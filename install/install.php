@@ -261,10 +261,17 @@ $_GET['step'] = isset($_GET['step']) && is_numeric($_GET['step']) && in_array($_
             $host = $_SERVER['HTTP_HOST'];
             // Get the base path by going up two directories from /install/install.php
             // Validate and sanitize SCRIPT_NAME to prevent path traversal
-            $scriptName = isset($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : '/install/install.php';
+            if (!isset($_SERVER['SCRIPT_NAME'])) {
+                error('Unable to determine the installation path. Please ensure your web server is configured correctly.');
+            }
+            $scriptName = $_SERVER['SCRIPT_NAME'];
+            // Validate that SCRIPT_NAME starts with / and contains only valid path characters
+            if (!preg_match('#^/[\w\-/.]*$#', $scriptName) || strpos($scriptName, '..') !== false) {
+                error('Invalid installation path detected. Please ensure the installer is accessed through a valid URL.');
+            }
             $scriptName = str_replace('\\', '/', $scriptName); // Normalize directory separators
             $scriptName = preg_replace('#/+#', '/', $scriptName); // Remove duplicate slashes
-            $basePath = dirname(dirname($scriptName));
+            $basePath = dirname($scriptName, 2); // Go up two directory levels from /install/install.php
             // Normalize the path (remove trailing slash if not root)
             $basePath = $basePath === '/' ? '' : $basePath;
             $siteUrl = $protocol . '://' . $host . $basePath;
