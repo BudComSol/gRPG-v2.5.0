@@ -263,7 +263,7 @@ MYSQL_PASS="' . $_POST['pass'] . '"
 MYSQL_BASE="' . $_POST['name'] . '"
 DEFAULT_TIMEZONE="' . $_POST['timezone'] . '"
 GAME_PATH="' . addslashes($_POST['gamedir']) . '"
-SITE_URL="'.$siteUrl.ltrim(str_replace([dirname(__DIR__, 2), DIRECTORY_SEPARATOR], ['', '/'], $_POST['gamedir']), '/').'"
+SITE_URL="'.rtrim($siteUrl, '/').'"
 ';
             if (!file_exists($configFile)) {
                 info('The configuration file (<code>' . $configFile . '</code>) couldn\'t be found. Trying to create it now...');
