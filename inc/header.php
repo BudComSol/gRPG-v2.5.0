@@ -6,7 +6,7 @@ if (!defined('GRPG_INC')) {
 require_once __DIR__.'/dbcon.php';
 $_SESSION['id'] = array_key_exists('id', $_SESSION) && is_numeric($_SESSION['id']) && $_SESSION['id'] > 0 ? $_SESSION['id'] : null;
 if ($_SESSION['id'] === null) {
-    require_once dirname(__DIR__).'/home.php';
+    header('Location: home.php');
     exit;
 }
 if (array_key_exists('code_slot', $_SESSION) && (!array_key_exists('code', $_GET) || empty($_GET['code']))) {
