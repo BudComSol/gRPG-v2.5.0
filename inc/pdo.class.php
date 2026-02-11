@@ -402,4 +402,8 @@ class database
     }
 }
 
-$db = database::getInstance();
+// Only auto-instantiate the database connection if not explicitly disabled
+// This allows the installer to control when the connection is established
+if (!defined('NO_AUTO_DB')) {
+    $db = database::getInstance();
+}
