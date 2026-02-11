@@ -381,19 +381,6 @@ CREATE TABLE IF NOT EXISTS `ganginvites`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
-DROP TABLE IF EXISTS ganglog;
-CREATE TABLE ganglog
-(
-    id         INT       NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    gangid     INT       NOT NULL REFERENCES gangs (id),
-    attacker   INT       NOT NULL REFERENCES users (id),
-    defender   INT       NOT NULL REFERENCES users (id),
-    winner     INT       NOT NULL REFERENCES users (id),
-    time_added TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4;
-
-
 DROP TABLE IF EXISTS `gangmail`;
 CREATE TABLE IF NOT EXISTS `gangmail`
 (
@@ -1102,6 +1089,22 @@ CREATE TABLE IF NOT EXISTS `users`
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 2
   DEFAULT CHARSET = latin1;
+
+DROP TABLE IF EXISTS ganglog;
+CREATE TABLE ganglog
+(
+    id         INT       NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    gangid     INT       NOT NULL,
+    attacker   INT       NOT NULL,
+    defender   INT       NOT NULL,
+    winner     INT       NOT NULL,
+    time_added TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (gangid) REFERENCES gangs (id),
+    FOREIGN KEY (attacker) REFERENCES users (id),
+    FOREIGN KEY (defender) REFERENCES users (id),
+    FOREIGN KEY (winner) REFERENCES users (id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
 
 DROP TABLE IF EXISTS `users_blocked`;
 CREATE TABLE IF NOT EXISTS `users_blocked`
