@@ -115,7 +115,7 @@ final class None extends Option
         return $this;
     }
 
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new EmptyIterator();
     }

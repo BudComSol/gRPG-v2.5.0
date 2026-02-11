@@ -23,7 +23,7 @@ if (!defined('GRPG_INC')) {
     exit;
 }
 
-class database extends PDO
+class database
 {
     protected string $last_query;
     private static $host = '';
@@ -62,7 +62,7 @@ class database extends PDO
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             ];
-            $this->db = parent::__construct('mysql:host=' . static::$host . ';dbname=' . static::$name . ';charset=utf8',
+            $this->db = new PDO('mysql:host=' . static::$host . ';dbname=' . static::$name . ';charset=utf8',
                 static::$user, static::$pass, $opts);
         } catch (PDOException $e) {
             exit('<p style="color:red;"><strong>CONSTRUCT ERROR</strong></p><pre>' . $e->getMessage() . '</pre>');
@@ -91,7 +91,7 @@ class database extends PDO
     {
         $this->last_query = $query;
         try {
-            $this->stmt = $this->prepare($query);
+            $this->stmt = $this->db->prepare($query);
             if (is_array($params) && count($params)) {
                 return $this->execute($params);
             }
@@ -276,7 +276,7 @@ class database extends PDO
     public function id(): ?int
     {
         try {
-            $id = $this->lastInsertId();
+            $id = $this->db->lastInsertId();
             return $id > 0 ? (int)$id : null;
         } catch (PDOException $e) {
             exit('<p style="color:red;"><strong>LAST INSERT ID ERROR</strong></p><pre>' . $e->getMessage() . '</pre>');
@@ -299,7 +299,7 @@ class database extends PDO
         ];
         $function = $opts[$which];
         try {
-            $this->$function();
+            $this->db->$function();
         } catch (Exception $e) {
             exit('<strong>' . strtoupper($which) . ' TRANSACTION ERROR:</strong> ' . $e->getMessage());
         }
@@ -336,7 +336,7 @@ class database extends PDO
             $this->trans('start');
         }
         foreach ($tables as $table) {
-            $this->exec('TRUNCATE TABLE `' . $table . '`');
+            $this->db->exec('TRUNCATE TABLE `' . $table . '`');
         }
         if (!$trans) {
             $this->trans('end');
