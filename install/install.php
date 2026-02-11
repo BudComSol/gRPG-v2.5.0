@@ -261,7 +261,13 @@ $_GET['step'] = isset($_GET['step']) && is_numeric($_GET['step']) && in_array($_
             $isHttps = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
                        (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
             $protocol = 'http' . ($isHttps ? 's' : '');
-            $host = $_SERVER['HTTP_HOST'];
+            // Use SERVER_NAME if available (more secure as it comes from server config)
+            // Fall back to HTTP_HOST but validate it
+            $host = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : $_SERVER['HTTP_HOST'];
+            // Validate host to prevent header injection attacks
+            if (!preg_match('/^[a-z0-9.\-:]+$/i', $host)) {
+                error('Invalid host detected. Please ensure your web server is configured correctly.');
+            }
             // Get the base path by going up two directories from /install/install.php
             // Validate and sanitize SCRIPT_NAME to prevent path traversal
             if (!isset($_SERVER['SCRIPT_NAME'])) {
@@ -272,8 +278,10 @@ $_GET['step'] = isset($_GET['step']) && is_numeric($_GET['step']) && in_array($_
             $scriptName = str_replace('\\', '/', $scriptName); // Normalize directory separators
             $scriptName = preg_replace('#/+#', '/', $scriptName); // Remove duplicate slashes
             // Validate that SCRIPT_NAME starts with / and contains only valid path characters
-            // Also prevent path traversal attempts
-            if (!preg_match('#^/[\w\-/.]*$#', $scriptName) || strpos($scriptName, '..') !== false) {
+            // Also prevent path traversal attempts (both .. and . references)
+            if (!preg_match('#^/[\w\-/]*(?:\.\w+)?$#', $scriptName) || 
+                strpos($scriptName, '..') !== false || 
+                preg_match('#/\.(?:/|$)#', $scriptName)) {
                 error('Invalid installation path detected. Please ensure the installer is accessed through a valid URL.');
             }
             $basePath = dirname($scriptName, 2); // Go up two directory levels from /install/install.php
