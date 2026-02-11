@@ -7,20 +7,36 @@
 // Define base path
 $vendorDir = __DIR__;
 
-// Autoloader for Dotenv (vlucas/phpdotenv)
+// Autoloader for all locally included libraries
 spl_autoload_register(function ($class) use ($vendorDir) {
-    // Check if this is a Dotenv class
-    if (strpos($class, 'Dotenv\\') === 0) {
-        // Convert namespace to file path
-        $relativePath = str_replace('Dotenv\\', '', $class);
-        $relativePath = str_replace('\\', DIRECTORY_SEPARATOR, $relativePath);
-        $file = $vendorDir . '/vlucas/phpdotenv/' . $relativePath . '.php';
+    // Map of namespace prefixes to directory paths
+    $prefixMap = [
+        'Dotenv\\' => $vendorDir . '/vlucas/phpdotenv/',
+        'PhpOption\\' => $vendorDir . '/phpoption/phpoption/',
+        'GrahamCampbell\\ResultType\\' => $vendorDir . '/graham-campbell/result-type/',
+    ];
+    
+    // Check each namespace prefix
+    foreach ($prefixMap as $prefix => $baseDir) {
+        $len = strlen($prefix);
+        if (strncmp($prefix, $class, $len) !== 0) {
+            // This prefix doesn't match, try next one
+            continue;
+        }
         
+        // Get the relative class name
+        $relativeClass = substr($class, $len);
+        
+        // Replace namespace separators with directory separators
+        $file = $baseDir . str_replace('\\', DIRECTORY_SEPARATOR, $relativeClass) . '.php';
+        
+        // If the file exists, require it
         if (file_exists($file)) {
             require_once $file;
             return true;
         }
     }
+    
     return false;
 });
 
