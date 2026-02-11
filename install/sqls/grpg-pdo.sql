@@ -950,11 +950,13 @@ DROP TABLE IF EXISTS `tickets_responses`;
 CREATE TABLE `tickets_responses`
 (
     id         INT(11)   NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    userid     INT(11)   NOT NULL REFERENCES users (id),
+    userid     INT(11)   NOT NULL,
     body       TEXT      NULL,
-    ticket_id  INT(11)   NOT NULL REFERENCES tickets (id),
+    ticket_id  INT(11)   NOT NULL,
     time_added TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    INDEX (ticket_id)
+    INDEX (ticket_id),
+    FOREIGN KEY (userid) REFERENCES users (id),
+    FOREIGN KEY (ticket_id) REFERENCES tickets (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
