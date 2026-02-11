@@ -256,14 +256,54 @@ $_GET['step'] = isset($_GET['step']) && is_numeric($_GET['step']) && in_array($_
             if (!is_dir($path)) {
                 error('I couldn\'t find that directory. Are you sure you\'ve entered the correct game path?');
             }
-            $siteUrl = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'].'/';
+            // Construct the base URL from the current request
+            // Check for HTTPS - consider both direct HTTPS and proxy headers
+            $isHttps = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
+                       (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
+            $protocol = 'http' . ($isHttps ? 's' : '');
+            // Use SERVER_NAME if available (more secure as it comes from server config)
+            // Fall back to HTTP_HOST but validate it
+            if (isset($_SERVER['SERVER_NAME'])) {
+                $host = $_SERVER['SERVER_NAME'];
+            } elseif (isset($_SERVER['HTTP_HOST'])) {
+                $host = $_SERVER['HTTP_HOST'];
+            } else {
+                error('Unable to determine the server hostname. Please ensure your web server is configured correctly.');
+            }
+            // Validate host to prevent header injection attacks
+            if (!preg_match('/^[a-z0-9.\-:]+$/i', $host)) {
+                error('Invalid host detected. Please ensure your web server is configured correctly.');
+            }
+            // Get the base path by going up two directories from /install/install.php
+            // This works because the installer is always located at /install/install.php relative to the game root
+            // For example: /game/install/install.php → /game (two levels up)
+            // Validate and sanitize SCRIPT_NAME to prevent path traversal
+            if (!isset($_SERVER['SCRIPT_NAME'])) {
+                error('Unable to determine the installation path. Please ensure your web server is configured correctly.');
+            }
+            $scriptName = $_SERVER['SCRIPT_NAME'];
+            // Normalize first, then validate to ensure we're checking the actual value that will be used
+            $scriptName = str_replace('\\', '/', $scriptName); // Normalize directory separators
+            $scriptName = preg_replace('#/+#', '/', $scriptName); // Remove duplicate slashes
+            // Validate that SCRIPT_NAME is a properly formatted path with segments
+            // Pattern ensures: starts with /, has valid segments (alphanumeric, hyphen, underscore),
+            // optional file extension at the end, and prevents any dot references
+            if (!preg_match('#^/[\w\-]+(?:/[\w\-]+)*(?:\.\w+)?$#', $scriptName) || 
+                strpos($scriptName, '..') !== false || 
+                preg_match('#/\.(?:/|$)#', $scriptName)) {
+                error('Invalid installation path detected. Please ensure the installer is accessed through a valid URL.');
+            }
+            $basePath = dirname($scriptName, 2); // Go up two directory levels from /install/install.php
+            // Normalize the path (remove trailing slash if not root)
+            $basePath = $basePath === '/' ? '' : $basePath;
+            $siteUrl = $protocol . '://' . $host . $basePath;
             $configuration = 'MYSQL_HOST="' . $_POST['host'] . '"
 MYSQL_USER="' . $_POST['user'] . '"
 MYSQL_PASS="' . $_POST['pass'] . '"
 MYSQL_BASE="' . $_POST['name'] . '"
 DEFAULT_TIMEZONE="' . $_POST['timezone'] . '"
 GAME_PATH="' . addslashes($_POST['gamedir']) . '"
-SITE_URL="'.$siteUrl.ltrim(str_replace([dirname(__DIR__, 2), DIRECTORY_SEPARATOR], ['', '/'], $_POST['gamedir']), '/').'"
+SITE_URL="'.$siteUrl.'"
 ';
             if (!file_exists($configFile)) {
                 info('The configuration file (<code>' . $configFile . '</code>) couldn\'t be found. Trying to create it now...');
