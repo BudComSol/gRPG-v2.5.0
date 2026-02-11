@@ -443,8 +443,8 @@ SITE_URL="'.$siteUrl.'"
                 }
                 warning('I couldn\'t delete this folder. Please manually delete it.' . $extra);
             } else {
-                $_SESSION['success'] = 'I\'ve managed to delete this install folder. Have fun!<br><a href="' . getenv('GAME_PATH') . '">To the game!</a>';
-                header('Location: /');
+                $_SESSION['success'] = 'I\'ve managed to delete this install folder. Have fun!<br><a href="' . htmlspecialchars(getenv('SITE_URL'), ENT_QUOTES, 'UTF-8') . '">To the game!</a>';
+                header('Location: ' . getenv('SITE_URL'));
                 return null;
             }
             break;

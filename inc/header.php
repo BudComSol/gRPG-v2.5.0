@@ -6,7 +6,7 @@ if (!defined('GRPG_INC')) {
 require_once __DIR__.'/dbcon.php';
 $_SESSION['id'] = array_key_exists('id', $_SESSION) && is_numeric($_SESSION['id']) && $_SESSION['id'] > 0 ? $_SESSION['id'] : null;
 if ($_SESSION['id'] === null) {
-    header('Location: /home.php');
+    header('Location: ' . rtrim(BASE_URL, '/') . '/home.php');
     exit;
 }
 if (array_key_exists('code_slot', $_SESSION) && (!array_key_exists('code', $_GET) || empty($_GET['code']))) {
@@ -52,7 +52,7 @@ if (!defined('LOAD_TIME_START')) {
 $db->query('SELECT COUNT(id) FROM users WHERE id = ?');
 $db->execute([$_SESSION['id']]);
 if (!$db->result()) {
-    header('Location: /?logout');
+    header('Location: ' . rtrim(BASE_URL, '/') . '/?logout');
     exit;
 }
 if (Is_User_Banned($_SESSION['id'])) {
