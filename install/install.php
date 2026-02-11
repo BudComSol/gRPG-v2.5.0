@@ -5,6 +5,7 @@ define('NO_SESSION', true);
 define('NO_CLASSES', true);
 define('NO_FUNCTIONS', true);
 define('NO_CSRF', true);
+define('NO_AUTO_DB', true);  // Prevent automatic DB connection during install
 define('INSTALLER', true);
 require_once __DIR__ . '/header.php';
 function error($msg)
@@ -337,10 +338,12 @@ SITE_URL="'.$siteUrl.'"
             }
             info('Attempting connection to the database..');
             require_once $mainPath . '/inc/dbcon.php';
+            $db = database::getInstance(); // Manually instantiate DB connection now that config is ready
             success('We\'ve connected! Moving on...<meta http-equiv="refresh" content="2; url=install.php?step=4" />');
             break;
         case 4:
             require_once $mainPath . '/inc/dbcon.php';
+            $db = database::getInstance(); // Manually instantiate DB connection for database installation
             ?><h2 class="content-subhead">We're connected! Let's install the database</h2><?php
             $templineMain = '';
             $lines = file($sqlPathMain);
@@ -393,6 +396,7 @@ SITE_URL="'.$siteUrl.'"
                 error('You didn\'t come from step 5..');
             }
             require_once $mainPath . '/inc/dbcon.php';
+            $db = database::getInstance(); // Manually instantiate DB connection for user creation
             if (empty($_POST['username'])) {
                 error('You didn\'t enter a valid username');
             }
