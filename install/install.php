@@ -257,10 +257,14 @@ $_GET['step'] = isset($_GET['step']) && is_numeric($_GET['step']) && in_array($_
                 error('I couldn\'t find that directory. Are you sure you\'ve entered the correct game path?');
             }
             // Construct the base URL from the current request
-            $protocol = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '');
+            $protocol = 'http' . ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 's' : '');
             $host = $_SERVER['HTTP_HOST'];
             // Get the base path by going up two directories from /install/install.php
-            $basePath = dirname(dirname($_SERVER['SCRIPT_NAME']));
+            // Validate and sanitize SCRIPT_NAME to prevent path traversal
+            $scriptName = isset($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : '/install/install.php';
+            $scriptName = str_replace('\\', '/', $scriptName); // Normalize directory separators
+            $scriptName = preg_replace('#/+#', '/', $scriptName); // Remove duplicate slashes
+            $basePath = dirname(dirname($scriptName));
             // Normalize the path (remove trailing slash if not root)
             $basePath = $basePath === '/' ? '' : $basePath;
             $siteUrl = $protocol . '://' . $host . $basePath;
