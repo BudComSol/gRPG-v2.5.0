@@ -236,6 +236,11 @@ $_GET['step'] = isset($_GET['step']) && is_numeric($_GET['step']) && in_array($_
                 warning('I couldn\'t verify that host. I\'ll continue attempting to install this for you anyway');
             }
             $_POST['user'] = array_key_exists('user', $_POST) && !empty($_POST['user']) ? $_POST['user'] : 'root';
+            $_POST['pass'] = $_POST['pass'] ?? '';
+            $_POST['name'] = $_POST['name'] ?? null;
+            if (empty($_POST['name'])) {
+                error('You didn\'t enter a valid database name');
+            }
             $_POST['timezone'] = array_key_exists('timezone',
                 $_POST) && is_string($_POST['timezone']) ? $_POST['timezone'] : null;
             if (empty($_POST['timezone'])) {
