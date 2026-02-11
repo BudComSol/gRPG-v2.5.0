@@ -22,8 +22,10 @@ Created `inc/vendor/autoload.php` - a lightweight PSR-4 compatible autoloader th
 ### 3. Code Updates
 - **inc/dbcon.php**: Updated to use local autoloader instead of Composer's vendor/autoload.php
 - **inc/header.php**: Updated Font Awesome CSS path from `/vendor/` to `/inc/vendor/`
-- **composer.json**: Removed library dependencies, kept only PHP extension requirements
+- **composer.json**: Removed completely (no longer needed)
+- **composer.lock**: Removed from .gitignore (no longer generated)
 - **.gitignore**: Removed `vendor` from ignore list so local dependencies are committed
+- **install/install.php**: Removed outdated Composer installation checks
 - **README.md**: Updated with simplified installation instructions
 
 ### 4. Security
