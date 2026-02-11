@@ -946,20 +946,6 @@ CREATE TABLE IF NOT EXISTS `tickets`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
-DROP TABLE IF EXISTS `tickets_responses`;
-CREATE TABLE `tickets_responses`
-(
-    id         INT(11)   NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    userid     INT(11)   NOT NULL,
-    body       TEXT      NULL,
-    ticket_id  INT(11)   NOT NULL,
-    time_added TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    INDEX (ticket_id),
-    FOREIGN KEY (userid) REFERENCES users (id),
-    FOREIGN KEY (ticket_id) REFERENCES tickets (id)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4;
-
 DROP TABLE IF EXISTS `todo`;
 CREATE TABLE IF NOT EXISTS `todo`
 (
@@ -1091,6 +1077,20 @@ CREATE TABLE IF NOT EXISTS `users`
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 2
   DEFAULT CHARSET = latin1;
+
+DROP TABLE IF EXISTS `tickets_responses`;
+CREATE TABLE `tickets_responses`
+(
+    id         INT(11)   NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    userid     INT(11)   NOT NULL,
+    body       TEXT      NULL,
+    ticket_id  INT(11)   NOT NULL,
+    time_added TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    INDEX (ticket_id),
+    FOREIGN KEY (userid) REFERENCES users (id),
+    FOREIGN KEY (ticket_id) REFERENCES tickets (id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
 
 DROP TABLE IF EXISTS ganglog;
 CREATE TABLE ganglog
