@@ -303,20 +303,16 @@ SITE_URL="'.$siteUrl.ltrim(str_replace([dirname(__DIR__, 2), DIRECTORY_SEPARATOR
             require_once $mainPath . '/inc/dbcon.php';
             ?><h2 class="content-subhead">We're connected! Let's install the database</h2><?php
             $templineMain = '';
-            if (isFunctionAvailable('system')) {
-                system('mysql --user='.getenv('MYSQL_USER').' --password='.getenv('MYSQL_PASS').' '.getenv('MYSQL_BASE').' < '.__DIR__.DIRECTORY_SEPARATOR.'sqls'.DIRECTORY_SEPARATOR.'grpg-pdo.sql');
-        } else {
-                $lines = file($sqlPathMain);
-                foreach ($lines as $line) {
-                    if (strncmp($line, '--', 2) === 0 || !$line) {
-                        continue;
-                    }
-                    $templineMain .= $line;
-                    if (substr(trim($line), -1, 1) === ';') {
-                        $db->query($templineMain);
-                        $db->execute();
-                        $templineMain = '';
-                    }
+            $lines = file($sqlPathMain);
+            foreach ($lines as $line) {
+                if (strncmp($line, '--', 2) === 0 || !$line) {
+                    continue;
+                }
+                $templineMain .= $line;
+                if (substr(trim($line), -1, 1) === ';') {
+                    $db->query($templineMain);
+                    $db->execute();
+                    $templineMain = '';
                 }
             }
             if ($db->tableExists('users')) {
