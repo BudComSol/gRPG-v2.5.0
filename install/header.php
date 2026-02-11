@@ -1,5 +1,8 @@
 <?php
 declare(strict_types=1);
+// Enable error display for installer
+ini_set('display_errors', '1');
+error_reporting(E_ALL);
 class grpg_install_header
 {
     public static ?grpg_install_header $inst = null;
