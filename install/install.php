@@ -423,7 +423,7 @@ SITE_URL="'.$siteUrl.'"
             I recommend that you remove this installation directory (keep a local backup, just in case).<br/>
             I can try to delete it for you now if you'd like?<br/>
             <a href="install.php?step=8">Yes, try and remove this directory</a> &middot;
-            <a href="<?php echo getenv('SITE_URL'); ?>">No, leave it and head to the game</a>
+            <a href="<?php echo htmlspecialchars(getenv('SITE_URL') ?: '/', ENT_QUOTES, 'UTF-8'); ?>">No, leave it and head to the game</a>
             <?php
             break;
         case 7:
@@ -435,7 +435,7 @@ SITE_URL="'.$siteUrl.'"
             I recommend that you remove this installation directory (keep a local backup, just in case).<br/>
             I can try to delete it for you now if you'd like?<br/>
             <a href="install.php?step=8">Yes, try and remove this directory</a> &middot;
-            <a href="<?php echo getenv('SITE_URL'); ?>">No, leave it and head to the game</a>
+            <a href="<?php echo htmlspecialchars(getenv('SITE_URL') ?: '/', ENT_QUOTES, 'UTF-8'); ?>">No, leave it and head to the game</a>
             <?php
             break;
         case 8:
@@ -447,8 +447,54 @@ SITE_URL="'.$siteUrl.'"
                 }
                 warning('I couldn\'t delete this folder. Please manually delete it.' . $extra);
             } else {
-                $_SESSION['success'] = 'I\'ve managed to delete this install folder. Have fun!<br><a href="' . htmlspecialchars(getenv('SITE_URL'), ENT_QUOTES, 'UTF-8') . '">To the game!</a>';
-                header('Location: ' . getenv('SITE_URL'));
+                $siteUrl = getenv('SITE_URL') ?: '/';
+                // Validate URL to prevent open redirect and header injection
+                // Remove any CRLF and other control characters to prevent header injection
+                $siteUrl = str_replace(["\r", "\n", "\0"], '', $siteUrl);
+                
+                // Check if this is an absolute URL (starts with http:// or https://)
+                $isAbsoluteUrl = preg_match('#^https?://#i', $siteUrl);
+                
+                if ($isAbsoluteUrl) {
+                    // Validate absolute URLs
+                    $parsedUrl = parse_url($siteUrl);
+                    // Require valid scheme, host, and matching domain
+                    if (!$parsedUrl || 
+                        !isset($parsedUrl['scheme']) || 
+                        !isset($parsedUrl['host']) ||
+                        !in_array(strtolower($parsedUrl['scheme']), ['http', 'https'], true)) {
+                        // Invalid URL structure or scheme
+                        $siteUrl = '/';
+                    } else {
+                        // Compare host using SERVER_NAME (safer than HTTP_HOST which can be spoofed)
+                        // Case-insensitive comparison as hostnames are case-insensitive
+                        $urlHost = strtolower($parsedUrl['host']);
+                        $serverName = strtolower($_SERVER['SERVER_NAME'] ?? '');
+                        // Remove port from server name if present
+                        if (!empty($serverName)) {
+                            $serverName = explode(':', $serverName)[0];
+                        }
+                        
+                        if (empty($serverName) || $urlHost !== $serverName) {
+                            // Server name not set or host doesn't match current domain
+                            $siteUrl = '/';
+                        }
+                    }
+                }
+                // Block protocol-relative URLs and other schemes  
+                elseif (str_starts_with($siteUrl, '//') || (strpos($siteUrl, ':') !== false && !str_starts_with($siteUrl, '/'))) {
+                    // Block: //evil.com, javascript:, data:, file:, C:/, etc.
+                    $siteUrl = '/';
+                }
+                // Relative paths starting with / are OK
+                
+                // Final sanity check: ensure no remaining control characters
+                if (preg_match('/[\x00-\x1F\x7F]/', $siteUrl)) {
+                    $siteUrl = '/';
+                }
+                
+                $_SESSION['success'] = 'I\'ve managed to delete this install folder. Have fun!<br><a href="' . htmlspecialchars($siteUrl, ENT_QUOTES, 'UTF-8') . '">To the game!</a>';
+                header('Location: ' . $siteUrl);
                 return null;
             }
             break;
