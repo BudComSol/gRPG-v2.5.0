@@ -10,3 +10,5 @@ cache
 .env
 *.7z
 *.zip
+logs/*.log
+logs/*.log.*

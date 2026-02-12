@@ -66,7 +66,11 @@ class database
                 static::$user, static::$pass, $opts);
         } catch (PDOException $e) {
             // Log the detailed error for debugging
-            error_log('Database connection error: ' . $e->getMessage());
+            if (function_exists('log_database_error')) {
+                log_database_error('Database connection error: ' . $e->getMessage());
+            } else {
+                error_log('Database connection error: ' . $e->getMessage());
+            }
             // Show user-friendly error without exposing sensitive details
             http_response_code(503);
             exit('<h1>Service Temporarily Unavailable</h1><p>Unable to connect to the database. Please try again later or contact the administrator.</p>');
@@ -361,7 +365,11 @@ class database
             $result = $this->query('SELECT 1 FROM ' . $table . ' LIMIT 1');
         } catch (Exception $e) {
             /** @noinspection ForgottenDebugOutputInspection */
-            error_log($e->getMessage());
+            if (function_exists('log_database_error')) {
+                log_database_error('Table existence check failed: ' . $e->getMessage(), ['table' => $table]);
+            } else {
+                error_log($e->getMessage());
+            }
             return false;
         }
 
@@ -382,7 +390,11 @@ class database
             $result = $this->db->query('SHOW COLUMNS FROM `' . $table . '` WHERE `Fieldname` = "' . $column . '"');
         } catch (Exception $e) {
             /** @noinspection ForgottenDebugOutputInspection */
-            error_log($e->getMessage());
+            if (function_exists('log_database_error')) {
+                log_database_error('Column existence check failed: ' . $e->getMessage(), ['table' => $table, 'column' => $column]);
+            } else {
+                error_log($e->getMessage());
+            }
             return false;
         }
 

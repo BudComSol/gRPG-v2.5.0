@@ -83,6 +83,12 @@ define('SECURITY_TIMEOUT_MESSAGE', 'Your request has timed out for security purp
 define('DEFAULT_DATE_FORMAT', 'F jS Y, g:i:sa'); // Match PHP's date() format
 define('DEFAULT_EMAIL_ADDRESS', 'noreply@' . $_SERVER['HTTP_HOST']); // Ideally, you should alter this to a hard-coded email address, instead of relying on _SERVER['HTTP_HOST']
 /*
+ *     Error Logging Configuration
+ */
+define('ERROR_LOG_PATH', BASE_PATH . '/logs/error.log'); // Path to the error log file
+define('ERROR_LOG_MAX_SIZE', 10485760); // Maximum log file size in bytes (10MB default)
+define('ERROR_LOG_MAX_ROTATIONS', 5); // Number of rotated log files to keep
+/*
  *     All definitions below MUST be called *before* including a core file
  *     Example:
  *     <?php
@@ -100,4 +106,7 @@ if (!defined('NO_CSRF')) { // If we haven't declared to not include the CSRF pro
 }
 if (!defined('NO_FUNCTIONS')) { // If we haven't declared to not include the functions file
     require_once __DIR__ . '/functions.php'; // Include the functions file
+}
+if (!defined('NO_ERROR_LOGGER')) { // If we haven't declared to not include the error logger
+    require_once __DIR__ . '/error_logger.php'; // Include the error logger
 }

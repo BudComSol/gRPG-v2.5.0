@@ -497,7 +497,11 @@ class Parser
             }
         } catch (ParserException $e) {
             /** @noinspection ForgottenDebugOutputInspection */
-            error_log($e->getMessage());
+            if (function_exists('log_warning')) {
+                log_warning('BBCode parser exception: ' . $e->getMessage(), ['tagName' => $tagName ?? 'unknown']);
+            } else {
+                error_log($e->getMessage());
+            }
             // if we're in this state, then something evidently went wrong. We'll consider everything that came after the tagname to be the attribute for that keyname
             $options[$tagName] = substr($tagContent, strpos($tagContent, '=') + 1);
         }

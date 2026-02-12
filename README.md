@@ -11,6 +11,22 @@ Text-based online RPG
 
 **Note:** All dependencies are included locally - no need for Composer or other package managers!
 
+### Error Logging ###
+
+The application includes a centralized error logging system to help track and diagnose issues:
+
+* **Log Location:** All errors are logged to `logs/error.log`
+* **Security:** The logs directory is protected by `.htaccess` to prevent web access
+* **Log Rotation:** Logs are automatically rotated when they reach 10MB (configurable in `inc/dbcon.php`)
+* **Usage:** Use the logging functions in your code:
+  * `log_error($message, $level, $context)` - Log general errors
+  * `log_database_error($message, $context)` - Log database-related errors
+  * `log_security_issue($message, $context)` - Log security issues
+  * `log_warning($message, $context)` - Log warnings
+  * `log_info($message, $context)` - Log informational messages
+
+Each log entry includes timestamp, severity level, IP address, user ID, request URI, and optional context data.
+
 ### I found a bug! ###
 If you're able to repair it, please do and submit the fix back. If not, please notify us
 
