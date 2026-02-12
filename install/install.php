@@ -423,7 +423,7 @@ SITE_URL="'.$siteUrl.'"
             I recommend that you remove this installation directory (keep a local backup, just in case).<br/>
             I can try to delete it for you now if you'd like?<br/>
             <a href="install.php?step=8">Yes, try and remove this directory</a> &middot;
-            <a href="<?php echo getenv('SITE_URL'); ?>">No, leave it and head to the game</a>
+            <a href="<?php echo getenv('SITE_URL') ?: '/'; ?>">No, leave it and head to the game</a>
             <?php
             break;
         case 7:
@@ -435,7 +435,7 @@ SITE_URL="'.$siteUrl.'"
             I recommend that you remove this installation directory (keep a local backup, just in case).<br/>
             I can try to delete it for you now if you'd like?<br/>
             <a href="install.php?step=8">Yes, try and remove this directory</a> &middot;
-            <a href="<?php echo getenv('SITE_URL'); ?>">No, leave it and head to the game</a>
+            <a href="<?php echo getenv('SITE_URL') ?: '/'; ?>">No, leave it and head to the game</a>
             <?php
             break;
         case 8:
@@ -447,8 +447,9 @@ SITE_URL="'.$siteUrl.'"
                 }
                 warning('I couldn\'t delete this folder. Please manually delete it.' . $extra);
             } else {
-                $_SESSION['success'] = 'I\'ve managed to delete this install folder. Have fun!<br><a href="' . htmlspecialchars(getenv('SITE_URL'), ENT_QUOTES, 'UTF-8') . '">To the game!</a>';
-                header('Location: ' . getenv('SITE_URL'));
+                $siteUrl = getenv('SITE_URL') ?: '/';
+                $_SESSION['success'] = 'I\'ve managed to delete this install folder. Have fun!<br><a href="' . htmlspecialchars($siteUrl, ENT_QUOTES, 'UTF-8') . '">To the game!</a>';
+                header('Location: ' . $siteUrl);
                 return null;
             }
             break;
