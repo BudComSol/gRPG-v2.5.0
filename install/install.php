@@ -470,9 +470,9 @@ SITE_URL="'.$siteUrl.'"
                         // Case-insensitive comparison as hostnames are case-insensitive
                         $urlHost = strtolower($parsedUrl['host']);
                         $serverName = strtolower($_SERVER['SERVER_NAME'] ?? '');
-                        // Remove port from server name if present (safer than explode)
+                        // Remove port from server name if present
                         if (!empty($serverName)) {
-                            $serverName = strtok($serverName, ':');
+                            $serverName = explode(':', $serverName)[0];
                         }
                         
                         if (empty($serverName) || $urlHost !== $serverName) {
