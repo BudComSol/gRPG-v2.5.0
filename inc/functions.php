@@ -613,7 +613,7 @@ function mrefresh($url = '', $time = 1)
  */
 function car_popup($text = '', $id = 0)
 {
-    return '<span class="underline clicky" onclick="javascript:window.open(\'cardesc.php?id=' . $id . '\', \'60\', \'left=20,top=20,width=400,height=400,toolbar=0,resizable=0,scrollbars=1\');">' . $text . '</span>';
+    return '<span class="underline clicky" onclick="javascript:window.open(\'plugins/cardesc.php?id=' . $id . '\', \'60\', \'left=20,top=20,width=400,height=400,toolbar=0,resizable=0,scrollbars=1\');">' . $text . '</span>';
 }
 
 /**
@@ -638,7 +638,7 @@ function item_popup($id = 0, $name = '')
         $name = $tmp;
     }
 
-    return '<span class="underline clicky" onclick="javascript:window.open(\'description.php?id=' . $id . '\', \'60\', \'left=20,top=20,width=400,height=400,toolbar=0,resizable=0,scrollbars=1\');">' . format($name) . '</span>';
+    return '<span class="underline clicky" onclick="javascript:window.open(\'plugins/description.php?id=' . $id . '\', \'60\', \'left=20,top=20,width=400,height=400,toolbar=0,resizable=0,scrollbars=1\');">' . format($name) . '</span>';
 }
 
 /**
