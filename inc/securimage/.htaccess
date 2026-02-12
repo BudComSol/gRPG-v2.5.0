@@ -1,0 +1,19 @@
+# Allow access to Securimage CAPTCHA files while keeping security
+# These files need to be accessed directly by the browser
+
+<FilesMatch "^securimage_(show|play)\.php$">
+    order allow,deny
+    allow from all
+</FilesMatch>
+
+# Block access to all other PHP files
+<FilesMatch "\.php$">
+    order deny,allow
+    deny from all
+</FilesMatch>
+
+# Allow access to static assets (images, audio, css, js)
+<FilesMatch "\.(jpg|jpeg|png|gif|css|js|swf|mp3|wav)$">
+    order allow,deny
+    allow from all
+</FilesMatch>
