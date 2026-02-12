@@ -55,7 +55,7 @@ class nocsrf
             $_SESSION['csrf_'.$key] = null;
         }
         // Origin checks
-        if (self::$doOriginCheck && sha1($_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT']) != substr(base64_decode($hash), 10, 40)) {
+        if (self::$doOriginCheck && sha1($_SERVER['REMOTE_ADDR'].($_SERVER['HTTP_USER_AGENT'] ?? '')) != substr(base64_decode($hash), 10, 40)) {
             if ($throwException) {
                 throw new \RuntimeException('Form origin does not match token origin.');
             }
@@ -99,7 +99,7 @@ class nocsrf
      */
     public static function generate($key): string
     {
-        $extra = self::$doOriginCheck ? sha1($_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT']) : '';
+        $extra = self::$doOriginCheck ? sha1($_SERVER['REMOTE_ADDR'].($_SERVER['HTTP_USER_AGENT'] ?? '')) : '';
         // token generation (basically base64_encode any random complex string, time() is used for token expiration)
         $token = base64_encode(time().$extra.self::randomString(32));
         // store the one-time token in session

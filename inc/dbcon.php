@@ -81,7 +81,7 @@ define('CAPTCHA_FORGOT_PASS', true); // Set to true to enable CAPTCHA on forgott
 define('SQL_SESSIONS', false); // Set to true to let the database handle PHP sessions. Set to false to use default disk file sessions
 define('SECURITY_TIMEOUT_MESSAGE', 'Your request has timed out for security purposes'); // In relation to CSRF protection. If a request is invalid, this message will be displayed
 define('DEFAULT_DATE_FORMAT', 'F jS Y, g:i:sa'); // Match PHP's date() format
-define('DEFAULT_EMAIL_ADDRESS', 'noreply@' . $_SERVER['HTTP_HOST']); // Ideally, you should alter this to a hard-coded email address, instead of relying on _SERVER['HTTP_HOST']
+define('DEFAULT_EMAIL_ADDRESS', 'noreply@' . ($_SERVER['HTTP_HOST'] ?? 'localhost')); // Ideally, you should alter this to a hard-coded email address, instead of relying on _SERVER['HTTP_HOST']
 /*
  *     Error Logging Configuration
  */
