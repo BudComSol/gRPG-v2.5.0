@@ -925,7 +925,8 @@ function recache_topic($id = 0)
     if (!$id || !ctype_digit($id)) {
         return false;
     }
-    $db->query('SELECT COUNT(ft_id) FROM forum_topics WHERE ft_id = ?', [$id]);
+    $db->query('SELECT COUNT(ft_id) FROM forum_topics WHERE ft_id = ?');
+    $db->execute([$id]);
     $topic = $db->result();
     if($topic > 0) {
         echo 'Recaching topic ID ' . $id;

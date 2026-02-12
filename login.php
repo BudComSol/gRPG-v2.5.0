@@ -34,7 +34,8 @@ if (array_key_exists('submit', $_POST)) {
         if ($row['ban']) {
             echo Message('You\'ve been banned from the game', 'Error', true);
         }
-        $db->query('SELECT COUNT(id) FROM pending_validations WHERE username = ?', [$_POST['username']]);
+        $db->query('SELECT COUNT(id) FROM pending_validations WHERE username = ?');
+        $db->execute([$_POST['username']]);
         if ($db->result()) {
             echo Message('You haven\'t validated your email address', 'Error', true);
         }

@@ -93,7 +93,8 @@ if ($rows !== null) {
                 foreach ($items as $item) {
 
                     [$itemID, $qty] = explode(':', $item);
-                    $db->query('SELECT name FROM items WHERE id = ?', [$itemID]);
+                    $db->query('SELECT name FROM items WHERE id = ?');
+                    $db->execute([$itemID]);
                     $it = $db->result();
                     $rewards[] = format($qty).'x '.$it;
                 }
