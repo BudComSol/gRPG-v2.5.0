@@ -41,7 +41,7 @@ class Gang
         $this->level = (int)Get_The_Level($row['experience']);
         $this->moneyvault = (int)$row['moneyvault'];
         $this->pointsvault = (int)$row['pointsvault'];
-        $this->formattedname = '<a href="viewgang.php?id='.$id.'">['.$row['tag'].'] '.format($row['name']).'</a>';
+        $this->formattedname = '<a href="plugins/viewgang.php?id='.$id.'">['.$row['tag'].'] '.format($row['name']).'</a>';
         if ($getLeader === true) {
             $this->setLeader();
         }
