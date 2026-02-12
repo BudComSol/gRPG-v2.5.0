@@ -449,37 +449,42 @@ SITE_URL="'.$siteUrl.'"
             } else {
                 $siteUrl = getenv('SITE_URL') ?: '/';
                 // Validate URL to prevent open redirect and header injection
-                // Remove any CRLF characters to prevent header injection
+                // Remove any CRLF and other control characters to prevent header injection
                 $siteUrl = str_replace(["\r", "\n", "\0"], '', $siteUrl);
                 
-                // Block protocol-relative URLs (e.g., //evil.com)
-                if (str_starts_with($siteUrl, '//')) {
-                    $siteUrl = '/';
-                }
-                // Validate absolute URLs (contain : which could be a scheme)
-                elseif (strpos($siteUrl, ':') !== false && !str_starts_with($siteUrl, '/')) {
+                // Check if this is an absolute URL (starts with http:// or https://)
+                $isAbsoluteUrl = preg_match('#^https?://#i', $siteUrl);
+                
+                if ($isAbsoluteUrl) {
+                    // Validate absolute URLs
                     $parsedUrl = parse_url($siteUrl);
                     // Require valid scheme, host, and matching domain
                     if (!$parsedUrl || 
                         !isset($parsedUrl['scheme']) || 
                         !isset($parsedUrl['host']) ||
-                        !in_array($parsedUrl['scheme'], ['http', 'https'], true)) {
+                        !in_array(strtolower($parsedUrl['scheme']), ['http', 'https'], true)) {
                         // Invalid URL structure or scheme
                         $siteUrl = '/';
                     } else {
-                        // Compare host without port
-                        $urlHost = $parsedUrl['host'];
-                        $serverHost = $_SERVER['HTTP_HOST'] ?? '';
-                        // Remove port from server host if present
-                        $serverHost = explode(':', $serverHost)[0];
+                        // Compare host using SERVER_NAME (safer than HTTP_HOST which can be spoofed)
+                        // Case-insensitive comparison as hostnames are case-insensitive
+                        $urlHost = strtolower($parsedUrl['host']);
+                        $serverName = strtolower($_SERVER['SERVER_NAME'] ?? $_SERVER['HTTP_HOST'] ?? '');
+                        // Remove port from server name if present
+                        $serverName = explode(':', $serverName)[0];
                         
-                        if ($urlHost !== $serverHost) {
+                        if ($urlHost !== $serverName) {
                             // Host doesn't match current domain
                             $siteUrl = '/';
                         }
                     }
                 }
-                // Relative paths starting with / are OK (already validated above)
+                // Block protocol-relative URLs and other schemes  
+                elseif (str_starts_with($siteUrl, '//') || (strpos($siteUrl, ':') !== false && !str_starts_with($siteUrl, '/'))) {
+                    // Block: //evil.com, javascript:, data:, file:, C:/, etc.
+                    $siteUrl = '/';
+                }
+                // Relative paths starting with / are OK
                 
                 $_SESSION['success'] = 'I\'ve managed to delete this install folder. Have fun!<br><a href="' . htmlspecialchars($siteUrl, ENT_QUOTES, 'UTF-8') . '">To the game!</a>';
                 header('Location: ' . $siteUrl);
