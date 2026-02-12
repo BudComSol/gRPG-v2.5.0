@@ -132,7 +132,7 @@ function callback($buffer)
     if ($rows !== null) {
         $effects .= '<div class="headbox">Current Effects</div>';
         foreach ($rows as $row) {
-            $effects .= sprintf('<a href="/effects.php?view=%1$s">%1$s (%2$s)</a><br />', $row['effect'], $row['timeleft']);
+            $effects .= sprintf('<a href="/plugins/effects.php?view=%1$s">%1$s (%2$s)</a><br />', $row['effect'], $row['timeleft']);
         }
     }
     $findRepl = [
@@ -182,9 +182,9 @@ if ($siteURL !== null) {
                 Server Time: <?php echo $time; ?>
             </span>
             <span class="right">
-                <a href="refer.php">Refer For Points</a>
-                | <a href="rmstore.php">Upgrade Account</a>
-                | <a href="vote.php">Vote To Receive Points</a>
+                <a href="plugins/refer.php">Refer For Points</a>
+                | <a href="plugins/rmstore.php">Upgrade Account</a>
+                | <a href="plugins/vote.php">Vote To Receive Points</a>
             </span>
         </td>
     </tr>
@@ -198,8 +198,8 @@ if ($siteURL !== null) {
                              <?php echo $user_class->formattedname; ?><br />
                              Class: <?php echo $user_class->class; ?><br />
                              Level: <!_-level-_!><br />
-                             Money: <!_-money-_!> [<a href="sendmoney.php">Send</a>]<br />
-                             Points: <!_-points-_!> [<a href="spendpoints.php">Spend</a>] [<a href="sendpoints.php">Send</a>]
+                             Money: <!_-money-_!> [<a href="plugins/sendmoney.php">Send</a>]<br />
+                             Points: <!_-points-_!> [<a href="plugins/spendpoints.php">Spend</a>] [<a href="plugins/sendpoints.php">Send</a>]
                          </td>
                     <td width="50%"><img src="images/logos/logo.png" alt="GRPG" /></td>
                     </tr>
@@ -232,19 +232,19 @@ if ($config['messagefromadmin'] !== null) {
                         <div>
                             <div class="headbox leftmenu">Stats</div>
                             <div class="leftmenu">
-                                <a class="medium-small" href="spendpoints.php?spend=HP">HP</a>: <div class="bar_a" title="<!_-formhp-_!>">
+                                <a class="medium-small" href="plugins/spendpoints.php?spend=HP">HP</a>: <div class="bar_a" title="<!_-formhp-_!>">
                                     <div class="bar_b" style="width: <!_-hpperc-_!>%;" title="<!_-formhp-_!>">&nbsp;</div>
                                 </div>
-                                <a class="medium-small" href="spendpoints.php?spend=energy" title="Refill this bar">Energy</a>: <div class="bar_a" title="<!_-formenergy-_!>">
+                                <a class="medium-small" href="plugins/spendpoints.php?spend=energy" title="Refill this bar">Energy</a>: <div class="bar_a" title="<!_-formenergy-_!>">
                                     <div class="bar_b" style="width: <!_-energyperc-_!>%;" title="<!_-formenergy-_!>">&nbsp;</div>
                                  </div>
-                                <a class="medium-small" href="spendpoints.php?spend=awake" title="Refill this bar">Awake</a>: <div class="bar_a" title="<!_-formawake-_!>">
+                                <a class="medium-small" href="plugins/spendpoints.php?spend=awake" title="Refill this bar">Awake</a>: <div class="bar_a" title="<!_-formawake-_!>">
                                      <div class="bar_b" style="width: <!_-awakeperc-_!>%;" title="<!_-formawake-_!>">&nbsp;</div>
                                 </div>
-                                <a class="medium-small" href="spendpoints.php?spend=nerve">Nerve</a>: <div class="bar_a" title="<!_-formnerve-_!>">
+                                <a class="medium-small" href="plugins/spendpoints.php?spend=nerve">Nerve</a>: <div class="bar_a" title="<!_-formnerve-_!>">
                                     <div class="bar_b" style="width: <!_-nerveperc-_!>%;" title="<!_-formnerve-_!>">&nbsp;</div>
                                 </div>
-                                <a class="medium-small" href="expguide.php"> EXP</a>: <div class="bar_a" title="<!_-formexp-_!>"><div class="bar_b" style="width: <!_-expperc-_!>%;" title="<!_-formexp-_!>">&nbsp;</div>
+                                <a class="medium-small" href="plugins/expguide.php"> EXP</a>: <div class="bar_a" title="<!_-formexp-_!>"><div class="bar_b" style="width: <!_-expperc-_!>%;" title="<!_-formexp-_!>">&nbsp;</div>
                                </div>
                            </div>
                        </div>
@@ -261,7 +261,7 @@ if ($config['messagefromadmin'] !== null) {
                                     <table class="content"><?php
 $db->query('SELECT COUNT(id) FROM ganginvites WHERE playerid = ?', [$user_class->id]);
 if ($db->result() > 0) {
-    echo Message('You\'ve got gang invites pending!<br />[<a href="ganginvites.php">View Invites</a>]');
+    echo Message('You\'ve got gang invites pending!<br />[<a href="plugins/ganginvites.php">View Invites</a>]');
 }
 if ($user_class->jail > 0) {
     $remaining = floor($user_class->jail / 60); ?><tr>

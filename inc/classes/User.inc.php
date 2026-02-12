@@ -511,8 +511,8 @@ class User
                 $this->gangleader = (int)$gang['leader'];
                 $this->gangtag = $gang['tag'];
                 $this->gangdescription = $gang['description'];
-                $this->formattedgang = '<a href="viewgang.php?id='.$this->gang.'">'.$this->gangname.'</a>';
-                $this->formattedname = '<a href="viewgang.php?id='.$this->gang.'" '.($this->gangleader === $this->id ? 'title="Gang Leader">[<strong>'.$this->gangtag.'</strong>]' : '>['.$this->gangtag.']').'</a> ';
+                $this->formattedgang = '<a href="plugins/viewgang.php?id='.$this->gang.'">'.$this->gangname.'</a>';
+                $this->formattedname = '<a href="plugins/viewgang.php?id='.$this->gang.'" '.($this->gangleader === $this->id ? 'title="Gang Leader">[<strong>'.$this->gangtag.'</strong>]' : '>['.$this->gangtag.']').'</a> ';
             } else {
                 generate_ticket('Non-existent gang', 'ID: '.$this->gang);
             }
@@ -548,11 +548,11 @@ class User
             $color = 'red';
         }
         if ($this->rmdays > 0) {
-            $this->formattedname .= '<a href="profiles.php?id='.$this->id.'" style="font-weight:700;'.($color !== '' ? 'color:'.$color.';' : '').'" title="Respected Mobster ['.$this->rmdays.' RM Day'.s($this->rmdays).' Left]">'.$this->username.'</a>';
+            $this->formattedname .= '<a href="plugins/profiles.php?id='.$this->id.'" style="font-weight:700;'.($color !== '' ? 'color:'.$color.';' : '').'" title="Respected Mobster ['.$this->rmdays.' RM Day'.s($this->rmdays).' Left]">'.$this->username.'</a>';
         } elseif ($this->admin > 0) {
-            $this->formattedname .= '<a href="profiles.php?id='.$this->id.'" style="font-weight:700;'.($color !== '' ? 'color:'.$color.';' : '').'">'.$this->username.'</a>';
+            $this->formattedname .= '<a href="plugins/profiles.php?id='.$this->id.'" style="font-weight:700;'.($color !== '' ? 'color:'.$color.';' : '').'">'.$this->username.'</a>';
         } else {
-            $this->formattedname .= '<a href="profiles.php?id='.$this->id.'" '.($color !== '' ? 'style="color:'.$color.';"' : '').'>'.$this->username.'</a>';
+            $this->formattedname .= '<a href="plugins/profiles.php?id='.$this->id.'" '.($color !== '' ? 'style="color:'.$color.';"' : '').'>'.$this->username.'</a>';
         }
         if((time() - strtotime($this->lastactive)) <= 300) {
             $conf = [

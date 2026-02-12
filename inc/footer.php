@@ -26,9 +26,9 @@ ob_start(); ?>
 <table width="827">
     <tr>
         <td height="20" colspan="2" align="center" class="content">
-            | <a href="citizens.php"><?php echo $stats->playerstotal; ?> Total Mobsters</a>&nbsp; | &nbsp;
-            <a href="online.php"><?php echo $stats->playersloggedin; ?> Mobster<?php echo s($stats->playersloggedin); ?> Online</a>&nbsp; | &nbsp;
-            <a href="24hour.php"><?php echo $stats->playersonlineinlastday; ?> Mobster<?php echo s($stats->playersonlineinlastday); ?> Online (24 Hours)</a> |<br />
+            | <a href="plugins/citizens.php"><?php echo $stats->playerstotal; ?> Total Mobsters</a>&nbsp; | &nbsp;
+            <a href="plugins/online.php"><?php echo $stats->playersloggedin; ?> Mobster<?php echo s($stats->playersloggedin); ?> Online</a>&nbsp; | &nbsp;
+            <a href="plugins/24hour.php"><?php echo $stats->playersonlineinlastday; ?> Mobster<?php echo s($stats->playersonlineinlastday); ?> Online (24 Hours)</a> |<br />
             This page was generated in <?php echo format($totaltime, 3); ?> seconds<br />
             &copy; <?php echo GAME_NAME; ?> 2017<?php echo $year != 2017 ? '-'.$year : ''; ?> gRPG Dev Team
         </td>
