@@ -10,7 +10,7 @@ require_once __DIR__.'/header.php';
 <div class="content">
 	<h2 class="content-subhead">Prerequisites</h2>
 	<ul>
-		<li><strong>PHP 7.4 or higher</strong> - Required for running the game</li>
+		<li><strong>PHP 7.4 or higher - works with 8.0+</strong> - Required for running the game</li>
 		<li><strong>MySQL Database</strong> - For storing game data</li>
 		<li><strong>Web Server</strong> - Apache, Nginx, or similar with PHP support</li>
 		<li><strong>Write Permissions</strong> - The web server must be able to write to the <code>/.env</code> file</li>
