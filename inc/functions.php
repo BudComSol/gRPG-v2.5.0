@@ -10,11 +10,14 @@ if (!defined('GRPG_INC')) {
  */
 function microtime_float(): float
 {
-    list($usec, $sec) = explode(' ', microtime());
-    return ((float)$usec + (float)$sec);
+    return microtime(true);
 }
 // Autoloader for game classes
 spl_autoload_register(function ($class) {
+    // Validate class name to prevent directory traversal
+    if (!preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $class)) {
+        return;
+    }
     $class_file = __DIR__ . '/classes/' . $class . '.inc.php';
     if (file_exists($class_file)) {
         require_once $class_file;

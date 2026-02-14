@@ -18,8 +18,15 @@ if (!array_key_exists('id', $_SESSION) || !$_SESSION['id']) {
     header('Location: login.php');
     exit;
 }
+// Validate and sanitize session ID
+$user_id = filter_var($_SESSION['id'], FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+if ($user_id === false) {
+    session_destroy();
+    header('Location: login.php');
+    exit;
+}
 // Load user class
-$user_class = new User($_SESSION['id']);
+$user_class = new User($user_id);
 // Check if user is banned
 if ($user_class->ban) {
     session_destroy();
@@ -27,14 +34,14 @@ if ($user_class->ban) {
     exit;
 }
 $time = date('F d, Y g:i:sa');
-$siteURL = getenv('SITE_URL');
+$site_url = getenv('SITE_URL') ?: '';
 ob_start(); ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head><?php
-if ($siteURL !== null) {
+if ($site_url !== '') {
     ?>
-    <base href="<?php echo rtrim($siteURL, '/').'/'; ?>"/>
+    <base href="<?php echo rtrim($site_url, '/').'/'; ?>"/>
     <?php
 }
     ?><title><?php echo GAME_NAME; ?></title>
