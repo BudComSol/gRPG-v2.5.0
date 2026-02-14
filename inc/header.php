@@ -1,58 +1,87 @@
 <?php
 declare(strict_types=1);
-// Enable error display for installer
-ini_set('display_errors', '1');
-error_reporting(E_ALL);
-class grpg_install_header
-{
-    public static ?grpg_install_header $inst = null;
-
-    public function __construct()
+if (!defined('GRPG_INC')) {
+    define('GRPG_INC', true);
+}
+if (!function_exists('microtime_float')) {
+    function microtime_float()
     {
-        ?><!DOCTYPE html>
-        <html lang="en">
-            <head><?php
-                if (defined('BASE_URL')) {
-                    ?><base href="<?php echo BASE_URL; ?>/install" /><?php
-                } ?>
-                <meta charset="utf-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <meta name="description" content="A web-based GUI for installing gRPG: PDO V2.5.0" />                
-                <link rel="stylesheet" href="css/layouts/side-menu.css" />
-                <link rel="stylesheet" type='text/css' href="css/message.css" />
-                <link rel="stylesheet" type='text/css' href="css/pure-css.css" />
-                <title>gRPG: PDO V2.5.0 - Installer</title>
-            </head>
-            <body>
-                <div id="layout">
-                    <a href="#menu" id="menuLink" class="menu-link"><span>&nbsp;</span></a>
-                    <div id="menu">
-                        <div class="pure-menu">                           
-                            <a class="pure-menu-heading" href="#">Menu</a>
-                            <br>
-                            <ul class="pure-menu-list">
-                                <li class="pure-menu-item"><a href="index.php" class="pure-menu-link">Home</a></li>
-                                <li class="pure-menu-item"><a href="readme.php" class="pure-menu-link">ReadMe</a></li>
-                                <li class="pure-menu-item"><a href="install.php" class="pure-menu-link">Install</a></li>
-                                <li class="pure-menu-item menu-item-divided"><a href="mailto:support@grpg.me" class="pure-menu-link">Support</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div id="main"><?php
-    }
-
-    public function __destruct()
-    {
-        ?>            </div>
-                </div>
-                <script src="js/ui.js"></script>
-            </body>
-        </html><?php
-    }
-
-    public static function getInstance(): ?grpg_install_header
-    {
-        return self::$inst = new self();
+        return microtime(true);
     }
 }
-$h = grpg_install_header::getInstance();
+define('LOAD_TIME_START', microtime_float());
+require_once __DIR__.'/dbcon.php';
+// Check if user is logged in
+if (!array_key_exists('id', $_SESSION) || !$_SESSION['id']) {
+    header('Location: login.php');
+    exit;
+}
+// Check for logout
+if (array_key_exists('logout', $_GET)) {
+    session_destroy();
+    header('Location: home.php');
+    exit;
+}
+// Initialize logged-in user
+$user_class = new User($_SESSION['id']);
+if (!$user_class->id) {
+    session_destroy();
+    header('Location: login.php');
+    exit;
+}
+$time = date('F d, Y g:i:sa');
+$siteURL = getenv('SITE_URL');
+ob_start(); ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><?php
+if ($siteURL !== null) {
+    ?>
+    <base href="<?php echo rtrim($siteURL, '/').'/'; ?>"/>
+    <?php
+}
+    ?><title><?php echo GAME_NAME; ?></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" type="text/css" media="all" href="css/login.css"/>
+    <link rel="stylesheet" type="text/css" media="all" href="css/style.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/g/pure@0.6.2(buttons-min.css+grids-min.css+forms-min.css)"
+          integrity="sha384-+YK1ur0Mr74WEZWTMC6oMb5fojhkGm6EpjgVheKlE9urf2PbykYP7MxdwPpruQB8" crossorigin="anonymous"/>
+</head>
+<body>
+<table bgcolor="#1E1E1E" border="0" cellspacing="0" cellpadding="0" width="100%">
+    <tr>
+        <td>
+            <table class="topbar">
+                <tr>
+                    <td>&gt; Server Time: <?php echo $time; ?></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3" class="pos1" height="55" valign="middle">
+            <div class="topbox">
+                <table width="800">
+                    <tr>
+                        <td width="50%" class="center"><img src="images/logos/logo.png" alt="GRPG"
+                                                            style="height:150px;"/></td>
+
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td valign="top" width="150"><?php
+                        require_once __DIR__.'/menu.php';
+                    ?></td>
+                    <td valign="top">
+                        <table border="0" cellspacing="0" cellpadding="0" width="100%">
+                            <tr>
+                                <td width="10"></td>
+                                <td valign="top" class="mainbox">
+                                    <table class="content"><?php
+require_once __DIR__.'/footer.php';
