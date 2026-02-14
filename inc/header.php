@@ -35,7 +35,7 @@ ob_start(); ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head><?php
-if ($site_url !== null) {
+if ($site_url !== false && $site_url !== '') {
     ?>
     <base href="<?php echo rtrim($site_url, '/').'/'; ?>"/>
     <?php
@@ -84,8 +84,9 @@ if ($site_url !== null) {
                                 <td width="10"></td>
                                 <td valign="top" class="mainbox">
                                     <table class="content"><?php
-// Note: footer.php is included at the end via register_shutdown_function
-// This ensures proper HTML closure and statistics display
+// The old installer header used __destruct() to auto-close HTML.
+// Logged-in pages (index.php, plugins/*) rely on this automatic closure.
+// Using register_shutdown_function maintains compatibility without modifying all pages.
 register_shutdown_function(function() {
     require_once __DIR__.'/footer.php';
 });
