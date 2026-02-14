@@ -108,4 +108,5 @@ require_once __DIR__.'/inc/header.php';
             </tr>
         </table>
     </td>
-</tr>
+</tr><?php
+require_once __DIR__.'/inc/footer.php';
