@@ -13,6 +13,13 @@ function microtime_float(): float
     list($usec, $sec) = explode(' ', microtime());
     return ((float)$usec + (float)$sec);
 }
+// Autoloader for game classes
+spl_autoload_register(function ($class) {
+    $class_file = __DIR__ . '/classes/' . $class . '.inc.php';
+    if (file_exists($class_file)) {
+        require_once $class_file;
+    }
+});
 if ($db->tableExists('users')) {
     $db->query('SELECT id FROM users WHERE admin = 1 ORDER BY id LIMIT 1');
     $db->execute();
