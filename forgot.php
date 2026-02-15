@@ -166,8 +166,19 @@ if (count($errors)) {
             } ?>
         </fieldset>
         <div class="pure-controls">
-            <button type="submit" name="submit" class="pure-button pure-button-primary">Send Reset Email</button>
+            <button type="submit" name="submit" class="pure-button pure-button-primary">Send Reset Email Now</button>
         </div>
     </form>
-</td></tr> <?php
-require_once __DIR__.'/inc/nlifooter.php';
+  </td>
+</tr> 
+     <tr>
+        <td>
+            <table class="topbar">
+                <tr>
+                   <br><br><td>gRPG © ● 2007 - 2026 ● All Rights Reserved</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+<?php require_once __DIR__.'/inc/nlifooter.php';
