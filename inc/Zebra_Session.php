@@ -544,7 +544,8 @@ class Zebra_Session extends SessionHandler
         }
         if (!$this->mustRegenerate($session_id) && isset($_SESSION[SESSION_NAME])) {
             $session_id = $this->regenerate_id();
-            setcookie(SESSION_NAME, $session_id);
+            $cookie_params = session_get_cookie_params();
+            setcookie(SESSION_NAME, $session_id, 0, $cookie_params['path'], $cookie_params['domain'], true, true);
 
             return true;
         }
