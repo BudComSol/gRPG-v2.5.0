@@ -63,7 +63,7 @@ if ($siteURL !== false && $siteURL !== '') {
                     <td valign="top" width="150">
                         <div>
                             <div class="headbox">Menu</div>
-                            <a href="index.php" class="leftmenu">Home</a>
+                            <a href="/" class="leftmenu">Home</a>
                             <a href="login.php" class="leftmenu">Login</a>
                             <a href="register.php" class="leftmenu">Register</a>                            
                             <a href="inc/privacy.php" class="leftmenu">Privacy Policy</a>
