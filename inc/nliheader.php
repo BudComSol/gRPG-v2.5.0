@@ -14,7 +14,7 @@ ob_start(); ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head><?php
-if ($siteURL !== null) {
+if ($siteURL !== false && $siteURL !== '') {
     ?>
     <base href="<?php echo rtrim($siteURL, '/').'/'; ?>"/>
     <?php
@@ -60,6 +60,8 @@ if ($siteURL !== null) {
                             <a href="login.php" class="leftmenu">Login</a>
                             <a href="register.php" class="leftmenu">Register</a>
                             <a href="forgot.php" class="leftmenu">Account Recovery</a>
+                            <a href="inc/privacy.php" class="leftmenu">Privacy Policy</a>
+                            <a href="inc/terms.php" class="leftmenu">Terms of Service</a>
                         </div>
                     </td>
                     <td valign="top">
