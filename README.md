@@ -5,7 +5,7 @@ Text-based online RPG-MMORPG-PBBG
 ### Why Persist With Legacy Code ###
 
 * Because we can, and by the way, you get the same files as the demo site demonstrates.
-* Beacuse it does not deserve to be thrown on the scrap heap and should be preserved for posterity.
+* Because it does not deserve to be thrown on the scrap heap and should be preserved for posterity.
 * The codebase has been around for a long time with many people contributing, which is reflected in the different coding styles.
 * This is an attempt to update this codebase with some uniformity without resorting to frameworks 'cause I like old shite.
 
