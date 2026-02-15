@@ -59,7 +59,7 @@ if (array_key_exists('submit', $_POST)) {
     }
 }
 ?><tr>
-    <th class="content-head">.: Login :.</th>
+    <th class="content-head">Login</th>
 </tr><?php
 if ($csrfError) {
     echo Message(SECURITY_TIMEOUT_MESSAGE, 'Error', null);
@@ -89,10 +89,10 @@ if (defined('CAPTCHA_LOGIN') && CAPTCHA_LOGIN == true) {
 } ?>
             </fieldset>
             <div class="pure-controls">
-                <button type="submit" name="submit" class="pure-button pure-button-primary">Login</button>
+                <button type="submit" name="submit" class="pure-button pure-button-primary">Login To A Game Account Now</button>
             </div>
-        </form><br />
-        <div class="center">&copy; GenericRPG 2007-<?php echo date('Y'); ?> GRPG Dev Team</div>
+        </form><br /><br />
+        <div class="center"> gRPG &copy; &#9679; 2007 - <?php echo date('Y'); ?> &#9679; All Rights Reserved</div>
     </td>
 </tr><?php
 require_once __DIR__.'/inc/nlifooter.php';
