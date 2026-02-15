@@ -66,7 +66,7 @@ if ($csrfError) {
 }
 ?><tr>
     <td class="content">
-        <form action="login.php" name="login" method="post" class="pure-form pure-form-aligned">
+        <form action="login.php" name="login" method="post" class="pure-form pure-form-aligned center">
             <?php echo csrf_create('csrf_login'); ?>
             <fieldset>
                 <div class="pure-control-group">
