@@ -17,18 +17,16 @@
 }
 
 .topbar {
-    width: 100%;
-    margin-left: 8px;
-    margin-right: 8px;
-    margin-top: 8px;
+    width: 100%;    
     background-color: #333;
     border-width: 1px;
     border-style: solid;
-    border-color: #444;
-    padding: 3px;
+    border-color: #444;    
     color: #ddd;
     font-weight: bold;
-    font-size: 11px;
+    font-size: 18px;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .content {
@@ -67,14 +65,16 @@
 }
 
 body {
+    width: 828px;
     margin: auto;
     border-width: 1px;
     border-style: solid;
-    border-color: #333;
-    width: 800;
+    border-color: #333;    
     background-color: #000000;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: normal;
+    margin-top: 30px;
+    margin-bottom: 30px;   
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -278,13 +278,6 @@ a:hover {
     line-height: 3px;
 }
 
-.topbar {
-    width: 100%;
-    padding: 3px;
-    font-weight: bold;
-    font-size: 11px;
-}
-
 .content {
     width: 100%;
     padding: 0;
@@ -300,7 +293,7 @@ a:hover {
 .content {
     padding: 3px;
     font-size: 14px;
-    text-align: center;
+    text-align: left;
 }
 
 .bar_a {
@@ -309,13 +302,6 @@ a:hover {
 
 .bar_b {
     font-size: 10;
-}
-
-body {
-    margin: auto;
-    width: 828px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: normal;
 }
 
 .head, .headbox, .dynabox, a.leftmenu, a.topmenu {
