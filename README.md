@@ -2,6 +2,12 @@
 PHP, MySQL, HTML, CSS.
 Text-based online RPG
 
+### Try it Live - NO Install Required! ###
+
+**Check out the live demo:** [https://bringflashback.xyz](https://bringflashback.xyz)
+
+Go straight to the site and try the game without any installation!
+
 ### How do I get set up? ###
 
 * Upload the files to your public_html (or htdocs/www)
