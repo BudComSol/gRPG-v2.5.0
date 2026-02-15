@@ -63,3 +63,12 @@ require_once __DIR__.'/inc/nliheader.php';
 
 <?php require_once __DIR__.'/inc/nlifooter.php'; ?>
 
+<tr>
+        <td>
+            <table class="topbar">
+                <tr>
+                    <td>gRPG © ● 2007 - 2026 ● All Rights Reserved</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
