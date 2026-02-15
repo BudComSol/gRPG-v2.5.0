@@ -91,8 +91,18 @@ if (defined('CAPTCHA_LOGIN') && CAPTCHA_LOGIN == true) {
             <div class="pure-controls">
                 <button type="submit" name="submit" class="pure-button pure-button-primary">Login To A Game Account Now</button>
             </div>
-        </form><br /><br />
-        <div class="center"> gRPG &copy; &#9679; 2007 - <?php echo date('Y'); ?> &#9679; All Rights Reserved</div>
+        </form>
     </td>
-</tr><?php
-require_once __DIR__.'/inc/nlifooter.php';
+</tr>
+     <tr>
+        <td>
+            <table class="topbar">
+                <tr>
+                   <br><br><td>gRPG © ● 2007 - 2026 ● All Rights Reserved</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+<?php require_once __DIR__.'/inc/nlifooter.php';
+
