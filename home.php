@@ -21,7 +21,7 @@ require_once __DIR__.'/inc/nliheader.php';
     <th class="content-head">Whats It Do?</th>
 </tr>
 <tr>
-    <td class="content">        
+    <td class="content-home">        
         <ul>
             <li>Cronless Crons.</li>            
             <li>Updated for PHP 8.0+</li>
@@ -52,7 +52,7 @@ require_once __DIR__.'/inc/nliheader.php';
     </td>
 </tr>
 <tr>
-    <th class="content-head">Check This!</th>
+    <th class="content-head">Screenshots</th>
 </tr>
 <tr>
     <td class="content">
