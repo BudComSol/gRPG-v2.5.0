@@ -14,7 +14,7 @@ ob_start(); ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head><?php
-if ($siteURL !== null) {
+if ($siteURL !== false && $siteURL !== '') {
     ?>
     <base href="<?php echo rtrim($siteURL, '/').'/'; ?>"/>
     <?php
