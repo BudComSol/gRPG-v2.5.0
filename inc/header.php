@@ -56,7 +56,7 @@ if ($site_url !== false && $site_url !== '') {
             We use cookies to ensure you get the best experience on our website. 
             These include essential cookies for site functionality and session management. 
             By continuing to use this site, you consent to our use of cookies. 
-            <a href="inc/privacy.php">Learn more</a>
+            <a href="<?php echo ($site_url !== false && $site_url !== '') ? '' : '/'; ?>inc/privacy.php">Learn more</a>
         </div>
         <div class="cookie-buttons">
             <button id="cookie-consent-accept">Accept</button>
