@@ -16,7 +16,7 @@ Text-based online RPG-MMORPG-PBBG
 * Go to the URL of wherever you just uploaded them - go through the installer and fill in the details
 * Login
 
-**Note:** All dependencies are included locally - no need for Composer or other package managers, making it much simpler to install in shared hosting!
+**Note:** All dependencies are included locally - no need for Composer or other package managers, making it much simpler to install in shared hosting, particularly with the easy peasy installer!
 
 ### Error Logging ###
 
