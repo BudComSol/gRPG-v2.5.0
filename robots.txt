@@ -26,5 +26,7 @@ Disallow: /install/
 Disallow: /crons/
 Disallow: /logs/
 Disallow: /ipn/
+# NOTE: robots.txt is not a security mechanism. These directories and files
+# are protected by .htaccess rules and should be placed outside the web root where possible.
 Disallow: /.env
 Disallow: /.env.local
