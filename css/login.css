@@ -68,18 +68,11 @@
     background-color: #FFFF00;
 }
 
-body {    
-    margin: auto;
-    border: 1px solid #333;
-    width: 800px;
-    background-color: #000000;
+body {     
+    border: 1px solid #333;    
     background-image: url("/images/logos/bg.webp");
     background-repeat: no-repeat;
-    background-size: cover;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: normal;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    background-size: cover;    
 }
 
 h1, h2, h3, h4, h5, h6 {
