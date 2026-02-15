@@ -141,8 +141,8 @@ if (count($errors)) {
     display_errors($errors);
 } ?>
 <tr><td class="content">
-    Enter your e-mail address below and a confirmation token will be sent to your inbox. Don't forget to check your junk/bulk/spam folder if it doesn't arrive in your inbox.<br /><br />
-    <form action="forgot.php" method="post" class="pure-form pure-form-aligned">
+    <br>Enter your e-mail address below and a confirmation token will be sent to your inbox. Don't forget to check your junk/bulk/spam folder if it doesn't arrive in your inbox.<br /><br />
+    <form action="forgot.php" method="post" class="pure-form pure-form-aligned center">
         <?php echo csrf_create('step_1'); ?>
         <fieldset>
             <div class="pure-control-group">
