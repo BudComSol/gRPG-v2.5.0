@@ -5,6 +5,7 @@ server {
     listen 80;
     server_name example.com;
     root /path/to/GRPG-v2;
+    # Note: GRPG v2 uses home.php as the default landing page, followed by index.php
     index home.php index.php;
 
     # Hide nginx version number
