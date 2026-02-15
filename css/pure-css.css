@@ -347,7 +347,8 @@ https://github.com/yahoo/pure/blob/master/LICENSE.md
 .pure-form fieldset {
     margin: 0;
     padding: .35em 0 .75em;
-    border: 0
+    border: 0;
+    margin-top: 50px;
 }
 
 .pure-form legend {
@@ -366,15 +367,17 @@ https://github.com/yahoo/pure/blob/master/LICENSE.md
 
 .pure-form-aligned .pure-help-inline, .pure-form-aligned input, .pure-form-aligned select, .pure-form-aligned textarea, .pure-form-message-inline {
     display: inline-block;
-    vertical-align: middle
+    vertical-align: middle;
+    width: 30%;
 }
 
 .pure-form-aligned textarea {
-    vertical-align: top
+    vertical-align: top;
 }
 
 .pure-form-aligned .pure-control-group {
-    margin-bottom: .5em
+    margin-bottom: .5em;
+    text-align: center;
 }
 
 .pure-form-aligned .pure-control-group label {
@@ -386,7 +389,7 @@ https://github.com/yahoo/pure/blob/master/LICENSE.md
 }
 
 .pure-form-aligned .pure-controls {
-    margin: 1.5em 0 0 11em
+    text-align: center;
 }
 
 .pure-form .pure-input-rounded, .pure-form input.pure-input-rounded {
