@@ -1,0 +1,49 @@
+# Example nginx configuration for GRPG v2
+# Copy this file to your nginx sites-available directory and adjust as needed
+
+server {
+    listen 80;
+    server_name example.com;
+    root /path/to/GRPG-v2;
+    # Note: GRPG v2 uses home.php as the default landing page, followed by index.php
+    index home.php index.php;
+
+    # Hide nginx version number
+    server_tokens off;
+
+    # Hide PHP version (requires FastCGI configuration)
+    fastcgi_hide_header X-Powered-By;
+    
+    # Additional security headers
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'self'; form-action 'self'" always;
+
+    # Protect sensitive files
+    location ~ ^/\.env {
+        deny all;
+        return 404;
+    }
+
+    location ~ ^/logs/ {
+        deny all;
+        return 404;
+    }
+
+    # PHP processing
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+        
+        # Hide PHP version in FastCGI
+        fastcgi_param PHP_VALUE "expose_php=off";
+    }
+
+    # Deny access to hidden files
+    location ~ /\. {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+}

@@ -27,6 +27,16 @@ The application includes a centralized error logging system to help track and di
 
 Each log entry includes timestamp, severity level, IP address, user ID, request URI, and optional context data.
 
+### Security Configuration ###
+
+The application includes security hardening configurations to protect against common vulnerabilities:
+
+* **Server Version Hiding:** Configuration files are provided to hide server and PHP version information
+* **Security Headers:** Multiple security headers are configured (CSP, HSTS, X-Frame-Options, etc.)
+* **Sensitive File Protection:** `.env` files and logs are protected from web access
+
+See [SECURITY-CONFIG.md](SECURITY-CONFIG.md) for detailed security configuration instructions for Apache, nginx, and PHP.
+
 ### I found a bug! ###
 If you're able to repair it, please do and submit the fix back. If not, please notify us
 

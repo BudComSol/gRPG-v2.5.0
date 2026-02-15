@@ -1,0 +1,31 @@
+; PHP Configuration for GRPG v2
+; This file can be used as .user.ini (for PHP-FPM) or included in php.ini
+; Place this file as .user.ini in the web root to apply these settings
+
+; Security: Hide PHP version in HTTP headers
+expose_php = Off
+
+; Additional security settings (optional but recommended)
+; Disable dangerous functions (adjust based on your needs)
+; disable_functions = exec,passthru,shell_exec,system,proc_open,popen,curl_exec,curl_multi_exec,parse_ini_file,show_source
+
+; Session security
+session.cookie_httponly = 1
+; Note: session.cookie_secure requires HTTPS. Only enable if your site is served over HTTPS.
+; Set to 0 if you're using HTTP or you'll be unable to establish sessions.
+session.cookie_secure = 1
+session.use_only_cookies = 1
+session.use_strict_mode = 1
+
+; Error handling (production)
+display_errors = Off
+log_errors = On
+error_reporting = E_ALL
+
+; File upload limits
+upload_max_filesize = 10M
+post_max_size = 10M
+
+; Memory and execution limits
+memory_limit = 256M
+max_execution_time = 60
