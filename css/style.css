@@ -298,6 +298,10 @@ a:hover {
 .content {
     padding: 3px;
     font-size: 14px;
+    text-align: center;    
+}
+
+.content-home {
     text-align: left;
 }
 
