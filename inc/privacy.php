@@ -19,6 +19,20 @@ require_once __DIR__.'/nliheader.php';
             <li><strong>Financial Data:</strong> Financial information, such as data related to your payment method (e.g., valid credit card number, card brand, expiration date) that we may collect when you purchase, order, return, exchange, or request information about our services from the Site.</li>
         </ul>
 
+        <h3>Cookies and Tracking Technologies</h3>
+        <p>
+            We use cookies and similar tracking technologies to track the activity on our Site and hold certain information. Cookies are files with small amount of data which may include an anonymous unique identifier. Cookies are sent to your browser from a website and stored on your device.
+        </p>
+        <p>We use the following types of cookies:</p>
+        <ul>
+            <li><strong>Essential Cookies:</strong> These cookies are necessary for the Site to function and cannot be switched off in our systems. They are usually only set in response to actions made by you which amount to a request for services, such as setting your privacy preferences, logging in or filling in forms.</li>
+            <li><strong>Session Cookies:</strong> These cookies allow us to maintain your session as you navigate through the Site, keeping you logged in and storing your preferences during your visit.</li>
+            <li><strong>Security Cookies:</strong> These cookies are used to authenticate users and prevent fraudulent use of login credentials.</li>
+        </ul>
+        <p>
+            You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our Site. By using our Site, you consent to the use of cookies as described in this Privacy Policy.
+        </p>
+
         <h3>Use of Your Information</h3>
         <p>Having accurate information about you permits us to provide you with a smooth, efficient, and customized experience. Specifically, we may use information collected about you via the Site to:</p>
         <ul>

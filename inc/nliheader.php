@@ -22,10 +22,26 @@ if ($siteURL !== false && $siteURL !== '') {
     ?><title><?php echo GAME_NAME; ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" type="text/css" media="all" href="css/login.css"/>
+    <link rel="stylesheet" type="text/css" media="all" href="css/style.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/g/pure@0.6.2(buttons-min.css+grids-min.css+forms-min.css)"
           integrity="sha384-+YK1ur0Mr74WEZWTMC6oMb5fojhkGm6EpjgVheKlE9urf2PbykYP7MxdwPpruQB8" crossorigin="anonymous"/>
+    <script src="js/cookie-consent.js"></script>
 </head>
 <body>
+<!-- Cookie Consent Banner -->
+<div id="cookie-consent-banner">
+    <div class="cookie-content">
+        <div class="cookie-message">
+            We use cookies to ensure you get the best experience on our website. 
+            These include essential cookies for site functionality and session management. 
+            By continuing to use this site, you consent to our use of cookies. 
+            <a href="<?php echo ($siteURL !== false && $siteURL !== '') ? '' : '/'; ?>inc/privacy.php">Learn more</a>
+        </div>
+        <div class="cookie-buttons">
+            <button id="cookie-consent-accept">Accept</button>
+        </div>
+    </div>
+</div>
 <table bgcolor="#1E1E1E" border="0" cellspacing="0" cellpadding="0" width="100%">
     <tr>
         <td>
