@@ -46,7 +46,7 @@ See [SECURITY-CONFIG.md](SECURITY-CONFIG.md) for detailed security configuration
 
 ### I Found A Bug! ###
 
-If you're able to repair it, please do and submit the fix back. If not, please notify us
+It's a work in progress, if you're able to repair it, please do and submit the fix back. If not, please notify us.
 
 ### I Want To Contribute To The Code ###
 
