@@ -92,6 +92,15 @@ require_once __DIR__.'/nliheader.php';
             If you have any questions about these Terms, please contact us through the support system available on the site.
         </p>
     </td>
-</tr>
+  </tr>
+<tr>
+        <td>
+            <table class="topbar">
+                <tr>
+                   <br><br><td>gRPG © ● 2007 - 2026 ● All Rights Reserved</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
 
 <?php require_once __DIR__.'/nlifooter.php'; ?>
