@@ -1,4 +1,4 @@
-# gRPG v2
+# gRPG v2.5.0
 PHP, MySQL, HTML, CSS.
 Text-based online RPG
 
