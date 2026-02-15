@@ -1,3 +1,11 @@
 order deny,allow
 deny from all
 allow from 127.0.0.1
+
+<Files "privacy.php">
+    allow from all
+</Files>
+
+<Files "terms.php">
+    allow from all
+</Files>

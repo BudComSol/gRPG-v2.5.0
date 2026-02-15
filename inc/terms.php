@@ -79,7 +79,7 @@ require_once __DIR__.'/nliheader.php';
 
         <h3>Governing Law</h3>
         <p>
-            These terms and conditions are governed by and construed in accordance with the laws and you irrevocably submit to the exclusive jurisdiction of the courts in that location.
+            These terms and conditions are governed by and construed in accordance with applicable laws. Any disputes arising from these Terms shall be resolved in accordance with the dispute resolution procedures available through the site.
         </p>
 
         <h3>Changes to Terms</h3>
