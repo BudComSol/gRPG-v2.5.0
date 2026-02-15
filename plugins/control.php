@@ -22,28 +22,28 @@ if (defined('PRUNE_INACTIVE_ACCOUNTS') && PRUNE_INACTIVE_ACCOUNTS == true) {
 //referrals section
 $nums = array_unique(['givecredit', 'denycredit', 'deletejob', 'deletecrime', 'deletecity', 'takealluser', 'takeallitem']);
 foreach ($nums as $what) {
-    $_GET[$what] = array_key_exists($what, $_GET) && ctype_digit($_GET[$what]) ? $_GET[$what] : null;
+    $_GET[$what] = (isset($_GET[$what]) && ctype_digit($_GET[$what])) ? $_GET[$what] : null;
 }
 $nums2 = array_unique(['money', 'strength', 'defense', 'speed', 'level', 'landleft', 'landprice', 'levelreq', 'nerve', 'cost', 'offense', 'heal', 'reduce', 'itemnumber', 'itemquantity', 'rmdays', 'points', 'hookers', 'crimeid', 'cityid', 'jobid', 'id', 'board', 'forum', 'forum2', 'recycle', 'delete', 'awake', 'buyable']);
 foreach ($nums2 as $what) {
-    $_POST[$what] = array_key_exists($what, $_POST) && ctype_digit(str_replace(',', '', $_POST[$what])) ? str_replace(',', '', $_POST[$what]) : 0;
+    $_POST[$what] = (isset($_POST[$what]) && ctype_digit(str_replace(',', '', $_POST[$what]))) ? str_replace(',', '', $_POST[$what]) : 0;
 }
 $strs = array_unique(['name', 'description', 'image', 'username', 'message', 'items']);
 foreach ($strs as $what) {
-    $_POST[$what] = array_key_exists($what, $_POST) && is_string($_POST[$what]) ? strip_tags(trim($_POST[$what])) : '';
+    $_POST[$what] = (isset($_POST[$what]) && is_string($_POST[$what])) ? strip_tags(trim($_POST[$what])) : '';
     if ($what === 'image' && !isImage($_POST[$what])) {
         $_POST[$what] = '';
     }
 }
 $errors = [];
-if (array_key_exists('addrmpack', $_POST)) {
+if (isset($_POST['addrmpack'])) {
     if (!csrf_check('rmstore_add', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
     if (empty($_POST['name'])) {
         $errors[] = 'You didn\'t enter a valid name';
     }
-    $_POST['pack_cost'] = array_key_exists('pack_cost', $_POST) && is_numeric(str_replace(',', '', $_POST['pack_cost'])) ? str_replace(',', '', $_POST['pack_cost']) : null;
+    $_POST['pack_cost'] = (isset($_POST['pack_cost']) && is_numeric(str_replace(',', '', $_POST['pack_cost']))) ? str_replace(',', '', $_POST['pack_cost']) : null;
     if (empty($_POST['pack_cost'])) {
         $errors[] = 'As nice as that is, you can\'t have free packs';
     }
@@ -58,7 +58,12 @@ if (array_key_exists('addrmpack', $_POST)) {
         $items = explode(',', $_POST['items']);
         foreach ($items as $what) {
             ++$cnt;
-            [$item, $qty] = explode(':', $what);
+            $parts = explode(':', $what);
+            if (count($parts) !== 2) {
+                $errors[] = 'The '.ordinal($cnt).' item has invalid format';
+                continue;
+            }
+            [$item, $qty] = $parts;
             if (!itemExists($item)) {
                 $errors[] = 'The '.ordinal($cnt).' item you entered doesn\'t exist';
             }
@@ -73,7 +78,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->execute([$_POST['name'], $_POST['pack_cost'], $_POST['money'], $_POST['points'], $_POST['rmdays'], $_POST['items'], $_POST['enabled']]);
         echo Message('RMStore Pack '.format($_POST['name']).' has been added');
     }
-} elseif (array_key_exists('editrmpack', $_POST)) {
+} elseif (isset($_POST['editrmpack'])) {
     if (!csrf_check('rmstore_edit', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -88,7 +93,7 @@ if (array_key_exists('addrmpack', $_POST)) {
     if (empty($_POST['name'])) {
         $errors[] = 'You didn\'t enter a valid name';
     }
-    $_POST['pack_cost'] = array_key_exists('pack_cost', $_POST) && is_numeric(str_replace(',', '', $_POST['pack_cost'])) ? str_replace(',', '', $_POST['pack_cost']) : null;
+    $_POST['pack_cost'] = isset($_POST['pack_cost']) && is_numeric(str_replace(',', '', $_POST['pack_cost'])) ? str_replace(',', '', $_POST['pack_cost']) : null;
     if (empty($_POST['pack_cost'])) {
         $errors[] = 'As nice as that is, you can\'t have free packs';
     }
@@ -118,7 +123,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->execute([$_POST['name'], $_POST['pack_cost'], $_POST['money'], $_POST['points'], $_POST['rmdays'], $_POST['items'], $_POST['enabled'], $_POST['id']]);
         echo Message('RMStore Pack '.format($_POST['name']).' has been edited');
     }
-} elseif (array_key_exists('disenablermpack', $_POST)) {
+} elseif (isset($_POST['disenablermpack'])) {
     if (!csrf_check('rmstore_disenable', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -137,7 +142,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->execute([$_POST['id']]);
         echo Message('RMStore Pack '.format($pack['name']).' has been '.$oppo);
     }
-} elseif (array_key_exists('deletermpack', $_POST)) {
+} elseif (isset($_POST['deletermpack'])) {
     if (!csrf_check('rmstore_delete', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -155,12 +160,12 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->execute([$_POST['id']]);
         echo Message('RMStore Pack '.format($pack['name']).' has been deleted');
     }
-} elseif (array_key_exists('addforumdb', $_POST)) {
+} elseif (isset($_POST['addforumdb'])) {
     if (!csrf_check('board_add', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
-    $_POST['auth'] = array_key_exists('auth', $_POST) && in_array($_POST['auth'], $auths) ? $_POST['auth'] : 'public';
-    $_POST['bin'] = array_key_exists('bin', $_POST) && isset($_POST['bin']) ? 1 : 0;
+    $_POST['auth'] = isset($_POST['auth']) && in_array($_POST['auth'], $auths) ? $_POST['auth'] : 'public';
+    $_POST['bin'] = isset($_POST['bin']) ? 1 : 0;
     if (empty($_POST['name'])) {
         $errors[] = 'You didn\'t enter a valid name';
     }
@@ -187,7 +192,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->execute([$_POST['name'], $_POST['desc'], $_POST['auth'], $_POST['bin']]);
         echo Message('You\'ve added the '.$_POST['auth'].' forum board: '.format($_POST['name']));
     }
-} elseif (array_key_exists('editforumdb', $_POST)) {
+} elseif (isset($_POST['editforumdb'])) {
     if (!csrf_check('board_edit', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -199,10 +204,10 @@ if (array_key_exists('addrmpack', $_POST)) {
     if (!$db->count()) {
         $errors[] = 'The board you selected doesn\'t exist';
     }
-    $_POST['name'] = array_key_exists('name', $_POST) && is_string($_POST['name']) ? trim(strip_tags($_POST['name'])) : null;
-    $_POST['desc'] = array_key_exists('desc', $_POST) && is_string($_POST['desc']) ? trim(strip_tags($_POST['desc'])) : null;
-    $_POST['auth'] = array_key_exists('auth', $_POST) && in_array($_POST['auth'], $auths) ? $_POST['auth'] : 'public';
-    $_POST['bin'] = array_key_exists('bin', $_POST) && isset($_POST['bin']) ? 1 : 0;
+    $_POST['name'] = isset($_POST['name']) && is_string($_POST['name']) ? trim(strip_tags($_POST['name'])) : null;
+    $_POST['desc'] = isset($_POST['desc']) && is_string($_POST['desc']) ? trim(strip_tags($_POST['desc'])) : null;
+    $_POST['auth'] = isset($_POST['auth']) && in_array($_POST['auth'], $auths) ? $_POST['auth'] : 'public';
+    $_POST['bin'] = isset($_POST['bin']) ? 1 : 0;
     if (empty($_POST['name'])) {
         $errors[] = 'You didn\'t enter a valid name';
     }
@@ -229,8 +234,8 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->execute([$_POST['name'], $_POST['desc'], $_POST['auth'], $_POST['bin'], $_POST['id']]);
         echo Message('You\'ve edited the '.$_POST['auth'].' forum board: '.format($_POST['name']));
     }
-} elseif (array_key_exists('deleteforumdb', $_GET)) {
-    if (array_key_exists('submit', $_POST)) {
+} elseif (isset($_GET['deleteforumdb'])) {
+    if (isset($_POST['submit'])) {
         if (!csrf_check('delete_forum', $_POST)) {
             echo Message(SECURITY_TIMEOUT_MESSAGE);
         }
@@ -381,7 +386,7 @@ if (array_key_exists('addrmpack', $_POST)) {
     $db->query('DELETE FROM jobs WHERE id = ?');
     $db->execute([$_GET['deletejob']]);
     echo Message('You have deleted job :'.format($job));
-} elseif (array_key_exists('addjobdb', $_POST)) {
+} elseif (isset($_POST['addjobdb'])) {
     if (!csrf_check('job_add', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -404,7 +409,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->execute([$_POST['name'], $_POST['money'], $_POST['strength'], $_POST['defense'], $_POST['speed'], $_POST['level']]);
         echo Message('You\'ve added the job: '.format($_POST['name']));
     }
-} elseif (array_key_exists('editjobdb', $_POST)) {
+} elseif (isset($_POST['editjobdb'])) {
     if (!csrf_check('job_edit', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -450,7 +455,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->execute([$_GET['deletecity']]);
         echo Message('You\'ve deleted the city: '.format($city));
     }
-} elseif (array_key_exists('addcitydb', $_POST)) {
+} elseif (isset($_POST['addcitydb'])) {
     if (!csrf_check('city_add', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -470,7 +475,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->execute([$_POST['name'], $_POST['levelreq'], $_POST['landleft'], $_POST['landprice'], $_POST['description']]);
         echo Message('You\'ve added the city: '.format($_POST['name']));
     }
-} elseif (array_key_exists('editcitydb', $_POST)) {
+} elseif (isset($_POST['editcitydb'])) {
     if (!csrf_check('city_edit', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -513,13 +518,13 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->execute([$_GET['deletecrime']]);
         echo Message('You\'ve deleted the crime: '.format($crime));
     }
-} elseif (array_key_exists('addcrimedb', $_POST)) {
+} elseif (isset($_POST['addcrimedb'])) {
     if (!csrf_check('crime_add', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
     $strs = ['stext' => 'success text', 'ftext' => 'failure text', 'ctext' => 'jail text'];
     foreach ($strs as $what => $disp) {
-        $_POST[$what] = array_key_exists($what, $_POST) && is_string($_POST[$what]) ? strip_tags(trim($_POST[$what])) : null;
+        $_POST[$what] = (isset($_POST[$what]) && is_string($_POST[$what])) ? strip_tags(trim($_POST[$what])) : null;
         if (empty($_POST[$what])) {
             $errors[] = 'You didn\'t enter a valid '.$disp;
         }
@@ -540,7 +545,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->execute([$_POST['name'], $_POST['nerve'], $_POST['stext'], $_POST['ftext'], $_POST['ctext']]);
         echo Message('You\'ve added the crime: '.format($_POST['name']));
     }
-} elseif (array_key_exists('editcrimedb', $_POST)) {
+} elseif (isset($_POST['editcrimedb'])) {
     if (!csrf_check('crime_edit', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -554,7 +559,7 @@ if (array_key_exists('addrmpack', $_POST)) {
     }
     $strs = ['stext' => 'success text', 'ftext' => 'failure text', 'ctext' => 'jail text'];
     foreach ($strs as $what => $disp) {
-        $_POST[$what] = array_key_exists($what, $_POST) && is_string($_POST[$what]) ? strip_tags(trim($_POST[$what])) : null;
+        $_POST[$what] = (isset($_POST[$what]) && is_string($_POST[$what])) ? strip_tags(trim($_POST[$what])) : null;
         if (empty($_POST[$what])) {
             $errors[] = 'You didn\'t enter a valid '.$disp;
         }
@@ -575,7 +580,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->execute([$_POST['name'], $_POST['nerve'], $_POST['stext'], $_POST['ftext'], $_POST['ctext'], $_POST['id']]);
         echo Message('You\'ve edited the crime: '.format($_POST['name']));
     }
-} elseif (array_key_exists('additemdb', $_POST)) {
+} elseif (isset($_POST['additemdb'])) {
     if (!csrf_check('item_add', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -596,7 +601,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->execute([$_POST['name'], $_POST['description'], $_POST['cost'], $_POST['image'], $_POST['offense'], $_POST['defense'], $_POST['heal'], $_POST['reduce'], $_POST['buyable'], $_POST['level']]);
         echo Message('You\'ve added the item: '.format($_POST['name']));
     }
-} elseif (array_key_exists('edititemdb', $_POST)) {
+} elseif (isset($_POST['edititemdb'])) {
     if (!csrf_check('item_edit', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -625,7 +630,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->execute([$_POST['name'], $_POST['description'], $_POST['cost'], $_POST['image'], $_POST['offense'], $_POST['defense'], $_POST['heal'], $_POST['reduce'], $_POST['buyable'], $_POST['level'], $_POST['id']]);
         echo Message('You\'ve edited the item: '.format($_POST['name']));
     }
-} elseif (array_key_exists('deleteitemdb', $_POST)) {
+} elseif (isset($_POST['deleteitemdb'])) {
     if (!csrf_check('item_delete', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -669,7 +674,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->trans('end');
         echo Message('You\'ve removed '.format($qty).' '.$item.s($qty).' from '.$target->formattedname);
     }
-} elseif (array_key_exists('giveitem', $_POST)) {
+} elseif (isset($_POST['giveitem'])) {
     if (!csrf_check('item_give', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -696,7 +701,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         $qty = Check_Item($_POST['itemnumber'], $id);
         echo Message('You\'ve credited '.format($_POST['itemquantity']).' '.$item.s($_POST['itemquantity']).' to '.$target->formattedname.'. They now have '.format($qty));
     }
-} elseif (array_key_exists('takeitem', $_POST)) {
+} elseif (isset($_POST['takeitem'])) {
     if (!csrf_check('item_take', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -724,7 +729,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         $qty = Check_Item($_POST['itemnumber'], $id);
         echo Message('You\'ve taken '.format($_POST['itemquantity']).' '.$item.s($_POST['itemquantity']).' from '.$target->formattedname.'. They now have '.format($qty));
     }
-} elseif (array_key_exists('listitems', $_POST)) {
+} elseif (isset($_POST['listitems'])) {
     if (!csrf_check('item_view', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -757,21 +762,21 @@ if (array_key_exists('addrmpack', $_POST)) {
             echo Message($target->formattedname.' doesn\'t have any items');
         }
     }
-} elseif (array_key_exists('changemessage', $_POST)) {
+} elseif (isset($_POST['changemessage'])) {
     if (!csrf_check('admin_message', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
     $db->query('UPDATE serverconfig SET messagefromadmin = ? WHERE id = 1');
     $db->execute([$_POST['message']]);
     echo Message('You\'ve changed the message from the admin.');
-} elseif (array_key_exists('changeserverdown', $_POST)) {
+} elseif (isset($_POST['changeserverdown'])) {
     if (!csrf_check('admin_serverdown', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
     $db->query('UPDATE serverconfig SET serverdown = ? WHERE id = 1');
     $db->execute([$_POST['message']]);
     echo Message('You\'ve changed the server down text.');
-} elseif (array_key_exists('addrmdays', $_POST)) {
+} elseif (isset($_POST['addrmdays'])) {
     if (!csrf_check('rmoptions_days', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -794,7 +799,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->trans('end');
         echo Message('You\'ve credited '.$target->formattedname.' with '.format($_POST['rmdays']).' RM Day'.s($_POST['rmdays']));
     }
-} elseif (array_key_exists('addpoints', $_POST)) {
+} elseif (isset($_POST['addpoints'])) {
     if (!csrf_check('rmoptions_points', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -817,7 +822,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->trans('end');
         echo Message('You\'ve credited '.$target->formattedname.' with '.format($_POST['points']).' point'.s($_POST['points']));
     }
-} elseif (array_key_exists('addhookers', $_POST)) {
+} elseif (isset($_POST['addhookers'])) {
     if (!csrf_check('rmoptions_hookers', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -840,11 +845,11 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->trans('end');
         echo Message('You\'ve credited '.$target->formattedname.' with '.format($_POST['hookers']).' hooker'.s($_POST['hookers']));
     }
-} elseif (array_key_exists('action', $_GET) && $_GET['action'] === 'deleteallfromip') {
+} elseif (isset($_GET['action']) && $_GET['action'] === 'deleteallfromip') {
     if (!csrf_check('ip_delete', $_GET)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
-    $_GET['ip'] = array_key_exists('ip', $_GET) && filter_var($_GET['ip'], FILTER_VALIDATE_IP) ? $_GET['ip'] : null;
+    $_GET['ip'] = isset($_GET['ip']) && filter_var($_GET['ip'], FILTER_VALIDATE_IP) ? $_GET['ip'] : null;
     if (empty($_GET['ip'])) {
         $errors[] = 'You didn\'t enter a valid IP address';
     }
@@ -859,7 +864,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->execute([$_GET['ip']]);
         echo Message(format($cnt).' account'.s($cnt).' '.($cnt == 1 ? 'has' : 'have').' been deleted');
     }
-} elseif (array_key_exists('adminstatus', $_POST)) {
+} elseif (isset($_POST['adminstatus'])) {
     if (!csrf_check('status_admin_grant', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -884,7 +889,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->trans('end');
         echo Message('You\'ve granted Administrator privileges to '.$target->formattedname);
     }
-} elseif (array_key_exists('revokeadminstatus', $_POST)) {
+} elseif (isset($_POST['revokeadminstatus'])) {
     if (!csrf_check('status_admin_revoke', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -909,8 +914,8 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->trans('end');
         echo Message('You\'ve revoked '.$target->formattedname.'\'s Administrator privileges');
     }
-} elseif (array_key_exists('banplayer', $_POST)) {
-    $_POST['reason'] = array_key_exists('reason', $_POST) && is_string($_POST['reason']) ? strip_tags(trim($_POST['reason'])) : '';
+} elseif (isset($_POST['banplayer'])) {
+    $_POST['reason'] = isset($_POST['reason']) && is_string($_POST['reason']) ? strip_tags(trim($_POST['reason'])) : '';
     if (!csrf_check('status_ban', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -937,7 +942,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->execute([$row['id'], $_POST['reason'], $user_class->id]);
         echo Message('You\'ve banned '.$target->formattedname);
     }
-} elseif (array_key_exists('president', $_POST)) {
+} elseif (isset($_POST['president'])) {
     if (!csrf_check('status_president_grant', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -962,7 +967,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->trans('end');
         echo Message('You\'ve granted Presidential privileges to '.$target->formattedname);
     }
-} elseif (array_key_exists('impeachpresident', $_POST)) {
+} elseif (isset($_POST['impeachpresident'])) {
     if (!csrf_check('status_president_revoke', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -984,7 +989,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->execute([$row['id']]);
         echo Message('You\'ve revoked '.$target->formattedname.'\'s Presidential privileges');
     }
-} elseif (array_key_exists('congress', $_POST)) {
+} elseif (isset($_POST['congress'])) {
     if (!csrf_check('status_congress_grant', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -1009,7 +1014,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->trans('end');
         echo Message('You\'ve granted Congress privileges to '.$target->formattedname);
     }
-} elseif (array_key_exists('impeachcongress', $_POST)) {
+} elseif (isset($_POST['impeachcongress'])) {
     if (!csrf_check('status_congress_revoke', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -1031,14 +1036,14 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->execute([$row['id']]);
         echo Message('You\'ve revoked '.$target->formattedname.'\'s Congress privileges');
     }
-} elseif (array_key_exists('addvotesite', $_POST)) {
+} elseif (isset($_POST['addvotesite'])) {
     if (!csrf_check('votesite_add', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
     $errors = [];
     $strs = ['title', 'url', 'reward_items'];
     foreach ($strs as $what) {
-        $_POST[$what] = array_key_exists($what, $_POST) && is_string($_POST[$what]) ? trim(strip_tags($_POST[$what])) : null;
+        $_POST[$what] = (isset($_POST[$what]) && is_string($_POST[$what])) ? trim(strip_tags($_POST[$what])) : null;
         if ($what === 'url') {
             $_POST['url'] = filter_var($_POST['url'], FILTER_VALIDATE_URL) ? $_POST['url'] : null;
         }
@@ -1048,7 +1053,7 @@ if (array_key_exists('addrmpack', $_POST)) {
     }
     $nums = ['reward_cash', 'reward_points', 'reward_rmdays', 'req_account_days_min', 'req_account_days_max', 'req_rmdays', 'days_between_vote'];
     foreach ($nums as $what) {
-        $_POST[$what] = array_key_exists($what, $_POST) && ctype_digit(str_replace(',', '', $_POST[$what])) ? str_replace(',', '', $_POST[$what]) : 0;
+        $_POST[$what] = (isset($_POST[$what]) && ctype_digit(str_replace(',', '', $_POST[$what]))) ? str_replace(',', '', $_POST[$what]) : 0;
         if (!$_POST['days_between_vote']) {
             $_POST['days_between_vote'] = 1;
         }
@@ -1066,7 +1071,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->execute([$_POST['title'], $_POST['url'], $_POST['reward_cash'], $_POST['reward_points'], $_POST['reward_rmdays'], $_POST['reward_items'], $_POST['req_account_days_min'], $_POST['req_account_days_max'], $_POST['req_rmdays'], $_POST['days_between_vote']]);
         echo Message('You\'ve added the voting site: '.$addText);
     }
-} elseif (array_key_exists('editvote', $_POST)) {
+} elseif (isset($_POST['editvote'])) {
     if (!csrf_check('votesite_edit', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -1079,11 +1084,11 @@ if (array_key_exists('addrmpack', $_POST)) {
         echo Message('That voting site doesn\'t exist', 'Error', true);
     }
     $row = $db->fetch(true);
-    if (array_key_exists('submit', $_POST)) {
+    if (isset($_POST['submit'])) {
         $errors = [];
         $strs = ['title', 'url', 'reward_items'];
         foreach ($strs as $what) {
-            $_POST[$what] = array_key_exists($what, $_POST) && is_string($_POST[$what]) ? trim(strip_tags($_POST[$what])) : null;
+            $_POST[$what] = (isset($_POST[$what]) && is_string($_POST[$what])) ? trim(strip_tags($_POST[$what])) : null;
             if ($what === 'url') {
                 $_POST['url'] = filter_var($_POST['url'], FILTER_VALIDATE_URL) ? $_POST['url'] : null;
             }
@@ -1093,7 +1098,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         }
         $nums = ['reward_cash', 'reward_points', 'reward_rmdays', 'req_account_days_min', 'req_account_days_max', 'req_rmdays', 'days_between_vote'];
         foreach ($nums as $what) {
-            $_POST[$what] = array_key_exists($what, $_POST) && ctype_digit(str_replace(',', '', $_POST[$what])) ? str_replace(',', '', $_POST[$what]) : 0;
+            $_POST[$what] = (isset($_POST[$what]) && ctype_digit(str_replace(',', '', $_POST[$what]))) ? str_replace(',', '', $_POST[$what]) : 0;
         }
         $db->query('SELECT COUNT(id) FROM voting_sites WHERE url = ? AND id <> ?');
         $db->execute([$_POST['url'], $_POST['id']]);
@@ -1111,7 +1116,7 @@ if (array_key_exists('addrmpack', $_POST)) {
             echo Message('You\'ve added the voting site: '.$editText);
         }
     }
-} elseif (array_key_exists('deletevotesite', $_GET)) {
+} elseif (isset($_GET['deletevotesite'])) {
     if (empty($_GET['id'])) {
         echo Message('You didn\'t select a valid voting site', 'Error', true);
     }
@@ -1121,7 +1126,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         echo Message('That voting site doesn\'t exist', 'Error', true);
     }
     $row = $db->fetch(true);
-    if (array_key_exists('ans', $_GET)) {
+    if (isset($_GET['ans'])) {
         if (!csrf_check('csrf', $_GET)) {
             echo Message(SECURITY_TIMEOUT_MESSAGE);
         }
@@ -1133,7 +1138,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         <a href="control.php?page=voting&amp;action=delete&amp;id=<?php echo $row['id']; ?>&amp;ans=yes&amp;csrf=<?php echo csrf_create('csrf', false); ?>" class="pure-button pure-button-red"><i class="fa fa-ban" aria-hidden="true"></i> I'm sure, delete it</a>
         <a href="control.php?page=voting" class="pure-button pure-button-primary"><i class="fa fa-tick" aria-hidden="true"></i> No, go back</a><?php
     }
-} elseif (array_key_exists('addhouse', $_GET)) {
+} elseif (isset($_GET['addhouse'])) {
     if (!csrf_check('csrf', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -1164,7 +1169,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->execute([$_POST['name'], $_POST['awake'], $_POST['cost'], $_POST['buyable']]);
         echo Message('You\'ve added the house: '.format($_POST['name']));
     }
-} elseif (array_key_exists('edithouse', $_GET)) {
+} elseif (isset($_GET['edithouse'])) {
     if ($_GET['id'] === null) {
         echo Message('You didn\'t select a valid house', 'Error', true);
     }
@@ -1174,7 +1179,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         echo Message('The house you selected doesn\'t exist', 'Error', true);
     }
     $row = $db->fetch(true);
-    if (array_key_exists('submit', $_POST)) {
+    if (isset($_POST['submit'])) {
         if ($_POST['name'] === null) {
             $errors[] = 'You didn\'t enter a valid name';
         }
@@ -1230,7 +1235,7 @@ if (array_key_exists('addrmpack', $_POST)) {
             </td>
         </tr><?php
     }
-} elseif (array_key_exists('deletehouse', $_GET)) {
+} elseif (isset($_GET['deletehouse'])) {
     if ($_GET['id'] === null) {
         echo Message('You didn\'t select a valid house', 'Error', true);
     }
@@ -1240,7 +1245,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         echo Message('The house you selected doesn\'t exist', 'Error', true);
     }
     $row = $db->fetch(true);
-    if (array_key_exists('ans', $_GET)) {
+    if (isset($_GET['ans'])) {
         if (!csrf_check('delcsrf', $_GET)) {
             echo Message(SECURITY_TIMEOUT_MESSAGE);
         }
@@ -1260,7 +1265,7 @@ if (array_key_exists('addrmpack', $_POST)) {
             </td>
         </tr><?php
     }
-} elseif (array_key_exists('addcar', $_GET)) {
+} elseif (isset($_GET['addcar'])) {
     if (!csrf_check('csrf', $_POST)) {
          echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -1294,7 +1299,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         $db->execute([$_POST['name'], $_POST['description'], $_POST['image'], $_POST['buyable'], $_POST['cost'], $_POST['level']]);
         echo Message('You\'ve added the car: '.format($_POST['name']));
     }
-} elseif (array_key_exists('editcar', $_GET)) {
+} elseif (isset($_GET['editcar'])) {
     if ($_GET['id'] === null) {
         echo Message('You didn\'t select a valid car', 'Error', true);
     }
@@ -1304,7 +1309,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         echo Message('The car you selected doesn\'t exist', 'Error', true);
     }
     $row = $db->fetch(true);
-    if (array_key_exists('submit', $_POST)) {
+    if (isset($_POST['submit'])) {
         if (!csrf_check('editcsrf', $_POST)) {
             echo Message(SECURITY_TIMEOUT_MESSAGE);
         }
@@ -1380,7 +1385,7 @@ if (array_key_exists('addrmpack', $_POST)) {
             </td>
         </tr><?php
     }
-} elseif (array_key_exists('deletecar', $_GET)) {
+} elseif (isset($_GET['deletecar'])) {
     if ($_GET['id'] === null) {
         echo Message('You didn\'t select a valid car', 'Error', true);
     }
@@ -1390,7 +1395,7 @@ if (array_key_exists('addrmpack', $_POST)) {
         echo Message('The car you selected doesn\'t exist', 'Error', true);
     }
     $row = $db->fetch(true);
-    if (array_key_exists('ans', $_GET)) {
+    if (isset($_GET['ans'])) {
         if (!csrf_check('delcsrf', $_GET)) {
             echo Message(SECURITY_TIMEOUT_MESSAGE);
         }
@@ -1410,12 +1415,12 @@ if (array_key_exists('addrmpack', $_POST)) {
             </td>
         </tr><?php
     }
-} elseif (array_key_exists('settings', $_GET)) {
+} elseif (isset($_GET['settings'])) {
     if (!csrf_check('csrf', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
     $updated = [];
-    $_POST['registration'] = array_key_exists('registration', $_POST) && in_array(strtolower($_POST['registration']), ['open', 'closed']) ? strtolower($_POST['registration']) : 'open';
+    $_POST['registration'] = isset($_POST['registration']) && in_array(strtolower($_POST['registration']), ['open', 'closed']) ? strtolower($_POST['registration']) : 'open';
     $db->trans('start');
     if ($_POST['registration'] != settings('registration')) {
         $db->query('UPDATE settings SET conf_value = ? WHERE conf_name = \'registration\'');
@@ -1571,7 +1576,7 @@ if (empty($_GET['page'])) {
             </form>
         </td>
     </tr><?php
-    if (array_key_exists('editrmpackstart', $_POST)) {
+    if (isset($_POST['editrmpackstart'])) {
         if (empty($_POST['id'])) {
             echo Message('You didn\'t select a valid upgrade', 'Error', true);
         }
@@ -1957,7 +1962,7 @@ if (empty($_GET['page'])) {
             </form>
         </td>
     </tr><?php
-    if (array_key_exists('edititemstart', $_POST)) {
+    if (isset($_POST['edititemstart'])) {
         if (empty($_POST['id'])) {
             echo Message('You didn\'t select a valid item', 'Error', true);
         }
@@ -2121,11 +2126,11 @@ if (empty($_GET['page'])) {
         $cache = [];
         foreach ($rows as $row) {
             $date = new DateTime($row['time_added']);
-            if (!array_key_exists($row['referrer'], $cache)) {
+            if (!isset($cache[$row['referrer']])) {
                 $ref = new User($row['referrer']);
                 $cache[$row['referrer']] = $ref->formattedname;
             }
-            if (!array_key_exists($row['referred'], $cache)) {
+            if (!isset($cache[$row['referred']])) {
                 $ref = new User($row['referred']);
                 $cache[$row['referred']] = $ref->formattedname;
             } ?><div>
@@ -2226,7 +2231,7 @@ if (empty($_GET['page'])) {
             </form>
         </td>
     </tr><?php
-    if (array_key_exists('vieweditcrime', $_POST) && !empty($_POST['crimeid'])) {
+    if (isset($_POST['vieweditcrime']) && !empty($_POST['crimeid'])) {
         $db->query('SELECT * FROM crimes WHERE id = ?');
         $db->execute([$_POST['crimeid']]);
         if ($db->count()) {
@@ -2358,7 +2363,7 @@ if (empty($_GET['page'])) {
             </form>
         </td>
     </tr><?php
-    if (array_key_exists('vieweditcity', $_POST) && !empty($_POST['cityid'])) {
+    if (isset($_POST['vieweditcity']) && !empty($_POST['cityid'])) {
         $db->query('SELECT * FROM cities WHERE id = ?');
         $db->execute([$_POST['cityid']]);
         if ($db->count()) {
@@ -2498,7 +2503,7 @@ if (empty($_GET['page'])) {
             </form>
         </td>
     </tr><?php
-    if (array_key_exists('vieweditjob', $_POST) && !empty($_POST['jobid'])) {
+    if (isset($_POST['vieweditjob']) && !empty($_POST['jobid'])) {
         $db->query('SELECT * FROM jobs WHERE id = ?');
         $db->execute([$_POST['jobid']]);
         if ($db->count()) {
@@ -2574,7 +2579,11 @@ if (empty($_GET['page'])) {
             if ($row['reward_items']) {
                 $items = explode(',', $row['reward_items']);
                 foreach ($items as $item) {
-                    [$itemID, $qty] = explode(':', $item);
+                    $parts = explode(':', $item);
+                    if (count($parts) !== 2) {
+                        continue;
+                    }
+                    [$itemID, $qty] = $parts;
                     $rewards[] = format($qty).'x '.item_popup($itemID);
                 }
             }
@@ -2687,7 +2696,7 @@ if (empty($_GET['page'])) {
             </form>
         </td>
     </tr><?php
-    if (array_key_exists('vieweditvotesite', $_POST)) {
+    if (isset($_POST['vieweditvotesite'])) {
         if (empty($_POST['id'])) {
             echo Message('You didn\'t select a valid site', 'Error', true);
         }
@@ -2831,8 +2840,8 @@ if (empty($_GET['page'])) {
             </form>
         </td>
     </tr><?php
-    if (array_key_exists('vieweditboard', $_POST)) {
-        $_POST['board'] = array_key_exists('board', $_POST) && ctype_digit($_POST['board']) ? $_POST['board'] : null;
+    if (isset($_POST['vieweditboard'])) {
+        $_POST['board'] = isset($_POST['board']) && ctype_digit($_POST['board']) ? $_POST['board'] : null;
         if (empty($_POST['board'])) {
             echo Message('You didn\'t select a valid board', 'Error', true);
         }
@@ -3075,11 +3084,11 @@ if (empty($_GET['page'])) {
             display_errors($errors);
         } ?>
         <tr><td class="content"> <?php
-            if (array_key_exists('who', $_GET)) {
+            if (isset($_GET['who'])) {
                 if (!csrf_check('csrf', $_GET)) {
                     echo Message(SECURITY_TIMEOUT_MESSAGE);
                 }
-                $_GET['user'] = array_key_exists('user', $_GET) && ctype_digit($_GET['user']) ? abs((int) $_GET['user']) : 0;
+                $_GET['user'] = isset($_GET['user']) && ctype_digit($_GET['user']) ? abs((int) $_GET['user']) : 0;
                 if (empty($_GET['user'])) {
                     $errors[] = 'Invalid input.';
                 }
