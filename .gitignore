@@ -12,3 +12,4 @@ cache
 *.zip
 logs/*.log
 logs/*.log.*
+test/
