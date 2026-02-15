@@ -263,6 +263,11 @@ a:hover {
     text-align: center;
 }
 
+.center-img {
+    padding-top: 50px;
+    text-align: center;
+}
+
 .leftmenu {
     margin-left: 8px;
     display: block;
@@ -417,10 +422,6 @@ a.topmenu:visited {
 
 .style1 {
     color: #BDBDBD;
-}
-
-.center {
-    text-align: center;
 }
 
 .shopitem {
