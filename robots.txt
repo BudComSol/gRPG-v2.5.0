@@ -1,0 +1,32 @@
+# robots.txt for GRPG v2
+# Block GPTBot and other AI crawlers
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+# Allow other crawlers with restrictions
+User-agent: *
+Disallow: /inc/
+Disallow: /install/
+Disallow: /crons/
+Disallow: /logs/
+Disallow: /ipn/
+# NOTE: robots.txt is not a security mechanism. These directories and files
+# are protected by .htaccess rules and should be placed outside the web root where possible.
+Disallow: /.env
+Disallow: /.env.local
