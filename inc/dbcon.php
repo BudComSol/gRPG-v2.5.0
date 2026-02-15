@@ -6,7 +6,7 @@ if (!defined('GRPG_INC')) {
 }
 if (!defined('INSTALLER') && !file_exists(dirname(__DIR__) . '/.env')) {
     // .env doesn't exist - redirect to installer
-    header('Location: install');
+    header('Location: install/');
     exit;
 }
 
@@ -21,7 +21,7 @@ if (!defined('INSTALLER') && file_exists(dirname(__DIR__) . '/.env')) {
         strpos($envContent, 'MYSQL_PASS="pass"') !== false &&
         strpos($envContent, 'MYSQL_BASE="dbname"') !== false) {
         // .env contains all placeholder values - redirect to installer
-        header('Location: install');
+        header('Location: install/');
         exit;
     }
 }
