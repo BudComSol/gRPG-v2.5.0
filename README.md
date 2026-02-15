@@ -2,6 +2,13 @@
 PHP, MySQL, HTML, CSS.
 Text-based online RPG-MMORPG-PBBG
 
+### Why Persist With Legacy Code ###
+
+* Beacuse we can.
+* Beacuse it does not deserve to be thrown on the scrap heap.
+* The codebase has been around for a long time with many people contributing, which is reflected in the different coding styles.
+* This is an attempt to update this codebase with some uniformity without resorting to frameworks 'cause I like old shite.
+
 ### How do I get set up? ###
 
 * Upload the files to your public_html (or htdocs/www)
