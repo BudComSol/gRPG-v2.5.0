@@ -9,7 +9,7 @@ Text-based online RPG-MMORPG-PBBG
 * The codebase has been around for a long time with many people contributing, which is reflected in the different coding styles.
 * This is an attempt to update this codebase with some uniformity without resorting to frameworks 'cause I like old shite.
 
-### How do I get set up? ###
+### How Do I Get Setup? ###
 
 * Upload the files to your public_html (or htdocs/www)
 * Create a MySQL database and user
@@ -44,8 +44,10 @@ The application includes security hardening configurations to protect against co
 
 See [SECURITY-CONFIG.md](SECURITY-CONFIG.md) for detailed security configuration instructions for Apache, nginx, and PHP.
 
-### I found a bug! ###
+### I Found A Bug! ###
+
 If you're able to repair it, please do and submit the fix back. If not, please notify us
 
-### I want to contribute to the code ###
+### I Want To Contribute To The Code ###
+
 Awesome! Simply fork the repo, make your changes/additions, and submit a pull request!
