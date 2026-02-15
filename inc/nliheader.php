@@ -43,22 +43,13 @@ if ($siteURL !== false && $siteURL !== '') {
     </div>
 </div>
 <table bgcolor="#1E1E1E" border="0" cellspacing="0" cellpadding="0" width="100%">
-    <tr>
-        <td>
-            <table class="topbar">
-                <tr>
-                    <td>&gt; Server Time: <?php echo $time; ?></td>
-                </tr>
-            </table>
-        </td>
-    </tr>
+    
     <tr>
         <td colspan="3" class="pos1" height="55" valign="middle">
             <div class="topbox">
                 <table width="800">
                     <tr>
-                        <td width="50%" class="center"><img src="images/logos/logo.png" alt="GRPG"
-                                                            style="height:150px;"/></td>
+                        <td width="50%" class="center-img"><img src="images/logos/logo.png" alt="gRPG Main Logo"/></td>
 
                     </tr>
                 </table>
@@ -74,10 +65,10 @@ if ($siteURL !== false && $siteURL !== '') {
                             <div class="headbox">Menu</div>
                             <a href="index.php" class="leftmenu">Home</a>
                             <a href="login.php" class="leftmenu">Login</a>
-                            <a href="register.php" class="leftmenu">Register</a>
-                            <a href="forgot.php" class="leftmenu">Account Recovery</a>
+                            <a href="register.php" class="leftmenu">Register</a>                            
                             <a href="inc/privacy.php" class="leftmenu">Privacy Policy</a>
                             <a href="inc/terms.php" class="leftmenu">Terms of Service</a>
+                            <a href="forgot.php" class="leftmenu">Account Recovery</a>
                         </div>
                     </td>
                     <td valign="top">
