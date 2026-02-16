@@ -214,7 +214,7 @@ $_GET['step'] = isset($_GET['step']) && is_numeric($_GET['step']) && in_array($_
                     <?php echo listTimeZones($timezones); ?>
                 </div>
                 <div class="pure-controls">
-                    <button type="submit" class="pure-button pure-button-primary">Try Connection To DB Now</button>
+                    <button type="submit" class="pure-button pure-button-primary">Try Connection To A DB Now</button>
                 </div>
             </form>
             <br>
@@ -422,8 +422,9 @@ SITE_URL="'.$siteUrl.'"
                 ]
             );
             success('Your account has been '.$success.'!'); ?>
-            I recommend that you remove this installation directory (keep a local backup, just in case).<br/>
-            I can try to delete it for you now if you'd like?<br/>
+            <br>I recommend that you remove this installation directory (keep a local backup, just in case).
+            <br/>
+            <br />
             <a href="install.php?step=8">Yes, try and remove this directory</a> &middot;
             <a href="<?php echo htmlspecialchars(getenv('SITE_URL') ?: '/', ENT_QUOTES, 'UTF-8'); ?>">No, leave it and head to the game</a>
             <?php
@@ -434,7 +435,9 @@ SITE_URL="'.$siteUrl.'"
             <?php
             success('Installation complete! All required dependencies are bundled with the application.');
             ?>
-            I recommend that you remove this installation directory (keep a local backup, just in case).<br/>
+            <br>I recommend that you remove this installation directory (keep a local backup, just in case).
+            <br/>
+            <br>
             I can try to delete it for you now if you'd like?<br/>
             <a href="install.php?step=8">Yes, try and remove this directory</a> &middot;
             <a href="<?php echo htmlspecialchars(getenv('SITE_URL') ?: '/', ENT_QUOTES, 'UTF-8'); ?>">No, leave it and head to the game</a>
