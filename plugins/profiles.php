@@ -26,6 +26,7 @@ if ($user_class->admin) {
                     </table>
                 </td>
             </tr>
+            <tr><td></td></tr><tr><td></td></tr>
             <tr>
                 <td width="12.5%"><strong>Name</strong>:</td>
                 <td width="37.5%"><?php echo $profile_class->formattedname; ?></td>
