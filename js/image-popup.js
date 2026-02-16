@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
     modalImg.style.top = '50%';
     modalImg.style.left = '50%';
     modalImg.style.transform = 'translate(-50%, -50%)';
-    
+    modalImg.style.cursor = 'default';    
     modal.appendChild(modalImg);
     document.body.appendChild(modal);
     
@@ -42,6 +42,9 @@ document.addEventListener('DOMContentLoaded', function() {
     screenshots.forEach(function(img) {
         img.style.cursor = 'pointer';
         img.style.transition = 'opacity 0.3s';
+        img.setAttribute('tabindex', '0');
+        img.setAttribute('role', 'button');
+        img.setAttribute('aria-label', 'Click to view full size: ' + img.alt);
         
         // Add hover effect
         img.addEventListener('mouseenter', function() {
@@ -52,12 +55,23 @@ document.addEventListener('DOMContentLoaded', function() {
             this.style.opacity = '1';
         });
         
-        // Add click event to show full size
-        img.addEventListener('click', function() {
-            focusedElement = this;
+        // Function to open modal
+        const openModal = function() {
+            focusedElement = img;
             modal.style.display = 'block';
-            modalImg.src = this.src;
-            modalImg.alt = this.alt;
+            modalImg.src = img.src;
+            modalImg.alt = img.alt;
+        };
+        
+        // Add click event to show full size
+        img.addEventListener('click', openModal);
+        
+        // Add keyboard support (Enter or Space)
+        img.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                openModal();
+            }
         });
     });
     
