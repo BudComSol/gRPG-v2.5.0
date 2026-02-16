@@ -11,9 +11,9 @@ if (array_key_exists('pull', $_GET)) {
         echo Message('You don\'t have enough money to play slots.', 'Error', true);
     }
     $money = $user_class->money - 100;
-    $slot[1] = '<img src="images/slots/7.png">';
-    $slot[2] = '<img src="images/slots/bar.png">';
-    $slot[3] = '<img src="images/slots/cherries.png">';
+    $slot[1] = '<img src="../images/slots/7.png">';
+    $slot[2] = '<img src="../images/slots/bar.png">';
+    $slot[3] = '<img src="../images/slots/cherries.png">';
     $slot1 = mt_rand(1, 3);
     $slot2 = mt_rand(1, 3);
     $slot3 = mt_rand(1, 3);

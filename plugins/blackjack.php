@@ -173,11 +173,11 @@ function makeGame()
                 <?php
 if ($_SESSION['bj_state'] === 'game_over') {
     for ($x = 0; $x < 5; ++$x) {
-        ?><td><img src="images/cards/e/<?php echo isset($_SESSION['bj_dealer_cards'][$x]) ? $_SESSION['bj_dealer_cards'][$x].$_SESSION['bj_dealer_suits'][$x] : ''; ?>.jpg" id="dealercard_<?php echo $x + 1; ?>"><br></td><?php
+        ?><td><img src="../images/cards/e/<?php echo isset($_SESSION['bj_dealer_cards'][$x]) ? $_SESSION['bj_dealer_cards'][$x].$_SESSION['bj_dealer_suits'][$x] : ''; ?>.jpg" id="dealercard_<?php echo $x + 1; ?>"><br></td><?php
     }
 } else {
     for ($x = 0; $x < 5; ++$x) {
-        ?><td><img src="images/cards/e/.jpg" name="dealercard_<?php echo $x + 1; ?>" id="dealercard_<?php echo $x + 1; ?>"><br></td><?php
+        ?><td><img src="../images/cards/e/.jpg" name="dealercard_<?php echo $x + 1; ?>" id="dealercard_<?php echo $x + 1; ?>"><br></td><?php
     }
 }
 ?>
@@ -187,7 +187,7 @@ if ($_SESSION['bj_state'] === 'game_over') {
                 <?php
 for ($x = 0; $x < 5; ++$x) {
     ?><td>
-                        <img src="images/cards/e/<?php echo isset($_SESSION['bj_player_cards'][$x]) ? $_SESSION['bj_player_cards'][$x].$_SESSION['bj_player_suits'][$x] : ''; ?>.jpg" name="playercard_<?php echo $x + 1; ?>" id="playercard_<?php echo $x + 1; ?>">
+                        <img src="../images/cards/e/<?php echo isset($_SESSION['bj_player_cards'][$x]) ? $_SESSION['bj_player_cards'][$x].$_SESSION['bj_player_suits'][$x] : ''; ?>.jpg" name="playercard_<?php echo $x + 1; ?>" id="playercard_<?php echo $x + 1; ?>">
                     </td><?php
 }
 ?>

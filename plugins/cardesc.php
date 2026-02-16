@@ -21,7 +21,7 @@ $siteURL = getenv('SITE_URL'); ?>
         <?php
     } ?>
     <title>Description: <?php echo format($row['name']); ?></title>
-    <link rel="stylesheet" type="text/css" media="all" href="css/descriptions.css"/>
+    <link rel="stylesheet" type="text/css" media="all" href="../css/descriptions.css"/>
 </head>
 <body>
 <table class="wrap center" width="100%" height="100%" cellpadding="5" cellspacing="0">

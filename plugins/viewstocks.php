@@ -6,7 +6,7 @@ $db->execute();
 $rows = $db->fetch();
 ?><tr>
     <td class="content" align="center">
-        <img src="images/stock-market.png" />
+        <img src="../images/stock-market.png" />
     </td>
 </tr>
 <tr>
