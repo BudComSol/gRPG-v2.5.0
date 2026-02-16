@@ -22,8 +22,8 @@ if (array_key_exists('logout', $_GET)) {
     header('Location: home.php');
     exit;
 }
-// Update lastactive timestamp before loading user
-$db->query('UPDATE users SET lastactive = CURRENT_TIMESTAMP WHERE id = ?', [$_SESSION['id']]);
+// Update lastactive timestamp (throttled to once per minute to reduce database writes)
+$db->query('UPDATE users SET lastactive = CURRENT_TIMESTAMP WHERE id = ? AND lastactive < DATE_SUB(NOW(), INTERVAL 1 MINUTE)', [$_SESSION['id']]);
 // Initialize logged-in user
 $user_class = new User($_SESSION['id']);
 if (!$user_class->id) {
