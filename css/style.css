@@ -553,7 +553,7 @@ fieldset {
 
 /* Register page form styling */
 .pure-form-aligned .pure-control-group {
-    text-align: center;
+    text-align: right;
 }
 
 .pure-form-aligned .pure-controls {
