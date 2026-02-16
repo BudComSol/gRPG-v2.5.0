@@ -292,7 +292,7 @@ a:hover {
 
 .content-head {
     text-align: center;
-    padding: 5px;
+    padding: 10px;
     font-weight: bold;
     font-size: 12px;
 }
@@ -378,9 +378,9 @@ a.topmenu:visited {
 }
 
 .headbox {
-    padding: 5px;
+    padding: 10px;
     display: block;
-    width: 139px;
+    width: 130px;
     text-align: left;
 }
 
