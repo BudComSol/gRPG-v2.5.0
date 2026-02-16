@@ -84,7 +84,7 @@ if (count($errors)) {
 }
 $_GET['referer'] = array_key_exists('referer', $_GET) && ctype_digit($_GET['referer']) ? $_GET['referer'] : null;
 ?><tr>
-    <th class="content-head">.: Register</th>
+    <th class="content-head">Register</th>
 </tr>
 <tr>
     <td class="content"><?php
@@ -114,7 +114,7 @@ echo csrf_create();
         <input type="text" name="email" id="email" />
     </div>
     <div class="pure-control-group">
-        <label for="class">Class</label>
+        <label for="class">Citizen Class</label>
         <select name="class" id="class"><?php
 foreach ($classes as $opt) {
             printf('<option value="%1$s">%1$s</option>', $opt);
@@ -126,20 +126,33 @@ if (defined('CAPTCHA_REGISTRATION') && CAPTCHA_REGISTRATION == true) {
                 <fieldset>
                     <div class="pure-control-group">
                         <img id="captcha" src="/inc/securimage/securimage_show.php" alt="CaptCha Image" /><br />
-                        <input type="text" name="captcha_code" id="captcha_code" size="10" maxlength="6" /><br /><br />
-                        [<a href="#" onclick="document.getElementById('captcha').src = '/inc/securimage/securimage_show.php?' + Math.random(); return false">Change Image</a>]
-                    </div>
+                        <input type="text" name="captcha_code" id="captcha_code" size="23" maxlength="6" /><br /><br />
+                        [<a href="#" onclick="document.getElementById('captcha').src = '/inc/securimage/securimage_show.php?' + Math.random(); return false">Click This Link To Change Image</a>]
+                    </div>                    
                 </fieldset><?php
         } ?><div class="pure-controls">
-                <button type="submit" name="submit" class="pure-button pure-button-primary">Register Your Account</button>
+                <button type="submit" name="submit" class="pure-button pure-button-primary">Click To Register Your Account</button>
             </div>
         </form><br /><br /><?php
     } else {
         ?>
         Registration is currently closed<br /><?php
     } ?>
-        <span class="center">&copy; GenericRPG 2007-<?php echo date('Y'); ?> GRPG Dev Team</span>
+        
     </td>
 </tr>
 
+<tr>
+        <td>
+            <table class="topbar">
+                <tr>
+                    <td>gRPG © ● 2007 - 2026 ● All Rights Reserved</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+
 <?php require_once __DIR__.'/inc/nlifooter.php';
+
+
