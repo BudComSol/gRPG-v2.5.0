@@ -17,33 +17,55 @@ if (array_key_exists('submit', $_POST)) {
         
         // Validate file type
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $mimeType = finfo_file($finfo, $uploadedFile['tmp_name']);
-        finfo_close($finfo);
-        
-        if (!in_array($mimeType, $allowedTypes)) {
-            $errors[] = 'Invalid file type. Only JPEG, PNG, GIF, and WebP images are allowed.';
-        } elseif ($uploadedFile['size'] > $maxFileSize) {
-            $errors[] = 'File size exceeds 2MB limit.';
+        if ($finfo === false) {
+            $errors[] = 'Failed to initialize file type detection.';
         } else {
-            // Generate unique filename based on user ID
-            $extension = pathinfo($uploadedFile['name'], PATHINFO_EXTENSION);
-            $filename = 'avatar_' . $user_class->id . '_' . time() . '.' . $extension;
-            $uploadDir = __DIR__ . '/../images/avatars/';
-            $uploadPath = $uploadDir . $filename;
+            $mimeType = finfo_file($finfo, $uploadedFile['tmp_name']);
+            finfo_close($finfo);
             
-            // Delete old avatar if it exists in avatars directory
-            if (!empty($user_class->avatar) && strpos($user_class->avatar, 'images/avatars/') !== false) {
-                $oldAvatarPath = __DIR__ . '/../' . $user_class->avatar;
-                if (file_exists($oldAvatarPath)) {
-                    unlink($oldAvatarPath);
-                }
-            }
-            
-            // Move uploaded file
-            if (move_uploaded_file($uploadedFile['tmp_name'], $uploadPath)) {
-                $avatarPath = 'images/avatars/' . $filename;
+            if (!in_array($mimeType, $allowedTypes)) {
+                $errors[] = 'Invalid file type. Only JPEG, PNG, GIF, and WebP images are allowed.';
+            } elseif ($uploadedFile['size'] > $maxFileSize) {
+                $errors[] = 'File size exceeds 2MB limit.';
             } else {
-                $errors[] = 'Failed to upload file. Please try again.';
+                // Map MIME types to safe extensions
+                $mimeToExt = [
+                    'image/jpeg' => 'jpg',
+                    'image/png' => 'png',
+                    'image/gif' => 'gif',
+                    'image/webp' => 'webp'
+                ];
+                $extension = $mimeToExt[$mimeType];
+                
+                // Generate unique filename based on user ID
+                $filename = 'avatar_' . $user_class->id . '_' . time() . '.' . $extension;
+                $uploadDir = __DIR__ . '/../images/avatars/';
+                
+                // Ensure upload directory exists and is writable
+                if (!is_dir($uploadDir)) {
+                    $errors[] = 'Upload directory does not exist.';
+                } elseif (!is_writable($uploadDir)) {
+                    $errors[] = 'Upload directory is not writable.';
+                } else {
+                    $uploadPath = $uploadDir . $filename;
+                    
+                    // Delete old avatar if it exists in avatars directory
+                    if (!empty($user_class->avatar) && strpos($user_class->avatar, 'images/avatars/') !== false) {
+                        $oldAvatarPath = __DIR__ . '/../' . $user_class->avatar;
+                        if (file_exists($oldAvatarPath)) {
+                            if (!unlink($oldAvatarPath)) {
+                                log_warning('Failed to delete old avatar file', ['path' => $oldAvatarPath, 'user_id' => $user_class->id]);
+                            }
+                        }
+                    }
+                    
+                    // Move uploaded file
+                    if (move_uploaded_file($uploadedFile['tmp_name'], $uploadPath)) {
+                        $avatarPath = 'images/avatars/' . $filename;
+                    } else {
+                        $errors[] = 'Failed to upload file. Please try again.';
+                    }
+                }
             }
         }
     } elseif (isset($_FILES['avatar_upload']) && $_FILES['avatar_upload']['error'] !== UPLOAD_ERR_NO_FILE) {
@@ -82,10 +104,12 @@ if (count($errors)) {
         <form action="preferences.php" method="post" enctype="multipart/form-data" class="pure-form pure-form-aligned">
             <?php echo csrf_create(); ?>
             <fieldset>
+                <?php if (!empty($user_class->avatar)) { ?>
                 <div class="pure-control-group">
                     <label>Current Avatar</label>
                     <img src="<?php echo format($user_class->avatar); ?>" alt="Current Avatar" style="max-width: 100px; max-height: 100px; border: 1px solid #ccc;" />
                 </div>
+                <?php } ?>
                 <div class="pure-control-group">
                     <label for="avatar_upload">Upload Avatar</label>
                     <input type="file" name="avatar_upload" id="avatar_upload" accept="image/jpeg,image/png,image/gif,image/webp" />
