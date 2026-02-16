@@ -938,7 +938,19 @@ fieldset {
 
 .captcha-input {
     margin-top: 10px;
-    width: auto;
+    width: 150px;
+    padding: 8px 10px;
+    border: 1px solid #555;
+    background-color: #222;
+    color: #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.captcha-input:focus {
+    outline: none;
+    border-color: #0078e7;
+    background-color: #2a2a2a;
 }
 
 @media (max-width: 480px) {
