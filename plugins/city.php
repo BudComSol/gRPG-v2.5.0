@@ -45,13 +45,13 @@ for ($i = 1; $i <= 3; ++$i) {
             <tr>
                 <td width="33%" class="top" style="padding-bottom:10px;">
                     <h3 style="padding:0;margin:0;font-size:1.4em;">Shops</h3><br />
-                    <a href="astore.php">Crazy Rileys Armor Emporium</a><br />
-                    <a href="store.php">Weapon Sales</a><br />
-                    <a href="itemmarket.php">Item Market</a><br />
-                    <a href="pointmarket.php">Points Market</a><br />
-                    <a href="spendpoints.php">Point Shop</a><br />
-                    <a href="pharmacy.php">Pharmacy</a><br />
-                    <?php echo $user_class->city == 2 ? '<a href="carlot.php">Big Bob\'s Used Car Lot</a>' : ''; ?>
+                    <a href="plugins/astore.php">Armor Emporium</a><br />
+                    <a href="plugins/store.php">Weapon Sales</a><br />
+                    <a href="plugins/itemmarket.php">Item Market</a><br />
+                    <a href="plugins/pointmarket.php">Points Market</a><br />
+                    <a href="plugins/spendpoints.php">Point Shop</a><br />
+                    <a href="plugins/pharmacy.php">Pharmacy</a><br />
+                    <?php echo $user_class->city == 2 ? '<a href="plugins/carlot.php">Big Bob\'s Used Car Lot</a>' : ''; ?>
                 </td>
                 <td width="34%" class="top" style="padding-bottom:10px;">
                     <h3 style="padding:0;margin:0;font-size:1.4em;">Town Hall</h3><br />
