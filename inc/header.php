@@ -22,6 +22,8 @@ if (array_key_exists('logout', $_GET)) {
     header('Location: home.php');
     exit;
 }
+// Update lastactive timestamp before loading user
+$db->query('UPDATE users SET lastactive = CURRENT_TIMESTAMP WHERE id = ?', [$_SESSION['id']]);
 // Initialize logged-in user
 $user_class = new User($_SESSION['id']);
 if (!$user_class->id) {
@@ -29,8 +31,6 @@ if (!$user_class->id) {
     header('Location: login.php');
     exit;
 }
-// Update lastactive timestamp
-$db->query('UPDATE users SET lastactive = CURRENT_TIMESTAMP WHERE id = ?', [$_SESSION['id']]);
 $time = date('F d, Y g:i:sa');
 $site_url = getenv('SITE_URL');
 ob_start(); ?>
