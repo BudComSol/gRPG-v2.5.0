@@ -487,7 +487,7 @@ SITE_URL="'.$siteUrl.'"
                     }
                 }
                 // Block protocol-relative URLs and other schemes  
-                elseif (str_starts_with($siteUrl, '//') || (strpos($siteUrl, ':') !== false && !str_starts_with($siteUrl, '/'))) {
+                elseif (substr($siteUrl, 0, 2) === '//' || (strpos($siteUrl, ':') !== false && substr($siteUrl, 0, 1) !== '/')) {
                     // Block: //evil.com, javascript:, data:, file:, C:/, etc.
                     $siteUrl = '/';
                 }
