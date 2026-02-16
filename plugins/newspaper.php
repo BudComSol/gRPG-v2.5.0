@@ -17,6 +17,6 @@ require_once __DIR__.'/../inc/header.php';
 </tr>
 <tr>
     <td class="content">
-        <iframe src="newspaper/index.php" width="100%" height="400px"></iframe>
+        <iframe src="../newspaper/index.php" width="100%" height="400px"></iframe>
     </td>
 </tr>
