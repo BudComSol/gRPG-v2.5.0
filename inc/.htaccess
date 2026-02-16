@@ -1,6 +1,10 @@
+# Allow access to securimage directory for CAPTCHA functionality
+SetEnvIf Request_URI "^/inc/securimage/" allow_securimage
+
 order deny,allow
 deny from all
 allow from 127.0.0.1
+allow from env=allow_securimage
 
 <Files "privacy.php">
     allow from all
