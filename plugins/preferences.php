@@ -98,8 +98,29 @@ if (array_key_exists('submit', $_POST)) {
     // If no file was uploaded, check for URL input
     if ($avatarPath === null) {
         $_POST['avatar'] = array_key_exists('avatar', $_POST) && is_string($_POST['avatar']) ? $_POST['avatar'] : null;
-        if (!empty($_POST['avatar']) && !isImage($_POST['avatar'])) {
-            $errors[] = 'The avatar you selected hasn\'t validated as an image!';
+        if (!empty($_POST['avatar'])) {
+            // Check if avatar is a local path (starts with images/avatars/)
+            $isLocalPath = strpos($_POST['avatar'], 'images/avatars/') === 0;
+            
+            if ($isLocalPath) {
+                // For local paths, verify the file exists and is a valid image
+                $localFilePath = realpath(__DIR__ . '/../' . $_POST['avatar']);
+                $uploadDir = realpath(__DIR__ . '/../images/avatars/');
+                
+                // Verify the file exists, is within avatars directory, and is a valid image
+                if ($localFilePath === false || 
+                    $uploadDir === false || 
+                    strpos($localFilePath, $uploadDir) !== 0 || 
+                    !is_file($localFilePath) || 
+                    !isImage($localFilePath, true)) {
+                    $errors[] = 'The avatar you selected hasn\'t validated as an image!';
+                }
+            } else {
+                // For external URLs, use remote validation
+                if (!isImage($_POST['avatar'])) {
+                    $errors[] = 'The avatar you selected hasn\'t validated as an image!';
+                }
+            }
         }
         $avatarPath = $_POST['avatar'];
     }
