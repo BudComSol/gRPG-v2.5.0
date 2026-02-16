@@ -64,6 +64,7 @@ require_once __DIR__.'/inc/nliheader.php';
     </td>
 </tr>
 
+<script src="js/image-popup.js"></script>
 <?php require_once __DIR__.'/inc/nlifooter.php'; ?>
 
 <tr>
