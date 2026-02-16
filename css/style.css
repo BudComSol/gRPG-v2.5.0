@@ -931,6 +931,16 @@ fieldset {
     }
 }
 
+.captcha-wrapper {
+    display: inline-block;
+    text-align: center;
+}
+
+.captcha-input {
+    margin-top: 10px;
+    width: auto;
+}
+
 @media (max-width: 480px) {
     .form-container {
         padding: 10px;
