@@ -1,0 +1,15 @@
+.pure-form legend {
+    display: block;
+    width: 100%;
+    padding: .3em 0;
+    margin-bottom: .3em;
+    color: #333;
+    border-bottom: 0px solid #e5e5e5;
+}
+
+.pure-form-aligned select, .pure-form select {
+    width: 42.3% !important;
+    box-sizing: content-box !important;
+    padding: 1px 2px !important;
+    border: 2px inset rgb(118, 118, 118) !important;
+}
