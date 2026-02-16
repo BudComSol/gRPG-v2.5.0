@@ -23,7 +23,7 @@ if (array_key_exists('logout', $_GET)) {
     exit;
 }
 // Update lastactive timestamp (throttled to once per minute to reduce database writes)
-$db->query('UPDATE users SET lastactive = CURRENT_TIMESTAMP WHERE id = ? AND lastactive < DATE_SUB(NOW(), INTERVAL 1 MINUTE)', [$_SESSION['id']]);
+$db->query('UPDATE users SET lastactive = CURRENT_TIMESTAMP WHERE id = ? AND lastactive < DATE_SUB(NOW(), INTERVAL 1 MINUTE)', [(int)$_SESSION['id']]);
 // Initialize logged-in user
 $user_class = new User($_SESSION['id']);
 if (!$user_class->id) {
