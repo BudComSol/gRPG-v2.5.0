@@ -65,15 +65,7 @@ if ($site_url !== false && $site_url !== '') {
     </div>
 </div>
 <table bgcolor="#1E1E1E" border="0" cellspacing="0" cellpadding="0" width="100%">
-    <tr>
-        <td>
-            <table class="topbar">
-                <tr>
-                    <td>&gt; Server Time: <?php echo $time; ?></td>
-                </tr>
-            </table>
-        </td>
-    </tr>
+    
     <tr>
         <td colspan="3" class="pos1" height="55" valign="middle">
             <div class="topbox">
