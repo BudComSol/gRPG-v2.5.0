@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__.'/../inc/header.php';
-$db->query('SELECT id FROM users WHERE city = ? ORDER BY CAST(strength AS CHAR) + CAST(speed AS CHAR) + CAST(defense AS CHAR) DESC LIMIT 3');
+$db->query('SELECT id FROM users WHERE city = ? ORDER BY (strength + speed + defense) DESC LIMIT 3');
 $db->execute([$user_class->city]);
 $rows = $db->fetch();
 $i = 1;
