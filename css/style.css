@@ -631,7 +631,7 @@ fieldset {
 @media (max-width: 1024px) {
     body {
         width: 100%;
-        max-width: 100%;
+        max-width: none;
         margin-top: 0;
         margin-bottom: 0;
         border-left: none;
@@ -645,7 +645,7 @@ fieldset {
     }
     
     .topbox table {
-        width: 100% !important;
+        width: 100%;
     }
 }
 
@@ -656,9 +656,10 @@ fieldset {
         padding: 0;
     }
     
-    /* Make tables responsive */
-    table {
-        width: 100% !important;
+    /* Make main content tables responsive */
+    .mainbox table,
+    .content table {
+        width: 100%;
     }
     
     /* Adjust left menu */
@@ -686,7 +687,7 @@ fieldset {
     
     /* Responsive forms */
     .pure-form {
-        width: 100% !important;
+        width: 100%;
     }
     
     .pure-control-group {
@@ -711,7 +712,7 @@ fieldset {
     
     .pure-table th,
     .pure-table td {
-        padding: 5px !important;
+        padding: 5px;
     }
     
     /* Make boxes responsive */
@@ -730,12 +731,12 @@ fieldset {
     /* Stack layout vertically on mobile */
     table[width="100%"] > tbody > tr > td[valign="top"] {
         display: block;
-        width: 100% !important;
+        width: 100%;
     }
     
     td[width="150"],
     td[valign="top"][width="150"] {
-        width: 100% !important;
+        width: 100%;
     }
     
     /* Adjust topbar */
@@ -786,7 +787,7 @@ fieldset {
     /* Reduce table padding on very small screens */
     .pure-table th,
     .pure-table td {
-        padding: 3px !important;
+        padding: 3px;
         font-size: 11px;
     }
     

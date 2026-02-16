@@ -317,7 +317,7 @@ a:hover {
     }
     
     table[width="800"] {
-        width: 100% !important;
+        width: 100%;
     }
     
     .topbox {
@@ -348,13 +348,13 @@ a:hover {
     
     /* Stack menu vertically on mobile */
     td[width="150"] {
-        width: 100% !important;
+        width: 100%;
         display: block;
     }
     
     /* Make form responsive */
     .pure-form {
-        width: 100% !important;
+        width: 100%;
     }
     
     input[type="text"],
