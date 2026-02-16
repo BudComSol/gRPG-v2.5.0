@@ -50,9 +50,9 @@ if (array_key_exists('submit', $_POST)) {
                     $uploadPath = $uploadDir . $filename;
                     
                     // Delete old avatar if it exists in avatars directory
-                    if (!empty($user_class->avatar) && strpos($user_class->avatar, 'images/avatars/') !== false) {
+                    if (!empty($user_class->avatar) && strpos($user_class->avatar, 'images/avatars/') === 0) {
                         $oldAvatarPath = __DIR__ . '/../' . $user_class->avatar;
-                        if (file_exists($oldAvatarPath)) {
+                        if (file_exists($oldAvatarPath) && is_file($oldAvatarPath)) {
                             if (!unlink($oldAvatarPath)) {
                                 log_warning('Failed to delete old avatar file', ['path' => $oldAvatarPath, 'user_id' => $user_class->id]);
                             }
@@ -64,6 +64,7 @@ if (array_key_exists('submit', $_POST)) {
                         $avatarPath = 'images/avatars/' . $filename;
                     } else {
                         $errors[] = 'Failed to upload file. Please try again.';
+                        log_warning('File upload failed', ['user_id' => $user_class->id, 'tmp_name' => $uploadedFile['tmp_name'], 'destination' => $uploadPath]);
                     }
                 }
             }
