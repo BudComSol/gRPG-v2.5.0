@@ -1,6 +1,10 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__.'/../inc/header.php';
+
+// Local avatar path prefix constant
+const LOCAL_AVATAR_PREFIX = 'images/avatars/';
+
 $genderOpts = ['Male', 'Female', 'Other'];
 $errors = [];
 if (array_key_exists('submit', $_POST)) {
@@ -51,8 +55,7 @@ if (array_key_exists('submit', $_POST)) {
                     
                     // Delete old avatar if it exists in avatars directory
                     // Note: Avatar paths are stored without leading slash (e.g., 'images/avatars/file.jpg')
-                    $avatarPrefix = 'images/avatars/';
-                    if (!empty($user_class->avatar) && strpos($user_class->avatar, $avatarPrefix) === 0) {
+                    if (!empty($user_class->avatar) && strpos($user_class->avatar, LOCAL_AVATAR_PREFIX) === 0) {
                         $oldAvatarPath = realpath(__DIR__ . '/../' . $user_class->avatar);
                         // Verify the resolved path is within avatars directory to prevent path traversal
                         if ($oldAvatarPath !== false && strpos($oldAvatarPath, $uploadDir) === 0 && is_file($oldAvatarPath)) {
@@ -102,7 +105,7 @@ if (array_key_exists('submit', $_POST)) {
             // Check if avatar is a local path (starts with images/avatars/)
             // Note: Path traversal attempts like "images/avatars/../../../etc/passwd" are prevented
             // by the realpath() check below which ensures the resolved path is within avatars directory
-            $isLocalPath = strpos($_POST['avatar'], 'images/avatars/') === 0;
+            $isLocalPath = strpos($_POST['avatar'], LOCAL_AVATAR_PREFIX) === 0;
             
             if ($isLocalPath) {
                 // For local paths, verify the file exists and is a valid image
@@ -125,8 +128,16 @@ if (array_key_exists('submit', $_POST)) {
                     $errors[] = 'The avatar you selected hasn\'t validated as an image!';
                 }
             }
+            $avatarPath = $_POST['avatar'];
+        } else {
+            // If avatar field is empty, preserve existing local avatar
+            // This handles the case where the form doesn't display local paths in the avatar URL field
+            if (!empty($user_class->avatar) && strpos($user_class->avatar, LOCAL_AVATAR_PREFIX) === 0) {
+                $avatarPath = $user_class->avatar;
+            } else {
+                $avatarPath = $_POST['avatar'];
+            }
         }
-        $avatarPath = $_POST['avatar'];
     }
     
     $_POST['quote'] = array_key_exists('quote', $_POST) && is_string($_POST['quote']) ? strip_tags(trim($_POST['quote'])) : null;
@@ -164,7 +175,7 @@ if (count($errors)) {
                 </div>
                 <div class="pure-control-group">
                     <label for="avatar">Or Avatar URL</label>
-                    <input type="text" name="avatar" id="avatar" value="<?php echo format($user_class->avatar); ?>" />
+                    <input type="text" name="avatar" id="avatar" value="<?php echo (!empty($user_class->avatar) && strpos($user_class->avatar, LOCAL_AVATAR_PREFIX) === 0) ? '' : format($user_class->avatar); ?>" />
                 </div>
                 <div class="pure-control-group">
                     <label for="quote">Quote</label>
