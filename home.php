@@ -61,10 +61,10 @@ require_once __DIR__.'/inc/nliheader.php';
         <img src="images/screenshots/screen2.png" width="152" height="152" alt="Screenshots" />
         <img src="images/screenshots/screen3.png" width="152" height="152" alt="Screenshots" />
         <img src="images/screenshots/screen4.png" width="152" height="152" alt="Screenshots" />
+        <script src="js/image-popup.js"></script>
     </td>
 </tr>
 
-<script src="js/image-popup.js"></script>
 <?php require_once __DIR__.'/inc/nlifooter.php'; ?>
 
 <tr>

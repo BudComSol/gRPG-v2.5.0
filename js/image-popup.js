@@ -1,8 +1,14 @@
 // Image popup/lightbox functionality
 document.addEventListener('DOMContentLoaded', function() {
+    // Track which element opened the modal for focus management
+    let focusedElement = null;
+    
     // Create modal overlay
     const modal = document.createElement('div');
     modal.id = 'image-modal';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Image viewer');
     modal.style.display = 'none';
     modal.style.position = 'fixed';
     modal.style.zIndex = '10000';
@@ -48,21 +54,30 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Add click event to show full size
         img.addEventListener('click', function() {
+            focusedElement = this;
             modal.style.display = 'block';
             modalImg.src = this.src;
             modalImg.alt = this.alt;
         });
     });
     
-    // Close modal when clicking on it
-    modal.addEventListener('click', function() {
-        this.style.display = 'none';
+    // Close modal when clicking on the overlay (not the image)
+    modal.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            this.style.display = 'none';
+            if (focusedElement) {
+                focusedElement.focus();
+            }
+        }
     });
     
     // Close modal with Escape key
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape' && modal.style.display === 'block') {
             modal.style.display = 'none';
+            if (focusedElement) {
+                focusedElement.focus();
+            }
         }
     });
 });
