@@ -12,7 +12,7 @@ if (!function_exists('microtime_float')) {
 define('LOAD_TIME_START', microtime_float());
 require_once __DIR__.'/dbcon.php';
 // Check if user is logged in
-if (!array_key_exists('id', $_SESSION) || !$_SESSION['id']) {
+if (!array_key_exists('id', $_SESSION) || !$_SESSION['id'] || !is_numeric($_SESSION['id'])) {
     header('Location: login.php');
     exit;
 }
@@ -22,6 +22,8 @@ if (array_key_exists('logout', $_GET)) {
     header('Location: home.php');
     exit;
 }
+// Update lastactive timestamp (throttled to once per minute to reduce database writes)
+$db->query('UPDATE users SET lastactive = CURRENT_TIMESTAMP WHERE id = ? AND lastactive < DATE_SUB(NOW(), INTERVAL 1 MINUTE)', [(int)$_SESSION['id']]);
 // Initialize logged-in user
 $user_class = new User($_SESSION['id']);
 if (!$user_class->id) {
