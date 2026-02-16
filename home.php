@@ -22,24 +22,25 @@ require_once __DIR__.'/inc/nliheader.php';
 </tr>
 <tr>
     <td class="content-home">        
-        <ul>
+        <ul>            
             <li>Cronless Crons.</li>            
             <li>Built for PHP7.4+.</li>
-            <li>Complete gang system.</li>            
-            <li>PDO prepare statements.</li>
-            <li>Gym to train your stats in.</li>
-            <li>RPG-Style leveling system.</li>            
+            <li>Live gangs system.</li>  
+            <li>Responsive Stage One.</li>          
+            <li>PDO prepare statements.</li>            
+            <li>RPG-Style leveling system.</li> 
+            <li>Gym to train your stats from.</li>           
             <li>Optional database-driven sessions.</li>                      
-            <li>Stats that effect what you can do in the game.</li>
+            <li>Stats effecting various game play aspects.</li>
             <li>Ability to vote on topsites for in game rewards.</li>            
-            <li>Classified Ads System to promote stuff and maybe earn.</li>
+            <li>Classified Ads system to promote whatever and earn.</li>
             <li>Mugging and attacking of other players, thats always fun.</li>
             <li>Houses you can buy and live in to gain higher max awake.</li>
-            <li>Bank to keep your money safe in, as if you trust banks huh.</li>
+            <li>Bank to keep your money safe in, as if you trust banks right.</li>
             <li>Jail that people go to if captured, but you can be broken out of.</li>
             <li>Forums to interact with other players, report issues, help others.</li> 
             <li>Armor and weapons to raise your attack and defense in combat.</li>
-            <li>Private Message System so you can contact other players easily.</li>                      
+            <li>Private messaging system so you can contact other players easily.</li>                      
             <li>Hospital that people are sent to when they get themselves beaten up.</li>
             <li>A point system that allows you to recharge your energy and nerve easily.</li> 
             <li>Hall of fame ranking system where you can see the strongest and best players.</li> 
@@ -58,6 +59,8 @@ require_once __DIR__.'/inc/nliheader.php';
     <td class="content">
         <img src="images/screenshots/screen1.png" width="152" height="152" alt="Screenshots" />
         <img src="images/screenshots/screen2.png" width="152" height="152" alt="Screenshots" />
+        <img src="images/screenshots/screen3.png" width="152" height="152" alt="Screenshots" />
+        <img src="images/screenshots/screen4.png" width="152" height="152" alt="Screenshots" />
     </td>
 </tr>
 
