@@ -126,7 +126,7 @@ if (defined('CAPTCHA_REGISTRATION') && CAPTCHA_REGISTRATION == true) {
                 <div class="form-group">
                     <div class="captcha-wrapper">
                         <img id="captcha" src="/inc/securimage/securimage_show.php" alt="CaptCha Image" /><br />
-                        <input type="text" name="captcha_code" id="captcha_code" size="10" maxlength="6" class="captcha-input" />
+                        <input type="text" name="captcha_code" id="captcha_code" maxlength="6" class="captcha-input" />
                         [<a href="#" onclick="document.getElementById('captcha').src = '/inc/securimage/securimage_show.php?' + Math.random(); return false">Change Image</a>]
                     </div>
                 </div><?php
