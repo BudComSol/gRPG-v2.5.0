@@ -123,7 +123,7 @@ if (count($errors)) {
 }
 ?><tr>
     <td class="content">
-        <form action="preferences.php" method="post" enctype="multipart/form-data" class="pure-form pure-form-aligned">
+        <form action="plugins/preferences.php" method="post" enctype="multipart/form-data" class="pure-form pure-form-aligned">
             <?php echo csrf_create(); ?>
             <fieldset>
                 <?php if (!empty($user_class->avatar)) { ?>
