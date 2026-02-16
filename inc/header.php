@@ -12,7 +12,7 @@ if (!function_exists('microtime_float')) {
 define('LOAD_TIME_START', microtime_float());
 require_once __DIR__.'/dbcon.php';
 // Check if user is logged in
-if (!array_key_exists('id', $_SESSION) || !$_SESSION['id']) {
+if (!array_key_exists('id', $_SESSION) || !$_SESSION['id'] || !is_numeric($_SESSION['id'])) {
     header('Location: login.php');
     exit;
 }
