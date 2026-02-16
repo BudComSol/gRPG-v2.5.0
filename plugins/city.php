@@ -25,7 +25,7 @@ foreach ($rows as $row) {
 for ($i = 1; $i <= 3; ++$i) {
     if (isset($leaders[$i])) {
         ?><div class="box<?php echo $i; ?>">
-            <span><img height="50" width="50" src="/images/medals/<?php echo ordinal($i); ?>.png" /></span><br />
+            <span><img height="50" width="50" src="images/medals/<?php echo ordinal($i); ?>.png" /></span><br />
             <span><?php echo formatImage($leaders[$i]->avatar); ?></span><br />
             <span><?php echo $leaders[$i]->formattedname; ?></span><br />
             <span>Level: <?php echo format($leaders[$i]->level); ?></span><br />
