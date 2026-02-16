@@ -630,7 +630,6 @@ fieldset {
 /* Responsive Design for Mobile and Tablet */
 @media (max-width: 1024px) {
     body {
-        width: 100%;
         max-width: none;
         margin-top: 0;
         margin-bottom: 0;
@@ -651,7 +650,6 @@ fieldset {
 
 @media (max-width: 768px) {
     body {
-        width: 100%;
         margin: 0;
         padding: 0;
     }
