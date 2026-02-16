@@ -307,9 +307,9 @@ function viewtopic($db, $user_class, $parser)
                 </form>
             </div>
             <div class="pure-u-1-2">
-                <a href="forum.php?act=pin&amp;topic=<?php echo $topic['ft_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><img src="images/silk/exclamation.png" alt="<?php echo $pinOpposite; ?>" title="<?php echo $pinOpposite; ?>" /></a> &middot;
-                <a href="forum.php?act=lock&amp;topic=<?php echo $topic['ft_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><img src="images/silk/lock.png" alt="<?php echo $lockOpposite; ?>" title="<?php echo $lockOpposite; ?>" /></a> &middot;
-                <a href="forum.php?act=deletopic&amp;topic=<?php echo $topic['ft_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><img src="images/silk/delete.png" title="Delete Topic" alt="Delete Topic" /></a>
+                <a href="forum.php?act=pin&amp;topic=<?php echo $topic['ft_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><img src="../images/silk/exclamation.png" alt="<?php echo $pinOpposite; ?>" title="<?php echo $pinOpposite; ?>" /></a> &middot;
+                <a href="forum.php?act=lock&amp;topic=<?php echo $topic['ft_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><img src="../images/silk/lock.png" alt="<?php echo $lockOpposite; ?>" title="<?php echo $lockOpposite; ?>" /></a> &middot;
+                <a href="forum.php?act=deletopic&amp;topic=<?php echo $topic['ft_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><img src="../images/silk/delete.png" title="Delete Topic" alt="Delete Topic" /></a>
             </div>
         </div><?php
     }
@@ -378,11 +378,11 @@ function viewtopic($db, $user_class, $parser)
             <th class="center top">
                 <?php echo $date->format('F d, Y g:i:sa'); ?><br />
                 <span class="small">
-                    <a href="forum.php?act=quote&amp;viewtopic=<?php echo $topic['ft_id']; ?>&amp;quote=<?php echo $post['fp_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><img src="images/silk/page_attach.png" title="Quote" alt="[Quote]" /></a><?php
+                    <a href="forum.php?act=quote&amp;viewtopic=<?php echo $topic['ft_id']; ?>&amp;quote=<?php echo $post['fp_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><img src="../images/silk/page_attach.png" title="Quote" alt="[Quote]" /></a><?php
         if ($user_class->admin == 1) {
             if ($post['fp_poster'] == $user_class->id) {
-                ?><a href="forum.php?act=edit&amp;topic=<?php echo $topic['ft_id']; ?>&amp;post=<?php echo $post['fp_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><img src="images/silk/pencil_go.png" title="Edit" alt="[Edit]" /></a><?php
-            } ?><a href="forum.php?act=delepost&amp;topic=<?php echo $topic['ft_id']; ?>&amp;post=<?php echo $post['fp_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><img src="images/silk/page_delete.png" title="Delete" alt="[Delete]" /></a><?php
+                ?><a href="forum.php?act=edit&amp;topic=<?php echo $topic['ft_id']; ?>&amp;post=<?php echo $post['fp_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><img src="../images/silk/pencil_go.png" title="Edit" alt="[Edit]" /></a><?php
+            } ?><a href="forum.php?act=delepost&amp;topic=<?php echo $topic['ft_id']; ?>&amp;post=<?php echo $post['fp_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><img src="../images/silk/page_delete.png" title="Delete" alt="[Delete]" /></a><?php
         } ?></span>
             </th>
         </tr>

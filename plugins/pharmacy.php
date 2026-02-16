@@ -34,13 +34,13 @@ $csrfg = csrf_create('csrfg', false);
         <table width="100%" class="center">
             <tr>
                 <td width="25%">
-                    <img src="images/noimage.png" width="100" height="100" style="border: 1px solid #333;"><br />
+                    <img src="../images/noimage.png" width="100" height="100" style="border: 1px solid #333;"><br />
                     No-Doze<br/>
                     <?php echo prettynum($drug['no-doze']['cost'], true); ?><br />
                     [<a href="pharmacy.php?buy=No-Doze&amp;csrfg=<?php echo $csrfg; ?>">Buy</a>]
                 </td>
                 <td width="25%">
-                    <img src="images/noimage.png" width="100" height="100" style="border: 1px solid #333;"><br />
+                    <img src="../images/noimage.png" width="100" height="100" style="border: 1px solid #333;"><br />
                     Generic Steroids<br />
                     <?php echo prettynum($drug['steroids']['cost'], true); ?><br />
                     [<a href="pharmacy.php?buy=Steroids&amp;csrfg=<?php echo $csrfg; ?>">Buy</a>]
