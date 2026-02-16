@@ -551,6 +551,24 @@ fieldset {
     width: 70%!important;
 }
 
+/* Register page form styling */
+.pure-form-aligned .pure-control-group {
+    text-align: center;
+}
+
+.pure-form-aligned .pure-controls {
+    text-align: center;
+}
+
+/* Make select dropdown match input field width */
+.pure-form-aligned select,
+.pure-form select {
+    width: 32.3% !important;
+    box-sizing: content-box !important;
+    padding: 1px 2px !important;
+    border: 2px inset rgb(118, 118, 118) !important;
+}
+
 /* Cookie Consent Banner */
 #cookie-consent-banner {
     position: fixed;

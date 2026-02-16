@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Register Test</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/css/login.css"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/css/style.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/g/pure@0.6.2(buttons-min.css+grids-min.css+forms-min.css)"
+          integrity="sha384-+YK1ur0Mr74WEZWTMC6oMb5fojhkGm6EpjgVheKlE9urf2PbykYP7MxdwPpruQB8" crossorigin="anonymous"/>
+</head>
+<body>
+<table bgcolor="#1E1E1E" border="0" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+    <th class="content-head">.: Register</th>
+</tr>
+<tr>
+    <td class="content">
+        <form action="register.php" method="post" class="pure-form pure-form-aligned">
+<legend>Account Setup</legend>
+<fieldset>
+    <div class="pure-control-group">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" />
+    </div>
+    <div class="pure-control-group">
+        <label for="pass">Password</label>
+        <input type="password" name="pass" id="pass" autocomplete="off" />
+    </div>
+    <div class="pure-control-group">
+        <label for="conf_pass">Confirm Password</label>
+        <input type="password" name="conf_pass" id="conf_pass" autocomplete="off" />
+    </div>
+    <div class="pure-control-group">
+        <label for="email">Email address</label>
+        <input type="text" name="email" id="email" />
+    </div>
+    <div class="pure-control-group">
+        <label for="class">Class</label>
+        <select name="class" id="class">
+            <option value="Mastermind">Mastermind</option>
+            <option value="Assassin">Assassin</option>
+            <option value="Bodyguard">Bodyguard</option>
+            <option value="Smuggler">Smuggler</option>
+            <option value="Thief">Thief</option>
+        </select>
+    </div>
+</fieldset>
+<div class="pure-controls">
+    <button type="submit" name="submit" class="pure-button pure-button-primary">Register Your Account</button>
+</div>
+        </form><br /><br />
+        <span class="center">&copy; GenericRPG 2007-2024 GRPG Dev Team</span>
+    </td>
+</tr>
+</table>
+</body>
+</html>
