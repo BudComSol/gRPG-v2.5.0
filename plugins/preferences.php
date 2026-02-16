@@ -50,11 +50,15 @@ if (array_key_exists('submit', $_POST)) {
                     $uploadPath = $uploadDir . DIRECTORY_SEPARATOR . $filename;
                     
                     // Delete old avatar if it exists in avatars directory
-                    if (!empty($user_class->avatar) && strpos($user_class->avatar, 'images/avatars/') === 0) {
+                    // Note: Avatar paths are stored without leading slash (e.g., 'images/avatars/file.jpg')
+                    $avatarPrefix = 'images/avatars/';
+                    if (!empty($user_class->avatar) && strpos($user_class->avatar, $avatarPrefix) === 0) {
                         $oldAvatarPath = realpath(__DIR__ . '/../' . $user_class->avatar);
                         // Verify the resolved path is within avatars directory to prevent path traversal
                         if ($oldAvatarPath !== false && strpos($oldAvatarPath, $uploadDir) === 0 && is_file($oldAvatarPath)) {
                             if (!unlink($oldAvatarPath)) {
+                                // Log but don't fail the upload if old file deletion fails
+                                // This could happen due to permissions or if file was already deleted
                                 log_warning('Failed to delete old avatar file', ['path' => $oldAvatarPath, 'user_id' => $user_class->id]);
                             }
                         }
