@@ -83,6 +83,10 @@ if (count($errors)) {
             <?php echo csrf_create(); ?>
             <fieldset>
                 <div class="pure-control-group">
+                    <label>Current Avatar</label>
+                    <img src="<?php echo format($user_class->avatar); ?>" alt="Current Avatar" style="max-width: 100px; max-height: 100px; border: 1px solid #ccc;" />
+                </div>
+                <div class="pure-control-group">
                     <label for="avatar_upload">Upload Avatar</label>
                     <input type="file" name="avatar_upload" id="avatar_upload" accept="image/jpeg,image/png,image/gif,image/webp" />
                     <span class="pure-form-message-inline">Max 2MB. Formats: JPEG, PNG, GIF, WebP</span>
