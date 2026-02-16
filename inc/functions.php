@@ -288,9 +288,23 @@ function formatImage($url = null, $width = 100, $height = 100, $style = 'border:
     if (!$url) {
         $url = 'images/noimage.png';
     }
-    if (!isImage($url)) {
-        return '[Invalid image: ' . $url . ']';
+    
+    // Check if URL is a local relative path (not starting with http:// or https://)
+    $isLocal = !preg_match('/^https?:\/\//', $url);
+    
+    if ($isLocal && defined('BASE_PATH')) {
+        // For local paths, construct the file path and use local validation
+        $filePath = BASE_PATH . '/' . ltrim($url, '/');
+        if (!isImage($filePath, true)) {
+            return '[Invalid image: ' . $url . ']';
+        }
+    } else {
+        // For remote URLs, use the existing validation
+        if (!isImage($url)) {
+            return '[Invalid image: ' . $url . ']';
+        }
     }
+    
     $image = '<img src="' . $url . '" width="' . $width . '" height="' . $height . '"';
     if ($style) {
         $image .= ' style="' . $style . '"';
@@ -310,14 +324,38 @@ function formatImage($url = null, $width = 100, $height = 100, $style = 'border:
  */
 function isImage($url, $local = false)
 {
-    if (!urlExists($url)) {
-        return false;
-    }
-    if ($local === true && function_exists('exif_imagetype')) { // Preferred method
-        if (!exif_imagetype($url)) {
+    // For local files, check file existence differently
+    if ($local === true) {
+        if (!file_exists($url) || !is_readable($url)) {
             return false;
         }
-    } else { // Eww.. Legacy
+        if (function_exists('exif_imagetype')) { // Preferred method
+            if (!exif_imagetype($url)) {
+                return false;
+            }
+        } else {
+            // Fallback to getimagesize for local files
+            try {
+                $dims = (array)getimagesize($url);
+            } catch (Exception $e) {
+                /** @noinspection ForgottenDebugOutputInspection */
+                if (function_exists('log_warning')) {
+                    log_warning('Image size check failed: ' . $e->getMessage(), ['url' => $url]);
+                } else {
+                    error_log($e->getMessage());
+                }
+                return false;
+            }
+            if (!is_array($dims) || !isset($dims[0], $dims[1]) || !$dims[0] || !$dims[1]) {
+                return false;
+            }
+        }
+    } else {
+        // For remote URLs, use the existing validation
+        if (!urlExists($url)) {
+            return false;
+        }
+        // Eww.. Legacy
         try {
             $dims = (array)getimagesize($url);
         } catch (Exception $e) {
