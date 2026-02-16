@@ -11,6 +11,7 @@ Text-based online RPG-MMORPG-PBBG
 
 ### How Do I Get Setup? ###
 
+* Its suggested you implement the script using PHP7.4, while the core supports PHP8+, some of the plugins require updating.
 * Upload the files to your public_html (or htdocs/www)
 * Create a MySQL database and user
 * Go to the URL of wherever you just uploaded them - go through the installer and fill in the details
