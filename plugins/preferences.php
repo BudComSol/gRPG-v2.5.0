@@ -39,20 +39,21 @@ if (array_key_exists('submit', $_POST)) {
                 
                 // Generate unique filename based on user ID
                 $filename = 'avatar_' . $user_class->id . '_' . time() . '.' . $extension;
-                $uploadDir = __DIR__ . '/../images/avatars/';
+                $uploadDir = realpath(__DIR__ . '/../images/avatars/');
                 
                 // Ensure upload directory exists and is writable
-                if (!is_dir($uploadDir)) {
+                if ($uploadDir === false) {
                     $errors[] = 'Upload directory does not exist.';
                 } elseif (!is_writable($uploadDir)) {
                     $errors[] = 'Upload directory is not writable.';
                 } else {
-                    $uploadPath = $uploadDir . $filename;
+                    $uploadPath = $uploadDir . DIRECTORY_SEPARATOR . $filename;
                     
                     // Delete old avatar if it exists in avatars directory
                     if (!empty($user_class->avatar) && strpos($user_class->avatar, 'images/avatars/') === 0) {
-                        $oldAvatarPath = __DIR__ . '/../' . $user_class->avatar;
-                        if (file_exists($oldAvatarPath) && is_file($oldAvatarPath)) {
+                        $oldAvatarPath = realpath(__DIR__ . '/../' . $user_class->avatar);
+                        // Verify the resolved path is within avatars directory to prevent path traversal
+                        if ($oldAvatarPath !== false && strpos($oldAvatarPath, $uploadDir) === 0 && is_file($oldAvatarPath)) {
                             if (!unlink($oldAvatarPath)) {
                                 log_warning('Failed to delete old avatar file', ['path' => $oldAvatarPath, 'user_id' => $user_class->id]);
                             }
@@ -70,8 +71,24 @@ if (array_key_exists('submit', $_POST)) {
             }
         }
     } elseif (isset($_FILES['avatar_upload']) && $_FILES['avatar_upload']['error'] !== UPLOAD_ERR_NO_FILE) {
-        // Handle upload errors
-        $errors[] = 'File upload error occurred. Please try again.';
+        // Handle upload errors with specific messages
+        switch ($_FILES['avatar_upload']['error']) {
+            case UPLOAD_ERR_INI_SIZE:
+            case UPLOAD_ERR_FORM_SIZE:
+                $errors[] = 'File is too large. Maximum size is 2MB.';
+                break;
+            case UPLOAD_ERR_PARTIAL:
+                $errors[] = 'File was only partially uploaded. Please try again.';
+                break;
+            case UPLOAD_ERR_CANT_WRITE:
+                $errors[] = 'Failed to write file to disk. Please contact support.';
+                break;
+            case UPLOAD_ERR_EXTENSION:
+                $errors[] = 'File upload was blocked. Please contact support.';
+                break;
+            default:
+                $errors[] = 'File upload error occurred. Please try again.';
+        }
     }
     
     // If no file was uploaded, check for URL input
@@ -108,7 +125,7 @@ if (count($errors)) {
                 <?php if (!empty($user_class->avatar)) { ?>
                 <div class="pure-control-group">
                     <label>Current Avatar</label>
-                    <img src="<?php echo format($user_class->avatar); ?>" alt="Current Avatar" style="max-width: 100px; max-height: 100px; border: 1px solid #ccc;" />
+                    <img src="<?php echo format($user_class->avatar); ?>" alt="Current Avatar" class="avatar-preview" />
                 </div>
                 <?php } ?>
                 <div class="pure-control-group">
