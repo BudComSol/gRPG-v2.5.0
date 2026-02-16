@@ -534,7 +534,7 @@ class User
         }
         if ($this->admin === 1) {
             $this->type = 'Admin';
-            $color = 'blue';
+            $color = '#FF3131';
         }
         if ($this->admin === 2) {
             $this->type = 'Staff';
@@ -556,13 +556,13 @@ class User
         }
         if((time() - strtotime($this->lastactive)) <= 300) {
             $conf = [
-                'color' => 'green',
-                'text' => '[online]',
+                'color' => '#39FF14',
+                'text' => '[ONLINE]',
             ];
         } else {
             $conf = [
-                'color' => 'red',
-                'text' => 'offline',
+                'color' => '#999',
+                'text' => '[OFFLINE]',
             ];
         }
         $this->formattedonline = '<span style="color:'.$conf['color'].';padding:2px;font-weight:bold;">'.$conf['text'].'</span>';
