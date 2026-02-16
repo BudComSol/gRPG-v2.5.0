@@ -125,8 +125,16 @@ if (array_key_exists('submit', $_POST)) {
                     $errors[] = 'The avatar you selected hasn\'t validated as an image!';
                 }
             }
+            $avatarPath = $_POST['avatar'];
+        } else {
+            // If avatar field is empty, preserve existing local avatar
+            // This handles the case where the form doesn't display local paths in the avatar URL field
+            if (!empty($user_class->avatar) && strpos($user_class->avatar, 'images/avatars/') === 0) {
+                $avatarPath = $user_class->avatar;
+            } else {
+                $avatarPath = $_POST['avatar'];
+            }
         }
-        $avatarPath = $_POST['avatar'];
     }
     
     $_POST['quote'] = array_key_exists('quote', $_POST) && is_string($_POST['quote']) ? strip_tags(trim($_POST['quote'])) : null;
@@ -164,7 +172,7 @@ if (count($errors)) {
                 </div>
                 <div class="pure-control-group">
                     <label for="avatar">Or Avatar URL</label>
-                    <input type="text" name="avatar" id="avatar" value="<?php echo format($user_class->avatar); ?>" />
+                    <input type="text" name="avatar" id="avatar" value="<?php echo (strpos($user_class->avatar, 'images/avatars/') === 0) ? '' : format($user_class->avatar); ?>" />
                 </div>
                 <div class="pure-control-group">
                     <label for="quote">Quote</label>
