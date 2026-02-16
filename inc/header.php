@@ -29,6 +29,8 @@ if (!$user_class->id) {
     header('Location: login.php');
     exit;
 }
+// Update lastactive timestamp
+$db->query('UPDATE users SET lastactive = CURRENT_TIMESTAMP WHERE id = ?', [$_SESSION['id']]);
 $time = date('F d, Y g:i:sa');
 $site_url = getenv('SITE_URL');
 ob_start(); ?>
