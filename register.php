@@ -90,50 +90,54 @@ $_GET['referer'] = array_key_exists('referer', $_GET) && ctype_digit($_GET['refe
     <td class="content"><?php
     if ($registration === 'open') {
         ?>
-        <form action="register.php" method="post" class="pure-form pure-form-aligned"><?php
+        <div class="form-container">
+            <form action="register.php" method="post"><?php
 echo csrf_create();
         if (!empty($_GET['referer'])) {
             ?><input type="hidden" name="referer" value="<?php echo $_GET['referer']; ?>" /><?php
         } ?>
-<legend>Account Setup</legend>
-<fieldset>
-    <div class="pure-control-group">
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username" />
-    </div>
-    <div class="pure-control-group">
-        <label for="pass">Password</label>
-        <input type="password" name="pass" id="pass" autocomplete="off" />
-    </div>
-    <div class="pure-control-group">
-        <label for="conf_pass">Confirm Password</label>
-        <input type="password" name="conf_pass" id="conf_pass" autocomplete="off" />
-    </div>
-    <div class="pure-control-group">
-        <label for="email">Email address</label>
-        <input type="text" name="email" id="email" />
-    </div>
-    <div class="pure-control-group">
-        <label for="class">Class</label>
-        <select name="class" id="class"><?php
+                <div class="form-legend">Account Setup</div>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" />
+                </div>
+                <div class="form-group">
+                    <label for="pass">Password</label>
+                    <input type="password" name="pass" id="pass" autocomplete="off" />
+                </div>
+                <div class="form-group">
+                    <label for="conf_pass">Confirm Password</label>
+                    <input type="password" name="conf_pass" id="conf_pass" autocomplete="off" />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="email" name="email" id="email" />
+                </div>
+                <div class="form-group">
+                    <label for="class">Class</label>
+                    <select name="class" id="class"><?php
 foreach ($classes as $opt) {
             printf('<option value="%1$s">%1$s</option>', $opt);
         } ?></select>
-                </div>
-            </fieldset><?php
+                </div><?php
 if (defined('CAPTCHA_REGISTRATION') && CAPTCHA_REGISTRATION == true) {
-            ?><legend>Captcha</legend>
-                <fieldset>
-                    <div class="pure-control-group">
+            ?>
+                <div class="form-legend">Captcha</div>
+                <div class="form-group">
+                    <label></label>
+                    <div style="display: inline-block; text-align: center;">
                         <img id="captcha" src="/inc/securimage/securimage_show.php" alt="CaptCha Image" /><br />
-                        <input type="text" name="captcha_code" id="captcha_code" size="10" maxlength="6" /><br /><br />
+                        <input type="text" name="captcha_code" id="captcha_code" size="10" maxlength="6" style="margin-top: 10px; width: auto;" /><br />
                         [<a href="#" onclick="document.getElementById('captcha').src = '/inc/securimage/securimage_show.php?' + Math.random(); return false">Change Image</a>]
                     </div>
-                </fieldset><?php
-        } ?><div class="pure-controls">
-                <button type="submit" name="submit" class="pure-button pure-button-primary">Register Your Account</button>
-            </div>
-        </form><br /><br /><?php
+                </div><?php
+        } ?>
+                <div class="form-controls">
+                    <button type="submit" name="submit" class="form-button">Register Your Account</button>
+                </div>
+            </form>
+        </div>
+        <br /><br /><?php
     } else {
         ?>
         Registration is currently closed<br /><?php
