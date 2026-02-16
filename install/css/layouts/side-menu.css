@@ -213,6 +213,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     .content {
         padding-left: 2em;
         padding-right: 2em;
+        text-align: center;
     }
 
     #layout {
