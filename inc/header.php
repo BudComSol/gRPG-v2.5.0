@@ -79,8 +79,7 @@ if ($site_url !== false && $site_url !== '') {
             <div class="topbox">
                 <table width="800">
                     <tr>
-                        <td width="50%" class="center"><img src="images/logos/logo.png" alt="GRPG"
-                                                            style="height:150px;"/></td>
+                        <td width="50%" class="center-img"><img src="images/logos/logo.png" alt="gRPG Main Logo"/></td>
 
                     </tr>
                 </table>
