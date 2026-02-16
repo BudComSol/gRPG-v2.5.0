@@ -292,7 +292,7 @@ function formatImage($url = null, $width = 100, $height = 100, $style = 'border:
     // Check if URL is a local relative path (not starting with http:// or https://)
     $isLocal = !preg_match('/^https?:\/\//', $url);
     
-    if ($isLocal) {
+    if ($isLocal && defined('BASE_PATH')) {
         // For local paths, construct the file path and use local validation
         $filePath = BASE_PATH . '/' . ltrim($url, '/');
         if (!isImage($filePath, true)) {
