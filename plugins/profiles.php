@@ -20,8 +20,8 @@ if ($user_class->admin) {
                 <td colspan="4">
                     <table width="100%" height="100%" cellpadding="5" cellspacing="2" class="center">
                         <tr>
-                            <td width="120"><img height="100" width="100" src="<?php echo $profile_class->avatar; ?>" /></td>
-                            <td><strong>Favorite Quote: </strong>&ldquo;<?php echo $profile_class->quote; ?>&rdquo;</td>
+                            <td width="120"><img height="100" width="100" style="box-shadow: 0px 0px 10px 5px #ccc" src="<?php echo $profile_class->avatar; ?>" /></td>
+                            <td><strong>Quote: </strong>&ldquo;<?php echo $profile_class->quote; ?>&rdquo;</td>
                         </tr>
                     </table>
                 </td>
