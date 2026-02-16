@@ -333,7 +333,8 @@ https://github.com/yahoo/pure/blob/master/LICENSE.md
 .pure-form select {
     height: 2.25em;
     border: 1px solid #ccc;
-    background-color: #fff
+    background-color: #fff;
+    width: 30%;
 }
 
 .pure-form select[multiple] {
