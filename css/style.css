@@ -65,7 +65,8 @@
 }
 
 body {
-    width: 828px;
+    width: 100%;
+    max-width: 828px;
     margin: auto;
     border-width: 1px;
     border-style: solid;
@@ -74,7 +75,8 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: normal;
     margin-top: 30px;
-    margin-bottom: 30px;   
+    margin-bottom: 30px;
+    box-sizing: border-box;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -622,5 +624,179 @@ fieldset {
     #cookie-consent-banner .cookie-buttons {
         width: 100%;
         justify-content: center;
+    }
+}
+
+/* Responsive Design for Mobile and Tablet */
+@media (max-width: 1024px) {
+    body {
+        width: 100%;
+        max-width: 100%;
+        margin-top: 0;
+        margin-bottom: 0;
+        border-left: none;
+        border-right: none;
+    }
+    
+    .topbox {
+        margin-left: 0;
+        margin-right: 0;
+        margin-top: 0;
+    }
+    
+    .topbox table {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    
+    /* Make tables responsive */
+    table {
+        width: 100% !important;
+    }
+    
+    /* Adjust left menu */
+    .leftmenu, a.leftmenu:link, a.leftmenu:hover, a.leftmenu:visited, .headbox {
+        width: 100%;
+        margin-left: 0;
+        box-sizing: border-box;
+    }
+    
+    /* Make main content full width on mobile */
+    .mainbox {
+        padding: 10px;
+    }
+    
+    .topbox {
+        height: auto;
+        padding: 10px;
+        margin: 0;
+    }
+    
+    .topnav {
+        height: auto;
+        margin: 0;
+    }
+    
+    /* Responsive forms */
+    .pure-form {
+        width: 100% !important;
+    }
+    
+    .pure-control-group {
+        display: block;
+    }
+    
+    .pure-control-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    
+    .pure-control-group input {
+        width: 100%;
+        max-width: 300px;
+        box-sizing: border-box;
+    }
+    
+    /* Responsive tables */
+    .pure-table {
+        font-size: 12px;
+    }
+    
+    .pure-table th,
+    .pure-table td {
+        padding: 5px !important;
+    }
+    
+    /* Make boxes responsive */
+    .box1, .box2, .box3 {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    /* Adjust images */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    /* Stack layout vertically on mobile */
+    table[width="100%"] > tbody > tr > td[valign="top"] {
+        display: block;
+        width: 100% !important;
+    }
+    
+    td[width="150"],
+    td[valign="top"][width="150"] {
+        width: 100% !important;
+    }
+    
+    /* Adjust topbar */
+    .topbar {
+        font-size: 12px;
+        padding: 5px;
+        margin: 0;
+    }
+    
+    /* Adjust content areas */
+    .content {
+        font-size: 12px;
+        overflow-x: auto;
+    }
+    
+    .content-head {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Extra small mobile devices */
+    body {
+        font-size: 12px;
+    }
+    
+    .topbar {
+        font-size: 11px;
+        padding: 3px;
+    }
+    
+    .content {
+        font-size: 11px;
+        padding: 5px;
+    }
+    
+    .content-head {
+        font-size: 12px;
+        padding: 3px;
+    }
+    
+    /* Make small buttons and text more readable */
+    .pure-button {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+    
+    /* Reduce table padding on very small screens */
+    .pure-table th,
+    .pure-table td {
+        padding: 3px !important;
+        font-size: 11px;
+    }
+    
+    /* Ensure form inputs are touch-friendly */
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    select,
+    textarea {
+        min-height: 40px;
+        font-size: 16px; /* Prevents zoom on iOS */
     }
 }

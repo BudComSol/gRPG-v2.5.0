@@ -42,6 +42,7 @@ if ($site_url !== false && $site_url !== '') {
 }
     ?><title><?php echo GAME_NAME; ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" type="text/css" media="all" href="css/login.css"/>
     <link rel="stylesheet" type="text/css" media="all" href="css/style.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/g/pure@0.6.2(buttons-min.css+grids-min.css+forms-min.css)"
