@@ -31,7 +31,7 @@ if (array_key_exists('success', $_SESSION)) {
 </tr>
 <tr>
     <td class="content">
-        <?php echo $_GET['act'] !== 'managesub' ? '<p><a href="forum.php?act=managesub" class="pure-button pure-button-grey">Manage Subscriptions</a></p>' : '<p><a href="forum.php" class="pure-button pure-button-grey">Back to Forum</a></p>'; ?>
+        <?php echo $_GET['act'] !== 'managesub' ? '<p><a href="plugins/forum.php?act=managesub" class="pure-button pure-button-grey">Manage Subscriptions</a></p>' : '<p><a href="plugins/forum.php" class="pure-button pure-button-grey">Back to Forum</a></p>'; ?>
     </td>
 </tr><?php
 if ($_GET['act'] !== 'viewtopic') {
@@ -106,7 +106,7 @@ function index($db, $user_class, $parser)
     if ($rows !== null) {
         foreach ($rows as $row) {
             ?><tr>
-                <td><a href="forum.php?viewforum=<?php echo $row['fb_id']; ?>" class="bold"><?php echo format($row['fb_name']); ?></a><br /><span class="small"><?php echo format($row['fb_desc']); ?></span></td>
+                <td><a href="plugins/forum.php?viewforum=<?php echo $row['fb_id']; ?>" class="bold"><?php echo format($row['fb_name']); ?></a><br /><span class="small"><?php echo format($row['fb_desc']); ?></span></td>
                 <td><?php echo format($row['fb_posts']); ?></td>
                 <td><?php echo format($row['fb_topics']); ?></td>
                 <td><?php
@@ -116,7 +116,7 @@ function index($db, $user_class, $parser)
                 $db->execute([$row['fb_latest_topic']]);
                 $date = new DateTime($row['fb_latest_time']);
                 echo $date->format('F d, Y g:i:sa'); ?><br />
-                        In: <a href="forum.php?viewtopic=<?php echo $row['fb_latest_topic']; ?>&amp;latest"><?php echo format($db->result()); ?></a><br />
+                        In: <a href="plugins/forum.php?viewtopic=<?php echo $row['fb_latest_topic']; ?>&amp;latest"><?php echo format($db->result()); ?></a><br />
                         By: <?php echo $poster->formattedname;
             } else {
                 echo 'No posts';
@@ -144,7 +144,7 @@ function index($db, $user_class, $parser)
         if ($rows !== null) {
             foreach ($rows as $row) {
                 ?><tr>
-                    <td><a href="forum.php?viewforum=<?php echo $row['fb_id']; ?>" class="bold"><?php echo format($row['fb_name']); ?></a><br /><span class="small"><?php echo format($row['fb_desc']); ?></span></td>
+                    <td><a href="plugins/forum.php?viewforum=<?php echo $row['fb_id']; ?>" class="bold"><?php echo format($row['fb_name']); ?></a><br /><span class="small"><?php echo format($row['fb_desc']); ?></span></td>
                     <td><?php echo format($row['fb_posts']); ?></td>
                     <td><?php echo format($row['fb_topics']); ?></td>
                     <td><?php
@@ -154,7 +154,7 @@ function index($db, $user_class, $parser)
                     $db->execute([$row['fb_latest_topic']]);
                     $date = new DateTime($row['fb_latest_time']);
                     echo $date->format('F d, Y g:i:sa'); ?><br />
-                            In: <a href="forum.php?viewtopic=<?php echo $row['fb_latest_topic']; ?>&amp;latest"><?php echo format($db->result()); ?></a><br />
+                            In: <a href="plugins/forum.php?viewtopic=<?php echo $row['fb_latest_topic']; ?>&amp;latest"><?php echo format($db->result()); ?></a><br />
                             By: <?php echo $poster->formattedname;
                 } else {
                     echo 'No posts';
@@ -179,8 +179,8 @@ function viewforum($db, $user_class, $parser)
         echo Message('That board doesn\'t exist', 'Error', true);
     }
     $board = $db->fetch(true); ?><div class="big">
-        <a href="forum.php">Index</a> &rarr;
-        <a href="forum.php?viewforum=<?php echo $_GET['viewforum']; ?>"><?php echo format($board['fb_name']); ?></a><?php echo $_GET['viewforum'] != 1 || $user_class->admin == 1 ? '<br /><a href="forum.php?act=newtopic&amp;forum='.$_GET['viewforum'].'" class="pure-button">Create New Topic</a>' : ''; ?>
+        <a href="plugins/forum.php">Index</a> &rarr;
+        <a href="plugins/forum.php?viewforum=<?php echo $_GET['viewforum']; ?>"><?php echo format($board['fb_name']); ?></a><?php echo $_GET['viewforum'] != 1 || $user_class->admin == 1 ? '<br /><a href="forum.php?act=newtopic&amp;forum='.$_GET['viewforum'].'" class="pure-button">Create New Topic</a>' : ''; ?>
     </div><br /><?php
     accessCheck($board, $user_class);
     $db->query('SELECT COUNT(ft_id) FROM forum_topics WHERE ft_board = ?');
@@ -215,7 +215,7 @@ function viewforum($db, $user_class, $parser)
             $creator = $topic['ft_creation_user'] ? new User($topic['ft_creation_user']) : (object) ['formattedname' => 'None']; ?><tr>
                 <td><?php
             echo $topic['ft_pinned'] ? '<img src="/images/silk/exclamation.png" title="Pinned" alt="Pinned" /> ' : '';
-            echo $topic['ft_locked'] ? '<img src="/images/silk/lock.png" title="Locked" alt="Locked" /> ' : ''; ?><a href="forum.php?viewtopic=<?php echo $topic['ft_id']; ?>"><?php echo format($topic['ft_name']); ?></a>
+            echo $topic['ft_locked'] ? '<img src="/images/silk/lock.png" title="Locked" alt="Locked" /> ' : ''; ?><a href="plugins/forum.php?viewtopic=<?php echo $topic['ft_id']; ?>"><?php echo format($topic['ft_name']); ?></a>
                     <?php echo isset($topic['subbed']) ? ' <img src="/images/silk/eye.png" title="Subscribed" alt="[Subscribed]" />' : ''; ?>
                 </td>
                 <td><?php echo getCount($topic['ft_id'], 'posts_topics'); ?></td>
@@ -228,7 +228,7 @@ function viewforum($db, $user_class, $parser)
                 $poster = $topic['ft_latest_user'] ? new User($topic['ft_latest_user']) : (object) ['formattedname' => 'None'];
                 echo $poster->formattedname; ?><br />
                         <span class="small"><?php echo $date_latest->format('F d, Y g:i:sa'); ?></span><br />
-                        <a href="forum.php?viewtopic=<?php echo $topic['ft_id']; ?>&amp;latest"><img src="/images/silk/arrow_right.png" title="Go to latest post" alt="Go to latest post" /></a><?php
+                        <a href="plugins/forum.php?viewtopic=<?php echo $topic['ft_id']; ?>&amp;latest"><img src="/images/silk/arrow_right.png" title="Go to latest post" alt="Go to latest post" /></a><?php
             } else {
                 echo 'No responses yet';
             } ?></td>
@@ -264,9 +264,9 @@ function viewtopic($db, $user_class, $parser)
     $board = $db->fetch(true); ?><tr>
         <th class="content-head">
             <div class="big">
-                <a href="forum.php">Index</a> &rarr;
-                <a href="forum.php?viewforum=<?php echo $board['fb_id']; ?>"><?php echo format($board['fb_name']); ?></a> &rarr;
-                <a href="forum.php?viewtopic=<?php echo $topic['ft_id']; ?>"><?php echo format($topic['ft_name']); ?></a>
+                <a href="plugins/forum.php">Index</a> &rarr;
+                <a href="plugins/forum.php?viewforum=<?php echo $board['fb_id']; ?>"><?php echo format($board['fb_name']); ?></a> &rarr;
+                <a href="plugins/forum.php?viewtopic=<?php echo $topic['ft_id']; ?>"><?php echo format($topic['ft_name']); ?></a>
             </div>
         </th>
     </tr>
@@ -307,9 +307,9 @@ function viewtopic($db, $user_class, $parser)
                 </form>
             </div>
             <div class="pure-u-1-2">
-                <a href="forum.php?act=pin&amp;topic=<?php echo $topic['ft_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><img src="../images/silk/exclamation.png" alt="<?php echo $pinOpposite; ?>" title="<?php echo $pinOpposite; ?>" /></a> &middot;
-                <a href="forum.php?act=lock&amp;topic=<?php echo $topic['ft_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><img src="../images/silk/lock.png" alt="<?php echo $lockOpposite; ?>" title="<?php echo $lockOpposite; ?>" /></a> &middot;
-                <a href="forum.php?act=deletopic&amp;topic=<?php echo $topic['ft_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><img src="../images/silk/delete.png" title="Delete Topic" alt="Delete Topic" /></a>
+                <a href="plugins/forum.php?act=pin&amp;topic=<?php echo $topic['ft_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><img src="../images/silk/exclamation.png" alt="<?php echo $pinOpposite; ?>" title="<?php echo $pinOpposite; ?>" /></a> &middot;
+                <a href="plugins/forum.php?act=lock&amp;topic=<?php echo $topic['ft_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><img src="../images/silk/lock.png" alt="<?php echo $lockOpposite; ?>" title="<?php echo $lockOpposite; ?>" /></a> &middot;
+                <a href="plugins/forum.php?act=deletopic&amp;topic=<?php echo $topic['ft_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><img src="../images/silk/delete.png" title="Delete Topic" alt="Delete Topic" /></a>
             </div>
         </div><?php
     }
@@ -333,7 +333,7 @@ function viewtopic($db, $user_class, $parser)
     </div>
     <div class="pure-g center">
         <div class="pure-u-1-6">
-            <a href="forum.php?act=sub&amp;topic=<?php echo $topic['ft_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>" class="pure-button pure-button-grey"><i class="fa fa-envelope" aria-hidden="true"></i> <?php echo $subWhich; ?>ubscribe</a>
+            <a href="plugins/forum.php?act=sub&amp;topic=<?php echo $topic['ft_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>" class="pure-button pure-button-grey"><i class="fa fa-envelope" aria-hidden="true"></i> <?php echo $subWhich; ?>ubscribe</a>
         </div>
     </div>
 </td>
@@ -378,11 +378,11 @@ function viewtopic($db, $user_class, $parser)
             <th class="center top">
                 <?php echo $date->format('F d, Y g:i:sa'); ?><br />
                 <span class="small">
-                    <a href="forum.php?act=quote&amp;viewtopic=<?php echo $topic['ft_id']; ?>&amp;quote=<?php echo $post['fp_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><img src="../images/silk/page_attach.png" title="Quote" alt="[Quote]" /></a><?php
+                    <a href="plugins/forum.php?act=quote&amp;viewtopic=<?php echo $topic['ft_id']; ?>&amp;quote=<?php echo $post['fp_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><img src="../images/silk/page_attach.png" title="Quote" alt="[Quote]" /></a><?php
         if ($user_class->admin == 1) {
             if ($post['fp_poster'] == $user_class->id) {
-                ?><a href="forum.php?act=edit&amp;topic=<?php echo $topic['ft_id']; ?>&amp;post=<?php echo $post['fp_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><img src="../images/silk/pencil_go.png" title="Edit" alt="[Edit]" /></a><?php
-            } ?><a href="forum.php?act=delepost&amp;topic=<?php echo $topic['ft_id']; ?>&amp;post=<?php echo $post['fp_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><img src="../images/silk/page_delete.png" title="Delete" alt="[Delete]" /></a><?php
+                ?><a href="plugins/forum.php?act=edit&amp;topic=<?php echo $topic['ft_id']; ?>&amp;post=<?php echo $post['fp_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><img src="../images/silk/pencil_go.png" title="Edit" alt="[Edit]" /></a><?php
+            } ?><a href="plugins/forum.php?act=delepost&amp;topic=<?php echo $topic['ft_id']; ?>&amp;post=<?php echo $post['fp_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><img src="../images/silk/page_delete.png" title="Delete" alt="[Delete]" /></a><?php
         } ?></span>
             </th>
         </tr>
@@ -435,8 +435,8 @@ function newtopic($db, $user_class, $parser)
         echo Message('That board doesn\'t exist', 'Error', true);
     } ?>
     <div class="big">
-        <a href="forum.php">Index</a> &rarr;
-        <a href="forum.php?viewforum=<?php echo $board['fb_id']; ?>"><?php echo format($board['fb_name']); ?></a> &rarr;
+        <a href="plugins/forum.php">Index</a> &rarr;
+        <a href="plugins/forum.php?viewforum=<?php echo $board['fb_id']; ?>"><?php echo format($board['fb_name']); ?></a> &rarr;
         Topic Creation
     </div><?php
     accessCheck($board, $user_class);
@@ -537,7 +537,7 @@ function reply($db, $user_class, $parser)
     if ($notify !== null) {
         foreach ($notify as $user) {
             if ($user != $user_class->id) {
-                Send_Event($user, '{extra} has posted on your subscription: <a href="forum.php?viewtopic='.$topic['ft_id'].'&amp;latest">'.format($topic['ft_name']).'</a>', $user_class->id);
+                Send_Event($user, '{extra} has posted on your subscription: <a href="plugins/forum.php?viewtopic='.$topic['ft_id'].'&amp;latest">'.format($topic['ft_name']).'</a>', $user_class->id);
             }
         }
     }
@@ -591,9 +591,9 @@ function quote($db, $user_class, $parser)
         echo Message('The board for this topic doesn\'t exist'.(trashTopic($topic['ft_id']) ? '. This topic has been automatically deleted/recycled' : ''), 'Error', true);
     }
     $board = $db->fetch(true); ?><div class="big">
-        <a href="forum.php">Index</a> &rarr;
-        <a href="forum.php?viewforum=<?php echo $board['fb_id']; ?>"><?php echo format($board['fb_name']); ?></a> &rarr;
-        <a href="forum.php?viewtopic=<?php echo $topic['ft_id']; ?>"><?php echo format($topic['ft_name']); ?></a> &rarr;
+        <a href="plugins/forum.php">Index</a> &rarr;
+        <a href="plugins/forum.php?viewforum=<?php echo $board['fb_id']; ?>"><?php echo format($board['fb_name']); ?></a> &rarr;
+        <a href="plugins/forum.php?viewtopic=<?php echo $topic['ft_id']; ?>"><?php echo format($topic['ft_name']); ?></a> &rarr;
         Quote
     </div><br /><?php
     accessCheck($board, $user_class);
@@ -636,7 +636,7 @@ function subscribe($db, $user_class, $parser)
         $db->execute([$user_class->id, $topic['ft_id']]);
         $which = 'subscribed to';
     }
-    $_SESSION['success'] = 'You\'ve '.$which.' <a href="forum.php?viewtopic='.$topic['ft_id'].'">'.format($topic['ft_name']).'</a>';
+    $_SESSION['success'] = 'You\'ve '.$which.' <a href="plugins/forum.php?viewtopic='.$topic['ft_id'].'">'.format($topic['ft_name']).'</a>';
     if (array_key_exists('from', $_GET)) {
         if ($_GET['from'] === 'manage') {
             exit(header('Location: forum.php?act=managesub'));
@@ -667,9 +667,9 @@ function manage_subscriptions($db, $user_class, $parser)
         $csrfg = csrf_create('csrfg', false);
         foreach ($rows as $row) {
             $poster = $row['ft_latest_user'] ? new User($row['ft_latest_user']) : (object) ['formattedname' => 'No activity yet']; ?><tr>
-                <td><a href="forum.php?viewtopic=<?php echo $row['ft_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><?php echo format($row['ft_name']); ?></a></td>
+                <td><a href="plugins/forum.php?viewtopic=<?php echo $row['ft_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><?php echo format($row['ft_name']); ?></a></td>
                 <td><?php echo $row['ft_latest_user'] ? $poster->formattedname : 'No activity yet'; ?></td>
-                <td><a href="forum.php?act=sub&amp;topic=<?php echo $row['ft_id']; ?>&amp;from=manage&amp;csrfg=<?php echo $csrfg; ?>" class="pure-button pure-button-grey">Unsubscribe</a></td>
+                <td><a href="plugins/forum.php?act=sub&amp;topic=<?php echo $row['ft_id']; ?>&amp;from=manage&amp;csrfg=<?php echo $csrfg; ?>" class="pure-button pure-button-grey">Unsubscribe</a></td>
             </tr><?php
         }
     } else {
@@ -699,9 +699,9 @@ function edit($db, $user_class, $parser)
         echo Message('The board for this topic doesn\'t exist'.(trashTopic($topic['ft_id']) ? '. This topic has been automatically deleted/recycled' : ''), 'Error', true);
     }
     $board = $db->fetch(true); ?><div class="big">
-        <a href="forum.php">Index</a> &rarr;
-        <a href="forum.php?viewforum=<?php echo $board['fb_id']; ?>"><?php echo format($board['fb_name']); ?></a> &rarr;
-        <a href="forum.php?viewtopic=<?php echo $topic['ft_id']; ?>"><?php echo format($topic['ft_name']); ?></a> &rarr;
+        <a href="plugins/forum.php">Index</a> &rarr;
+        <a href="plugins/forum.php?viewforum=<?php echo $board['fb_id']; ?>"><?php echo format($board['fb_name']); ?></a> &rarr;
+        <a href="plugins/forum.php?viewtopic=<?php echo $topic['ft_id']; ?>"><?php echo format($topic['ft_name']); ?></a> &rarr;
         Edit Post
     </div><br /><?php
     accessCheck($board, $user_class);
@@ -1087,7 +1087,7 @@ function tag($text, $display = false, $id = false)
                 ++$cnt;
                 $tagged = new User($row['id']);
                 if (!$display && !isset($ids[$row['id']]) && !isset($event_sent)) {
-                    Send_Event($row['id'], 'You\'ve been tagged in the forum!<br /><a href="forum.php?viewtopic='.$id.'">View it here</a>');
+                    Send_Event($row['id'], 'You\'ve been tagged in the forum!<br /><a href="plugins/forum.php?viewtopic='.$id.'">View it here</a>');
                     $event_sent = true;
                 } else {
                     return preg_replace('/@(\w+)/', $tagged->formattedname, $text);
