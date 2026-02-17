@@ -5,7 +5,7 @@ require_once __DIR__.'/../inc/header.php';
     <th class="content-head">Citizen Search</th>
 </tr>
 <tr>
-    <td class="content">Find citizens that meet your search criteria.</td>
+    <td class="content">Find Citizens that meet your search criteria.</td>
 </tr><?php
 if (array_key_exists('search', $_POST)) {
     if (!csrf_check('csrf', $_POST)) {
