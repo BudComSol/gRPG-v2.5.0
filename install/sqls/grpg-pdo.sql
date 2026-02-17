@@ -146,6 +146,11 @@ CREATE TABLE IF NOT EXISTS `cities`
     `price`       int(11)      NOT NULL DEFAULT 0
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
+INSERT INTO `cities` (`name`, `levelreq`, `landleft`, `landprice`, `description`, `price`)
+VALUES ('Generica', 0, 100, 1000, 'A generic city perfect for starting your journey. This bustling metropolis offers all the basic amenities and opportunities for newcomers.', 0),
+       ('Novara', 5, 150, 2000, 'A vibrant city for intermediate players. Known for its thriving markets and challenging opportunities for those ready to advance.', 50000),
+       ('Valoria', 10, 200, 3000, 'A prestigious city that attracts experienced individuals. Here, the stakes are higher and the rewards greater.', 100000),
+       ('Centara', 15, 250, 4000, 'The ultimate destination for elite players. This sophisticated city offers the most exclusive opportunities and challenges.', 200000);
 
 DROP TABLE IF EXISTS `contactlist`;
 CREATE TABLE IF NOT EXISTS `contactlist`
