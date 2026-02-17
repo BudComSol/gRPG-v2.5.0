@@ -16,7 +16,7 @@ if (array_key_exists('deleteall', $_GET)) {
         $db->execute([$user_class->id]);
         echo Message(prettynum($cnt).' event'.s($cnt).' ha'.($cnt == 1 ? 's' : 've').' been deleted');
     } else {
-        echo Message('You have no events to delete');
+        echo Message('<p>You have no events to delete presently.</p>');
     }
 }
 $_POST['event_id'] = array_key_exists('event_id', $_POST) && ctype_digit($_POST['event_id']) ? $_POST['event_id'] : null;
@@ -50,7 +50,7 @@ if ($db->result()) {
     <th class="content-head">Event Log</th>
 </tr>
 <tr>
-    <td class="content center"><a href="events.php?deleteall&amp;csrfa=<?php echo csrf_create('csrfa', false); ?>">Delete All My Events</a></td>
+    <td class="content center"><a href="plugins/events.php?deleteall&amp;csrfa=<?php echo csrf_create('csrfa', false); ?>"><p>Delete All My Events</p></a></td>
 </tr>
 <tr>
     <td class="content"><?php
@@ -89,7 +89,7 @@ if ($rows !== null) {
             </table><?php
         }
     } else {
-        ?>You don't have any events<?php
+        ?><p>You don't have any events at the moment.</p><?php
     }
 ?></td>
 </tr>
