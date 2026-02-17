@@ -43,7 +43,7 @@ if (array_key_exists('submit', $_POST)) {
             <?php echo csrf_create(); ?>
             <fieldset>
                 <div class="pure-control-group">
-                    <label for="theirid">Mobster ID</label>
+                    <label for="theirid">Citizen ID</label>
                     <input type="text" name="theirid" id="theirid" size="22" value="<?php echo $_GET['person']; ?>" />
                 </div>
             </fieldset>

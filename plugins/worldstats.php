@@ -13,9 +13,9 @@ $stats = $db->fetch(true);
     <td class="content">
         <table width="100%" cellpadding="4" cellspacing="0">
             <tr>
-                <td class="textl" width="15%">Mobsters:</td>
+                <td class="textl" width="15%">Citizens:</td>
                 <td class="textr" width="35%"><?php echo format($stats['total']); ?></td>
-                <td class="textl" width="15%">Respected Mobsters:</td>
+                <td class="textl" width="15%">Respected Citizens:</td>
                 <td class="textr" width="35%"><?php echo format($stats['upgraded']); ?></td>
            </tr>
         </table>

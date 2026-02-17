@@ -48,7 +48,7 @@ if (array_key_exists('submit', $_POST)) {
                     <input type="text" name="amount" id="amount" />
                 </div>
                 <div class="pure-control-group">
-                    <label for="theirid">Mobster's ID</label>
+                    <label for="theirid">Citizen's ID</label>
                     <input type="text" name="theirid" id="theirid" value="<?php echo format($_GET['person']); ?>" />
                 </div>
             </fieldset>

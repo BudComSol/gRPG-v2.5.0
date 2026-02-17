@@ -1351,7 +1351,7 @@ function listItems($ddname = 'item', $selected = -1, array $notIDs = [])
     return $ret;
 }
 
-function listMobsters($ddname = 'user', $selected = -1, $notIDs = [])
+function listCitizens($ddname = 'user', $selected = -1, $notIDs = [])
 {
     global $db;
     $where = '';
@@ -1361,7 +1361,7 @@ function listMobsters($ddname = 'user', $selected = -1, $notIDs = [])
     $db->query('SELECT id, username FROM users ' . $where . ' ORDER BY username ');
     $db->execute();
     if (!$db->count()) {
-        return 'No mobsters found';
+        return 'No citizens found';
     }
     $rows = $db->fetch();
     $ret = '<select name="' . $ddname . '" id="' . $ddname . '"><option value="0" class="centre"' . (in_array($selected,
@@ -1373,6 +1373,12 @@ function listMobsters($ddname = 'user', $selected = -1, $notIDs = [])
     $ret .= '</select>';
 
     return $ret;
+}
+
+// Backward compatibility alias
+function listMobsters($ddname = 'user', $selected = -1, $notIDs = [])
+{
+    return listCitizens($ddname, $selected, $notIDs);
 }
 
 function points($amnt)

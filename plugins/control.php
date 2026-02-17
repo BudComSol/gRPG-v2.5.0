@@ -3114,7 +3114,7 @@ if (empty($_GET['page'])) {
                     <?php echo csrf_create(); ?>
                     <table width='98%' cellspacing='1' style='text-align:center;'>
 
-                    <?php listMobsters(); ?>
+                    <?php listCitizens(); ?>
                     <button name="who" type="submit">Edit User</button>
                 </form> <?php
             } ?>

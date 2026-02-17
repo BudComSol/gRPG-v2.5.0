@@ -48,7 +48,7 @@ if (count($errors)) {
             <?php echo csrf_create(); ?>
             <fieldset>
                 <div class="pure-control-group">
-                    <label for="username">Mobster's name</label>
+                    <label for="username">Citizen's name</label>
                     <input type="text" name="username" id="username" size="15" />
                 </div>
             </fieldset>

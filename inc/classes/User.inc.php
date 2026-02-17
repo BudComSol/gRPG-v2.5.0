@@ -527,10 +527,10 @@ class User
         $this->type = '';
         $color = '';
         if ($this->rmdays !== 0) {
-            $this->type = 'Respected Mobster';
+            $this->type = 'Respected Citizen';
             $color = 'green';
         } else {
-            $this->type = 'Regular Mobster';
+            $this->type = 'Regular Citizen';
         }
         if ($this->admin === 1) {
             $this->type = 'Admin';
@@ -548,7 +548,7 @@ class User
             $color = 'red';
         }
         if ($this->rmdays > 0) {
-            $this->formattedname .= '<a href="plugins/profiles.php?id='.$this->id.'" style="font-weight:700;'.($color !== '' ? 'color:'.$color.';' : '').'" title="Respected Mobster ['.$this->rmdays.' RM Day'.s($this->rmdays).' Left]">'.$this->username.'</a>';
+            $this->formattedname .= '<a href="plugins/profiles.php?id='.$this->id.'" style="font-weight:700;'.($color !== '' ? 'color:'.$color.';' : '').'" title="Respected Citizen ['.$this->rmdays.' RM Day'.s($this->rmdays).' Left]">'.$this->username.'</a>';
         } elseif ($this->admin > 0) {
             $this->formattedname .= '<a href="plugins/profiles.php?id='.$this->id.'" style="font-weight:700;'.($color !== '' ? 'color:'.$color.';' : '').'">'.$this->username.'</a>';
         } else {

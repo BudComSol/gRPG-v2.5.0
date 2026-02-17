@@ -14,7 +14,7 @@ $lines = [];
             <thead>
                 <tr>
                     <th width="5%">ID</th>
-                    <th width="45%">Mobster</th>
+                    <th width="45%">Citizen</th>
                     <th width="50%">Last Active</th>
                 </tr>
             </thead><?php

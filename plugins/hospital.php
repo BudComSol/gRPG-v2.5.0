@@ -12,7 +12,7 @@ $rows = $db->fetch();
         <table width="100%" class="pure-table pure-table-horizontal">
             <thead>
                 <tr>
-                    <th>Mobster</th>
+                    <th>Citizen</th>
                     <th>Care Time</th>
                     <th>Reason</th>
                     <th>Hospitalized</th>

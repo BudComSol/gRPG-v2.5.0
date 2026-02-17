@@ -35,7 +35,7 @@ $db->query('SELECT * FROM rmstore_packs WHERE enabled = 1 ORDER BY cost ');
 $db->execute();
 $packs = $db->fetch();
 ?><tr>
-    <th class="content-head">Respected Mobsters</th>
+    <th class="content-head">Respected Citizens</th>
 </tr>
 <tr>
     <td class="content">
