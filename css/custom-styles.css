@@ -19,3 +19,9 @@
     max-height: 100px;
     border: 1px solid #ccc;
 }
+
+.pure-button-primary, .pure-button-selected, a.pure-button-primary, a.pure-button-selected {
+    background-color: #0078e7;
+    color: #fff;
+    margin-bottom: 10px;
+}
