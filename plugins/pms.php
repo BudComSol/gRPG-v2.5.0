@@ -95,25 +95,25 @@ if (count($errors)) {
 $csrfa = csrf_create('csrfa', false);
 $replyTo = isset($reply_class) ? $reply_class->username : '';
 ?><tr>
-    <th class="content-head">New Message</th>
+    <th class="content-head">Compose Message</th>
 </tr>
 <tr>
     <td class="content">
-        <a href="pms.php?deleteall&amp;csrfa=<?php echo $csrfa; ?>">Delete All PMs In Your Inbox</a><br /><br />
+        <a href="pms.php?deleteall&amp;csrfa=<?php echo $csrfa; ?>"><p>Delete All PMs In Your Inbox</p></a><br /><br />
         <form action="pms.php" method="post" class="pure-form pure-form-aligned">
             <?php echo csrf_create(); ?>
             <fieldset>
                 <div class="pure-control-group">
-                    <label for="to">Send To</label>
+                    <label for="to">Send Message To</label>
                     <input type="text" name="to" id="to" value="<?php echo !empty($_GET['to']) ? $_GET['to'] : $replyTo; ?>" />
                 </div>
                 <div class="pure-control-group">
                     <label for="subject">Subject</label>
-                    <input type="text" name="subject" id="subject" size="70" maxlength="75" value="<?php echo isset($mes) ? 'Re: '.ltrim('Re: ', format($mes['subject'])) : null; ?>" />
+                    <input type="text" name="subject" id="subject" size="35" maxlength="75" value="<?php echo isset($mes) ? 'Re: '.ltrim('Re: ', format($mes['subject'])) : null; ?>" />
                 </div>
                 <div class="pure-control-group">
                     <label for="msgtext">Message</label>
-                    <textarea name="msgtext" id="msgtext" cols="53" rows="7"><?php echo isset($mes) ? "\n\n\n--------\n".format($mes['msgtext']) : ''; ?></textarea>
+                    <textarea name="msgtext" id="msgtext" cols="35" rows="7"><?php echo isset($mes) ? "\n\n\n--------\n".format($mes['msgtext']) : ''; ?></textarea>
                 </div>
             </fieldset>
             <div class="pure-controls">
@@ -147,7 +147,7 @@ if ($rows !== null) {
         }
     } else {
         ?><tr>
-                    <td colspan="5" class="center">You have no mail</td>
+                    <td colspan="5" class="center"><p>You're Mailbox Is Empty</p></td>
                 </tr><?php
     }
 ?></table>
