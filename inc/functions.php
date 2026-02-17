@@ -295,13 +295,13 @@ function formatImage($url = null, $width = 100, $height = 100, $style = 'border:
     if ($isLocal) {
         // For local paths, try to validate using available path resolution methods
         // Determine if we should log debug info for fallback paths
-        $shouldLogDebug = function_exists('log_info') && defined('DEBUG') && DEBUG;
+        $isDebugLoggingEnabled = function_exists('log_info') && defined('DEBUG') && DEBUG;
         
         $isValid = false;
         $filePath = '';
         
         // First, try with BASE_PATH if available
-        if (defined('BASE_PATH') && !empty(BASE_PATH)) {
+        if (defined('BASE_PATH') && BASE_PATH !== '') {
             $filePath = BASE_PATH . '/' . ltrim($url, '/');
             $isValid = isImage($filePath, true);
         }
@@ -310,8 +310,8 @@ function formatImage($url = null, $width = 100, $height = 100, $style = 'border:
         if (!$isValid && isset($_SERVER['DOCUMENT_ROOT'])) {
             $filePath = $_SERVER['DOCUMENT_ROOT'] . '/' . ltrim($url, '/');
             $isValid = isImage($filePath, true);
-            if ($isValid && $shouldLogDebug) {
-                log_info('formatImage: Used DOCUMENT_ROOT fallback for image', ['url' => $url, 'path' => $filePath]);
+            if ($isValid && $isDebugLoggingEnabled) {
+                log_info('formatImage: Used DOCUMENT_ROOT fallback for image', ['url' => $url]);
             }
         }
         
@@ -319,8 +319,8 @@ function formatImage($url = null, $width = 100, $height = 100, $style = 'border:
         if (!$isValid) {
             $filePath = dirname(__DIR__) . '/' . ltrim($url, '/');
             $isValid = isImage($filePath, true);
-            if ($isValid && $shouldLogDebug) {
-                log_info('formatImage: Used project root fallback for image', ['url' => $url, 'path' => $filePath]);
+            if ($isValid && $isDebugLoggingEnabled) {
+                log_info('formatImage: Used project root fallback for image', ['url' => $url]);
             }
         }
         
