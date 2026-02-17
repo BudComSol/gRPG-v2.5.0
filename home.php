@@ -53,7 +53,7 @@ require_once __DIR__.'/inc/nliheader.php';
     </td>
 </tr>
 <tr>
-    <th class="content-head">Screenshots</th>
+    <th class="content-head">Check These!</th>
 </tr>
 <tr>
     <td class="content">
