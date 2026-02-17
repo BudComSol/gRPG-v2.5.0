@@ -1361,7 +1361,7 @@ function listCitizens($ddname = 'user', $selected = -1, $notIDs = [])
     $db->query('SELECT id, username FROM users ' . $where . ' ORDER BY username ');
     $db->execute();
     if (!$db->count()) {
-        return 'No citizens found';
+        return 'No Citizens found';
     }
     $rows = $db->fetch();
     $ret = '<select name="' . $ddname . '" id="' . $ddname . '"><option value="0" class="centre"' . (in_array($selected,
