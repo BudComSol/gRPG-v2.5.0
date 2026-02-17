@@ -16,13 +16,13 @@ class grpg_install_header
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <meta name="description" content="A web-based GUI for installing gRPG: PDO V2.5.0" />
                 <!--[if lte IE 8]>
-                <link rel="stylesheet" href="../css/layouts/side-menu-old-ie.css" />
+                <link rel="stylesheet" href="css/layouts/side-menu-old-ie.css" />
                 <![endif]-->
                 <!--[if gt IE 8]><!-->
-                <link rel="stylesheet" href="../css/layouts/side-menu.css" />
+                <link rel="stylesheet" href="css/layouts/side-menu.css" />
                 <!--<![endif]-->
-                <link rel="stylesheet" type='text/css' href="../css/message.css" />
-                <link rel="stylesheet" type='text/css' href="../css/pure-min.css" />
+                <link rel="stylesheet" type='text/css' href="css/message.css" />
+                <link rel="stylesheet" type='text/css' href="css/pure-min.css" />
                 <title>gRPG: PDO V2.5.0 - Installer</title>
             </head>
             <body>
@@ -47,7 +47,7 @@ class grpg_install_header
     {
         ?>            </div>
                 </div>
-                <script src="../js/ui.js"></script>
+                <script src="js/ui.js"></script>
             </body>
         </html><?php
     }

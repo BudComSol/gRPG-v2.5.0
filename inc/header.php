@@ -47,12 +47,12 @@ if ($site_url !== false && $site_url !== '') {
     <meta name="description" content="gRPG is a full stack game engine with which to build your own RPG, MMORPG or PBBG game.">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" type="text/css" media="all" href="/css/login.css"/>
-    <link rel="stylesheet" type="text/css" media="all" href="/css/style.css"/>    
+    <link rel="stylesheet" type="text/css" media="all" href="css/login.css"/>
+    <link rel="stylesheet" type="text/css" media="all" href="css/style.css"/>    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/g/pure@0.6.2(buttons-min.css+grids-min.css+forms-min.css)"
     integrity="sha384-+YK1ur0Mr74WEZWTMC6oMb5fojhkGm6EpjgVheKlE9urf2PbykYP7MxdwPpruQB8" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="/css/custom-styles.css">      
-    <script src="/js/cookie-consent.js"></script>
+    <link rel="stylesheet" href="css/custom-styles.css">      
+    <script src="js/cookie-consent.js"></script>
 </head>
 <body>
 <!-- Cookie Consent Banner -->
@@ -76,7 +76,7 @@ if ($site_url !== false && $site_url !== '') {
             <div class="topbox">
                 <table width="800">
                     <tr>
-                        <td width="50%" class="center-img"><img src="/images/logos/logo.png" alt="gRPG Main Logo"/></td>
+                        <td width="50%" class="center-img"><img src="images/logos/logo.png" alt="gRPG Main Logo"/></td>
 
                     </tr>
                 </table>
