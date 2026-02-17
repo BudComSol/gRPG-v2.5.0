@@ -6,9 +6,11 @@ $db->execute([$user_class->city]);
 $rows = $db->fetch();
 $i = 1;
 $leaders = [];
-foreach ($rows as $row) {
-    $leaders[$i] = new User($row['id']);
-    ++$i;
+if ($rows !== null) {
+    foreach ($rows as $row) {
+        $leaders[$i] = new User($row['id']);
+        ++$i;
+    }
 }
 ?><tr>
     <th class="content-head"><?php echo $user_class->cityname; ?></th>
