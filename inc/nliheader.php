@@ -18,8 +18,10 @@ if ($siteURL !== false && $siteURL !== '') {
     ?>
     <base href="<?php echo rtrim($siteURL, '/').'/'; ?>"/>
     <?php
-}
-    ?><title><?php echo GAME_NAME; ?></title>
+    }
+    ?>
+    <title>gRPG - A Full Stack Game Engine</title>
+    <meta name="description" content="gRPG is a full stack game engine with which to build your own RPG, MMORPG or PBBG game.">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" type="text/css" media="all" href="css/login.css"/>
