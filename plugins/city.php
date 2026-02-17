@@ -6,7 +6,7 @@ $db->execute([$user_class->city]);
 $rows = $db->fetch();
 $i = 1;
 $leaders = [];
-if ($rows !== null) {
+if (!empty($rows)) {
     foreach ($rows as $row) {
         $leaders[$i] = new User($row['id']);
         ++$i;
