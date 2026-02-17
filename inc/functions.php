@@ -292,18 +292,21 @@ function formatImage($url = null, $width = 100, $height = 100, $style = 'border:
     // Check if URL is a local relative path (not starting with http:// or https://)
     $isLocal = !preg_match('/^https?:\/\//', $url);
     
-    // For local paths, try BASE_PATH and fallback options if needed
-    // Skip validation if BASE_PATH is not defined or empty
-    if ($isLocal && defined('BASE_PATH') && BASE_PATH !== '') {
-        // For local paths, try to construct the file path and use local validation
+    if ($isLocal) {
+        // For local paths, try to validate using available path resolution methods
         // Determine if we should log debug info for fallback paths
         $shouldLogDebug = function_exists('log_info') && defined('DEBUG') && DEBUG;
         
-        // First, try with BASE_PATH
-        $filePath = BASE_PATH . '/' . ltrim($url, '/');
-        $isValid = isImage($filePath, true);
+        $isValid = false;
+        $filePath = '';
         
-        // If BASE_PATH doesn't work, try with document root as fallback
+        // First, try with BASE_PATH if available
+        if (defined('BASE_PATH') && !empty(BASE_PATH)) {
+            $filePath = BASE_PATH . '/' . ltrim($url, '/');
+            $isValid = isImage($filePath, true);
+        }
+        
+        // If BASE_PATH doesn't work or isn't available, try with document root as fallback
         if (!$isValid && isset($_SERVER['DOCUMENT_ROOT'])) {
             $filePath = $_SERVER['DOCUMENT_ROOT'] . '/' . ltrim($url, '/');
             $isValid = isImage($filePath, true);
