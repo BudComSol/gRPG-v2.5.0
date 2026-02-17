@@ -2,12 +2,16 @@
 declare(strict_types=1);
 require_once __DIR__.'/../inc/header.php';
 
+const MAX_HOOKERS = 400;
+const EARNINGS_PER_HOOKER = 500;
+
 $spend = $_GET['spend'] ?? '';
 $cash = $_GET['cash'] ?? '';
 
 if ($spend !== '') {
     if (!csrf_check('csrfg', $_GET)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
+        return;
     }
     
     $spendAmounts = [
@@ -28,8 +32,8 @@ if ($spend !== '') {
         $cost = $spendAmounts[$spend];
         $hookersToAdd = (int)$spend;
         
-        if ($user_class->hookers + $hookersToAdd > 400) {
-            echo Message("You can't have more than 400 hookers! The pimp union won't allow it!");
+        if ($user_class->hookers + $hookersToAdd > MAX_HOOKERS) {
+            echo Message("You can't have more than ".MAX_HOOKERS." hookers! The pimp union won't allow it!");
         } elseif ($user_class->money < $cost) {
             $errors[] = 'You don\'t have enough money for that';
         } else {
@@ -47,6 +51,7 @@ if ($spend !== '') {
 if ($cash !== '') {
     if (!csrf_check('csrfg', $_GET)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
+        return;
     }
     
     $errors = [];
@@ -56,7 +61,7 @@ if ($cash !== '') {
     }
     
     if (!count($errors)) {
-        $earnings = $user_class->hookers * 500;
+        $earnings = $user_class->hookers * EARNINGS_PER_HOOKER;
         $db->query('UPDATE users SET money = money + ?, hookers = 0 WHERE id = ?');
         $db->execute([$earnings, $user_class->id]);
         echo Message('Your hookers earned you '.prettynum($earnings, true).'! They\'ve been released.');
@@ -73,7 +78,7 @@ $csrfg = csrf_create('csrfg', false);
 </tr>
 <tr>
     <td class="content">
-        Welcome to the Whorehouse! Here you can hire hookers to earn money for you. Each hooker earns you $500 when you cash out, but you can't have more than 400 hookers at a time.
+        Welcome to the Whorehouse! Here you can hire hookers to earn money for you. Each hooker earns you <?php echo prettynum(EARNINGS_PER_HOOKER, true); ?> when you cash out, but you can't have more than <?php echo MAX_HOOKERS; ?> hookers at a time.
     </td>
 </tr>
 <tr>
@@ -116,7 +121,7 @@ $csrfg = csrf_create('csrfg', false);
 </tr>
 <tr>
     <td class="content">
-        Release all your hookers and collect their earnings (<?php echo prettynum($user_class->hookers * 500, true); ?>).<br /><br />
+        Release all your hookers and collect their earnings (<?php echo prettynum($user_class->hookers * EARNINGS_PER_HOOKER, true); ?>).<br /><br />
         [<a href="whorehouse.php?cash=1&amp;csrfg=<?php echo $csrfg; ?>">Cash Out All Hookers</a>]
     </td>
 </tr>
