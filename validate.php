@@ -10,7 +10,7 @@ if ($_GET['email'] !== null) {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $output = 'Invalid email address';
         } else {
-        $db->query('SELECT * FROM pending_validations WHERE email = ? AND validation_code = ? AND time_added >= DATE_SUB(NOW(), INTERVAL 1 DAY)');
+        $db->query('SELECT id, username, password, email, class FROM pending_validations WHERE email = ? AND validation_code = ? AND time_added >= DATE_SUB(NOW(), INTERVAL 1 DAY)');
         $db->execute([$email, $_GET['token']]);
         $row = $db->fetch(true);
         if ($row !== null) {
