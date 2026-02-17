@@ -292,18 +292,35 @@ function formatImage($url = null, $width = 100, $height = 100, $style = 'border:
     // Check if URL is a local relative path (not starting with http:// or https://)
     $isLocal = !preg_match('/^https?:\/\//', $url);
     
-    if ($isLocal && defined('BASE_PATH')) {
-        // For local paths, construct the file path and use local validation
+    if ($isLocal && defined('BASE_PATH') && BASE_PATH) {
+        // For local paths, try to construct the file path and use local validation
+        // First, try with BASE_PATH
         $filePath = BASE_PATH . '/' . ltrim($url, '/');
-        if (!isImage($filePath, true)) {
+        $isValid = isImage($filePath, true);
+        
+        // If BASE_PATH doesn't work, try with document root as fallback
+        if (!$isValid && isset($_SERVER['DOCUMENT_ROOT'])) {
+            $filePath = $_SERVER['DOCUMENT_ROOT'] . '/' . ltrim($url, '/');
+            $isValid = isImage($filePath, true);
+        }
+        
+        // If still not valid, try relative to the project root (one level up from inc)
+        if (!$isValid) {
+            $filePath = dirname(__DIR__) . '/' . ltrim($url, '/');
+            $isValid = isImage($filePath, true);
+        }
+        
+        // Only return error if none of the paths worked
+        if (!$isValid) {
             return '[Invalid image: ' . $url . ']';
         }
-    } else {
+    } elseif (!$isLocal) {
         // For remote URLs, use the existing validation
         if (!isImage($url)) {
             return '[Invalid image: ' . $url . ']';
         }
     }
+    // If BASE_PATH is not defined, skip validation for local paths
     
     $image = '<img src="' . $url . '" width="' . $width . '" height="' . $height . '"';
     if ($style) {
