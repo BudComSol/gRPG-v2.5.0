@@ -292,8 +292,13 @@ function formatImage($url = null, $width = 100, $height = 100, $style = 'border:
     // Check if URL is a local relative path (not starting with http:// or https://)
     $isLocal = !preg_match('/^https?:\/\//', $url);
     
-    if ($isLocal && defined('BASE_PATH') && BASE_PATH) {
+    // For local paths, try BASE_PATH and fallback options if needed
+    // Skip validation if BASE_PATH is not defined or empty
+    if ($isLocal && defined('BASE_PATH') && BASE_PATH !== '') {
         // For local paths, try to construct the file path and use local validation
+        // Determine if we should log debug info for fallback paths
+        $shouldLogDebug = function_exists('log_info') && defined('DEBUG') && DEBUG;
+        
         // First, try with BASE_PATH
         $filePath = BASE_PATH . '/' . ltrim($url, '/');
         $isValid = isImage($filePath, true);
@@ -302,7 +307,7 @@ function formatImage($url = null, $width = 100, $height = 100, $style = 'border:
         if (!$isValid && isset($_SERVER['DOCUMENT_ROOT'])) {
             $filePath = $_SERVER['DOCUMENT_ROOT'] . '/' . ltrim($url, '/');
             $isValid = isImage($filePath, true);
-            if ($isValid && function_exists('log_info') && defined('DEBUG') && DEBUG) {
+            if ($isValid && $shouldLogDebug) {
                 log_info('formatImage: Used DOCUMENT_ROOT fallback for image', ['url' => $url, 'path' => $filePath]);
             }
         }
@@ -311,7 +316,7 @@ function formatImage($url = null, $width = 100, $height = 100, $style = 'border:
         if (!$isValid) {
             $filePath = dirname(__DIR__) . '/' . ltrim($url, '/');
             $isValid = isImage($filePath, true);
-            if ($isValid && function_exists('log_info') && defined('DEBUG') && DEBUG) {
+            if ($isValid && $shouldLogDebug) {
                 log_info('formatImage: Used project root fallback for image', ['url' => $url, 'path' => $filePath]);
             }
         }
@@ -326,7 +331,6 @@ function formatImage($url = null, $width = 100, $height = 100, $style = 'border:
             return '[Invalid image: ' . $url . ']';
         }
     }
-    // If BASE_PATH is not defined or empty, skip validation for local paths
     
     $image = '<img src="' . $url . '" width="' . $width . '" height="' . $height . '"';
     if ($style) {
