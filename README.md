@@ -4,7 +4,7 @@ Text-based online RPG-MMORPG-PBBG
 
 ### Credits ###
 
-* We acknowlege copyright, the original author and everyone who has had a hand in this scripts development, there are many names and you know who you are!
+* We acknowlege copyright, the original author and everyone who has had a hand in this scripts development, there are many names and you know who you are, thank you all, we are grateful for your contributions.
 
 ### Why Persist With Legacy Code ###
 
