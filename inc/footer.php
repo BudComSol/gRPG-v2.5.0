@@ -34,7 +34,8 @@ ob_start(); ?>
         </td>
     </tr>
 </table>
-<tr>
+<table width="100%">
+    <tr>
         <td>
             <table class="topbar">
                 <tr>
@@ -43,6 +44,7 @@ ob_start(); ?>
             </table>
         </td>
     </tr>
+</table>
 </body>
 </html><?php
 if(ob_get_level() > 0) {

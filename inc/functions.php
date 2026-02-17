@@ -292,10 +292,40 @@ function formatImage($url = null, $width = 100, $height = 100, $style = 'border:
     // Check if URL is a local relative path (not starting with http:// or https://)
     $isLocal = !preg_match('/^https?:\/\//', $url);
     
-    if ($isLocal && defined('BASE_PATH')) {
-        // For local paths, construct the file path and use local validation
-        $filePath = BASE_PATH . '/' . ltrim($url, '/');
-        if (!isImage($filePath, true)) {
+    if ($isLocal) {
+        // For local paths, try to validate using available path resolution methods
+        // Determine if we should log debug info for fallback paths
+        $isDebugLoggingEnabled = function_exists('log_info') && defined('DEBUG') && DEBUG;
+        
+        $isValid = false;
+        $filePath = '';
+        
+        // First, try with BASE_PATH if available
+        if (defined('BASE_PATH') && BASE_PATH !== '') {
+            $filePath = BASE_PATH . '/' . ltrim($url, '/');
+            $isValid = isImage($filePath, true);
+        }
+        
+        // If BASE_PATH doesn't work or isn't available, try with document root as fallback
+        if (!$isValid && isset($_SERVER['DOCUMENT_ROOT'])) {
+            $filePath = $_SERVER['DOCUMENT_ROOT'] . '/' . ltrim($url, '/');
+            $isValid = isImage($filePath, true);
+            if ($isValid && $isDebugLoggingEnabled) {
+                log_info('formatImage: Used DOCUMENT_ROOT fallback for image', ['url' => $url]);
+            }
+        }
+        
+        // If still not valid, try relative to the project root (one level up from inc)
+        if (!$isValid) {
+            $filePath = dirname(__DIR__) . '/' . ltrim($url, '/');
+            $isValid = isImage($filePath, true);
+            if ($isValid && $isDebugLoggingEnabled) {
+                log_info('formatImage: Used project root fallback for image', ['url' => $url]);
+            }
+        }
+        
+        // Only return error if none of the paths worked
+        if (!$isValid) {
             return '[Invalid image: ' . $url . ']';
         }
     } else {
