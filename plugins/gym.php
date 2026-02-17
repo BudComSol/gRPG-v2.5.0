@@ -74,11 +74,11 @@ if (array_key_exists('train', $_POST)) {
     <th class="content-head">Gym</th>
 </tr>
 <tr>
-    <td class="content">You can currently train <?php echo format($user_class->energy); ?> time<?php echo s($user_class->energy); ?></td>
+    <td class="content"><p>You Can Currently Train <?php echo format($user_class->energy); ?> Time<?php echo s($user_class->energy); ?></p></td>
 </tr>
 <tr>
     <td class="content">
-        <form action="gym.php" method="post" class="pure-form pure-form-aligned">
+        <form action="plugins/gym.php" method="post" class="pure-form pure-form-aligned">
             <?php echo csrf_create(); ?>
             <fieldset>
                 <div class="pure-control-group">
@@ -93,7 +93,7 @@ if (array_key_exists('train', $_POST)) {
                 </div>
             </fieldset>
             <div class="pure-controls">
-                <button type="submit" name="train" class="pure-button pure-button-primary">Train</button>
+                <br><button type="submit" name="train" class="pure-button pure-button-primary">Train Stat Now</button>
             </div>
         </form>
     </td>
@@ -104,6 +104,7 @@ if (array_key_exists('train', $_POST)) {
 <tr>
     <td class="content">
         <table width="100%" class="pure-table pure-table-horizontal">
+          <br>
             <tr>
                 <th width="12.5%">Strength:</th>
                 <td width="37.5%"><?php echo format($user_class->strength); ?></td>
@@ -117,5 +118,6 @@ if (array_key_exists('train', $_POST)) {
                 <td><?php echo format($user_class->totalattrib); ?></td>
             </tr>
         </table>
+      <br>
     </td>
 </tr>
