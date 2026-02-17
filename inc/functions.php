@@ -328,7 +328,7 @@ function formatImage($url = null, $width = 100, $height = 100, $style = 'border:
         if (!$isValid) {
             return '[Invalid image: ' . $url . ']';
         }
-    } elseif (!$isLocal) {
+    } else {
         // For remote URLs, use the existing validation
         if (!isImage($url)) {
             return '[Invalid image: ' . $url . ']';
