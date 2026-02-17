@@ -507,8 +507,8 @@ if (isset($_POST['addrmpack'])) {
     if (!csrf_check('delete_crime_'.$_GET['deletecrime'], $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
-    $$db->query('SELECT name FROM crimes WHERE id = ?');
-    $db->execuute([$_GET['deletecrime']]);
+    $db->query('SELECT name FROM crimes WHERE id = ?');
+    $db->execute([$_GET['deletecrime']]);
     if (!$db->count()) {
         $errors[] = 'Invalid crime';
     }

@@ -23,6 +23,20 @@ Text-based online RPG-MMORPG-PBBG
 
 **Note:** All dependencies are now included locally - no need for Composer, Docker or other package managers, making it much simpler to install in shared hosting, particularly with the easy peasy installer!
 
+### Game Administration ###
+
+After installation, administrators can manage game content through the Staff Control Panel:
+
+* **Access:** Admin accounts have access to the control panel at `plugins/control.php`
+* **Manage Crimes:** Add, edit, or delete crimes with custom messages and difficulty levels
+* **Manage Cities:** Configure cities, land prices, and level requirements
+* **Manage Items:** Add custom items, weapons, and equipment
+* **Manage Jobs:** Create jobs with various pay rates and requirements
+* **Player Management:** Edit player stats, ban users, manage referrals
+* **And More:** Cars, houses, forum categories, voting sites, and RM store options
+
+The game comes with default content including 7 sample crimes ranging from Pickpocket to Bank Robbery. Administrators can customize all messages and add new content as needed.
+
 ### Error Logging ###
 
 The application includes a centralized error logging system to help track and diagnose issues:
