@@ -2,6 +2,10 @@
 PHP, MySQL, HTML, CSS.
 Text-based online RPG-MMORPG-PBBG
 
+### Credits ###
+
+* We acknowlege copyright, the original author and everyone who has had a hand in this scripts development, there are many names and you know who you are!
+
 ### Why Persist With Legacy Code ###
 
 * Because we can, and by the way, you get the same files here as the demo site demonstrates.
