@@ -39,10 +39,10 @@ $db->query('SELECT * FROM todo ORDER BY status ');
 $db->execute();
 $rows = $db->fetch();
 ?><tr>
-    <th class="content-head"><?php echo $owner->formattedname; ?>'s To-Do List</th>
+    <th class="content-head">To-Do List</th>
 </tr>
 <tr>
-    <td class="content">Here you can view what <?php echo $owner->formattedname; ?> currently has in the works for <?php echo GAME_NAME; ?>.</td>
+    <td class="content"><p>Here you can view what <?php echo $owner->formattedname; ?> currently has in the works for <?php echo GAME_NAME; ?>.</p></td>
 </tr><?php
 if ($user_class->admin == 1) {
     ?><tr>
@@ -50,20 +50,20 @@ if ($user_class->admin == 1) {
     </tr>
     <tr>
         <td class="content">
-            <form action="todo.php" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/todo.php" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create(); ?>
                 <fieldset>
                     <div class="pure-control-group">
                         <label for="text">Goal/Content</label>
-                        <textarea name="text" id="text" rows="7" cols="53"><?php echo isset($row) ? format($row['content']) : ''; ?></textarea>
+                        <textarea name="text" id="text" rows="7" cols="40"><?php echo isset($row) ? format($row['content']) : ''; ?></textarea>
                     </div>
                     <div class="pure-control-group">
-                        <label for="status">Status (percentage)</label>
+                        <label for="status">Status ( % )</label>
                         <input type="text" name="status" size="10" maxlength="75" value="<?php echo isset($row) ? $row['status'] : ''; ?>" />
                     </div>
                 </fieldset>
                 <div class="pure-controls">
-                    <button type="submit" name="submit" class="pure-button pure-button-primary">Add Goal</button>
+                    <button type="submit" name="submit" class="pure-button pure-button-primary">Add New Goal</button>
                 </div>
             </form>
         </td>
@@ -86,13 +86,13 @@ if ($rows !== null) {
                     <td><?php echo $row['status'] == 100 ? '<span class="green-light">'.format($row['status']).'%</span>' : format($row['status']).'%'; ?></td><?php
                     if ($user_class->admin == 1) {
                         ?>
-                        <td><a href="todo.php?id=<?php echo $row['id']; ?>">Edit</a></td><?php
+                        <td><a href="plugins/todo.php?id=<?php echo $row['id']; ?>">Edit</a></td><?php
                     } ?>
                 </tr><?php
         }
     } else {
         ?><tr>
-                    <td colspan="<?php echo $user_class->admin == 1 ? 4 : 3; ?>" class="center">Nothing's been added to the TODO list (doesn't mean nothing's due to happen ;))</td>
+                    <td colspan="<?php echo $user_class->admin == 1 ? 4 : 3; ?>" class="center">Nothing's been added to the TODO list (doesn't mean it won't though. :))</td>
                 </tr><?php
     }
 ?></table>
