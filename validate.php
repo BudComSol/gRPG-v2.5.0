@@ -7,6 +7,9 @@ $output = '';
 if ($_GET['email'] !== null) {
     if ($_GET['token'] !== null) {
         $email = base64_decode($_GET['email']);
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $output = 'Invalid email address';
+        } else {
         $db->query('SELECT * FROM pending_validations WHERE email = ? AND validation_code = ? AND time_added >= DATE_SUB(NOW(), INTERVAL 1 DAY)');
         $db->execute([$email, $_GET['token']]);
         $row = $db->fetch(true);
@@ -18,10 +21,10 @@ if ($_GET['email'] !== null) {
             $_POST['referer'] = array_key_exists('referer', $_POST) && ctype_digit($_POST['referer']) && $_POST['referer'] > 0 ? $_POST['referer'] : null;
             if ($_POST['referer'] !== null) {
                 $db->query('SELECT COUNT(id) FROM users WHERE id = ?');
-                $db->execute([$_POST['referrer']]);
+                $db->execute([$_POST['referer']]);
                 if ($db->result()) {
                     $db->query('INSERT INTO referrals (referrer, referred) VALUES (?, ?)');
-                    $db->execute([$_POST['referrer'], $userid]);
+                    $db->execute([$_POST['referer'], $userid]);
                 }
             }
             $db->query('DELETE FROM pending_validations WHERE id = ?');
@@ -30,6 +33,7 @@ if ($_GET['email'] !== null) {
             $output = 'Your account has been validated successfully! Redirecting to login page in 5 seconds. <meta http-equiv="refresh" content="5;url=login.php">';
         } else {
             $output = 'Either that email/token combination doesn\'t exist or it has expired';
+        }
         }
     } else {
         $output = 'You didn\'t supply a valid token';
