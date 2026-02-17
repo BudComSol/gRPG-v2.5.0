@@ -11,7 +11,7 @@ if (!$profile_class->id) {
     <th class="content-head">Profile</th>
 </tr><?php
 if ($user_class->admin) {
-    echo Message('<a href="profiles.php?harbinger='.$profile_class->id.'">Take Over Account</a>', 'Harbinger');
+    echo Message('<a href="plugins/profiles.php?harbinger='.$profile_class->id.'">Take Over Account</a>', 'Harbinger');
 }
 ?><tr>
     <td class="content">
@@ -74,14 +74,14 @@ if ($user_class->id != $profile_class->id) {
         <td class="content">
             <table width="100%" class="center">
                 <tr>
-                    <td width="25%"><a href="pms.php?to=<?php echo $profile_class->username; ?>&amp;csrfg=<?php echo $csrfg; ?>">Message</a></td>
-                    <td width="25%"><a href="attack.php?attack=<?php echo $profile_class->id; ?>&amp;csrfg=<?php echo $csrfg; ?>">Attack</a></td>
-                    <td width="25%"><a href="mug.php?mug=<?php echo $profile_class->id; ?>&amp;csrfg=<?php echo $csrfg; ?>">Mug</a></td>
-                    <td width="25%"><a href="spy.php?id=<?php echo $profile_class->id; ?>&amp;csrfg=<?php echo $csrfg; ?>">Spy</a></td>
+                    <td width="25%"><a href="plugins/pms.php?to=<?php echo $profile_class->username; ?>&amp;csrfg=<?php echo $csrfg; ?>">Message</a></td>
+                    <td width="25%"><a href="plugins/attack.php?attack=<?php echo $profile_class->id; ?>&amp;csrfg=<?php echo $csrfg; ?>">Attack</a></td>
+                    <td width="25%"><a href="plugins/mug.php?mug=<?php echo $profile_class->id; ?>&amp;csrfg=<?php echo $csrfg; ?>">Mug</a></td>
+                    <td width="25%"><a href="plugins/spy.php?id=<?php echo $profile_class->id; ?>&amp;csrfg=<?php echo $csrfg; ?>">Spy</a></td>
                 </tr>
                 <tr>
-                    <td><a href="sendmoney.php?person=<?php echo $profile_class->id; ?>">Send Money</a></td>
-                    <td><a href="sendpoints.php?person=<?php echo $profile_class->id; ?>">Send Points</a></td>
+                    <td><a href="plugins/sendmoney.php?person=<?php echo $profile_class->id; ?>">Send Money</a></td>
+                    <td><a href="plugins/sendpoints.php?person=<?php echo $profile_class->id; ?>">Send Points</a></td>
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
                 </tr>
