@@ -68,7 +68,7 @@ require_once __DIR__.'/inc/header.php';
     </td>
 </tr>
 <tr>
-    <th class="content-head">Battle Stats</th>
+    <th class="content-head">Battle Statistics</th>
 </tr>
 <tr>
     <td class="content">
@@ -89,7 +89,7 @@ require_once __DIR__.'/inc/header.php';
     </td>
 </tr>
 <tr>
-    <th class="content-head">Crime Stats</th>
+    <th class="content-head">Crime Statistics</th>
 </tr>
 <tr>
     <td class="content">
