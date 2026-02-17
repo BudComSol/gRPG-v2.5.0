@@ -19,7 +19,7 @@ if (!empty($rows)) {
     <td class="content"><?php echo format($user_class->citydesc); ?></td>
 </tr>
 <tr>
-    <th class="content-head">Top Deadlist Citizens in <?php echo format($user_class->cityname); ?></th>
+    <th class="content-head">Most Nefarious Citizens in <?php echo format($user_class->cityname); ?></th>
 </tr>
 <tr>
     <td class="content">
@@ -46,7 +46,7 @@ for ($i = 1; $i <= 3; ++$i) {
         <table width="100%" class="pure-table pure-table-horizontal">
             <tr>
                 <td width="33%" class="top" style="padding-bottom:10px;">
-                    <h3 style="padding:0;margin:0;font-size:1.4em;">Shops</h3><br />
+                    <h3 style="padding:0;margin:0;font-size:1.4em;">Market</h3><br />
                     <a href="plugins/astore.php">Armor Emporium</a><br />
                     <a href="plugins/store.php">Weapon Sales</a><br />
                     <a href="plugins/itemmarket.php">Item Market</a><br />
@@ -57,59 +57,66 @@ for ($i = 1; $i <= 3; ++$i) {
                 </td>
                 <td width="34%" class="top" style="padding-bottom:10px;">
                     <h3 style="padding:0;margin:0;font-size:1.4em;">Town Hall</h3><br />
-                    <a href="halloffame.php">Hall Of Fame</a><br />
-                    <a href="worldstats.php">World Stats</a><br />
-                    <a href="viewstaff.php">Town Hall</a><br />
-                    <a href="search.php">Citizen Search</a><br />
-                    <a href="citizens.php">Citizens List</a><br />
-                    <a href="online.php">Citizens Online</a><br />
-                    <a href="expguide.php">Experience Guide</a><br />
+                    <a href="plugins/halloffame.php">Hall Of Fame</a><br />
+                    <a href="plugins/worldstats.php">World Stats</a><br />
+                    <a href="plugins/viewstaff.php">Town Hall</a><br />
+                    <a href="plugins/search.php">Citizen Search</a><br />
+                    <a href="plugins/citizens.php">Citizens List</a><br />
+                    <a href="plugins/online.php">Citizens Online</a><br />                    
                 </td>
                 <td width="33%" class="top" style="padding-bottom:10px;">
-                    <h3 style="padding:0;margin:0;font-size:1.4em;">Casino</h3><br />
-                    <a href="lottery.php">Lottery</a><br />
-                    <a href="slots.php">Slot Machine</a><br />
-                    <a href="5050game.php">50/50 Game</a><br />
+                    <h3 style="padding:0;margin:0;font-size:1.4em;">Gaming</h3><br />
+                    <a href="plugins/5050game.php">50/50</a><br />
+                    <a href="plugins/lottery.php">Lottery</a><br />
+                    <a href="plugins/slots.php">Slot Machine</a><br />
+                    
                 </td>
             </tr>
             <tr>
                 <td class="top" style="padding-bottom:10px;">
-                    <h3 style="padding:0;margin:0;font-size:1.4em;">Your Home</h3><br />
-                    <a href="pms.php">Mailbox <!_-mail-_!></a><br />
-                    <a href="events.php">Events <!_-events-_!></a><br />
-                    <a href="spylog.php">Spy Log</a><br />
-                    <a href="inventory.php">Inventory</a><br />
-                    <a href="refer.php">Referrals</a><br />
-                    <a href="house.php">Move House</a><br />
-                    <a href="fields.php">Manage Land</a>
+                    <h3 style="padding:0;margin:0;font-size:1.4em;">Residential</h3><br />
+                    <a href="plugins/pms.php">Mailbox <!_-mail-_!></a><br />
+                    <a href="plugins/events.php">Events <!_-events-_!></a><br />                    
+                    <a href="plugins/inventory.php">Inventory</a><br />                    
+                    <a href="plugins/house.php">Move House</a><br />
+                    <a href="plugins/fields.php">Manage Land</a>
                 </td>
                 <td class="top" style="padding-bottom:10px;">
                     <h3 style="padding:0;margin:0;font-size:1.4em;">Travel</h3><br />
-                    <a href="bus.php">Bus Station</a><br />
-                    <a href="drive.php">Drive</a><br />
+                    <a href="plugins/drive.php">Drive</a><br />
+                    <a href="plugins/bus.php">Bus Station</a><br />
+                    <a href="plugins/expguide.php">Experience Guide</a><br />                    
                 </td>
                 <td class="top" style="padding-bottom:10px;">
                     <h3 style="padding:0;margin:0;font-size:1.4em;">Downtown</h3><br />
-                    <a href="buydrugs.php">Shady-Looking Stranger</a><br />
-                    <a href="downtown.php">Search Downtown</a><br />
-                    <a href="jobs.php">Job Center</a><br />
-                    <a href="gang_list.php">Gang List</a><br />
-                    <a href="<?php echo !$user_class->gang ? 'create' : ''; ?>gang.php">Your Gang</a><br />
-                    <a href="bank.php">Bank</a><br />
-                    <a href="realestate.php">Real Estate Agency</a>
+                    <a href="bank.php">Bank</a><br />                        
+                    <a href="plugins/jobs.php">Job Center</a><br />
+                    <a href="plugins/gang_list.php">Gang List</a><br />
+                    <a href="<?php echo !$user_class->gang ? 'create' : ''; ?>gang.php">Your Gang</a><br />                     
+                    <a href="plugins/downtown.php">Search Downtown</a><br />                  
                 </td>
-            </tr>
-            <tr>
-                <td class="top" style="padding-bottom:10px;">
-                    <h3 style="padding:0;margin:0;font-size:1.4em;">Car Central</h3><br />
-                    <a href="garage.php">Your Garage</a><br />
+            </tr>  
+            <td class="top" style="padding-bottom:10px;">
+                    <h3 style="padding:0;margin:0;font-size:1.4em;">Southside</h3><br />                    
+                    <a href="plugins/jobs.php">Job Center</a><br />
+                    <a href="plugins/gang_list.php">Gang List</a><br />
+                    <a href="<?php echo !$user_class->gang ? 'create' : ''; ?>gang.php">Your Gang</a><br />                    
+                    <a href="plugins/realestate.php">Real Estate Agency</a>
                 </td>
-                <td class="top" style="padding-bottom:10px;">&nbsp;</td>
+            <td class="top" style="padding-bottom:10px;">
+                    <h3 style="padding:0;margin:0;font-size:1.4em;">Back Alley</h3><br />
+                    <a href="plugins/spylog.php">Spy Log</a><br />
+                    <a href="plugin/refer.php">Referrals</a><br />
+                    <a href="plugins/garage.php">Your Garage</a><br />
+                    <a href="plugins/buydrugs.php">Shady Dude</a><br />                    
+                </td>                
                 <td class="top" style="padding-bottom:10px;">
-                    <h3 style="padding:0;margin:0;font-size:1.4em;">Generic Street</h3><br />
-                    <a href="viewstocks.php">View Stock Market</a><br />
-                    <a href="brokerage.php">Brokerage Firm</a><br />
-                    <a href="portfolio.php">View Portfolio</a>
+                    <h3 style="padding:0;margin:0;font-size:1.4em;">Northside</h3><br />
+                    <a href="plugins/downtown.php">Search Downtown</a><br />
+                    <a href="plugins/viewstocks.php">View Stock Market</a><br />
+                    <a href="plugins/brokerage.php">Brokerage Firm</a><br />
+                    <a href="plugins/portfolio.php">View Portfolio</a>
+                    
                 </td>
             </tr>
         </table>
