@@ -34,18 +34,18 @@ if (array_key_exists('submit', $_POST)) {
         </tr>
         <tr>
             <td class="content">
-                Are you sure you want to post that ad?<br />
+                <p>Are you sure you want to post that ad?</p><br />
                 It'll cost you <?php echo prettynum($cost, true); ?> in total.<br />
-                <form action="classifieds.php" method="post" class="pure-form pure-form-aligned">
+                <form action="plugins/classifieds.php" method="post" class="pure-form pure-form-aligned">
                     <?php echo $csrf; ?>
                     <input type="hidden" name="title" value="<?php echo $_POST['title']; ?>" />
                     <input type="hidden" name="message" value="<?php echo $_POST['message']; ?>" />
                     <input type="hidden" name="confirm" value="true" />
                     <div class="pure-controls">
-                        <button type="submit" name="submit" class="pure-button pure-button-primary">Yes, post it</button>
+                        <button type="submit" name="submit" class="pure-button pure-button-primary">Yes Post That Sucker</button>
                     </div>
                 </form><br />
-                <a href="classifieds.php">No, go back</a>
+                <a href="plugins/classifieds.php">No, Go Back.</a>
             </td>
         </tr><?php
     }
@@ -63,11 +63,11 @@ if (!isset($csrf)) {
     $csrf = csrf_create();
 }
 ?><tr>
-    <td class="content">Here you can post any thing your heart desires. Careful though, as it costs <?php echo prettynum(50, true); ?> per character in the title and in the message.</td>
+    <td class="content"><p>Here you can post any thing your heart desires.</p><p>Careful though, as it costs <?php echo prettynum(50, true); ?> per character in the title and in the message.</p></td>
 </tr>
 <tr>
     <td class="content">
-        <form action="classifieds.php" method="post" class="pure-form pure-form-aligned">
+        <form action="plugins/classifieds.php" method="post" class="pure-form pure-form-aligned">
             <?php echo $csrf; ?>
             <fieldset>
                 <div class="pure-control-group">
@@ -75,12 +75,13 @@ if (!isset($csrf)) {
                     <input type="text" name="title" id="title" size="40" maxlength="100" />
                 </div>
                 <div class="pure-control-group">
-                    <label for="message">Message</label>
-                    <textarea name="message" id="message" cols="60" rows="4"></textarea>
+                    <label for="message">You're Message</label>
+                    <br><br>
+                    <textarea name="message" id="message" cols="40" rows="4"></textarea>
                 </div>
             </fieldset>
             <div class="pure-controls">
-                <button type="submit" name="submit" class="pure-button pure-button-primary">Post</button>
+                <button type="submit" name="submit" class="pure-button pure-button-primary">Post It Now</button>
             </div>
         </form>
     </td>
