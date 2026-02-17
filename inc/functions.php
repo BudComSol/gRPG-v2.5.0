@@ -302,12 +302,18 @@ function formatImage($url = null, $width = 100, $height = 100, $style = 'border:
         if (!$isValid && isset($_SERVER['DOCUMENT_ROOT'])) {
             $filePath = $_SERVER['DOCUMENT_ROOT'] . '/' . ltrim($url, '/');
             $isValid = isImage($filePath, true);
+            if ($isValid && function_exists('log_info') && defined('DEBUG') && DEBUG) {
+                log_info('formatImage: Used DOCUMENT_ROOT fallback for image', ['url' => $url, 'path' => $filePath]);
+            }
         }
         
         // If still not valid, try relative to the project root (one level up from inc)
         if (!$isValid) {
             $filePath = dirname(__DIR__) . '/' . ltrim($url, '/');
             $isValid = isImage($filePath, true);
+            if ($isValid && function_exists('log_info') && defined('DEBUG') && DEBUG) {
+                log_info('formatImage: Used project root fallback for image', ['url' => $url, 'path' => $filePath]);
+            }
         }
         
         // Only return error if none of the paths worked
@@ -320,7 +326,7 @@ function formatImage($url = null, $width = 100, $height = 100, $style = 'border:
             return '[Invalid image: ' . $url . ']';
         }
     }
-    // If BASE_PATH is not defined, skip validation for local paths
+    // If BASE_PATH is not defined or empty, skip validation for local paths
     
     $image = '<img src="' . $url . '" width="' . $width . '" height="' . $height . '"';
     if ($style) {
