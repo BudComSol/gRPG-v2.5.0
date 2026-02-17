@@ -27,9 +27,9 @@ ob_start(); ?>
     <tr>
         <td height="20" colspan="2" align="center" class="content">
             <br>
-            <a href="plugins/citizens.php"><?php echo $stats->playerstotal; ?> Total Mobsters</a>&nbsp; | &nbsp;
-            <a href="plugins/online.php"><?php echo $stats->playersloggedin; ?> Mobster<?php echo s($stats->playersloggedin); ?> Online</a>&nbsp; | &nbsp;
-            <a href="plugins/24hour.php"><?php echo $stats->playersonlineinlastday; ?> Mobster<?php echo s($stats->playersonlineinlastday); ?> Online (24 Hours)</a> |<br /><br />
+            <a href="plugins/citizens.php"><?php echo $stats->playerstotal; ?> Total Citizens</a>&nbsp; | &nbsp;
+            <a href="plugins/online.php"><?php echo $stats->playersloggedin; ?> Citizen<?php echo s($stats->playersloggedin); ?> Online</a>&nbsp; | &nbsp;
+            <a href="plugins/24hour.php"><?php echo $stats->playersonlineinlastday; ?> Citizen<?php echo s($stats->playersonlineinlastday); ?> Online (24 Hours)</a> |<br /><br />
             This page was generated in <?php echo format($totaltime, 3); ?> seconds            
         </td>
     </tr>

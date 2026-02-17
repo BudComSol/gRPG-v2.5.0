@@ -2,10 +2,10 @@
 declare(strict_types=1);
 require_once __DIR__.'/../inc/header.php';
 ?><tr>
-    <th class="content-head">Mobster Search</th>
+    <th class="content-head">Citizen Search</th>
 </tr>
 <tr>
-    <td class="content">Find mobsters that meet your search criteria.</td>
+    <td class="content">Find citizens that meet your search criteria.</td>
 </tr><?php
 if (array_key_exists('search', $_POST)) {
     if (!csrf_check('csrf', $_POST)) {
@@ -39,7 +39,7 @@ if (array_key_exists('search', $_POST)) {
             <table width="100%" class="pure-table pure-table-horizontal">
                 <thead>
                     <tr>
-                        <th>Mobster</th>
+                        <th>Citizen</th>
                         <th>Money</th>
                         <th>Level</th>
                     </tr>

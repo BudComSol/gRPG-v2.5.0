@@ -37,7 +37,7 @@ function blockListIndex($db, $user_class)
             <table class="pure-table pure-table-horizontal">
                 <thead>
                     <tr>
-                        <th width="40%">Blocked <span class="right"><a href="blocklist.php?action=add" class="pure-button pure-button-green" title="Block Mobster"><i class="fa fa-plus"></i></a></th>
+                        <th width="40%">Blocked <span class="right"><a href="blocklist.php?action=add" class="pure-button pure-button-green" title="Block Citizen"><i class="fa fa-plus"></i></a></th>
                         <th width="40%">Comment</th>
                         <th width="20%">Actions</th>
                     </tr>
@@ -74,7 +74,7 @@ function addListing($db, $user_class)
         $_POST['comment'] = array_key_exists('comment', $_POST) && is_string($_POST['comment']) ? trim($_POST['comment']) : '';
         $_POST['user'] = array_key_exists('user', $_POST) && ctype_digit($_POST['user']) ? $_POST['user'] : null;
         if (empty($_POST['user'])) {
-            $errors[] = 'You didn\'t select a valid mobster';
+            $errors[] = 'You didn\'t select a valid citizen';
         }
         if ($_POST['user'] == $user_class->id) {
             $errors[] = 'You can\'t block yourself :/';
@@ -82,7 +82,7 @@ function addListing($db, $user_class)
         $db->query('SELECT id, admin FROM users WHERE id = ?');
         $db->execute([$_POST['user']]);
         if (!$db->count()) {
-            $errors[] = 'The mobster you selected doesn\'t exist';
+            $errors[] = 'The citizen you selected doesn\'t exist';
         }
         $row = $db->fetch(true);
         $target = new User($_POST['user']);
@@ -108,15 +108,15 @@ function addListing($db, $user_class)
             <form action="blocklist.php?action=add" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('add'); ?>
                 <div class="pure-control-group">
-                    <label for="user">Mobster</label>
-                    <?php echo listMobsters('user', $_GET['id'], [$user_class->id]); ?>
+                    <label for="user">Citizen</label>
+                    <?php echo listCitizens('user', $_GET['id'], [$user_class->id]); ?>
                 </div>
                 <div class="pure-control-group">
                     <label for="comment">Comment</label>
                     <textarea name="comment" id="comment" rows="5" cols="40" placeholder="Optional"></textarea>
                 </div>
                 <div class="pure-controls">
-                    <button type="submit" name="submit" class="pure-button pure-buttuon-primary">Block Mobster</button>
+                    <button type="submit" name="submit" class="pure-button pure-buttuon-primary">Block Citizen</button>
                 </div>
             </form>
         </td>

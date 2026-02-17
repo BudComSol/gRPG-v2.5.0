@@ -25,7 +25,7 @@ $invites = $db->fetch();
             <thead>
                 <tr>
                     <td>Rank</td>
-                    <td>Mobster</td>
+                    <td>Citizen</td>
                     <td>Level</td>
                     <td>Money</td>
                     <td>Online</td>
@@ -51,7 +51,7 @@ if ($rows !== null) {
     </td>
 </tr>
 <tr>
-    <th class="content-head">Invited Mobsters</th>
+    <th class="content-head">Invited Citizens</th>
 </tr>
 <tr>
     <td class="content"><?php

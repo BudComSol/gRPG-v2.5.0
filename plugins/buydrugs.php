@@ -11,7 +11,7 @@ if (array_key_exists('sell', $_GET)) {
         $errors[] = 'You don\'t have any';
     }
     if (!$user_class->rmdays) {
-        $errors[] = 'You must be a Respected Mobster to sell drugs';
+        $errors[] = 'You must be a Respected Citizen to sell drugs';
     }
     if (count($errors)) {
         display_errors($errors);
@@ -32,7 +32,7 @@ if (!empty($_GET['buy'])) {
         $errors[] = 'You don\'t have enough money';
     }
     if (!$user_class->rmdays) {
-        $errors[] = 'You must be a Respected Mobster to buy drugs';
+        $errors[] = 'You must be a Respected Citizen to buy drugs';
     }
     if (count($errors)) {
         display_errors($errors);
@@ -57,7 +57,7 @@ if ($user_class->rmdays) {
         <a href="buydrugs.php?sell=pot&amp;csrfg=<?php echo $csrfg; ?>">Sell all Weed</a> |
         <a href="city.php">You're a bad man, I'm leaving!</a><?php
 } else {
-        ?>Hmm... How do I know you won't squeal? You aren't respected enough to buy from me. Come back when you are a respected mobster.<br /><br />
+        ?>Hmm... How do I know you won't squeal? You aren't respected enough to buy from me. Come back when you are a respected citizen.<br /><br />
         <a href="city.php">Back to the city</a><?php
     }
 ?></td>

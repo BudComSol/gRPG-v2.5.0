@@ -13,7 +13,7 @@ $rows = $db->fetch();
             <thead>
                 <tr>
                     <th width="5%">ID</th>
-                    <th width="95%">Mobster</th>
+                    <th width="95%">Citizen</th>
                 </tr>
             </thead><?php
 foreach ($rows as $row) {

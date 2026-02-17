@@ -46,7 +46,7 @@ if (count($errors)) {
     <td class="content">
         <table width="100%">
             <tr>
-                <td>Mobster</td>
+                <td>Citizen</td>
                 <td>Kick Out</td>
             </tr><?php
 if ($rows !== null) {

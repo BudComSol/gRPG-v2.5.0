@@ -12,7 +12,7 @@ $rows = $db->fetch();
         <table width="100%">
             <thead>
                 <tr>
-                    <th width="50%">Mobster</th>
+                    <th width="50%">Citizen</th>
                     <th width="50%">Last Active</th>
                 </tr>
             </thead><?php

@@ -17,7 +17,7 @@ foreach ($rows as $row) {
     <td class="content"><?php echo format($user_class->citydesc); ?></td>
 </tr>
 <tr>
-    <th class="content-head">Top Deadlist Mobsters in <?php echo format($user_class->cityname); ?></th>
+    <th class="content-head">Top Deadlist Citizens in <?php echo format($user_class->cityname); ?></th>
 </tr>
 <tr>
     <td class="content">
@@ -58,9 +58,9 @@ for ($i = 1; $i <= 3; ++$i) {
                     <a href="halloffame.php">Hall Of Fame</a><br />
                     <a href="worldstats.php">World Stats</a><br />
                     <a href="viewstaff.php">Town Hall</a><br />
-                    <a href="search.php">Mobster Search</a><br />
-                    <a href="citizens.php">Mobsters List</a><br />
-                    <a href="online.php">Mobsters Online</a><br />
+                    <a href="search.php">Citizen Search</a><br />
+                    <a href="citizens.php">Citizens List</a><br />
+                    <a href="online.php">Citizens Online</a><br />
                     <a href="expguide.php">Experience Guide</a><br />
                 </td>
                 <td width="33%" class="top" style="padding-bottom:10px;">

@@ -62,7 +62,7 @@ if (count($errors)) {
         <table class="pure-table pure-table-horizontal" width="100%">
             <thead>
                 <tr>
-                    <th>Mobster</th>
+                    <th>Citizen</th>
                     <th>Time Left</th>
                     <th>Actions</th>
                 </tr>

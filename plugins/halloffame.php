@@ -25,7 +25,7 @@ $rank = 0;
             <thead>
                 <tr>
                     <th>Rank</th>
-                    <th>Mobster</th>
+                    <th>Citizen</th>
                     <th>Level</th>
                     <th>Money</th>
                     <th>Gang</th>
