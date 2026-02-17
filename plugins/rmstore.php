@@ -39,7 +39,7 @@ $packs = $db->fetch();
 </tr>
 <tr>
     <td class="content">
-        * For those days you will gain energy and nerve twice as quick.<br /> * For those days you will gain 4% bank interest instead of 2%.
+        <p>* For those days you will gain energy and nerve twice as quick.<br /> * For those days you will gain 4% bank interest instead of 2%.</p>
     </td>
 </tr>
 <tr>
@@ -47,15 +47,15 @@ $packs = $db->fetch();
 </tr>
 <tr>
     <td class="content">
-        <form action="rmstore.php" method="post" class="pure-form pure-form-aligned">
-            <div class="pure-info-message">You're currently purchasing an RMStore Upgrade for <?php echo $target->id == $user_class->id ? 'yourself' : $target->formattedname.' <span class="small italic">- [<a href="rmstore.php?reset">Reset</a>]</span>'; ?></div>
+        <form action="/plugins/rmstore.php" method="post" class="pure-form pure-form-aligned">
+            <div class="pure-info-message"><p>You're currently purchasing an RMStore Upgrade for <?php echo $target->id == $user_class->id ? 'yourself' : $target->formattedname.'</p> <span class="small italic">- [<a href="plugins/rmstore.php?reset">Reset</a>]</span>'; ?></div>
             <?php echo csrf_create('custom_for'); ?>
             <div class="pure-control-group">
                 <label for="customer">Purchase upgrade for:</label>
                 <input type="text" name="customer" id="customer" placeholder="<?php echo format($target->username); ?>" />
             </div>
             <div class="pure-controls">
-                <button type="submit" name="update_customer" class="pure-button pure-button-primary">Update recipient</button>
+                <button type="submit" name="update_customer" class="pure-button pure-button-primary">Update Recipient</button>
             </div>
         </form>
     </td>
@@ -114,8 +114,8 @@ if ($packs !== null) {
                                 <input type="hidden" name="no_note" value="1" />
                                 <input type="hidden" name="notify_url" value="<?php echo BASE_URL; ?>ipn/notify.php" />
                                 <input type="hidden" name="currency_code" value="<?php echo RMSTORE_CURRENCY; ?>" />
-                                <input type="hidden" name="return" value="<?php echo BASE_URL; ?>rmstore.php?success" />
-                                <input type="hidden" name="return_cancel" value="<?php echo BASE_URL; ?>rmstore.php?cancel" />
+                                <input type="hidden" name="return" value="<?php echo BASE_URL; ?>plugins/rmstore.php?success" />
+                                <input type="hidden" name="return_cancel" value="<?php echo BASE_URL; ?>plugins/rmstore.php?cancel" />
                                 <input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but23.gif" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!" />
                                 <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
                             </form>
@@ -124,7 +124,7 @@ if ($packs !== null) {
         }
     } else {
         ?><tr>
-                        <td colspan="7" class="centre" style="background:#181818;text-align:center;">There are no RMStore Upgrades available</td>
+                        <td colspan="7" class="centre" style="background:#181818;text-align:center;"><p>There are no RMStore Upgrades Available</p></td>
                     </tr><?php
     }
 ?></table>
@@ -135,9 +135,9 @@ if ($packs !== null) {
 </tr>
 <tr>
     <td class="content">
-        If you have any questions, PM me (<?php echo $owner->formattedname; ?>).<br />
+        <p>If you have any questions, PM me (<?php echo $owner->formattedname; ?>).<br />
         Before you buy you must be clear of the following things:<br /><br />
-        1. No refunds.<br />
-        2. You can still be banned for breaking the rules whether you have donated or not.
+        1. NO Refunds.<br />
+        2. And you can still be banned for breaking the rules whether you have donated or not.</p>
     </td>
 </tr>
