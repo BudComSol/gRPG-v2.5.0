@@ -209,6 +209,36 @@ CREATE TABLE IF NOT EXISTS `crimes`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
+INSERT INTO `crimes` (`name`, `nerve`, `stext`, `ftext`, `ctext`)
+VALUES ('Pickpocket', 1, 
+        'You bump into a distracted tourist and slip your hand into their pocket.^You expertly lift a wallet from an unsuspecting businessman.^A crowded subway car provides perfect cover as you snatch some cash.',
+        'Your target notices your hand reaching for their pocket.^The mark turns around just as you make your move.^A nearby security guard gives you a warning look.',
+        'A plainclothes officer grabs your wrist mid-theft.^Your victim screams for the police who are conveniently nearby.^You\'re caught on camera and security arrives quickly.'),
+       ('Shoplift', 2,
+        'You casually walk out with merchandise hidden under your jacket.^The security tag removal goes perfectly and you stroll out unnoticed.^You blend in with a crowd of shoppers while carrying concealed goods.',
+        'The alarm goes off as you try to leave the store.^A store employee spots you acting suspicious.^The item won\'t fit in your bag without being obvious.',
+        'Loss prevention officers surround you at the exit.^Store security reviews the cameras and identifies you.^An undercover security guard catches you red-handed.'),
+       ('Steal Car Radio', 3,
+        'You quickly pop the dashboard and yank out an expensive stereo system.^The car alarm doesn\'t go off and you extract a premium sound system.^You work efficiently and get away with a high-end radio.',
+        'The car alarm starts blaring as soon as you touch the dashboard.^Someone walks by and you have to abort the theft.^The radio is bolted in too well to remove quickly.',
+        'The car owner returns mid-theft and calls the cops.^A patrol car happens to be passing by.^A neighbor sees you and reports the license plate of your getaway car.'),
+       ('Break Into House', 5,
+        'You jimmy the lock and quickly grab valuables before leaving undetected.^A window on the second floor provides easy access and great loot.^The security system is disabled and you take your time collecting valuables.',
+        'A dog starts barking and you retreat empty-handed.^The lock is too sophisticated for your tools.^A neighbor becomes suspicious of the noise.',
+        'The homeowner arrives home early and traps you inside.^A silent alarm alerts the police who arrive within minutes.^A vigilant neighborhood watch member reports suspicious activity.'),
+       ('Rob Convenience Store', 7,
+        'You brandish a weapon and the clerk hands over the cash quickly.^Your intimidating presence makes the robbery quick and successful.^You get away with the cash drawer before anyone can react.',
+        'The clerk hits the panic button before you can react.^Your weapon jams and you have to flee.^A customer walks in mid-robbery forcing you to abort.',
+        'The store has a armed security guard you didn\'t notice.^Police were already nearby responding to another call.^Multiple cameras capture your face clearly despite your disguise.'),
+       ('Grand Theft Auto', 10,
+        'You hotwire a luxury vehicle and speed away.^The car is unlocked with keys inside - too easy!^Your skills allow you to bypass the ignition in seconds.',
+        'The steering wheel lock won\'t budge.^The car has a kill switch you can\'t locate.^Someone sees you trying to break in and yells.',
+        'The car has a GPS tracker and police intercept you blocks away.^An off-duty cop witnesses the theft.^The owner has a remote kill switch and stops the car.'),
+       ('Bank Robbery', 15,
+        'Your careful planning pays off with a massive haul.^You crack the vault and escape before alarms can summon help.^Your team executes the heist flawlessly.',
+        'The vault timer hasn\'t expired yet and you can\'t open it.^A customer triggers a silent alarm.^Your inside contact failed to disable the security.',
+        'The FBI was already investigating and catches you in the act.^An armed security guard triggers a lockdown.^Your getaway driver abandons you when police arrive.');
+
 DROP TABLE IF EXISTS `deflog`;
 CREATE TABLE IF NOT EXISTS `deflog`
 (
