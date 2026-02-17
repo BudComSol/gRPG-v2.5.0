@@ -24,7 +24,7 @@ require_once __DIR__.'/inc/nliheader.php';
     <td class="content-home">        
         <ul>            
             <li>Cronless Crons.</li>            
-            <li>Built for PHP7.4+.</li>
+            <li>Runs on PHP8.0+.</li>
             <li>Live gangs system.</li>  
             <li>Responsive Stage One.</li>          
             <li>PDO prepare statements.</li>            
