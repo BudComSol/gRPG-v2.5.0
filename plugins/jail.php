@@ -63,7 +63,7 @@ if (count($errors)) {
             <thead>
                 <tr>
                     <th>Citizen</th>
-                    <th>Time Left</th>
+                    <th>Time Remaining</th>
                     <th>Actions</th>
                 </tr>
             </thead><?php
@@ -78,7 +78,7 @@ if ($rows !== null) {
         }
     } else {
         ?><tr>
-                    <td colspan="3" class="center">There's no-one in jail</td>
+                    <td colspan="3" class="center"><p>There's no-one in jail</p></td>
                 </tr><?php
     }
 ?></table>
