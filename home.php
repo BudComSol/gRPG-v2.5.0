@@ -8,9 +8,9 @@ require_once __DIR__.'/inc/nliheader.php';
     <td class="content">
         <table width="100%" cellpadding="5" cellspacing="2">
             <tr>
-                <td class="center img"><img src="images/logos/engine.png" border="0" alt="gRPG Engine Logo" /></td>
+                <td class="center img"><img src="images/logos/engine.png" border="0" height="150" alt="gRPG Engine Logo" /></td>
                 <td class="center">
-                    Welcome to Generic RPG or gRPG which is an engine written in PHP that allows you to create an MMORPG style browser game of your very own. It can be themed in just about any genre, from gangster to outer space, it's limited only by you're imagination and the best part is that it is free and can be found on Github.
+                    Welcome to Generic RPG or gRPG which is an full stack engine written in PHP that allows you to create an MMORPG style browser game of your very own. It can be themed in just about any genre, from gangster to outer space, it's limited only by you're imagination and the best part is that it is free and can be found on <a href="https://github.com/BudComSol/gRPG-v2.5.0" target="_blank" rel="noopener">Github</a> so that you may contribute.
                     
                 </td>
             </tr>
