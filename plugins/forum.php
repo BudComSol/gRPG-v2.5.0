@@ -180,7 +180,7 @@ function viewforum($db, $user_class, $parser)
     }
     $board = $db->fetch(true); ?><div class="big">
         <a href="plugins/forum.php">Index</a> &rarr;
-        <a href="plugins/forum.php?viewforum=<?php echo $_GET['viewforum']; ?>"><?php echo format($board['fb_name']); ?></a><?php echo $_GET['viewforum'] != 1 || $user_class->admin == 1 ? '<br /><a href="forum.php?act=newtopic&amp;forum='.$_GET['viewforum'].'" class="pure-button">Create New Topic</a>' : ''; ?>
+        <a href="plugins/forum.php?viewforum=<?php echo $_GET['viewforum']; ?>"><?php echo format($board['fb_name']); ?></a><?php echo $_GET['viewforum'] != 1 || $user_class->admin == 1 ? '<br /><a href="plugins/forum.php?act=newtopic&amp;forum='.$_GET['viewforum'].'" class="pure-button">Create New Topic</a>' : ''; ?>
     </div><br /><?php
     accessCheck($board, $user_class);
     $db->query('SELECT COUNT(ft_id) FROM forum_topics WHERE ft_board = ?');
