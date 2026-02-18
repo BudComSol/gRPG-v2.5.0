@@ -274,7 +274,7 @@ function viewtopic($db, $user_class, $parser)
         <td class="content"><?php
     accessCheck($board, $user_class);
     $pages = new Paginator(getCount($topic['ft_id'], 'posts_topics'));
-    if (array_key_exists('latest', $_GET)) {
+    if (array_key_exists('latest', $_GET) && $pages->num_pages > 0) {
         exit(header('Location: forum.php?viewtopic='.$topic['ft_id'].'&page='.$pages->num_pages.'#latest'));
     }
     $blocked = [];
