@@ -21,7 +21,7 @@ This migration updates the forum board structure to move the "Announcements" boa
 mysql -u your_username -p your_database_name < install/sqls/migrate_announcements_board.sql
 ```
 
-### Method 3: Manual update via Admin Control Panel
+### Method 3: Manual update via Staff Control Panel
 1. Log in as an administrator
 2. Go to the Staff Control Panel (`plugins/control.php`)
 3. Navigate to Forum Boards management
