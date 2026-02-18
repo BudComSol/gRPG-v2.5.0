@@ -12,11 +12,12 @@ if (array_key_exists('deposit', $_POST) || array_key_exists('deposit_points', $_
     }
     $curr = !array_key_exists('points', $_GET) ? 'money' : 'points';
     $currVault = !array_key_exists('points', $_GET) ? 'moneyvault' : 'pointsvault';
-    $_POST['damount'] = array_key_exists('damount', $_POST) && ctype_digit(str_replace(',', '', $_POST['damount'])) ? str_replace(',', '', $_POST['damount']) : null;
-    if (empty($_POST['damount'])) {
+    $_POST['damount'] = array_key_exists('damount', $_POST) && ctype_digit(str_replace(',', '', $_POST['damount'])) ? (int)str_replace(',', '', $_POST['damount']) : null;
+    if ($_POST['damount'] === null) {
         $errors[] = 'You didn\'t enter a valid amount';
-    }
-    if ($_POST['damount'] > $user_class->$curr) {
+    } elseif ($_POST['damount'] <= 0) {
+        $errors[] = 'You must deposit a positive amount';
+    } elseif ($_POST['damount'] > $user_class->$curr) {
         $errors[] = 'You don\'t have that much '.$curr;
     }
     if (!count($errors)) {
@@ -28,7 +29,7 @@ if (array_key_exists('deposit', $_POST) || array_key_exists('deposit_points', $_
         $db->trans('end');
         $gang_class->$currVault += $_POST['damount'];
         $user_class->$curr -= $_POST['damount'];
-        echo Message('You\'ve deposited '.(!empty($_POST['deposit']) ? prettynum($_POST['damount'], true) : points($_POST['damount'])));
+        echo Message('You\'ve deposited '.($curr == 'money' ? prettynum($_POST['damount'], true) : points($_POST['damount'])));
     }
 }
 if ((array_key_exists('withdraw', $_POST) || array_key_exists('withdraw_points', $_POST)) && $gang_class->leader == $user_class->id) {
@@ -37,11 +38,12 @@ if ((array_key_exists('withdraw', $_POST) || array_key_exists('withdraw_points',
     }
     $curr = !empty($_POST['withdraw']) ? 'money' : 'points';
     $currVault = !empty($_POST['withdraw']) ? 'moneyvault' : 'pointsvault';
-    $_POST['wamount'] = array_key_exists('wamount', $_POST) && ctype_digit(str_replace(',', '', $_POST['wamount'])) ? str_replace(',', '', $_POST['wamount']) : null;
-    if (empty($_POST['wamount'])) {
+    $_POST['wamount'] = array_key_exists('wamount', $_POST) && ctype_digit(str_replace(',', '', $_POST['wamount'])) ? (int)str_replace(',', '', $_POST['wamount']) : null;
+    if ($_POST['wamount'] === null) {
         $errors[] = 'You didn\'t enter a valid amount';
-    }
-    if ($_POST['wamount'] > $gang_class->$currVault) {
+    } elseif ($_POST['wamount'] <= 0) {
+        $errors[] = 'You must withdraw a positive amount';
+    } elseif ($_POST['wamount'] > $gang_class->$currVault) {
         $errors[] = 'The vault doesn\'t have that much '.$curr;
     }
     if (!count($errors)) {
@@ -53,14 +55,17 @@ if ((array_key_exists('withdraw', $_POST) || array_key_exists('withdraw_points',
         $db->trans('end');
         $gang_class->$currVault -= $_POST['wamount'];
         $user_class->$curr += $_POST['wamount'];
-        echo Message('You\'ve withdrawn '.(!empty($_POST['withdraw']) ? prettynum($_POST['wamount'], true) : points($_POST['wamount'])).' from the gang vault');
+        echo Message('You\'ve withdrawn '.($curr == 'money' ? prettynum($_POST['wamount'], true) : points($_POST['wamount'])).' from the gang vault');
     }
 }
 $csrf = csrf_create();
 ?><tr>
     <th class="content-head"><?php echo $gang_class->formattedname; ?> Vault</th>
-</tr>
-<tr>
+</tr><?php
+if (count($errors)) {
+    display_errors($errors);
+}
+?><tr>
     <td class="content">
         <p>There is currently  <?php echo prettynum($gang_class->moneyvault, true); ?> and <?php echo format($gang_class->pointsvault); ?> point<?php echo s($gang_class->pointsvault); ?> in the gang vault.</p>
         <table width="100%" class="pure-table pure-table-horizontal">
