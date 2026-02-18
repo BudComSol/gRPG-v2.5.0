@@ -31,7 +31,7 @@ if ($rows !== null) {
         }
     } else {
         ?><tr>
-                    <td colspan="4" class="center">There's no-one in hospital</td>
+                    <td colspan="4" class="center"><p>The hospital is empty at this time, c'mon, f%#k someone up!</p></td>
                 </tr><?php
     }
 ?></table>
