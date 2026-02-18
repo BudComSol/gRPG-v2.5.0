@@ -54,12 +54,12 @@ if ($rows !== null) {
         foreach ($rows as $row) {
             $gang_member = new User($row['id']); ?><tr>
                     <td><?php echo $gang_member->formattedname; ?></td>
-                    <td><a href="managegang.php?dismiss=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>">Kick Out</a></td>
+                    <td><a href="plugins/managegang.php?dismiss=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>">Boot Their Ass</a></td>
                 </tr><?php
         }
     } else {
         ?><tr>
-                    <td colspan="2" class="center">There aren't any other members of your gang</td>
+                    <td colspan="2" class="center"><p>There are no members in your gang at this time!</p></td>
                 </tr><?php
     }
 ?></table>
