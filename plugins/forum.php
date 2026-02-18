@@ -180,14 +180,14 @@ function viewforum($db, $user_class, $parser)
     }
     $board = $db->fetch(true); ?><div class="big">
         <a href="plugins/forum.php">Index</a> &rarr;
-        <a href="plugins/forum.php?viewforum=<?php echo $_GET['viewforum']; ?>"><?php echo format($board['fb_name']); ?></a><?php echo $_GET['viewforum'] != 1 || $user_class->admin == 1 ? '<br /><a href="plugins/forum.php?act=newtopic&amp;forum='.$_GET['viewforum'].'" class="pure-button">Create New Topic</a>' : ''; ?>
+        <a href="plugins/forum.php?viewforum=<?php echo $_GET['viewforum']; ?>"><?php echo format($board['fb_name']); ?></a><?php echo $_GET['viewforum'] != 1 || $user_class->admin == 1 ? '<br /><br /><a href="plugins/forum.php?act=newtopic&amp;forum='.$_GET['viewforum'].'" class="pure-button">Create New Topic</a>' : ''; ?>
     </div><br /><?php
     accessCheck($board, $user_class);
     $db->query('SELECT COUNT(ft_id) FROM forum_topics WHERE ft_board = ?');
     $db->execute([$_GET['viewforum']]);
     $cnt = $db->result();
     if (!$cnt) {
-        echo Message('There are no topics', 'Error', true);
+        echo Message('There are no topics, numpty.', 'Error', true);
     }
     $pages = new Paginator($cnt);
     $db->query('SELECT ft_id, ft_name, ft_creation_time, ft_creation_user, ft_latest_time, ft_latest_user, ft_latest_post, ft_locked, ft_pinned, id AS subbed
@@ -296,7 +296,7 @@ function viewtopic($db, $user_class, $parser)
         $lockOpposite = $topic['ft_locked'] ? 'Unlock' : 'Lock'; ?>
         <div class="pure-g center">
             <div class="pure-u-1-2">
-                <form action="forum.php?act=move&amp;topic=<?php echo $topic['ft_id']; ?>" method="post" class="pure-form pure-form-aligned">
+                <form action="plugins/forum.php?act=move&amp;topic=<?php echo $topic['ft_id']; ?>" method="post" class="pure-form pure-form-aligned">
                     <div class="pure-control-group">
                         <label for="board">Move topic to</label>
                         <?php echo forums_boards('board'); ?>
@@ -318,7 +318,7 @@ function viewtopic($db, $user_class, $parser)
         ?><div class="pure-u-1-1 pure-info-message">This topic is locked. Only staff members can respond</div><?php
     } else {
         $csrfReply = csrf_create(); ?><div class="pure-u-1-1 center">
-                <form action="forum.php?reply=<?php echo $topic['ft_id']; ?>" method="post" class="pure-form pure-form-aligned">
+                <form action="plugins/forum.php?reply=<?php echo $topic['ft_id']; ?>" method="post" class="pure-form pure-form-aligned">
                     <?php echo $csrfReply; ?>
                     <div class="pure-control-group">
                         <label for="message">Enter a response</label>
@@ -411,11 +411,11 @@ function viewtopic($db, $user_class, $parser)
         }
         if (!isset($csrfReply)) {
             $csrfReply = csrf_create();
-        } ?><form action="forum.php?reply=<?php echo $topic['ft_id']; ?>" method="post" class="pure-form pure-form-aligned">
+        } ?><form action="plugins/forum.php?reply=<?php echo $topic['ft_id']; ?>" method="post" class="pure-form pure-form-aligned">
             <?php echo $csrfReply; ?>
             <fieldset>
                 <legend>Post a reply to this topic</legend>
-                <textarea name="message" rows="7" cols="50" required></textarea>
+                <textarea name="message" rows="7" cols="40" required></textarea>
                 <button type="submit" class="pure-button pure-button-primary"><i class="fa fa-cog" aria-hidden="true"></i> Post Response</button>
             </fieldset>
         </form><?php
@@ -436,8 +436,8 @@ function newtopic($db, $user_class, $parser)
     $board = $db->fetch(true); ?>
     <div class="big">
         <a href="plugins/forum.php">Index</a> &rarr;
-        <a href="plugins/forum.php?viewforum=<?php echo $board['fb_id']; ?>"><?php echo format($board['fb_name']); ?></a> &rarr;
-        Topic Creation
+        <a href="plugins/forum.php?viewforum=<?php echo $board['fb_id']; ?>"><?php echo format($board['fb_name']); ?></a>
+        <p>Topic Creation</p>
     </div><?php
     accessCheck($board, $user_class);
     $errors = [];
@@ -481,11 +481,11 @@ function newtopic($db, $user_class, $parser)
         $db->query('UPDATE users SET posts = posts + 1 WHERE id = ?');
         $db->execute([$user_class->id]);
         $db->trans('end');
-        echo Message('Your new topic has been created!', 'Success');
+        echo Message('<p>Your new topic has been created!</p>', 'Success');
         $_GET['viewtopic'] = $topicID;
         $_GET['latest'] = true;
         exit(viewtopic($db, $user_class, $parser));
-    } ?><form action="forum.php?act=newtopic&amp;forum=<?php echo $board['fb_id']; ?>" method="post" class="pure-form pure-form-aligned">
+    } ?><form action="plugins/forum.php?act=newtopic&amp;forum=<?php echo $board['fb_id']; ?>" method="post" class="pure-form pure-form-aligned">
         <?php echo csrf_create(); ?>
         <fieldset>
             <div class="pure-control-group">
@@ -493,11 +493,11 @@ function newtopic($db, $user_class, $parser)
                 <input type="text" name="name" autofocus required />
             </div>
             <div class="pure-control-group">
-                <label for="message">Topic Message</label>
-                <textarea name="message" rows="7" cols="50"></textarea>
+                <label for="message"><p>Topic Message</p></label>
+                <textarea name="message" rows="7" cols="40"></textarea>
             </div>
             <div class="pure-controls">
-                <button type="submit" name="submit" class="pure-button pure-button-primary">Create Topic</button>
+                <button type="submit" name="submit" class="pure-button pure-button-primary">Create New Topic</button>
             </div>
         </fieldset>
     </form><?php
@@ -599,10 +599,10 @@ function quote($db, $user_class, $parser)
     accessCheck($board, $user_class);
     if ($topic['ft_locked'] && $user_class->admin != 1) {
         echo Message('This topic has been locked. No further responses are permitted', 'Error', true);
-    } ?><form action="forum.php?reply=<?php echo $topic['ft_id']; ?>&amp;csrfg=<?php echo csrf_create('csrfg', false); ?>" method="post" class="pure-form pure-form-aligned">
+    } ?><form action="plugins/forum.php?reply=<?php echo $topic['ft_id']; ?>&amp;csrfg=<?php echo csrf_create('csrfg', false); ?>" method="post" class="pure-form pure-form-aligned">
         <div class="pure-control-group">
             <label for="message">Quote/Response</label>
-            <textarea name="message" rows="7" cols="50" autofocus required>[quote=<?php echo $quoter->username; ?>]<?php echo format($post['fp_text']); ?>[/quote]</textarea>
+            <textarea name="message" rows="7" cols="40" autofocus required>[quote=<?php echo $quoter->username; ?>]<?php echo format($post['fp_text']); ?>[/quote]</textarea>
         </div>
         <div class="pure-controls">
             <button type="submit" name="submit" class="pure-button pure-button-primary">Post Response</button>
@@ -674,7 +674,7 @@ function manage_subscriptions($db, $user_class, $parser)
         }
     } else {
         ?><tr>
-            <td colspan="3" class="center">You don't have any subscriptions</td>
+            <td colspan="3" class="center"><p>You don't have any subscriptions.</p></td>
         </tr><?php
     } ?></table><?php
 }
@@ -731,10 +731,10 @@ function edit($db, $user_class, $parser)
         echo Message('Your edits has been posted', 'Success');
         $_GET['viewtopic'] = $_GET['topic'];
         exit(viewtopic($db, $user_class, $parser));
-    } ?><form action="forum.php?act=edit&amp;topic=<?php echo $topic['ft_id']; ?>&amp;post=<?php echo $post['fp_id']; ?>" method="post" class="pure-form">
+    } ?><form action="plugins/forum.php?act=edit&amp;topic=<?php echo $topic['ft_id']; ?>&amp;post=<?php echo $post['fp_id']; ?>" method="post" class="pure-form">
         <div class="pure-control-group">
             <label for="message">Post</label><br />
-            <textarea name="message" rows="7" cols="50" autofocus><?php echo format($post['fp_text']); ?></textarea>
+            <textarea name="message" rows="7" cols="40" autofocus><?php echo format($post['fp_text']); ?></textarea>
         </div>
         <div class="pure-control-group">
             <label for="reason">Reason for editing (optional):</label>
