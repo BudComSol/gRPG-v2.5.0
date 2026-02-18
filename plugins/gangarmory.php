@@ -45,7 +45,7 @@ $rows = $db->fetch();
     <th class="content-head"><?php echo $gang_class->formattedname; ?> Vault</th>
 </tr>
 <tr>
-    <td class="content">Please note that only the gang leader can take items out of the gang armory.</td>
+    <td class="content"><p>Kindly note that only the gang leader can remove items from gang armory.</p></td>
 </tr>
 <tr>
     <th class="content-head">Items In Vault</th>
@@ -60,7 +60,7 @@ if ($rows !== null) {
             echo $sub.' '.format($row['name']).'<br />';
         }
     } else {
-        ?>The armory is empty<?php
+        ?><p>Sad to report but the armory is presently empty.</p><?php
     }
 ?></td>
 </tr>
@@ -81,7 +81,7 @@ if ($rows !== null) {
             echo format($row['name']); ?> [<?php echo format($row['quantity']); ?>] <a href="addtoarmory.php?id=<?php echo $row['itemid']; ?>&amp;csrfg=<?php echo $csrfg; ?>">Add</a><br /><?php
         }
     } else {
-        ?>You have no items<?php
+        ?><p>You have no items to add, umm WTF?</p><?php
     }
 ?></td>
 </tr>
