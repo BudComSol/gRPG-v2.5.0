@@ -30,9 +30,9 @@ if ($gang_class->leader == $user_class->id) {
         <td class="content">
             <table width="100%" class="center">
                 <tr>
-                    <td width="33%"><a href="invite.php">Invite Player</a></td>
-                    <td width="34%"><a href="managegang.php">Manage Gang Members</a></td>
-                    <td width="33%"><a href="changedesc.php">Change Gang Message</a></td>
+                    <td width="33%"><a href="plugins/invite.php">Invite Player</a></td>
+                    <td width="34%"><a href="plugins/managegang.php">Manage Gang Members</a></td>
+                    <td width="33%"><a href="plugins/changedesc.php">Change Gang Message</a></td>
                 </tr>
             </table>
         </td>
@@ -45,14 +45,14 @@ if ($gang_class->leader == $user_class->id) {
     <td class="content">
         <table width="100%" class="center">
             <tr>
-                <td width="25%"><a href="viewgang.php?id=<?php echo $gang_class->id; ?>">View Gang</a></td>
-                <td width="25%"><a href="gangarmory.php">Armory</a></td>
-                <td width="25%"><a href="ganglog.php">Defense Log</a></td>
-                <td width="25%"><a href="gangvault.php">Vault</a></td>
+                <td width="25%"><a href="plugins/viewgang.php?id=<?php echo $gang_class->id; ?>">View Gang</a></td>
+                <td width="25%"><a href="plugins/gangarmory.php">Armory</a></td>
+                <td width="25%"><a href="plugins/ganglog.php">Defense Log</a></td>
+                <td width="25%"><a href="plugins/gangvault.php">Vault</a></td>
             </tr><?php
 if ($user_class->id != $gang_class->leader) {
     ?><tr>
-                    <td colspan="4" class="center"><a href="gang.php?leave&amp;csrfg=<?php echo csrf_create('csrfg', false); ?>">Leave Gang</a></td>
+                    <td colspan="4" class="center"><a href="plugins/gang.php?leave&amp;csrfg=<?php echo csrf_create('csrfg', false); ?>">Leave Gang</a></td>
                 </tr><?php
 }
 ?></table>
