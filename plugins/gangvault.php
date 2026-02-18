@@ -13,7 +13,7 @@ if (array_key_exists('deposit', $_POST) || array_key_exists('deposit_points', $_
     $curr = !array_key_exists('points', $_GET) ? 'money' : 'points';
     $currVault = !array_key_exists('points', $_GET) ? 'moneyvault' : 'pointsvault';
     $_POST['damount'] = array_key_exists('damount', $_POST) && ctype_digit(str_replace(',', '', $_POST['damount'])) ? str_replace(',', '', $_POST['damount']) : null;
-    if (empty($_POST['damount'])) {
+    if ($_POST['damount'] === null) {
         $errors[] = 'You didn\'t enter a valid amount';
     } elseif ($_POST['damount'] <= 0) {
         $errors[] = 'You must deposit a positive amount';
@@ -39,7 +39,7 @@ if ((array_key_exists('withdraw', $_POST) || array_key_exists('withdraw_points',
     $curr = !empty($_POST['withdraw']) ? 'money' : 'points';
     $currVault = !empty($_POST['withdraw']) ? 'moneyvault' : 'pointsvault';
     $_POST['wamount'] = array_key_exists('wamount', $_POST) && ctype_digit(str_replace(',', '', $_POST['wamount'])) ? str_replace(',', '', $_POST['wamount']) : null;
-    if (empty($_POST['wamount'])) {
+    if ($_POST['wamount'] === null) {
         $errors[] = 'You didn\'t enter a valid amount';
     } elseif ($_POST['wamount'] <= 0) {
         $errors[] = 'You must withdraw a positive amount';
