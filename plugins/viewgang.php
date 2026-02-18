@@ -58,7 +58,7 @@ if ($invites !== null) {
             $user = new User($row['playerid']); ?><div><?php echo $user->formattedname; ?></div><?php
         }
     } else {
-        ?>No-one has been invited yet<?php
+        ?><p>No-one has been invited yet.</p><?php
     }
 ?></td>
 </tr>
