@@ -125,7 +125,7 @@ function index($db, $user_class, $parser)
         }
     } else {
         ?><tr>
-            <td colspan="4" class="center">There are no boards in this category</td>
+            <td colspan="4" class="center"><p>There are no boards in this category.</p></td>
         </tr><?php
     } ?></table><?php
     if ($user_class->admin > 0) {
@@ -163,7 +163,7 @@ function index($db, $user_class, $parser)
             }
         } else {
             ?><tr>
-            <td colspan="4" class="center">There are no boards in this category</td>
+            <td colspan="4" class="center"><p>There are no boards in this category.</p></td>
         </tr><?php
         } ?></table><?php
     }
@@ -236,7 +236,7 @@ function viewforum($db, $user_class, $parser)
         }
     } else {
         ?><tr>
-            <td colspan="4" class="center">There are no topics</td>
+            <td colspan="4" class="center"><p>There are no topics as yet.</p></td>
         </tr><?php
     } ?></table>
     <?php echo $pages->display_pages();
