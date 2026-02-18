@@ -286,7 +286,7 @@ class database
     public function count(): ?int
     {
         try {
-            return (int)$this->stmt->fetchColumn();
+            return (int)$this->stmt->rowCount();
         } catch (PDOException $e) {
             exit('<p style="color:red;"><strong>NUM ROWS ERROR</strong></p><pre>' . $e->getMessage() . '</pre>');
         }
