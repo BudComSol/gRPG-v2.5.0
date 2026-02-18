@@ -430,10 +430,10 @@ function newtopic($db, $user_class, $parser)
     }
     $db->query('SELECT fb_id, fb_name, fb_owner, fb_auth FROM forum_boards WHERE fb_id = ?');
     $db->execute([$_GET['forum']]);
-    $board = $db->fetch(true);
-    if ($board === null) {
+    if (!$db->count()) {
         echo Message('That board doesn\'t exist', 'Error', true);
-    } ?>
+    }
+    $board = $db->fetch(true); ?>
     <div class="big">
         <a href="plugins/forum.php">Index</a> &rarr;
         <a href="plugins/forum.php?viewforum=<?php echo $board['fb_id']; ?>"><?php echo format($board['fb_name']); ?></a> &rarr;
