@@ -34,6 +34,7 @@ class database
     public ?array $binds = [];
     private ?PDO $db;
     private ?PDOStatement $stmt;
+    private bool $executed = false;
     public static ?database $inst = null;
 
     /**
@@ -114,6 +115,7 @@ class database
     public function query($query, array $params = null): ?bool
     {
         $this->last_query = $query;
+        $this->executed = false;
         try {
             $this->stmt = $this->db->prepare($query);
             if (is_array($params) && count($params)) {
@@ -186,7 +188,9 @@ class database
             return false;
         }
         try {
-            return (bool)is_array($binds) && count($binds) > 0 ? $this->stmt->execute($binds) : $this->stmt->execute();
+            $result = (bool)is_array($binds) && count($binds) > 0 ? $this->stmt->execute($binds) : $this->stmt->execute();
+            $this->executed = true;
+            return $result;
         } catch (PDOException $e) {
             echo '<p style="color:red;"><strong>EXECUTION ERROR</strong></p><pre>' . $e->getMessage() . '</pre><p><pre>';
             /** @noinspection ForgottenDebugOutputInspection */
@@ -209,7 +213,9 @@ class database
             return null;
         }
         try {
-            $this->execute();
+            if (!$this->executed) {
+                $this->execute();
+            }
             $ret = $this->stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             exit('<p style="color:red;"><strong>FETCH ROW ERROR</strong></p><pre>' . $e->getMessage() . '</pre>');
@@ -237,7 +243,9 @@ class database
             return null;
         }
         try {
-            $this->execute();
+            if (!$this->executed) {
+                $this->execute();
+            }
 
             return $this->stmt->fetchColumn($col);
         } catch (PDOException $e) {
@@ -256,7 +264,9 @@ class database
             return null;
         }
         try {
-            $this->execute();
+            if (!$this->executed) {
+                $this->execute();
+            }
 
             return $this->stmt->fetch(PDO::FETCH_OBJ);
         } catch (PDOException $e) {
