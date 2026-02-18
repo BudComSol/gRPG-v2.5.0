@@ -202,6 +202,8 @@ class database
 
     /**
      *    Return single or multiple rows.
+     *    Note: If execute() has already been called, this will not re-execute.
+     *    If you need to execute again with different parameters, call execute() before calling this method.
      *
      * @param bool $shift [shift the returned array of data up a step - loses the requirement of a loop for one 1 row]
      *
