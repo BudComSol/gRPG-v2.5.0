@@ -62,21 +62,21 @@ $csrf = csrf_create();
 </tr>
 <tr>
     <td class="content">
-        Welcome to the gang vault. There is currently  <?php echo prettynum($gang_class->moneyvault, true); ?> and <?php echo format($gang_class->pointsvault); ?> point<?php echo s($gang_class->pointsvault); ?> in the gang vault.<br /><br />
+        <p>There is currently  <?php echo prettynum($gang_class->moneyvault, true); ?> and <?php echo format($gang_class->pointsvault); ?> point<?php echo s($gang_class->pointsvault); ?> in the gang vault.</p>
         <table width="100%" class="pure-table pure-table-horizontal">
             <thead>
                 <tr>
-                    <th width="50%">Money</th>
-                    <th width="50%">Points</th>
+                    <th width="50%"><p>Money</p></th>
+                    <th width="50%"><p>Points</p></th>
                 </tr>
             </thead>
             <tr>
                 <td>
-                    <form action="gangvault.php" method="post" class="pure-form pure-form-aligned">
+                    <form action="plugins/gangvault.php" method="post" class="pure-form pure-form-aligned">
                         <?php echo $csrf; ?>
                         <fieldset>
                             <div class="pure-control-group">
-                                <label for="damount">Money</label>
+                                <label for="damount"><p>Money</p></label>
                                 <input type="text" name="damount" id="damount" value="<?php echo format($user_class->money); ?>" size="10" maxlength="20" />
                             </div>
                         </fieldset>
@@ -86,11 +86,11 @@ $csrf = csrf_create();
                     </form>
                 </td>
                 <td>
-                    <form action="gangvault.php?points" method="post" class="pure-form pure-form-aligned">
+                    <form action="plugins/gangvault.php?points" method="post" class="pure-form pure-form-aligned">
                         <?php echo $csrf; ?>
                         <fieldset>
                             <div class="pure-control-group">
-                                <label for="damount_points">Points</label>
+                                <label for="damount_points"><p>Points</p></label>
                                 <input type="text" name="damount" id="damount_points" value="<?php echo format($user_class->points); ?>" size="10" maxlength="20" />
                             </div>
                         </fieldset>
@@ -103,11 +103,11 @@ $csrf = csrf_create();
             if ($gang_class->leader == $user_class->id) {
                 ?><tr>
                     <td>
-                        <form action="gangvault.php" method="post" class="pure-form pure-form-aligned">
+                        <form action="plugins/gangvault.php" method="post" class="pure-form pure-form-aligned">
                             <?php echo $csrf; ?>
                             <fieldset>
                                 <div class="pure-control-group">
-                                    <label for="wamount">Money</label>
+                                    <label for="wamount"><p>Money</p></label>
                                     <input type="text" name="wamount" id="wamount" value="<?php echo format($gang_class->moneyvault); ?>" size="10" maxlength="20" />
                                 </div>
                             </fieldset>
@@ -117,11 +117,11 @@ $csrf = csrf_create();
                         </form>
                     </td>
                     <td>
-                        <form action="gangvault.php?points" method="post" class="pure-form pure-form-aligned">
+                        <form action="plugins/gangvault.php?points" method="post" class="pure-form pure-form-aligned">
                             <?php echo $csrf; ?>
                             <fieldset>
                                 <div class="pure-control-group">
-                                    <label for="wamount_points">Points</label>
+                                    <label for="wamount_points"><p>Points</p></label>
                                     <input type="text" name="wamount" id="wamount_points" value="<?php echo format($gang_class->pointsvault); ?>" size="10" maxlength="20" />
                                 </div>
                             </fieldset>
