@@ -16,23 +16,23 @@ if (array_key_exists('submit', $_POST)) {
     $db->query('UPDATE gangs SET description = ? WHERE id = ?');
     $db->execute([$_POST['changedesc'], $gang_class->id]);
     $gang_class->description = format($_POST['changedesc']);
-    echo Message('You\'ve changed the gang message.');
+    echo Message('<p>You\'ve changed the gang message.</p>');
 }
 ?><tr>
     <th class="content-head">Change Gang Message</th>
 </tr>
 <tr>
     <td class="content">
-        <form action="changedesc.php" method="post" class="pure-form pure-form-aligned">
+        <form action="plugins/changedesc.php" method="post" class="pure-form pure-form-aligned">
             <?php echo csrf_create(); ?>
             <fieldset>
                 <div class="pure-control-group">
-                    <label for="changedesc">Gang Message</label>
-                    <textarea name="changedesc" id="changedesc" cols="53" rows="7"><?php echo $gang_class->description; ?></textarea>
+                    <label for="changedesc"><p>Message to Gang</p></label>
+                    <textarea name="changedesc" id="changedesc" cols="40" rows="7"><?php echo $gang_class->description; ?></textarea>
                 </div>
             </fieldset>
             <div class="pure-controls">
-                <button type="submit" name="submit" class="pure-button pure-button-primary">Change</button>
+                <button type="submit" name="submit" class="pure-button pure-button-primary">Change It Now</button>
             </div>
         </form>
     </td>
