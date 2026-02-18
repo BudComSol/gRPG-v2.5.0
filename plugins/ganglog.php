@@ -32,7 +32,7 @@ if ($rows !== null) {
             echo $cache[$row['attacker']].' attacked '.$cache[$row['defender']].' and '.$cache[$row['winner']].' won - '.$date->format(DEFAULT_DATE_FORMAT).'<br />';
         }
     } else {
-        ?>There have been no attacks<?php
+        ?><p>Bummer, there have been no attacks to date.</p><?php
     }
 ?></td>
 </tr>
