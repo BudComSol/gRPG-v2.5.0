@@ -34,7 +34,7 @@ if ($_GET['id'] !== null) {
         if ($chance <= 75) {
             $db->query('UPDATE users SET experience = experience + ?, crimesucceeded = crimesucceeded + 1, crimemoney = crimemoney + ?, money = money + ?, nerve = GREATEST(nerve - ?, 0) WHERE id = ?');
             $db->execute([$exp, $money, $money, $nerve, $user_class->id]);
-            echo Message($stext.'<br /><br /><span style="color:green;">Success! You receive '.$exp.' exp and '.prettynum($money, true).'.</span><br /><a href="crime.php?id='.$_GET['id'].'&amp;csrfg='.$csrfg.'">Retry</a> | <a href="crime.php">Back</a>', 'Error', true);
+            echo Message($stext.'<br /><br /><span style="color:green;">Success! You receive '.$exp.' exp and '.prettynum($money, true).'.</span><br /><a href="plugins/crime.php?id='.$_GET['id'].'&amp;csrfg='.$csrfg.'">Retry</a> | <a href="plugins/crime.php">Back</a>', 'Error', true);
         } elseif ($chance >= 150) {
             $db->query('UPDATE users SET crimefailed = crimefailed + 1, jail = ?, nerve = GREATEST(nerve - ?, 0) WHERE id = ?');
             $db->execute([$_GET['id'] * 600, $nerve, $user_class->id]);
@@ -42,7 +42,7 @@ if ($_GET['id'] !== null) {
         } else {
             $db->query('UPDATE users SET crimefailed = crimefailed + 1, nerve = GREATEST(nerve - ?, 0) WHERE id = ?');
             $db->execute([$nerve, $user_class->id]);
-            echo Message($ftext.'<br /><br /><span style="color:red;">You failed.</span><br /><a href="crime.php?id='.$_GET['id'].'&amp;csrfg='.$csrfg.'">Retry</a> | <a href="crime.php">Back</a>', 'Error', true);
+            echo Message($ftext.'<br /><br /><span style="color:red;">You failed.</span><br /><a href="plugins/crime.php?id='.$_GET['id'].'&amp;csrfg='.$csrfg.'">Retry</a> | <a href="plugins/crime.php">Back</a>', 'Error', true);
         }
     }
 }
@@ -53,8 +53,14 @@ $db->query('SELECT id, name, nerve FROM crimes ORDER BY nerve ');
 $db->execute();
 $rows = $db->fetch();
 ?><tr>
-    <th class="content-head">Crime</th>
+    <th class="content-head">Commit Crimes</th>
 </tr>
+<tr>
+    <td class="content">
+        <p>Choose a crime and see if you can get away with it, you won't always.</p>
+    </td>
+</tr>
+<tr>
 <tr>
     <td class="content">
         <table width="100%" class="pure-table pure-table-horizontal">
@@ -64,22 +70,23 @@ $rows = $db->fetch();
                     <th width="25%">Nerve</th>
                     <th width="25%">Action</th>
                 </tr>
-            </thead><?php
+            </thead><br><?php
 if ($rows !== null) {
         foreach ($rows as $row) {
             ?>
         <tr>
             <td><?php echo format($row['name']); ?></td>
             <td><?php echo format($row['nerve']); ?></td>
-            <td>[<a href="crime.php?id=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>">Do</a>]</td>
+            <td>[<a href="plugins/crime.php?id=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>">Commit</a>]</td>
         </tr><?php
         }
     } else {
         ?>
         <tr>
-            <td colspan="3" class="center">There are no crimes</td>
+            <td colspan="3" class="center">There are no crimes to commit.</td>
         </tr><?php
     }
 ?></table>
+   <br>
     </td>
 </tr>
