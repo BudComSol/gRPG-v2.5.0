@@ -319,11 +319,11 @@ CREATE TABLE IF NOT EXISTS `forum_boards`
   DEFAULT CHARSET = utf8mb4;
 
 INSERT INTO `forum_boards` (`fb_name`, `fb_desc`, `fb_auth`)
-VALUES ('Announcements', 'Official game announcements and updates.', 'public'),
-       ('General Discussion', 'General chat and discussions about anything and everything.', 'public'),
-       ('Game Discussion', 'Discuss game features, strategies, and gameplay.', 'public'),
-       ('Help & Support', 'Get help with game mechanics and technical issues.', 'public'),
-       ('Staff Discussion', 'Private discussion area for game staff members.', 'staff');
+VALUES ('Game News', 'Official news and announcements.', 'public'),
+       ('General Chat', 'Chat about anything and everything.', 'public'),
+       ('Game Discussion', 'Discussion about game related issues.', 'public'),
+       ('Help & Support', 'Help with any support issues you have.', 'public'),
+       ('Staff Discussion', 'Private area for game staff members.', 'staff');
 
 DROP TABLE IF EXISTS `forum_browsers`;
 CREATE TABLE IF NOT EXISTS `forum_browsers`
