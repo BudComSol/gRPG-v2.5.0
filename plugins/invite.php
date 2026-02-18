@@ -19,7 +19,7 @@ if (array_key_exists('invite', $_POST)) {
     }
     $id = Get_ID($_POST['username']);
     if (!$id) {
-        $errors[] = 'The player you selected doesn\'t exist';
+        $errors[] = 'The player you selected doesn\'t exist numpty!';
     }
     $target = new User($id);
     if ($target->gang) {
@@ -44,11 +44,11 @@ if (count($errors)) {
 }
 ?><tr>
     <td class="content">
-        <form action="invite.php" method="post" class="pure-form pure-form-aligned">
+        <form action="plugins/invite.php" method="post" class="pure-form pure-form-aligned">
             <?php echo csrf_create(); ?>
             <fieldset>
                 <div class="pure-control-group">
-                    <label for="username">Citizen's name</label>
+                    <label for="username">Citizen's Name</label>
                     <input type="text" name="username" id="username" size="15" />
                 </div>
             </fieldset>
