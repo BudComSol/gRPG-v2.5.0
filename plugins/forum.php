@@ -922,7 +922,7 @@ function pin($db, $user_class, $parser)
 function recache_topic($id = 0)
 {
     global $db;
-    if (!$id || !ctype_digit($id)) {
+    if (!$id || !ctype_digit((string)$id)) {
         return false;
     }
     $db->query('SELECT COUNT(ft_id) FROM forum_topics WHERE ft_id = ?');
@@ -949,7 +949,7 @@ function recache_topic($id = 0)
 function recache_forum($id = 0)
 {
     global $db;
-    if (!$id || !ctype_digit($id)) {
+    if (!$id || !ctype_digit((string)$id)) {
         return false;
     }
     echo 'Recaching forum ID #'.$id;
@@ -1008,7 +1008,7 @@ function accessCheck($data, $user_class)
 function getCount($id = null, $type = null)
 {
     global $db;
-    if (!ctype_digit($id)) {
+    if (!ctype_digit((string)$id)) {
         return 0;
     }
     switch ($type) {
@@ -1050,7 +1050,7 @@ function getCount($id = null, $type = null)
 function trashTopic($id = null)
 {
     global $db;
-    if (!ctype_digit($id)) {
+    if (!ctype_digit((string)$id)) {
         return false;
     }
     $db->query('SELECT ft_board FROM forum_topics WHERE ft_id = ?');
