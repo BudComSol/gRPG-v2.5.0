@@ -280,6 +280,8 @@ class database
 
     /**
      *    Returns the amount of rows found from single previous query.
+     *    Note: rowCount() works reliably for SELECT statements with MySQL/MariaDB drivers (mysqlnd).
+     *    This application uses MySQL exclusively, so this implementation is safe.
      *
      * @return int
      */
