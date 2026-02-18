@@ -318,6 +318,12 @@ CREATE TABLE IF NOT EXISTS `forum_boards`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
+INSERT INTO `forum_boards` (`fb_name`, `fb_desc`, `fb_auth`)
+VALUES ('Announcements', 'Official announcements and important updates', 'public'),
+       ('Bug Reports', 'Report bugs and technical issues', 'public'),
+       ('Game Play', 'Discuss game mechanics and strategies', 'public'),
+       ('General Chat', 'General discussion and community chat', 'public');
+
 DROP TABLE IF EXISTS `forum_browsers`;
 CREATE TABLE IF NOT EXISTS `forum_browsers`
 (
