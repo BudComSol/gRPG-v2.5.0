@@ -35,7 +35,7 @@ if ($spend !== '') {
         if ($user_class->hookers + $hookersToAdd > MAX_HOOKERS) {
             echo Message("You can't have more than ".MAX_HOOKERS." hookers! The pimp union won't allow it!");
         } elseif ($user_class->money < $cost) {
-            $errors[] = 'You don\'t have enough money for that';
+            $errors[] = 'You don\'t have enough money for that, numpty.';
         } else {
             $db->query('UPDATE users SET money = GREATEST(money - ?, 0), hookers = hookers + ? WHERE id = ?');
             $db->execute([$cost, $hookersToAdd, $user_class->id]);
@@ -57,7 +57,7 @@ if ($cash !== '') {
     $errors = [];
     
     if ($user_class->hookers <= 0) {
-        $errors[] = 'You don\'t have any hookers to cash out';
+        $errors[] = 'You don\'t have any hookers to cash out, numpty.';
     }
     
     if (!count($errors)) {
@@ -78,13 +78,13 @@ $csrfg = csrf_create('csrfg', false);
 </tr>
 <tr>
     <td class="content">
-        Welcome to the Whorehouse! Here you can hire hookers to earn money for you. Each hooker earns you <?php echo prettynum(EARNINGS_PER_HOOKER, true); ?> when you cash out, but you can't have more than <?php echo MAX_HOOKERS; ?> hookers at a time.
+        <p>Each hooker earns <?php echo prettynum(EARNINGS_PER_HOOKER, true); ?> when you cash out, but you can't have more than <?php echo MAX_HOOKERS; ?> hookers at a time.</p>
     </td>
 </tr>
 <tr>
     <td class="content">
         <strong>Current Hookers:</strong> <?php echo prettynum($user_class->hookers); ?><br />
-        <strong>Your Money:</strong> <?php echo prettynum($user_class->money, true); ?>
+        <strong>Cash on Hand:</strong> <?php echo prettynum($user_class->money, true); ?>
     </td>
 </tr>
 <tr>
@@ -95,23 +95,23 @@ $csrfg = csrf_create('csrfg', false);
         <table width="100%" class="pure-table pure-table-horizontal">
             <tr>
                 <td width="50%">1 Hooker - <?php echo prettynum(1000, true); ?></td>
-                <td width="50%">[<a href="whorehouse.php?spend=1&amp;csrfg=<?php echo $csrfg; ?>">Hire</a>]</td>
+                <td width="50%">[<a href="plugins/whorehouse.php?spend=1&amp;csrfg=<?php echo $csrfg; ?>">Hire</a>]</td>
             </tr>
             <tr>
                 <td>5 Hookers - <?php echo prettynum(5000, true); ?></td>
-                <td>[<a href="whorehouse.php?spend=5&amp;csrfg=<?php echo $csrfg; ?>">Hire</a>]</td>
+                <td>[<a href="plugins/whorehouse.php?spend=5&amp;csrfg=<?php echo $csrfg; ?>">Hire</a>]</td>
             </tr>
             <tr>
                 <td>10 Hookers - <?php echo prettynum(10000, true); ?></td>
-                <td>[<a href="whorehouse.php?spend=10&amp;csrfg=<?php echo $csrfg; ?>">Hire</a>]</td>
+                <td>[<a href="plugins/whorehouse.php?spend=10&amp;csrfg=<?php echo $csrfg; ?>">Hire</a>]</td>
             </tr>
             <tr>
                 <td>20 Hookers - <?php echo prettynum(20000, true); ?></td>
-                <td>[<a href="whorehouse.php?spend=20&amp;csrfg=<?php echo $csrfg; ?>">Hire</a>]</td>
+                <td>[<a href="plugins/whorehouse.php?spend=20&amp;csrfg=<?php echo $csrfg; ?>">Hire</a>]</td>
             </tr>
             <tr>
                 <td>50 Hookers - <?php echo prettynum(50000, true); ?></td>
-                <td>[<a href="whorehouse.php?spend=50&amp;csrfg=<?php echo $csrfg; ?>">Hire</a>]</td>
+                <td>[<a href="plugins/whorehouse.php?spend=50&amp;csrfg=<?php echo $csrfg; ?>">Hire</a>]</td>
             </tr>
         </table>
     </td>
@@ -121,7 +121,7 @@ $csrfg = csrf_create('csrfg', false);
 </tr>
 <tr>
     <td class="content">
-        Release all your hookers and collect their earnings (<?php echo prettynum($user_class->hookers * EARNINGS_PER_HOOKER, true); ?>).<br /><br />
-        [<a href="whorehouse.php?cash=1&amp;csrfg=<?php echo $csrfg; ?>">Cash Out All Hookers</a>]
+        <p>Release all your hookers and collect their earnings (<?php echo prettynum($user_class->hookers * EARNINGS_PER_HOOKER, true); ?>).</p>
+         <a href="plugins/whorehouse.php?cash=1&amp;csrfg=<?php echo $csrfg; ?>"><p>Cash Out All Hookers</p></a>
     </td>
 </tr>
