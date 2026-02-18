@@ -280,13 +280,15 @@ class database
 
     /**
      *    Returns the amount of rows found from single previous query.
+     *    Note: rowCount() works reliably for SELECT statements with MySQL/MariaDB drivers (mysqlnd).
+     *    This application uses MySQL exclusively, so this implementation is safe.
      *
      * @return int
      */
     public function count(): ?int
     {
         try {
-            return (int)$this->stmt->fetchColumn();
+            return (int)$this->stmt->rowCount();
         } catch (PDOException $e) {
             exit('<p style="color:red;"><strong>NUM ROWS ERROR</strong></p><pre>' . $e->getMessage() . '</pre>');
         }
