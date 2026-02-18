@@ -74,7 +74,7 @@ if ($cash !== '') {
 
 $csrfg = csrf_create('csrfg', false);
 ?><tr>
-    <th class="content-head">The Whorehouse</th>
+    <th class="content-head">Whorehouse</th>
 </tr>
 <tr>
     <td class="content">
@@ -88,11 +88,12 @@ $csrfg = csrf_create('csrfg', false);
     </td>
 </tr>
 <tr>
-    <th class="content-head">Hire Hookers</th>
+    <th class="content-head">Hire Whores</th>
 </tr>
 <tr>
     <td class="content">
         <table width="100%" class="pure-table pure-table-horizontal">
+          <br>
             <tr>
                 <td width="50%">1 Hooker - <?php echo prettynum(1000, true); ?></td>
                 <td width="50%">[<a href="plugins/whorehouse.php?spend=1&amp;csrfg=<?php echo $csrfg; ?>">Hire</a>]</td>
@@ -113,9 +114,9 @@ $csrfg = csrf_create('csrfg', false);
                 <td>50 Hookers - <?php echo prettynum(50000, true); ?></td>
                 <td>[<a href="plugins/whorehouse.php?spend=50&amp;csrfg=<?php echo $csrfg; ?>">Hire</a>]</td>
             </tr>
-        </table>
-    </td>
-</tr>
+        </table><br>
+    </td><br>
+</tr><br>
 <tr>
     <th class="content-head">Cash Out</th>
 </tr>
