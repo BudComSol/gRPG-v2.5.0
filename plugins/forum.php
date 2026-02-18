@@ -92,7 +92,7 @@ switch ($_GET['act']) {
 }
 function index($db, $user_class, $parser)
 {
-    $db->query('SELECT * FROM forum_boards WHERE fb_auth = \'public\' ORDER BY fb_id ');
+    $db->query('SELECT * FROM forum_boards WHERE fb_auth = \'public\' AND fb_bin = 0 ORDER BY fb_id ');
     $db->execute();
     $rows = $db->fetch(); ?><table class="pure-table pure-table-horizontal center" width="100%">
         <thead>
@@ -129,7 +129,7 @@ function index($db, $user_class, $parser)
         </tr><?php
     } ?></table><?php
     if ($user_class->admin > 0) {
-        $db->query('SELECT * FROM forum_boards WHERE fb_auth = \'staff\' ORDER BY fb_id ');
+        $db->query('SELECT * FROM forum_boards WHERE fb_auth = \'staff\' AND fb_bin = 0 ORDER BY fb_id ');
         $db->execute();
         $rows = $db->fetch(); ?><h2 class="center">Staff Boards</h2>
         <table class="pure-table pure-table-horizontal center" width="100%">
