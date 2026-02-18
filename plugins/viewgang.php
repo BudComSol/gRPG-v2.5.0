@@ -1,15 +1,13 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__.'/../inc/header.php';
-if (empty($_GET['id'])) {
+if (empty($_GET['id']) || !is_numeric($_GET['id'])) {
     echo Message('Invalid gang', 'Error', true);
 }
-$db->query('SELECT COUNT(id) FROM gangs WHERE id = ?');
-$db->execute([$_GET['id']]);
-if (!$db->result()) {
+$gang_class = new Gang((int)$_GET['id']);
+if (!isset($gang_class->id)) {
     echo Message('The gang you selected doesn\'t exist', 'Error', true);
 }
-$gang_class = new Gang($_GET['id']);
 $db->query('SELECT id FROM users WHERE gang = ? ORDER BY experience DESC');
 $db->execute([$gang_class->id]);
 $rows = $db->fetch();
