@@ -25,8 +25,8 @@ class Paginator
     public string $limit;
     protected array $ipp_array;
     protected int $mid_range;
-    protected string $querystring;
-    protected string $return;
+    protected string $querystring = '';
+    protected string $return = '';
     protected int $default_ipp;
     protected int $start_range;
     protected int $end_range;
@@ -81,8 +81,8 @@ class Paginator
         }
         if ($this->num_pages > 10) {
             $this->return .= ($this->current_page > 1 and $this->total_items >= 10) ? '<div class="pure-u-1-12"><a class="pure-button button-xsmall pure-button-disabled" href="'.$_SERVER['PHP_SELF'].'?page='.($this->current_page - 1).'&ipp='.$this->items_per_page.$this->querystring.'" disabled>Previous</a></div>' : '<div class="pure-u-1-12 disabled"><a class="pure-button button-xsmall pure-button-disabled" href="#" disabled>Previous</div> ';
-            $this->start_range = $this->current_page - floor($this->mid_range / 2);
-            $this->end_range = $this->current_page + floor($this->mid_range / 2);
+            $this->start_range = $this->current_page - (int)floor($this->mid_range / 2);
+            $this->end_range = $this->current_page + (int)floor($this->mid_range / 2);
             if ($this->start_range <= 0) {
                 $this->end_range += abs($this->start_range) + 1;
                 $this->start_range = 1;
