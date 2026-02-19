@@ -107,9 +107,9 @@ function index($db, $user_class, $parser)
     if ($rows !== null) {
         foreach ($rows as $row) {
             ?><tr>
-                <td><a href="plugins/forum.php?viewforum=<?php echo $row['fb_id']; ?>" class="bold"><?php echo format($row['fb_name']) ?? '[Unnamed]'; ?></a><br /><span class="small"><?php echo format($row['fb_desc']) ?? ''; ?></span></td>
-                <td><?php echo format($row['fb_posts']) ?? 0; ?></td>
-                <td><?php echo format($row['fb_topics']) ?? 0; ?></td>
+                <td><a href="plugins/forum.php?viewforum=<?php echo $row['fb_id']; ?>" class="bold"><?php echo format($row['fb_name'] ?? '[Unnamed]'); ?></a><br /><span class="small"><?php echo format($row['fb_desc'] ?? ''); ?></span></td>
+                <td><?php echo format($row['fb_posts'] ?? 0); ?></td>
+                <td><?php echo format($row['fb_topics'] ?? 0); ?></td>
                 <td><?php
             if ($row['fb_latest_topic']) {
                 $poster = $row['fb_latest_poster'] ? new User($row['fb_latest_poster']) : (object) ['formattedname' => 'None'];
@@ -117,7 +117,7 @@ function index($db, $user_class, $parser)
                 $db->execute([$row['fb_latest_topic']]);
                 $date = new DateTime($row['fb_latest_time']);
                 echo $date->format('F d, Y g:i:sa'); ?><br />
-                        In: <a href="plugins/forum.php?viewtopic=<?php echo $row['fb_latest_topic']; ?>&amp;latest"><?php echo format($db->result()) ?? '[Untitled]'; ?></a><br />
+                        In: <a href="plugins/forum.php?viewtopic=<?php echo $row['fb_latest_topic']; ?>&amp;latest"><?php echo format($db->result() ?? '[Untitled]'); ?></a><br />
                         By: <?php echo $poster->formattedname ?: 'Unknown';
             } else {
                 echo 'No posts';
@@ -146,9 +146,9 @@ function index($db, $user_class, $parser)
         if ($rows !== null) {
             foreach ($rows as $row) {
                 ?><tr>
-                    <td><a href="plugins/forum.php?viewforum=<?php echo $row['fb_id']; ?>" class="bold"><?php echo format($row['fb_name']) ?? '[Unnamed]'; ?></a><br /><span class="small"><?php echo format($row['fb_desc']) ?? ''; ?></span></td>
-                    <td><?php echo format($row['fb_posts']) ?? 0; ?></td>
-                    <td><?php echo format($row['fb_topics']) ?? 0; ?></td>
+                    <td><a href="plugins/forum.php?viewforum=<?php echo $row['fb_id']; ?>" class="bold"><?php echo format($row['fb_name'] ?? '[Unnamed]'); ?></a><br /><span class="small"><?php echo format($row['fb_desc'] ?? ''); ?></span></td>
+                    <td><?php echo format($row['fb_posts'] ?? 0); ?></td>
+                    <td><?php echo format($row['fb_topics'] ?? 0); ?></td>
                     <td><?php
                 if ($row['fb_latest_topic']) {
                     $poster = $row['fb_latest_poster'] ? new User($row['fb_latest_poster']) : (object) ['formattedname' => 'None'];
@@ -156,7 +156,7 @@ function index($db, $user_class, $parser)
                     $db->execute([$row['fb_latest_topic']]);
                     $date = new DateTime($row['fb_latest_time']);
                     echo $date->format('F d, Y g:i:sa'); ?><br />
-                            In: <a href="plugins/forum.php?viewtopic=<?php echo $row['fb_latest_topic']; ?>&amp;latest"><?php echo format($db->result()) ?? '[Untitled]'; ?></a><br />
+                            In: <a href="plugins/forum.php?viewtopic=<?php echo $row['fb_latest_topic']; ?>&amp;latest"><?php echo format($db->result() ?? '[Untitled]'); ?></a><br />
                             By: <?php echo $poster->formattedname ?: 'Unknown';
                 } else {
                     echo 'No posts';
@@ -218,10 +218,10 @@ function viewforum($db, $user_class, $parser)
             $creator = $topic['ft_creation_user'] ? new User($topic['ft_creation_user']) : (object) ['formattedname' => 'None']; ?><tr>
                 <td><?php
             echo $topic['ft_pinned'] ? '<img src="/images/silk/exclamation.png" title="Pinned" alt="Pinned" /> ' : '';
-            echo $topic['ft_locked'] ? '<img src="/images/silk/lock.png" title="Locked" alt="Locked" /> ' : ''; ?><a href="plugins/forum.php?viewtopic=<?php echo $topic['ft_id']; ?>"><?php echo format($topic['ft_name']) ?? '[Untitled]'; ?></a>
+            echo $topic['ft_locked'] ? '<img src="/images/silk/lock.png" title="Locked" alt="Locked" /> ' : ''; ?><a href="plugins/forum.php?viewtopic=<?php echo $topic['ft_id']; ?>"><?php echo format($topic['ft_name'] ?? '[Untitled]'); ?></a>
                     <?php echo isset($topic['subbed']) ? ' <img src="/images/silk/eye.png" title="Subscribed" alt="[Subscribed]" />' : ''; ?>
                 </td>
-                <td><?php echo getCount($topic['ft_id'], 'posts_topics') ?? 0; ?></td>
+                <td><?php echo getCount($topic['ft_id'], 'posts_topics') ?: 0; ?></td>
                 <td>
                     <?php echo $creator->formattedname ?: 'Unknown'; ?><br />
                     <span class="small"><?php echo $date_created->format('F d, Y g:i:sa'); ?></span>
