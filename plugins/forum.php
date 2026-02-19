@@ -192,11 +192,11 @@ function viewforum($db, $user_class, $parser)
     $pages = new Paginator($cnt);
     $db->query('SELECT ft_id, ft_name, ft_creation_time, ft_creation_user, ft_latest_time, ft_latest_user, ft_latest_post, ft_locked, ft_pinned, id AS subbed
         FROM forum_topics
-        LEFT JOIN forum_subscriptions ON topic = ft_id
+        LEFT JOIN forum_subscriptions ON topic = ft_id AND userid = ?
         WHERE ft_board = ?
         ORDER BY ft_pinned DESC, ft_latest_time DESC
         LIMIT '.$pages->limit_start.', '.$pages->limit_end);
-    $db->execute([$_GET['viewforum']]);
+    $db->execute([$user_class->id, $_GET['viewforum']]);
     $topics = $db->fetch();
     echo $pages->display_pages(); ?>
     <table class="pure-table pure-table-horizontal center" width="100%">
@@ -249,9 +249,9 @@ function viewtopic($db, $user_class, $parser)
     }
     $db->query('SELECT ft_id, ft_name, ft_board, ft_locked, ft_pinned, id AS subbed
         FROM forum_topics
-        LEFT JOIN forum_subscriptions ON topic = ft_id
+        LEFT JOIN forum_subscriptions ON topic = ft_id AND userid = ?
         WHERE ft_id = ?');
-    $db->execute([$_GET['viewtopic']]);
+    $db->execute([$user_class->id, $_GET['viewtopic']]);
     if (!$db->count()) {
         echo Message('That topic doesn\'t exist', 'Error', true);
     }
