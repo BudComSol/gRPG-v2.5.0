@@ -352,7 +352,7 @@ function viewtopic($db, $user_class, $parser)
             </tr>
         </thead>
         <tbody><?php
-    if($posts !== null) {
+    if ($posts !== null) {
     $cnt = count($posts);
     $no = isset($_GET['page']) && $_GET['page'] > 1 ? ($pages->items_per_page * $_GET['page']) - $pages->items_per_page : 0;
     foreach ($posts as $post) {
@@ -404,6 +404,10 @@ function viewtopic($db, $user_class, $parser)
             </td>
         </tr><?php
     }
+    } else {
+        ?><tr>
+            <td colspan="2" class="center"><p>No posts in this topic yet. Be the first to post!</p></td>
+        </tr><?php
     }?></tbody></table>
     <?php echo $pages->display_pages(); ?><br /><br /><?php
     if (!$topic['ft_locked'] || ($user_class->admin == 1 && $topic['ft_locked'])) {

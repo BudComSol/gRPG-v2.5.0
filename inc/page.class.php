@@ -37,6 +37,14 @@ class Paginator
         $this->total_items = (int) $total;
         if ($this->total_items <= 0) {
             $this->return = '';
+            // Set default pagination values even when count is 0
+            // This ensures LIMIT 0,N (not LIMIT 0,0) in SQL queries
+            // allowing posts to display if they exist despite count mismatch
+            // (e.g., due to caching, race conditions, or count errors)
+            $this->items_per_page = $ipp_array[1] ?? 25;
+            $this->limit_start = 0;
+            $this->limit_end = $this->items_per_page;
+            $this->current_page = 1;
 
             return;
         }
