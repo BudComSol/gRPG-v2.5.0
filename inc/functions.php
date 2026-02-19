@@ -1004,7 +1004,7 @@ function Message($text, $head = null, $kill = false)
         $kill = $kill !== null;
     } ?>
     <tr>
-    <th class="content-head"><?php echo $head ?? '.: Important Message :.'; ?></th>
+    <th class="content-head"><?php echo $head ?? '✸ Important Message ✸'; ?></th>
     </tr>
     <tr>
     <td class="content"><?php echo $text; ?></td>
