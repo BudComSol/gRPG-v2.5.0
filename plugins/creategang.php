@@ -24,7 +24,7 @@ if (array_key_exists('create', $_POST)) { // if they are wanting to start a new 
     $db->query('SELECT COUNT(id) FROM gangs WHERE name = ?');
     $db->execute([$_POST['name']]);
     if ($db->result()) {
-        $errors[] = 'Another gang with that name already exists';
+        $errors[] = 'Another gang with that name already exists, choose another.';
     }
     $_POST['tag'] = array_key_exists('tag', $_POST) && is_string($_POST['tag']) ? strip_tags(trim($_POST['tag'])) : null;
     if (empty($_POST['tag'])) {
@@ -32,12 +32,12 @@ if (array_key_exists('create', $_POST)) { // if they are wanting to start a new 
     }
     $tagLen = strlen($_POST['tag']);
     if ($tagLen < 1 || $tagLen > 3) {
-        $errors[] = 'Your gang\'s tag must be between 1 and 3 characters';
+        $errors[] = 'Your gang\'s tag must be between 1 and 3 characters long.';
     }
     $db->query('SELECT COUNT(id) FROM gangs WHERE tag = ?');
     $db->execute([$_POST['tag']]);
     if ($db->result()) {
-        $errors[] = 'Another gang has already taken that tag';
+        $errors[] = 'Another gang has already taken that tag, chose another.';
     }
     if (count($errors)) {
         display_errors($errors);
@@ -49,7 +49,7 @@ if (array_key_exists('create', $_POST)) { // if they are wanting to start a new 
         $db->query('UPDATE users SET money = GREATEST(money - ?, 0), gang = ? WHERE id = ?');
         $db->execute([$cost, $id, $user_class->id]);
         $db->trans('end');
-        echo Message('<p>You\'ve created your new gang.</p>', 'Error', true);
+        echo Message('<p>Congrats, you\'ve created your new gang.</p>', 'Error', true);
     }
 }
 ?><tr>
