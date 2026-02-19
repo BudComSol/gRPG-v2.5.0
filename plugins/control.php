@@ -1974,7 +1974,7 @@ if (empty($_GET['page'])) {
             <td class="content">
                 <form action="control.php?page=playeritems" method="post" class="pure-form pure-form-aligned">
                     <?php echo csrf_create('item_edit'); ?>
-                    <input tpye="hidden" name="id" value="<?php echo $row['id']; ?>" />
+                    <input type="hidden" name="id" value="<?php echo $row['id']; ?>" />
                     <fieldset>
                         <div class="pure-control-group">
                             <label for="name">Item Name</label>
@@ -2479,7 +2479,7 @@ if (empty($_GET['page'])) {
                     </div>
                 </fieldset>
                 <div class="pure-controls">
-                    <button type="submit" name="addjobdb" class="pure-butotn pure-button-primary">Add Job</button>
+                    <button type="submit" name="addjobdb" class="pure-button pure-button-primary">Add Job</button>
                 </div>
             </form>
         </td>
@@ -2543,7 +2543,7 @@ if (empty($_GET['page'])) {
                         </div>
                     </fieldset>
                     <div class="pure-controls">
-                        <button type="submit" name="editjobdb" class="pure-butotn pure-button-primary">Edit Job</button>
+                        <button type="submit" name="editjobdb" class="pure-button pure-button-primary">Edit Job</button>
                     </div>
                 </form>
             </td>
