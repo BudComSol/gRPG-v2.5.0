@@ -102,13 +102,14 @@ function index($db, $user_class, $parser)
                 <th width="10%">Topics</th>
                 <th width="40%">Last Post</th>
             </tr>
-        </thead><?php
+        </thead>
+        <tbody><?php
     if ($rows !== null) {
         foreach ($rows as $row) {
             ?><tr>
-                <td><a href="plugins/forum.php?viewforum=<?php echo $row['fb_id']; ?>" class="bold"><?php echo format($row['fb_name']); ?></a><br /><span class="small"><?php echo format($row['fb_desc']); ?></span></td>
-                <td><?php echo format($row['fb_posts']); ?></td>
-                <td><?php echo format($row['fb_topics']); ?></td>
+                <td><a href="plugins/forum.php?viewforum=<?php echo $row['fb_id']; ?>" class="bold"><?php echo format($row['fb_name']) ?? '[Unnamed]'; ?></a><br /><span class="small"><?php echo format($row['fb_desc']) ?? ''; ?></span></td>
+                <td><?php echo format($row['fb_posts']) ?? 0; ?></td>
+                <td><?php echo format($row['fb_topics']) ?? 0; ?></td>
                 <td><?php
             if ($row['fb_latest_topic']) {
                 $poster = $row['fb_latest_poster'] ? new User($row['fb_latest_poster']) : (object) ['formattedname' => 'None'];
@@ -116,8 +117,8 @@ function index($db, $user_class, $parser)
                 $db->execute([$row['fb_latest_topic']]);
                 $date = new DateTime($row['fb_latest_time']);
                 echo $date->format('F d, Y g:i:sa'); ?><br />
-                        In: <a href="plugins/forum.php?viewtopic=<?php echo $row['fb_latest_topic']; ?>&amp;latest"><?php echo format($db->result()); ?></a><br />
-                        By: <?php echo $poster->formattedname;
+                        In: <a href="plugins/forum.php?viewtopic=<?php echo $row['fb_latest_topic']; ?>&amp;latest"><?php echo format($db->result()) ?? '[Untitled]'; ?></a><br />
+                        By: <?php echo $poster->formattedname ?: 'Unknown';
             } else {
                 echo 'No posts';
             } ?></td>
@@ -127,7 +128,7 @@ function index($db, $user_class, $parser)
         ?><tr>
             <td colspan="4" class="center"><p>There are no boards in this category.</p></td>
         </tr><?php
-    } ?></table><?php
+    } ?></tbody></table><?php
     if ($user_class->admin > 0) {
         $db->query('SELECT * FROM forum_boards WHERE fb_auth = \'staff\' AND fb_bin = 0 ORDER BY fb_id ');
         $db->execute();
@@ -140,13 +141,14 @@ function index($db, $user_class, $parser)
                     <th width="10%">Topics</th>
                     <th width="40%">Last Post</th>
                 </tr>
-            </thead><?php
+            </thead>
+            <tbody><?php
         if ($rows !== null) {
             foreach ($rows as $row) {
                 ?><tr>
-                    <td><a href="plugins/forum.php?viewforum=<?php echo $row['fb_id']; ?>" class="bold"><?php echo format($row['fb_name']); ?></a><br /><span class="small"><?php echo format($row['fb_desc']); ?></span></td>
-                    <td><?php echo format($row['fb_posts']); ?></td>
-                    <td><?php echo format($row['fb_topics']); ?></td>
+                    <td><a href="plugins/forum.php?viewforum=<?php echo $row['fb_id']; ?>" class="bold"><?php echo format($row['fb_name']) ?? '[Unnamed]'; ?></a><br /><span class="small"><?php echo format($row['fb_desc']) ?? ''; ?></span></td>
+                    <td><?php echo format($row['fb_posts']) ?? 0; ?></td>
+                    <td><?php echo format($row['fb_topics']) ?? 0; ?></td>
                     <td><?php
                 if ($row['fb_latest_topic']) {
                     $poster = $row['fb_latest_poster'] ? new User($row['fb_latest_poster']) : (object) ['formattedname' => 'None'];
@@ -154,8 +156,8 @@ function index($db, $user_class, $parser)
                     $db->execute([$row['fb_latest_topic']]);
                     $date = new DateTime($row['fb_latest_time']);
                     echo $date->format('F d, Y g:i:sa'); ?><br />
-                            In: <a href="plugins/forum.php?viewtopic=<?php echo $row['fb_latest_topic']; ?>&amp;latest"><?php echo format($db->result()); ?></a><br />
-                            By: <?php echo $poster->formattedname;
+                            In: <a href="plugins/forum.php?viewtopic=<?php echo $row['fb_latest_topic']; ?>&amp;latest"><?php echo format($db->result()) ?? '[Untitled]'; ?></a><br />
+                            By: <?php echo $poster->formattedname ?: 'Unknown';
                 } else {
                     echo 'No posts';
                 } ?></td>
@@ -165,7 +167,7 @@ function index($db, $user_class, $parser)
             ?><tr>
             <td colspan="4" class="center"><p>There are no boards in this category.</p></td>
         </tr><?php
-        } ?></table><?php
+        } ?></tbody></table><?php
     }
 }
 function viewforum($db, $user_class, $parser)
@@ -207,7 +209,8 @@ function viewforum($db, $user_class, $parser)
                 <th width="25%">Started</th>
                 <th width="25%">Latest Post</th>
             </tr>
-        </thead><?php
+        </thead>
+        <tbody><?php
     if ($topics !== null) {
         foreach ($topics as $topic) {
             $date_created = new DateTime($topic['ft_creation_time']);
@@ -215,18 +218,18 @@ function viewforum($db, $user_class, $parser)
             $creator = $topic['ft_creation_user'] ? new User($topic['ft_creation_user']) : (object) ['formattedname' => 'None']; ?><tr>
                 <td><?php
             echo $topic['ft_pinned'] ? '<img src="/images/silk/exclamation.png" title="Pinned" alt="Pinned" /> ' : '';
-            echo $topic['ft_locked'] ? '<img src="/images/silk/lock.png" title="Locked" alt="Locked" /> ' : ''; ?><a href="plugins/forum.php?viewtopic=<?php echo $topic['ft_id']; ?>"><?php echo format($topic['ft_name']); ?></a>
+            echo $topic['ft_locked'] ? '<img src="/images/silk/lock.png" title="Locked" alt="Locked" /> ' : ''; ?><a href="plugins/forum.php?viewtopic=<?php echo $topic['ft_id']; ?>"><?php echo format($topic['ft_name']) ?? '[Untitled]'; ?></a>
                     <?php echo isset($topic['subbed']) ? ' <img src="/images/silk/eye.png" title="Subscribed" alt="[Subscribed]" />' : ''; ?>
                 </td>
-                <td><?php echo getCount($topic['ft_id'], 'posts_topics'); ?></td>
+                <td><?php echo getCount($topic['ft_id'], 'posts_topics') ?? 0; ?></td>
                 <td>
-                    <?php echo $creator->formattedname; ?><br />
+                    <?php echo $creator->formattedname ?: 'Unknown'; ?><br />
                     <span class="small"><?php echo $date_created->format('F d, Y g:i:sa'); ?></span>
                 </td>
                 <td><?php
             if ($topic['ft_latest_user']) {
-                $poster = $topic['ft_latest_user'] ? new User($topic['ft_latest_user']) : (object) ['formattedname' => 'None'];
-                echo $poster->formattedname; ?><br />
+                $poster = new User($topic['ft_latest_user']);
+                echo $poster->formattedname ?: 'Unknown'; ?><br />
                         <span class="small"><?php echo $date_latest->format('F d, Y g:i:sa'); ?></span><br />
                         <a href="plugins/forum.php?viewtopic=<?php echo $topic['ft_id']; ?>&amp;latest"><img src="/images/silk/arrow_right.png" title="Go to latest post" alt="Go to latest post" /></a><?php
             } else {
@@ -238,7 +241,7 @@ function viewforum($db, $user_class, $parser)
         ?><tr>
             <td colspan="4" class="center"><p>There are no topics as yet.</p></td>
         </tr><?php
-    } ?></table>
+    } ?></tbody></table>
     <?php echo $pages->display_pages();
 }
 function viewtopic($db, $user_class, $parser)
@@ -350,7 +353,8 @@ function viewtopic($db, $user_class, $parser)
                 <th width="25%">Poster</th>
                 <th width="75%">Content</th>
             </tr>
-        </thead><?php
+        </thead>
+        <tbody><?php
     if($posts !== null) {
     $cnt = count($posts);
     $no = isset($_GET['page']) && $_GET['page'] > 1 ? ($pages->items_per_page * $_GET['page']) - $pages->items_per_page : 0;
@@ -403,7 +407,7 @@ function viewtopic($db, $user_class, $parser)
             </td>
         </tr><?php
     }
-    }?></table>
+    }?></tbody></table>
     <?php echo $pages->display_pages(); ?><br /><br /><?php
     if (!$topic['ft_locked'] || ($user_class->admin == 1 && $topic['ft_locked'])) {
         if ($user_class->admin == 1 && $topic['ft_locked']) {
