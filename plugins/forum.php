@@ -466,7 +466,7 @@ function newtopic($db, $user_class, $parser)
             $db->query('SELECT fp_id FROM forum_posts WHERE fp_text = ? AND fp_poster = ? AND fp_topic = ? ORDER BY fp_id DESC LIMIT 1');
             $db->execute([$_POST['message'], $user_class->id, $topic['ft_id']]);
             if ($db->count()) {
-                $error[] = 'You\'ve already made that topic/post';
+                $errors[] = 'You\'ve already made that topic/post';
             }
         }
         if (count($errors)) {
@@ -606,6 +606,7 @@ function quote($db, $user_class, $parser)
     if ($topic['ft_locked'] && $user_class->admin != 1) {
         echo Message('This topic has been locked. No further responses are permitted', 'Error', true);
     } ?><form action="plugins/forum.php?reply=<?php echo $topic['ft_id']; ?>&amp;csrfg=<?php echo csrf_create('csrfg', false); ?>" method="post" class="pure-form pure-form-aligned">
+        <?php echo csrf_create(); ?>
         <div class="pure-control-group">
             <label for="message">Quote/Response</label>
             <textarea name="message" rows="7" cols="40" autofocus required>[quote=<?php echo $quoter->username; ?>]<?php echo format($post['fp_text']); ?>[/quote]</textarea>
@@ -935,7 +936,6 @@ function recache_topic($id = 0)
     $db->execute([$id]);
     $topic = $db->result();
     if($topic > 0) {
-        echo 'Recaching topic ID ' . $id;
         $db->query('SELECT fp_id, fp_poster, fp_time, fp_topic, fp_board FROM forum_posts WHERE fp_topic = ? ORDER BY fp_time DESC LIMIT 1',
             [$id]);
         $post = $db->fetch(true);
@@ -945,10 +945,8 @@ function recache_topic($id = 0)
             $db->query('UPDATE forum_boards SET fb_topics = ?, fb_posts = ?, fb_latest_topic = ?, fb_latest_post = ?, fb_latest_poster = ?, fb_latest_time = ? WHERE fb_id = ?', [
                 $topicCount, $postCount, $post['fp_topic'], $post['fp_id'], $post['fp_poster'], $post['fp_time'], $post['fp_board']
             ]);
-            echo ' ... Done<br />';
         } else {
             $db->query('UPDATE forum_topics SET ft_latest_time = NULL, ft_latest_user = 0, ft_latest_post = 0 WHERE ft_id = ?', [$id]);
-            echo ' ... Done<br />';
         }
     }
 }
@@ -958,7 +956,6 @@ function recache_forum($id = 0)
     if (!$id || !ctype_digit((string)$id)) {
         return false;
     }
-    echo 'Recaching forum ID #'.$id;
     $db->query('SELECT fp_id, fp_poster, fp_time, ft_id, ft_name
         FROM forum_posts
         LEFT JOIN forum_topics ON fp_topic = ft_id
@@ -971,11 +968,9 @@ function recache_forum($id = 0)
         $topicCount = getCount($id, 'topics');
         $db->query('UPDATE forum_boards SET fb_topics = ?, fb_posts = ?, fb_latest_topic = ?, fb_latest_post = ?, fb_latest_poster = ?, fb_latest_time = ? WHERE fb_id = ?');
         $db->execute([$topicCount, $postCount, $row['ft_id'], $row['fp_id'], $row['fp_poster'], $row['fp_time'], $id]);
-        echo '... Done<br />';
     } else {
         $db->query('UPDATE forum_boards SET fb_topics = 0, fb_posts = 0, fb_latest_topic = 0, fb_latest_post = 0, fb_latest_poster = 0, fb_latest_time = NULL WHERE fb_id = ?');
         $db->execute([$id]);
-        echo '... Done<br />';
     }
 }
 function accessCheck($data, $user_class)
@@ -1001,10 +996,10 @@ function accessCheck($data, $user_class)
         if (!empty($_GET['act'])) {
             $text .= "\n".'Act: '.$_GET['act'];
         }
-        $extra .= generate_ticket($user_class->id, 'Forum resource not found', $text) ? '. A bug report has been generated on your account. You don\'t need to do anything else' : '. This bug has already been reported. You don\'t have to worry about it ;)';
+        $extra .= generate_ticket('Forum resource not found', $text, $user_class->id) ? '. A bug report has been generated on your account. You don\'t need to do anything else' : '. This bug has already been reported. You don\'t have to worry about it ;)';
         echo Message('Resource not defined'.$extra, 'Error', true);
     }
-    if ($data['fb_auth'] === 'gang' && $user_class->gang != $data['fb_owner'] && 1 != $user_class->admin) {
+    if ($data['fb_auth'] === 'family' && $user_class->gang != $data['fb_owner'] && 1 != $user_class->admin) {
         echo Message('You don\'t have access', 'Error', true);
     }
     if ($data['fb_auth'] === 'staff' && $user_class->admin != 1) {
@@ -1098,7 +1093,7 @@ function tag($text, $display = false, $id = false)
                 } else {
                     return preg_replace('/@(\w+)/', $tagged->formattedname, $text);
                 }
-                $ids[] = $row['userid'];
+                $ids[] = $row['id'];
                 if ($cnt == 10) {
                     break;
                 }
