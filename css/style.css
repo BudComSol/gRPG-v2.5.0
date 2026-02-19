@@ -3,10 +3,9 @@
     background-color: #333;
     color: #ffffff;
     display: block;
-    padding: 2px;
-    border-style: solid;
-    border-color: #444;
-    border-width: 0 1px 0 1px;
+    padding: 5px 5px 5px 5px;
+    border: none;
+    border-width: 1px 0 1px 1px;
     width: 145px;
     font-weight: normal;
     text-align: left;
@@ -139,9 +138,9 @@ a {
 
 a.leftmenu:link {
     display: block;
-    padding: 2px;
-    border-style: solid;
-    border-width: 0 1px 1px 1px;
+    padding: 5px 5px 5px 5px;
+    border: none;
+    border-width: 1px 0 1px 1px;
     width: 145px;
     font-weight: normal;
     text-align: left;
@@ -149,9 +148,9 @@ a.leftmenu:link {
 
 a.leftmenu:hover {
     display: block;
-    padding: 2px;
-    border-style: solid;
-    border-width: 0 1px 1px 1px;
+    padding: 5px 5px 5px 5px;
+    border: none;
+    border-width: 1px 0 1px 1px;
     width: 145px;
     font-weight: normal;
     text-align: left;
@@ -159,9 +158,9 @@ a.leftmenu:hover {
 
 a.leftmenu:visited {
     display: block;
-    padding-left: 2px;
-    border-style: solid;
-    border-width: 0 1px 1px 1px;
+    padding: 5px 5px 5px 5px;
+    border: none;
+    border-width: 1px 0 1px 1px;
     width: 145px;
     font-weight: normal;
     text-align: left;
@@ -194,8 +193,9 @@ a.topmenu:visited {
 
 .headbox {
     background-color: #111;
-    border: 1px solid #444;
-    padding: 5px;
+    border: none;
+    border-width: 1px 0 1px 1px;
+    padding: 5px 5px 5px 5px;
     color: #ddd;
     display: block;
     width: 139px;
@@ -273,9 +273,9 @@ a:hover {
 .leftmenu {
     margin-left: 8px;
     display: block;
-    padding: 2px;
-    border-style: solid;
-    border-width: 1px;
+    padding: 5px 5px 5px 5px;
+    border: none;
+    border-width: 1px 0 1px 1px;
     width: 145px;
     font-weight: normal;
     text-align: left;
@@ -325,9 +325,9 @@ a:hover {
 
 a.leftmenu:link {
     display: block;
-    padding: 2px 2px 2px 2px;
-    border-style: solid;
-    border-width: 0 1px 1px 1px;
+    padding: 5px 5px 5px 5px;
+    border: none;
+    border-width: 1px 0 1px 1px;
     width: 145px;
     font-weight: normal;
     text-align: left;
@@ -335,9 +335,9 @@ a.leftmenu:link {
 
 a.leftmenu:hover {
     display: block;
-    padding: 2px 2px 2px 2px;
-    border-style: solid;
-    border-width: 0 1px 1px 1px;
+    padding: 5px 5px 5px 5px;
+    border: none;
+    border-width: 1px 0 1px 1px;
     width: 145px;
     font-weight: normal;
     text-align: left;
@@ -345,9 +345,9 @@ a.leftmenu:hover {
 
 a.leftmenu:visited {
     display: block;
-    padding: 2px 2px 2px 2px;
-    border-style: solid;
-    border-width: 0 1px 1px 1px;
+    padding: 5px 5px 5px 5px;
+    border: none;
+    border-width: 1px 0 1px 1px;
     width: 145px;
     font-weight: normal;
     text-align: left;
@@ -379,7 +379,9 @@ a.topmenu:visited {
 }
 
 .headbox {
-    padding: 10px;
+    border: none;
+    border-width: 1px 0 1px 1px;
+    padding: 5px 5px 5px 5px;
     display: block;
     width: 130px;
     text-align: center;
