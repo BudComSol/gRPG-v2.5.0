@@ -1449,6 +1449,30 @@ if (isset($_POST['addrmpack'])) {
         Please send any ideas for things that need to be added to the control panel to comments@thegrpg.com <br /><br />
         If you are experiencing problems with any of the options, try clicking the submit button instead of pressing the enter key.
     </td>
+</tr>
+<tr>
+    <th class="content-head">Navigation</th>
+</tr>
+<tr>
+    <td class="content" style="text-align: center; padding: 10px;">
+        <div class="pure-button-group" role="group" style="flex-wrap: wrap; display: flex; justify-content: center; gap: 5px;">
+            <a href="control.php" class="pure-button<?php echo empty($_GET['page']) ? ' pure-button-primary' : ''; ?>">Admin Messages</a>
+            <a href="control.php?page=rmpacks" class="pure-button<?php echo ($_GET['page'] ?? '') === 'rmpacks' ? ' pure-button-primary' : ''; ?>">RM Packs</a>
+            <a href="control.php?page=rmoptions" class="pure-button<?php echo ($_GET['page'] ?? '') === 'rmoptions' ? ' pure-button-primary' : ''; ?>">RM Options</a>
+            <a href="control.php?page=setplayerstatus" class="pure-button<?php echo ($_GET['page'] ?? '') === 'setplayerstatus' ? ' pure-button-primary' : ''; ?>">Player Status</a>
+            <a href="control.php?page=playeritems" class="pure-button<?php echo ($_GET['page'] ?? '') === 'playeritems' ? ' pure-button-primary' : ''; ?>">Player Items</a>
+            <a href="control.php?page=giveuseritem" class="pure-button<?php echo ($_GET['page'] ?? '') === 'giveuseritem' ? ' pure-button-primary' : ''; ?>">Give User Item</a>
+            <a href="control.php?page=referrals" class="pure-button<?php echo ($_GET['page'] ?? '') === 'referrals' ? ' pure-button-primary' : ''; ?>">Referrals</a>
+            <a href="control.php?page=crimes" class="pure-button<?php echo ($_GET['page'] ?? '') === 'crimes' ? ' pure-button-primary' : ''; ?>">Crimes</a>
+            <a href="control.php?page=cities" class="pure-button<?php echo ($_GET['page'] ?? '') === 'cities' ? ' pure-button-primary' : ''; ?>">Cities</a>
+            <a href="control.php?page=jobs" class="pure-button<?php echo ($_GET['page'] ?? '') === 'jobs' ? ' pure-button-primary' : ''; ?>">Jobs</a>
+            <a href="control.php?page=voting" class="pure-button<?php echo ($_GET['page'] ?? '') === 'voting' ? ' pure-button-primary' : ''; ?>">Voting Sites</a>
+            <a href="control.php?page=forum" class="pure-button<?php echo ($_GET['page'] ?? '') === 'forum' ? ' pure-button-primary' : ''; ?>">Forum Boards</a>
+            <a href="control.php?page=houses" class="pure-button<?php echo ($_GET['page'] ?? '') === 'houses' ? ' pure-button-primary' : ''; ?>">Houses</a>
+            <a href="control.php?page=cars" class="pure-button<?php echo ($_GET['page'] ?? '') === 'cars' ? ' pure-button-primary' : ''; ?>">Cars</a>
+            <a href="control.php?page=site_settings" class="pure-button<?php echo ($_GET['page'] ?? '') === 'site_settings' ? ' pure-button-primary' : ''; ?>">Site Settings</a>
+        </div>
+    </td>
 </tr><?php
 if (count($errors)) {
     display_errors($errors);
