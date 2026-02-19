@@ -76,6 +76,8 @@ if (isset($_POST['addrmpack'])) {
         $db->query('INSERT INTO rmstore_packs (name, cost, money, points, days, items, enabled) VALUES (?, ?, ?, ?, ?, ?, ?)');
         $db->execute([$_POST['name'], $_POST['pack_cost'], $_POST['money'], $_POST['points'], $_POST['rmdays'], $_POST['items'], $_POST['enabled']]);
         echo Message('RMStore Pack '.format($_POST['name']).' has been added');
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_POST['editrmpack'])) {
     if (!csrf_check('rmstore_edit', $_POST)) {
@@ -121,6 +123,8 @@ if (isset($_POST['addrmpack'])) {
         $db->query('UPDATE rmstore_packs SET name = ?, cost = ?, money = ?, points = ?, days = ?, items = ?, enabled = ? WHERE id = ?');
         $db->execute([$_POST['name'], $_POST['pack_cost'], $_POST['money'], $_POST['points'], $_POST['rmdays'], $_POST['items'], $_POST['enabled'], $_POST['id']]);
         echo Message('RMStore Pack '.format($_POST['name']).' has been edited');
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_POST['disenablermpack'])) {
     if (!csrf_check('rmstore_disenable', $_POST)) {
@@ -140,6 +144,8 @@ if (isset($_POST['addrmpack'])) {
         $db->query('UPDATE rmstore_packs SET enabled = IF(enabled = 1, 0, 1) WHERE id = ?');
         $db->execute([$_POST['id']]);
         echo Message('RMStore Pack '.format($pack['name']).' has been '.$oppo);
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_POST['deletermpack'])) {
     if (!csrf_check('rmstore_delete', $_POST)) {
@@ -158,6 +164,8 @@ if (isset($_POST['addrmpack'])) {
         $db->query('DELETE FROM rmstore_packs WHERE id = ?');
         $db->execute([$_POST['id']]);
         echo Message('RMStore Pack '.format($pack['name']).' has been deleted');
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_POST['addforumdb'])) {
     if (!csrf_check('board_add', $_POST)) {
@@ -190,6 +198,8 @@ if (isset($_POST['addrmpack'])) {
         $db->query('INSERT INTO forum_boards (fb_name, fb_desc, fb_auth, fb_bin) VALUES (?, ?, ?, ?)');
         $db->execute([$_POST['name'], $_POST['desc'], $_POST['auth'], $_POST['bin']]);
         echo Message('You\'ve added the '.$_POST['auth'].' forum board: '.format($_POST['name']));
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_POST['editforumdb'])) {
     if (!csrf_check('board_edit', $_POST)) {
@@ -232,6 +242,8 @@ if (isset($_POST['addrmpack'])) {
         $db->query('UPDATE forum_boards SET fb_name = ?, fb_desc = ?, fb_auth = ?, fb_bin = ? WHERE fb_id = ?');
         $db->execute([$_POST['name'], $_POST['desc'], $_POST['auth'], $_POST['bin'], $_POST['id']]);
         echo Message('You\'ve edited the '.$_POST['auth'].' forum board: '.format($_POST['name']));
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_GET['deleteforumdb'])) {
     if (isset($_POST['submit'])) {
@@ -262,6 +274,8 @@ if (isset($_POST['addrmpack'])) {
                 $db->execute([$_POST['forum']]);
                 $db->trans('end');
                 echo Message('You\'ve deleted the forum board '.$name.' and recycled its topics and posts');
+            } else {
+                display_errors($errors);
             }
         } elseif (!empty($_POST['delete'])) {
             $db->trans('start');
@@ -292,6 +306,8 @@ if (isset($_POST['addrmpack'])) {
                 recache_forum($_POST['forum2']);
                 $db->trans('end');
                 echo Message('You\'ve deleted the forum board '.$name.' and moved its posts and topics to '.$name2);
+            } else {
+                display_errors($errors);
             }
         }
     } else {
@@ -407,6 +423,8 @@ if (isset($_POST['addrmpack'])) {
         $db->query('INSERT INTO jobs (name, money, strength, defense, speed, level) VALUES (?, ?, ?, ?, ?, ?)');
         $db->execute([$_POST['name'], $_POST['money'], $_POST['strength'], $_POST['defense'], $_POST['speed'], $_POST['level']]);
         echo Message('You\'ve added the job: '.format($_POST['name']));
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_POST['editjobdb'])) {
     if (!csrf_check('job_edit', $_POST)) {
@@ -438,6 +456,8 @@ if (isset($_POST['addrmpack'])) {
         $db->query('UPDATE jobs SET name = ?, money = ?, strength = ?, defense = ?, speed = ?, level = ? WHERE id = ?');
         $db->execute([$_POST['name'], $_POST['money'], $_POST['strength'], $_POST['defense'], $_POST['speed'], $_POST['level'], $_POST['id']]);
         echo Message('You\'ve edited the job: '.format($_POST['name']));
+    } else {
+        display_errors($errors);
     }
 } elseif (!empty($_GET['deletecity'])) {
     if (!csrf_check('delete_city_'.$_GET['deletecity'], $_POST)) {
@@ -473,6 +493,8 @@ if (isset($_POST['addrmpack'])) {
         $db->query('INSERT INTO cities (name, levelreq, landleft, landprice, description) VALUES (?, ?, ?, ?, ?)');
         $db->execute([$_POST['name'], $_POST['levelreq'], $_POST['landleft'], $_POST['landprice'], $_POST['description']]);
         echo Message('You\'ve added the city: '.format($_POST['name']));
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_POST['editcitydb'])) {
     if (!csrf_check('city_edit', $_POST)) {
@@ -501,6 +523,8 @@ if (isset($_POST['addrmpack'])) {
         $db->query('UPDATE cities SET name = ?, levelreq = ?, landleft = ?, landprice = ?, description = ? WHERE id = ?');
         $db->execute([$_POST['name'], $_POST['levelreq'], $_POST['landleft'], $_POST['landprice'], $_POST['description'], $_POST['id']]);
         echo Message('You\'ve edited the city: '.format($_POST['name']));
+    } else {
+        display_errors($errors);
     }
 } elseif (!empty($_GET['deletecrime'])) {
     if (!csrf_check('delete_crime_'.$_GET['deletecrime'], $_POST)) {
@@ -543,6 +567,8 @@ if (isset($_POST['addrmpack'])) {
         $db->query('INSERT INTO crimes (name, nerve, stext, ftext, ctext) VALUES (?, ?, ?, ?, ?)');
         $db->execute([$_POST['name'], $_POST['nerve'], $_POST['stext'], $_POST['ftext'], $_POST['ctext']]);
         echo Message('You\'ve added the crime: '.format($_POST['name']));
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_POST['editcrimedb'])) {
     if (!csrf_check('crime_edit', $_POST)) {
@@ -578,6 +604,8 @@ if (isset($_POST['addrmpack'])) {
         $db->query('UPDATE crimes SET name = ?, nerve = ?, stext = ?, ftext = ?, ctext = ? WHERE id = ?');
         $db->execute([$_POST['name'], $_POST['nerve'], $_POST['stext'], $_POST['ftext'], $_POST['ctext'], $_POST['id']]);
         echo Message('You\'ve edited the crime: '.format($_POST['name']));
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_POST['additemdb'])) {
     if (!csrf_check('item_add', $_POST)) {
@@ -599,6 +627,8 @@ if (isset($_POST['addrmpack'])) {
         $db->query('INSERT INTO items (name, description, cost, image, offense, defense, heal, reduce, buyable, level) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
         $db->execute([$_POST['name'], $_POST['description'], $_POST['cost'], $_POST['image'], $_POST['offense'], $_POST['defense'], $_POST['heal'], $_POST['reduce'], $_POST['buyable'], $_POST['level']]);
         echo Message('You\'ve added the item: '.format($_POST['name']));
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_POST['edititemdb'])) {
     if (!csrf_check('item_edit', $_POST)) {
@@ -628,6 +658,8 @@ if (isset($_POST['addrmpack'])) {
         $db->query('UPDATE items SET name = ?, description = ?, cost = ?, image = ?, offense = ?, defense = ?, heal = ?, reduce = ?, buyable = ?, level = ? WHERE id = ?');
         $db->execute([$_POST['name'], $_POST['description'], $_POST['cost'], $_POST['image'], $_POST['offense'], $_POST['defense'], $_POST['heal'], $_POST['reduce'], $_POST['buyable'], $_POST['level'], $_POST['id']]);
         echo Message('You\'ve edited the item: '.format($_POST['name']));
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_POST['deleteitemdb'])) {
     if (!csrf_check('item_delete', $_POST)) {
@@ -643,6 +675,8 @@ if (isset($_POST['addrmpack'])) {
         $db->query('DELETE FROM items WHERE id = ?');
         $db->execute([$_POST['id']]);
         echo Message('You\'ve deleted the item: '.item_popup($_POST['id']));
+    } else {
+        display_errors($errors);
     }
 } elseif (!empty($_GET['takealluser'])) {
     if (!csrf_check('item_take_all_'.$_GET['takealluser'], $_GET)) {
@@ -672,6 +706,8 @@ if (isset($_POST['addrmpack'])) {
         Send_Event($_GET['takealluser'], 'Your '.format($qty).' '.$item.($qty == 1 ? 'has' : 's have').' been removed from you by the Administration');
         $db->trans('end');
         echo Message('You\'ve removed '.format($qty).' '.$item.s($qty).' from '.$target->formattedname);
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_POST['giveitem'])) {
     if (!csrf_check('item_give', $_POST)) {
@@ -764,6 +800,8 @@ if (isset($_POST['addrmpack'])) {
         } else {
             echo Message($target->formattedname.' doesn\'t have any items');
         }
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_POST['changemessage'])) {
     if (!csrf_check('admin_message', $_POST)) {
@@ -872,6 +910,8 @@ if (isset($_POST['addrmpack'])) {
         $db->query('DELETE FROM users WHERE ip = ?');
         $db->execute([$_GET['ip']]);
         echo Message(format($cnt).' account'.s($cnt).' '.($cnt == 1 ? 'has' : 'have').' been deleted');
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_POST['adminstatus'])) {
     if (!csrf_check('status_admin_grant', $_POST)) {
