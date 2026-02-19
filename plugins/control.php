@@ -3109,7 +3109,7 @@ if (empty($_GET['page'])) {
                             <input type="number" name="quantity" id="quantity" min="1" value="1" required />
                         </div>
                         <div class="pure-controls">
-                            <input type="hidden" name="user" value="<?php echo $_GET['user']; ?>" />
+                            <input type="hidden" name="user" value="<?php echo htmlspecialchars($_GET['user'], ENT_QUOTES, 'UTF-8'); ?>" />
                             <button type="submit" name="giveitem" class="pure-button pure-button-primary">Give Item</button>
                         </div>
                     </form>
