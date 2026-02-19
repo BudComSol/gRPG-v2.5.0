@@ -699,6 +699,8 @@ if (isset($_POST['addrmpack'])) {
         $db->trans('end');
         $qty = Check_Item($_POST['itemnumber'], $id);
         echo Message('You\'ve credited '.format($_POST['itemquantity']).' '.$item.s($_POST['itemquantity']).' to '.$target->formattedname.'. They now have '.format($qty));
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_POST['takeitem'])) {
     if (!csrf_check('item_take', $_POST)) {
@@ -727,6 +729,8 @@ if (isset($_POST['addrmpack'])) {
         $db->trans('end');
         $qty = Check_Item($_POST['itemnumber'], $id);
         echo Message('You\'ve taken '.format($_POST['itemquantity']).' '.$item.s($_POST['itemquantity']).' from '.$target->formattedname.'. They now have '.format($qty));
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_POST['listitems'])) {
     if (!csrf_check('item_view', $_POST)) {
@@ -797,6 +801,8 @@ if (isset($_POST['addrmpack'])) {
         Send_Event($id, 'You\'ve been credited with '.format($_POST['rmdays']).' RM Day'.s($_POST['rmdays']).' by the Administration');
         $db->trans('end');
         echo Message('You\'ve credited '.$target->formattedname.' with '.format($_POST['rmdays']).' RM Day'.s($_POST['rmdays']));
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_POST['addpoints'])) {
     if (!csrf_check('rmoptions_points', $_POST)) {
@@ -820,6 +826,8 @@ if (isset($_POST['addrmpack'])) {
         Send_Event($id, 'You\'ve been credited with '.format($_POST['points']).' point'.s($_POST['points']).' by the Administration');
         $db->trans('end');
         echo Message('You\'ve credited '.$target->formattedname.' with '.format($_POST['points']).' point'.s($_POST['points']));
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_POST['addhookers'])) {
     if (!csrf_check('rmoptions_hookers', $_POST)) {
@@ -843,6 +851,8 @@ if (isset($_POST['addrmpack'])) {
         Send_Event($id, 'You\'ve been credited with '.format($_POST['hookers']).' hooker'.s($_POST['hookers']).' by the Administration');
         $db->trans('end');
         echo Message('You\'ve credited '.$target->formattedname.' with '.format($_POST['hookers']).' hooker'.s($_POST['hookers']));
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_GET['action']) && $_GET['action'] === 'deleteallfromip') {
     if (!csrf_check('ip_delete', $_GET)) {
@@ -887,6 +897,8 @@ if (isset($_POST['addrmpack'])) {
         Send_Event($row['id'], 'You\'ve been granted Administrator privileges');
         $db->trans('end');
         echo Message('You\'ve granted Administrator privileges to '.$target->formattedname);
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_POST['revokeadminstatus'])) {
     if (!csrf_check('status_admin_revoke', $_POST)) {
@@ -912,6 +924,8 @@ if (isset($_POST['addrmpack'])) {
         Send_Event($row['id'], 'Your Administrator privileges have been revoked');
         $db->trans('end');
         echo Message('You\'ve revoked '.$target->formattedname.'\'s Administrator privileges');
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_POST['banplayer'])) {
     $_POST['reason'] = isset($_POST['reason']) && is_string($_POST['reason']) ? strip_tags(trim($_POST['reason'])) : '';
@@ -922,7 +936,7 @@ if (isset($_POST['addrmpack'])) {
         $errors[] = 'You didn\'t select a valid player';
     }
     if (empty($_POST['reason'])) {
-        $erros[] = 'You did not enter a reason';
+        $errors[] = 'You did not enter a reason';
     }
     $db->query('SELECT id, ban FROM users WHERE username = ?');
     $db->execute([$_POST['username']]);
@@ -940,6 +954,8 @@ if (isset($_POST['addrmpack'])) {
         $db->query('INSERT INTO site_bans (userid,reason,banner) VALUES(?,?,?)');
         $db->execute([$row['id'], $_POST['reason'], $user_class->id]);
         echo Message('You\'ve banned '.$target->formattedname);
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_POST['president'])) {
     if (!csrf_check('status_president_grant', $_POST)) {
@@ -965,6 +981,8 @@ if (isset($_POST['addrmpack'])) {
         Send_Event($row['id'], 'You\'ve been granted President privileges');
         $db->trans('end');
         echo Message('You\'ve granted Presidential privileges to '.$target->formattedname);
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_POST['impeachpresident'])) {
     if (!csrf_check('status_president_revoke', $_POST)) {
@@ -987,6 +1005,8 @@ if (isset($_POST['addrmpack'])) {
         $db->query('UPDATE users SET admin = 0 WHERE id = ?');
         $db->execute([$row['id']]);
         echo Message('You\'ve revoked '.$target->formattedname.'\'s Presidential privileges');
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_POST['congress'])) {
     if (!csrf_check('status_congress_grant', $_POST)) {
@@ -1012,6 +1032,8 @@ if (isset($_POST['addrmpack'])) {
         Send_Event($row['id'], 'You\'ve been granted Congress privileges');
         $db->trans('end');
         echo Message('You\'ve granted Congress privileges to '.$target->formattedname);
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_POST['impeachcongress'])) {
     if (!csrf_check('status_congress_revoke', $_POST)) {
@@ -1034,6 +1056,8 @@ if (isset($_POST['addrmpack'])) {
         $db->query('UPDATE users SET admin = 0 WHERE id = ?');
         $db->execute([$row['id']]);
         echo Message('You\'ve revoked '.$target->formattedname.'\'s Congress privileges');
+    } else {
+        display_errors($errors);
     }
 } elseif (isset($_POST['addvotesite'])) {
     if (!csrf_check('votesite_add', $_POST)) {
