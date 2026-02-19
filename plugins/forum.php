@@ -353,9 +353,9 @@ function viewtopic($db, $user_class, $parser)
         </thead>
         <tbody><?php
     if ($posts !== null) {
-    $cnt = count($posts);
-    $no = isset($_GET['page']) && $_GET['page'] > 1 ? ($pages->items_per_page * $_GET['page']) - $pages->items_per_page : 0;
-    foreach ($posts as $post) {
+        $cnt = count($posts);
+        $no = isset($_GET['page']) && $_GET['page'] > 1 ? ($pages->items_per_page * $_GET['page']) - $pages->items_per_page : 0;
+        foreach ($posts as $post) {
         $date = new DateTime($post['fp_time']);
         ++$no;
         if (isset($precache[$post['fp_poster']])) {
