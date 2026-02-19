@@ -5,7 +5,7 @@ if (!defined('GRPG_INC')) {
 }
 global $owner;
 ?>
-<div>
+<div class="mainbox">
     <div class="headbox">Menu</div>
     
     <a class="leftmenu style1" href="index.php">Home</a>
