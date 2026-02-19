@@ -313,7 +313,7 @@ if (isset($_POST['addrmpack'])) {
                         return true;
                     }
                 </script>
-                <form action="control.php?page=forum&amp;deleteforumdb=<?php echo $_GET['deleteforumdb']; ?>" method="post" name="theform" onsubmit="return checkme();" class="pure-form pure-form-aligned">
+                <form action="plugins/control.php?page=forum&amp;deleteforumdb=<?php echo $_GET['deleteforumdb']; ?>" method="post" name="theform" onsubmit="return checkme();" class="pure-form pure-form-aligned">
                     <?php echo csrf_create('delete_forum'); ?>
                     <div class="pure-control-group">
                         <label for="forum">Board</label>
@@ -754,7 +754,7 @@ if (isset($_POST['addrmpack'])) {
             <tr>
                 <td class="content"><?php
             foreach ($rows as $row) {
-                printf('<div>%s - %s - Quantity: %s - <a href="control.php?page=playeritems&amp;takealluser=%u&amp;takeallitem=%u&amp;item_take_all_%u=%s">Take All</a></div>', item_popup($row['itemid'], $row['name']), prettynum($row['cost'], true), format($row['quantity']), $id, $row['itemid'], $id, csrf_create('item_take_all_'.$id, false));
+                printf('<div>%s - %s - Quantity: %s - <a href="plugins/control.php?page=playeritems&amp;takealluser=%u&amp;takeallitem=%u&amp;item_take_all_%u=%s">Take All</a></div>', item_popup($row['itemid'], $row['name']), prettynum($row['cost'], true), format($row['quantity']), $id, $row['itemid'], $id, csrf_create('item_take_all_'.$id, false));
             } ?></td>
             </tr><?php
         } else {
@@ -1134,8 +1134,8 @@ if (isset($_POST['addrmpack'])) {
         echo Message('You\'ve deleted the voting site: '.format($row['title']));
     } else {
         ?>Are you sure you want to delete &ldquo;<?php echo format($row['title']); ?>&rdquo;?<br />
-        <a href="control.php?page=voting&amp;action=delete&amp;id=<?php echo $row['id']; ?>&amp;ans=yes&amp;csrf=<?php echo csrf_create('csrf', false); ?>" class="pure-button pure-button-red"><i class="fa fa-ban" aria-hidden="true"></i> I'm sure, delete it</a>
-        <a href="control.php?page=voting" class="pure-button pure-button-primary"><i class="fa fa-tick" aria-hidden="true"></i> No, go back</a><?php
+        <a href="plugins/control.php?page=voting&amp;action=delete&amp;id=<?php echo $row['id']; ?>&amp;ans=yes&amp;csrf=<?php echo csrf_create('csrf', false); ?>" class="pure-button pure-button-red"><i class="fa fa-ban" aria-hidden="true"></i> I'm sure, delete it</a>
+        <a href="plugins/control.php?page=voting" class="pure-button pure-button-primary"><i class="fa fa-tick" aria-hidden="true"></i> No, go back</a><?php
     }
 } elseif (isset($_GET['addhouse'])) {
     if (!csrf_check('csrf', $_POST)) {
@@ -1207,7 +1207,7 @@ if (isset($_POST['addrmpack'])) {
         </tr>
         <tr>
             <td class="content">
-                <form action="control.php?page=houses&amp;edithouse&amp;id=<?php echo $row['id']; ?>" method="post" class="pure-form pure-form-aligned">
+                <form action="plugins/control.php?page=houses&amp;edithouse&amp;id=<?php echo $row['id']; ?>" method="post" class="pure-form pure-form-aligned">
                     <?php echo csrf_create(); ?>
                     <div class="pure-control-group">
                         <label for="name">Name</label>
@@ -1260,7 +1260,7 @@ if (isset($_POST['addrmpack'])) {
         <tr>
             <td class="content">
                 Are you sure you wish to delete the <?php echo format($row['awake']); ?> house: &ldquo;<?php echo format($row['name']); ?>&rdquo;?<br />
-                <a href="control.php?page=houses&amp;deletehouse&amp;id=<?php echo $row['id']; ?>&amp;ans=yes&amp;delcsrf=<?php echo $csrf; ?>" class="pure-button pure-button-primary">Yes, delete it</a>
+                <a href="plugins/control.php?page=houses&amp;deletehouse&amp;id=<?php echo $row['id']; ?>&amp;ans=yes&amp;delcsrf=<?php echo $csrf; ?>" class="pure-button pure-button-primary">Yes, delete it</a>
             </td>
         </tr><?php
     }
@@ -1349,7 +1349,7 @@ if (isset($_POST['addrmpack'])) {
         </tr>
         <tr>
             <td class="content">
-                <form action="control.php?page=cars&amp;editcar&amp;id=<?php echo $row['id']; ?>" method="post" class="pure-form pure-form-aligned">
+                <form action="plugins/control.php?page=cars&amp;editcar&amp;id=<?php echo $row['id']; ?>" method="post" class="pure-form pure-form-aligned">
                     <?php echo csrf_create('editcsrf'); ?>
                     <div class="pure-control-group">
                         <label for="name">Name</label>
@@ -1410,7 +1410,7 @@ if (isset($_POST['addrmpack'])) {
         <tr>
             <td class="content">
                 Are you sure you wish to delete the <?php echo formatCurrency($row['cost']); ?> car: &ldquo;<?php echo format($row['name']); ?>&rdquo;?<br />
-                <a href="control.php?page=cars&amp;deletecar&amp;id=<?php echo $row['id']; ?>&amp;ans=yes&amp;delcsrf=<?php echo $csrf; ?>" class="pure-button pure-button-primary">Yes, delete it</a>
+                <a href="plugins/control.php?page=cars&amp;deletecar&amp;id=<?php echo $row['id']; ?>&amp;ans=yes&amp;delcsrf=<?php echo $csrf; ?>" class="pure-button pure-button-primary">Yes, delete it</a>
             </td>
         </tr><?php
     }
@@ -1461,7 +1461,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('admin_message'); ?>
                 <fieldset>
                     <div class="pure-control-group">
@@ -1479,7 +1479,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('admin_serverdown'); ?>
                 <fieldset>
                     <div class="pure-control-group">
@@ -1498,7 +1498,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=rmpacks" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=rmpacks" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('rmstore_add'); ?>
                 <fieldset>
                     <div class="pure-control-group">
@@ -1547,7 +1547,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=rmpacks" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=rmpacks" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('rmstore_disenable'); ?>
                 <div class="pure-control-group">
                     <label for="id_disenable">Upgrade</label>
@@ -1564,7 +1564,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=rmpacks" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=rmpacks" method="post" class="pure-form pure-form-aligned">
                 <div class="pure-control-group">
                     <label for="id_edit">Upgrade</label>
                     <?php listRMPacks(false, 'id_edit'); ?>
@@ -1586,7 +1586,7 @@ if (empty($_GET['page'])) {
         }
         $row = $db->fetch(true); ?><tr>
             <td class="content">
-                <form action="control.php?page=rmpacks" method="post" class="pure-form pure-form-aligned">
+                <form action="plugins/control.php?page=rmpacks" method="post" class="pure-form pure-form-aligned">
                     <?php echo csrf_create('rmstore_edit'); ?>
                     <input type="hidden" name="id" value="<?php echo $row['id']; ?>" />
                     <fieldset>
@@ -1636,7 +1636,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=rmpacks" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=rmpacks" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('rmstore_delete'); ?>
                 <div class="pure-control-group">
                     <label for="id_delete">Upgrade</label>
@@ -1672,7 +1672,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=rmoptions" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=rmoptions" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('rmoptions_days'); ?>
                 <fieldset>
                     <div class="pure-control-group">
@@ -1695,7 +1695,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=rmoptions" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=rmoptions" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('rmoptions_points'); ?>
                 <fieldset>
                     <div class="pure-control-group">
@@ -1718,7 +1718,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=rmoptions" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=rmoptions" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('rmoptions_hookers'); ?>
                 <fieldset>
                     <div class="pure-control-group">
@@ -1742,7 +1742,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=setplayerstatus" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=setplayerstatus" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('status_ban'); ?>
                 <fieldset>
                     <div class="pure-control-group">
@@ -1765,7 +1765,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=setplayerstatus" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=setplayerstatus" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('status_admin_grant'); ?>
                 <fieldset>
                     <div class="pure-control-group">
@@ -1784,7 +1784,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=setplayerstatus" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=setplayerstatus" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('status_admin_revoke'); ?>
                 <fieldset>
                     <div class="pure-control-group">
@@ -1803,7 +1803,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=setplayerstatus" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=setplayerstatus" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('status_president_grant'); ?>
                 <fieldset>
                     <div class="pure-control-group">
@@ -1822,7 +1822,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=setplayerstatus" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=setplayerstatus" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('status_president_revoke'); ?>
                 <fieldset>
                     <div class="pure-control-group">
@@ -1841,7 +1841,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=setplayerstatus" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=setplayerstatus" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('status_congress_grant'); ?>
                 <fieldset>
                     <div class="pure-control-group">
@@ -1860,7 +1860,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=setplayerstatus" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=setplayerstatus" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('status_congress_revoke'); ?>
                 <fieldset>
                     <div class="pure-control-group">
@@ -1895,7 +1895,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=playeritems" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=playeritems" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('item_add'); ?>
                 <fieldset>
                     <div class="pure-control-group">
@@ -1950,7 +1950,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=playeritems" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=playeritems" method="post" class="pure-form pure-form-aligned">
                 <div class="pure-control-group">
                     <label for="id">Item</label>
                     <?php echo listItems('id'); ?>
@@ -1972,7 +1972,7 @@ if (empty($_GET['page'])) {
         }
         $row = $db->fetch(true); ?><tr>
             <td class="content">
-                <form action="control.php?page=playeritems" method="post" class="pure-form pure-form-aligned">
+                <form action="plugins/control.php?page=playeritems" method="post" class="pure-form pure-form-aligned">
                     <?php echo csrf_create('item_edit'); ?>
                     <input type="hidden" name="id" value="<?php echo $row['id']; ?>" />
                     <fieldset>
@@ -2028,7 +2028,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=playeritems" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=playeritems" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('item_delete'); ?>
                 <div class="pure-control-group">
                     <label for="id">Item</label>
@@ -2045,7 +2045,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=playeritems" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=playeritems" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('item_give'); ?>
                 <fieldset>
                     <div class="pure-control-group">
@@ -2072,7 +2072,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=playeritems" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=playeritems" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('item_take'); ?>
                 <fieldset>
                     <div class="pure-control-group">
@@ -2099,7 +2099,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=playeritems" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=playeritems" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('item_view'); ?>
                 <fieldset>
                     <div class="pure-control-group">
@@ -2136,8 +2136,8 @@ if (empty($_GET['page'])) {
                     <?php echo $row['id']; ?>.)
                     <?php echo $cache[$row['referred']]; ?> was referred by <?php echo $cache[$row['referrer']]; ?>.
                     (<?php echo $date->format('F d, Y g:i:sa'); ?>)
-                    <a href="control.php?page=referrals&amp;givecredit=<?php echo $row['id']; ?>&amp;csrfg=<?php echo csrf_create('referral_credit_'.$row['id'], false); ?>">Credit</a> |
-                    <a href="control.php?page=referrals&amp;denycredit=<?php echo $row['id']; ?>&amp;csrfg=<?php echo csrf_create('referral_deny_'.$row['id'], false); ?>">Deny</a>
+                    <a href="plugins/control.php?page=referrals&amp;givecredit=<?php echo $row['id']; ?>&amp;csrfg=<?php echo csrf_create('referral_credit_'.$row['id'], false); ?>">Credit</a> |
+                    <a href="plugins/control.php?page=referrals&amp;denycredit=<?php echo $row['id']; ?>&amp;csrfg=<?php echo csrf_create('referral_deny_'.$row['id'], false); ?>">Deny</a>
                 </div><?php
         }
     } else {
@@ -2167,7 +2167,7 @@ if (empty($_GET['page'])) {
                         <td><?php echo $row['id']; ?></td>
                         <td><?php echo format($row['name']); ?></td>
                         <td><?php echo format($row['nerve']); ?></td>
-                        <td>[<a href="control.php?page=crimes&amp;deletecrime=<?php echo $row['id']; ?>&amp;csrfg=<?php echo csrf_create('delete_crime_'.$row['id'], false); ?>">Delete Crime</a>]</td>
+                        <td>[<a href="plugins/control.php?page=crimes&amp;deletecrime=<?php echo $row['id']; ?>&amp;csrfg=<?php echo csrf_create('delete_crime_'.$row['id'], false); ?>">Delete Crime</a>]</td>
                     </tr><?php
         }
     } else {
@@ -2182,7 +2182,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=crimes" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=crimes" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('crime_add'); ?>
                 <fieldset>
                     <div class="pure-control-group">
@@ -2217,7 +2217,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=crimes" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=crimes" method="post" class="pure-form pure-form-aligned">
                 <fieldset>
                     <div class="pure-control-group">
                         <label for="crimeid">Crime ID</label>
@@ -2239,7 +2239,7 @@ if (empty($_GET['page'])) {
             </tr>
             <tr>
                 <td class="content">
-                    <form action="control.php?page=crimes" method="post" class="pure-form pure-form-aligned">
+                    <form action="plugins/control.php?page=crimes" method="post" class="pure-form pure-form-aligned">
                         <?php echo csrf_create('crime_edit'); ?>
                         <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
                         <fieldset>
@@ -2299,7 +2299,7 @@ if (empty($_GET['page'])) {
                         <td><?php echo format($row['levelreq']); ?></td>
                         <td><?php echo format($row['landleft']); ?></td>
                         <td><?php echo prettynum($row['landprice'], true); ?></td>
-                        <td>[<a href="control.php?page=cities&amp;deletecity=<?php echo $row['id']; ?>&amp;csrfg=<?php echo csrf_create('delete_city_'.$row['id'], false); ?>">Delete City</a>]</td>
+                        <td>[<a href="plugins/control.php?page=cities&amp;deletecity=<?php echo $row['id']; ?>&amp;csrfg=<?php echo csrf_create('delete_city_'.$row['id'], false); ?>">Delete City</a>]</td>
                     </tr><?php
         }
     } else {
@@ -2314,7 +2314,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=cities" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=cities" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('city_add'); ?>
                 <fieldset>
                     <div class="pure-control-group">
@@ -2349,7 +2349,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=cities" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=cities" method="post" class="pure-form pure-form-aligned">
                 <fieldset>
                     <div class="pure-control-group">
                         <label for="cityid">City ID</label>
@@ -2371,7 +2371,7 @@ if (empty($_GET['page'])) {
             </tr>
             <tr>
                 <td class="content">
-                    <form action="control.php?page=cities" method="post" class="pure-form pure-form-aligned">
+                    <form action="plugins/control.php?page=cities" method="post" class="pure-form pure-form-aligned">
                         <?php echo csrf_create('city_edit'); ?>
                         <input type="hidden" name="id" value="<?php echo $row['id']; ?>" />
                         <fieldset>
@@ -2435,7 +2435,7 @@ if (empty($_GET['page'])) {
                         <td><?php echo format($row['defense']); ?></td>
                         <td><?php echo format($row['speed']); ?></td>
                         <td><?php echo format($row['level']); ?></td>
-                        <td>[<a href="control.php?page=jobs&amp;deletejob=<?php echo $row['id']; ?>&amp;csrfg=<?php echo csrf_create('delete_job_'.$row['id'], false); ?>">Delete Job</a>]</td>
+                        <td>[<a href="plugins/control.php?page=jobs&amp;deletejob=<?php echo $row['id']; ?>&amp;csrfg=<?php echo csrf_create('delete_job_'.$row['id'], false); ?>">Delete Job</a>]</td>
                     </tr><?php
         }
     } else {
@@ -2450,7 +2450,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=jobs" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=jobs" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('job_add'); ?>
                 <fieldset>
                     <div class="pure-control-group">
@@ -2489,7 +2489,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=jobs" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=jobs" method="post" class="pure-form pure-form-aligned">
                 <fieldset>
                     <div class="pure-control-group">
                         <label for="jobid">Job ID</label>
@@ -2513,7 +2513,7 @@ if (empty($_GET['page'])) {
         </tr>
         <tr>
             <td class="content">
-                <form action="control.php?page=jobs" method="post" class="pure-form pure-form-aligned">
+                <form action="plugins/control.php?page=jobs" method="post" class="pure-form pure-form-aligned">
                     <?php echo csrf_create('job_edit'); ?>
                     <input type="hidden" name="id" value="<?php echo $row['id']; ?>" />
                     <fieldset>
@@ -2600,7 +2600,7 @@ if (empty($_GET['page'])) {
             if ($row['req_rmdays']) {
                 $reqs[] = 'RM Days: at least '.time_format($row['req_rmdays'] * 86400, 'long', false).' left';
             } ?><tr>
-                        <td><?php echo format($row['id']); ?> [<a href="control.php?page=voting&amp;deletevotesite&amp;id=<?php echo $row['id']; ?>&amp;csrfg=<?php echo csrf_create('delete_votesite_'.$row['id'], false); ?>">X</a>]</td>
+                        <td><?php echo format($row['id']); ?> [<a href="plugins/control.php?page=voting&amp;deletevotesite&amp;id=<?php echo $row['id']; ?>&amp;csrfg=<?php echo csrf_create('delete_votesite_'.$row['id'], false); ?>">X</a>]</td>
                         <td><a href="<?php echo format($row['url']); ?>" target="new" class="pure-button pure-button-yellow"><i class="fa fa-eye" aria-hidden="true"></i> <?php echo format($row['title']); ?></a></td>
                         <td><?php echo count($rewards) ? implode('<br />', $rewards) : 'None'; ?></td>
                         <td><?php echo count($reqs) ? implode('<br />', $reqs) : 'None'; ?></td>
@@ -2616,7 +2616,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=voting" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=voting" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('votesite_add'); ?>
                 <fieldset>
                     <legend>Basic Information</legend>
@@ -2682,7 +2682,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=voting" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=voting" method="post" class="pure-form pure-form-aligned">
                 <fieldset>
                     <div class="pure-control-group">
                         <label for="id">Vote Site ID</label>
@@ -2704,7 +2704,7 @@ if (empty($_GET['page'])) {
         if (!$db->count()) {
             echo Message('That voting site doesn\'t exist', 'Error', true);
         }
-        $row = $db->fetch(true); ?><form action="control.php?page=voting" method="post" class="pure-form pure-form-aligned">
+        $row = $db->fetch(true); ?><form action="plugins/control.php?page=voting" method="post" class="pure-form pure-form-aligned">
             <?php echo csrf_create('votesite_edit'); ?>
             <input type="hidden" name="id" value="<?php echo $row['id']; ?>" />
             <fieldset>
@@ -2779,7 +2779,7 @@ if (empty($_GET['page'])) {
             ?><tr>
                 <td><?php echo $row['fb_id']; ?></td>
                 <td><?php echo format($row['fb_name']); ?></td>
-                <td>[<a href="control.php?page=forum&amp;deleteforumdb=<?php echo $row['fb_id']; ?>&amp;csrfg=<?php echo csrf_create('delete_board_'.$row['fb_id'], false); ?>">Delete Board</a>]</td>
+                <td>[<a href="plugins/control.php?page=forum&amp;deleteforumdb=<?php echo $row['fb_id']; ?>&amp;csrfg=<?php echo csrf_create('delete_board_'.$row['fb_id'], false); ?>">Delete Board</a>]</td>
             </tr><?php
         }
     } else {
@@ -2794,7 +2794,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=forum" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=forum" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('board_add'); ?>
                 <fieldset>
                     <div class="pure-control-group">
@@ -2826,7 +2826,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=forum" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=forum" method="post" class="pure-form pure-form-aligned">
                 <fieldset>
                     <div class="pure-control-group">
                         <label for="board">Board ID</label>
@@ -2855,7 +2855,7 @@ if (empty($_GET['page'])) {
         </tr>
         <tr>
             <td class="content">
-                <form action="control.php?page=forum" method="post" class="pure-form pure-form-aligned">
+                <form action="plugins/control.php?page=forum" method="post" class="pure-form pure-form-aligned">
                     <?php echo csrf_create('board_edit'); ?>
                     <input type="hidden" name="id" value="<?php echo $_POST['board']; ?>" />
                     <div class="pure-control-group">
@@ -2912,8 +2912,8 @@ if (empty($_GET['page'])) {
                             <td><?php echo prettynum($row['cost'], true); ?></td>
                             <td><img src="/images/silk/<?php echo $buyable; ?>.png" title="<?php echo $title; ?>" alt="<?php echo $title; ?>" /></td>
                             <td>
-                                [<a href="control.php?page=houses&amp;edithouse&amp;id=<?php echo $row['id']; ?>">Edit</a>] &middot;
-                                [<a href="control.php?page=houses&amp;deletehouse&amp;id=<?php echo $row['id']; ?>">Delete</a>]
+                                [<a href="plugins/control.php?page=houses&amp;edithouse&amp;id=<?php echo $row['id']; ?>">Edit</a>] &middot;
+                                [<a href="plugins/control.php?page=houses&amp;deletehouse&amp;id=<?php echo $row['id']; ?>">Delete</a>]
                             </td>
                         </tr><?php
                     }
@@ -2935,7 +2935,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=houses&amp;addhouse" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=houses&amp;addhouse" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create(); ?>
                 <div class="pure-control-group">
                     <label for="name">Name</label>
@@ -2968,7 +2968,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=site_settings&amp;settings" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=site_settings&amp;settings" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create(); ?>
                 <div class="pure-control-group">
                     <label for="registration">Registration</label>
@@ -3019,8 +3019,8 @@ if (empty($_GET['page'])) {
                             <td><?php echo format($row['cost']); ?></td>
                             <td><img src="/images/silk/<?php echo $buyable; ?>.png" title="<?php echo $title; ?>" alt="<?php echo $title; ?>" /></td>
                             <td>
-                                [<a href="control.php?page=cars&amp;editcar&amp;id=<?php echo $row['id']; ?>">Edit</a>] &middot;
-                                [<a href="control.php?page=cars&amp;deletecar&amp;id=<?php echo $row['id']; ?>">Delete</a>]
+                                [<a href="plugins/control.php?page=cars&amp;editcar&amp;id=<?php echo $row['id']; ?>">Edit</a>] &middot;
+                                [<a href="plugins/control.php?page=cars&amp;deletecar&amp;id=<?php echo $row['id']; ?>">Delete</a>]
                             </td>
                         </tr><?php
                     }
@@ -3042,7 +3042,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="control.php?page=cars&amp;addcar" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=cars&amp;addcar" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create(); ?>
                 <div class="pure-control-group">
                     <label for="name">Name</label>
