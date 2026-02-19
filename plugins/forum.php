@@ -297,6 +297,7 @@ function viewtopic($db, $user_class, $parser)
         <div class="pure-g center">
             <div class="pure-u-1-2">
                 <form action="plugins/forum.php?act=move&amp;topic=<?php echo $topic['ft_id']; ?>" method="post" class="pure-form pure-form-aligned">
+                    <?php echo csrf_create(); ?>
                     <div class="pure-control-group">
                         <label for="board">Move topic to</label>
                         <?php echo forums_boards('board'); ?>
