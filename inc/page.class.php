@@ -37,6 +37,12 @@ class Paginator
         $this->total_items = (int) $total;
         if ($this->total_items <= 0) {
             $this->return = '';
+            // Set default pagination values even when there are no items
+            // This prevents LIMIT 0,0 which returns nothing
+            $this->items_per_page = $ipp_array[1] ?? 25;
+            $this->limit_start = 0;
+            $this->limit_end = $this->items_per_page;
+            $this->current_page = 1;
 
             return;
         }
