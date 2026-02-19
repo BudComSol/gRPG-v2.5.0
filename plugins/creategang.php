@@ -2,7 +2,7 @@
 declare(strict_types=1);
 require_once __DIR__.'/../inc/header.php';
 if ($user_class->gang) {
-    echo Message('You\'re already in a gang', 'Error', true);
+    echo Message('<p>You\'re already in a gang, numpty.</p>', 'Error', true);
 }
 $cost = 50000;
 if (array_key_exists('create', $_POST)) { // if they are wanting to start a new gang
@@ -11,7 +11,7 @@ if (array_key_exists('create', $_POST)) { // if they are wanting to start a new 
     }
     $errors = [];
     if ($cost > 0 && $cost > $user_class->money) {
-        $errors[] = 'You don\'t have enough money to start a gang. You need at least '.prettynum($cost, true);
+        $errors[] = 'You don\'t have enough money to start a gang, you need at least '.prettynum($cost, true);
     }
     $_POST['name'] = array_key_exists('name', $_POST) && is_string($_POST['name']) ? strip_tags(trim($_POST['name'])) : null;
     if (empty($_POST['name'])) {
@@ -49,7 +49,7 @@ if (array_key_exists('create', $_POST)) { // if they are wanting to start a new 
         $db->query('UPDATE users SET money = GREATEST(money - ?, 0), gang = ? WHERE id = ?');
         $db->execute([$cost, $id, $user_class->id]);
         $db->trans('end');
-        echo Message('You\'ve created your gang', 'Error', true);
+        echo Message('<p>You\'ve created your new gang.</p>', 'Error', true);
     }
 }
 ?><tr>
@@ -57,9 +57,9 @@ if (array_key_exists('create', $_POST)) { // if they are wanting to start a new 
 </tr>
 <tr>
     <td class="content">
-        Well, it looks like you haven't join or created a gang yet.<br /><br />
-        To create a gang it costs $50,000. If you don't have enough, or would like to join someone elses gang, check out the <a href="gang_list.php">Gang List</a> for other gangs to join.<br /><br />
-        <form action="creategang.php" method="post" class="pure-form pure-form-aligned">
+        <p>Well, it looks like you haven't join or created a gang yet.</p>
+        <p>To create a gang is going to cost you $50,000.<br>If you don't have enough, or would like to join someone<br>elses gang, check out the <a href="plugins/gang_list.php">Gang List</a> for other gangs to join.</p>
+        <form action="plugins/creategang.php" method="post" class="pure-form pure-form-aligned">
             <?php echo csrf_create(); ?>
             <fieldset>
                 <div class="pure-control-group">
@@ -72,7 +72,7 @@ if (array_key_exists('create', $_POST)) { // if they are wanting to start a new 
                 </div>
             </fieldset>
             <div class="pure-controls">
-                <button type="submit" name="create" class="pure-button pure-button-primary">Create Gang</button>
+                <button type="submit" name="create" class="pure-button pure-button-primary">Create New Gang</button>
             </div>
         </form>
     </td>
