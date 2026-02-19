@@ -1,9 +1,8 @@
 <?php
 declare(strict_types=1);
-define('STAFF_FILE', true);
 require_once __DIR__.'/../inc/header.php';
 $auths = ['public', 'staff'];
-if ($user_class->admin != 1) {
+if (!$user_class->admin) {
     echo Message('You don\'t have access', 'Access Denied', true);
 }
 if (defined('PRUNE_INACTIVE_ACCOUNTS') && PRUNE_INACTIVE_ACCOUNTS == true) {
@@ -3097,25 +3096,34 @@ if (empty($_GET['page'])) {
                 if (!$db->count()) {
                     $errors[] = 'Invalid user!';
                 }
-                $user = $db->fetch($_GET['user']); ?>
-                <form method="POST">
-                    <?php echo csrf_create('updateuser'); ?>
-                    <table width='98%' cellspacing='1' style='text-align:center;'>
-                        <tr>
-                            <td>Level</td>
-                            <td><input type='number' name='level' min='1' /></td>
-                        </tr>
-                        <tr>
-                            <td>
-
-            }
-            else { ?>
+                $user = $db->fetch(true);
+                if ($user) { ?>
+                    <form method="POST" class="pure-form pure-form-aligned">
+                        <?php echo csrf_create('giveitem'); ?>
+                        <div class="pure-control-group">
+                            <label for="item">Item</label>
+                            <?php echo listItems('item', 0); ?>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="quantity">Quantity</label>
+                            <input type="number" name="quantity" id="quantity" min="1" value="1" required />
+                        </div>
+                        <div class="pure-controls">
+                            <input type="hidden" name="user" value="<?php echo $_GET['user']; ?>" />
+                            <button type="submit" name="giveitem" class="pure-button pure-button-primary">Give Item</button>
+                        </div>
+                    </form>
+                <?php }
+            } else { ?>
                 <form method="GET" class="pure-form pure-form-aligned">
                     <?php echo csrf_create(); ?>
-                    <table width='98%' cellspacing='1' style='text-align:center;'>
-
-                    <?php listCitizens(); ?>
-                    <button name="who" type="submit">Edit User</button>
+                    <div class="pure-control-group">
+                        <label for="user">Select User</label>
+                        <?php echo listCitizens(); ?>
+                    </div>
+                    <div class="pure-controls">
+                        <button name="who" type="submit" class="pure-button pure-button-primary">Select User</button>
+                    </div>
                 </form> <?php
             } ?>
         </td></tr> <?php
@@ -3136,3 +3144,4 @@ function listRMPacks($showEnabled = false, $formID = 'id')
         echo 'No upgrades available';
     }
 }
+?>
