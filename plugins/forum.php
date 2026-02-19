@@ -378,7 +378,7 @@ function viewtopic($db, $user_class, $parser)
             $edit = new DateTime($post['fp_edit_time']);
             $post['fp_text'] .= "\n\n".'[i]Edited '.$edit->format('F d, Y g:i:sa').'. Reason: '.($post['fp_edit_reason'] ?: 'None').'[/i]';
         } ?><tr>
-            <th class="center">Post #<?php echo $cnt == ($no - 25) ? '<a id="latest" href="#latest">'.$no.'</a>' : $no; ?></th>
+            <th class="center">Post #<?php echo $no == ($pages->limit_start + $cnt) ? '<a id="latest" href="#latest">'.$no.'</a>' : $no; ?></th>
             <th class="center top">
                 <?php echo $date->format('F d, Y g:i:sa'); ?><br />
                 <span class="small">

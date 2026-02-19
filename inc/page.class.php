@@ -16,13 +16,13 @@ if (!defined('GRPG_INC')) {
 }
 class Paginator
 {
-    public int $current_page;
-    public int $items_per_page;
-    public int $limit_end;
-    public int $limit_start;
-    public float $num_pages;
-    public int $total_items;
-    public string $limit;
+    public int $current_page = 1;
+    public int $items_per_page = 0;
+    public int $limit_end = 0;
+    public int $limit_start = 0;
+    public float $num_pages = 0;
+    public int $total_items = 0;
+    public string $limit = '';
     protected array $ipp_array;
     protected int $mid_range;
     protected string $querystring = '';
