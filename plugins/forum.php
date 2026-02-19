@@ -188,9 +188,6 @@ function viewforum($db, $user_class, $parser)
     $db->query('SELECT COUNT(ft_id) FROM forum_topics WHERE ft_board = ?');
     $db->execute([$_GET['viewforum']]);
     $cnt = $db->result();
-    if (!$cnt) {
-        echo Message('There are no topics, numpty.', 'Error', true);
-    }
     $pages = new Paginator($cnt);
     $db->query('SELECT ft_id, ft_name, ft_creation_time, ft_creation_user, ft_latest_time, ft_latest_user, ft_latest_post, ft_locked, ft_pinned, id AS subbed
         FROM forum_topics
