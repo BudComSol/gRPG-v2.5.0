@@ -4,7 +4,8 @@
     color: #ffffff;
     display: block;
     padding: 5px 5px 5px 5px;
-    border: none;
+    border-style: solid;
+    border-color: #444;
     border-width: 1px 0 1px 1px;
     width: 145px;
     font-weight: normal;
@@ -139,7 +140,8 @@ a {
 a.leftmenu:link {
     display: block;
     padding: 5px 5px 5px 5px;
-    border: none;
+    border-style: solid;
+    border-color: #444;
     border-width: 1px 0 1px 1px;
     width: 145px;
     font-weight: normal;
@@ -149,7 +151,8 @@ a.leftmenu:link {
 a.leftmenu:hover {
     display: block;
     padding: 5px 5px 5px 5px;
-    border: none;
+    border-style: solid;
+    border-color: #444;
     border-width: 1px 0 1px 1px;
     width: 145px;
     font-weight: normal;
@@ -159,7 +162,8 @@ a.leftmenu:hover {
 a.leftmenu:visited {
     display: block;
     padding: 5px 5px 5px 5px;
-    border: none;
+    border-style: solid;
+    border-color: #444;
     border-width: 1px 0 1px 1px;
     width: 145px;
     font-weight: normal;
@@ -193,7 +197,8 @@ a.topmenu:visited {
 
 .headbox {
     background-color: #111;
-    border: none;
+    border-style: solid;
+    border-color: #444;
     border-width: 1px 0 1px 1px;
     padding: 5px 5px 5px 5px;
     color: #ddd;
@@ -274,7 +279,8 @@ a:hover {
     margin-left: 8px;
     display: block;
     padding: 5px 5px 5px 5px;
-    border: none;
+    border-style: solid;
+    border-color: #444;
     border-width: 1px 0 1px 1px;
     width: 145px;
     font-weight: normal;
@@ -326,7 +332,8 @@ a:hover {
 a.leftmenu:link {
     display: block;
     padding: 5px 5px 5px 5px;
-    border: none;
+    border-style: solid;
+    border-color: #444;
     border-width: 1px 0 1px 1px;
     width: 145px;
     font-weight: normal;
@@ -336,7 +343,8 @@ a.leftmenu:link {
 a.leftmenu:hover {
     display: block;
     padding: 5px 5px 5px 5px;
-    border: none;
+    border-style: solid;
+    border-color: #444;
     border-width: 1px 0 1px 1px;
     width: 145px;
     font-weight: normal;
@@ -346,7 +354,8 @@ a.leftmenu:hover {
 a.leftmenu:visited {
     display: block;
     padding: 5px 5px 5px 5px;
-    border: none;
+    border-style: solid;
+    border-color: #444;
     border-width: 1px 0 1px 1px;
     width: 145px;
     font-weight: normal;
@@ -379,7 +388,8 @@ a.topmenu:visited {
 }
 
 .headbox {
-    border: none;
+    border-style: solid;
+    border-color: #444;
     border-width: 1px 0 1px 1px;
     padding: 5px 5px 5px 5px;
     display: block;
