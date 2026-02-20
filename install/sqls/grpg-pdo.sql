@@ -381,6 +381,22 @@ CREATE TABLE IF NOT EXISTS `forum_topics`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
+INSERT INTO `forum_topics` (`ft_board`, `ft_name`, `ft_creation_user`, `ft_latest_user`, `ft_pinned`, `ft_locked`)
+VALUES (1, 'Welcome to the Game!', 0, 0, 1, 0),
+       (1, 'Rules & Guidelines', 0, 0, 1, 1),
+       (1, 'Getting Started Guide', 0, 0, 1, 0);
+
+INSERT INTO `forum_posts` (`fp_board`, `fp_topic`, `fp_poster`, `fp_text`)
+VALUES (1, 1, 0, 'Welcome to the game! We are glad to have you here.\n\nFeel free to explore, meet other players, and enjoy everything the game has to offer. Check out the Rules & Guidelines and Getting Started Guide topics for helpful information.'),
+       (1, 2, 0, 'Please follow these rules when using the forum and the game:\n\n1. Be respectful to all players.\n2. No spam, advertising, or offensive content.\n3. Keep discussions on-topic.\n4. Do not exploit bugs - report them to staff.\n5. Decisions made by staff are final.\n\nViolations may result in a ban.'),
+       (1, 3, 0, 'Getting started is easy!\n\n1. Complete your profile and choose your character name.\n2. Visit the city to explore locations and activities.\n3. Earn money through jobs, crimes, and other activities.\n4. Level up by gaining experience points.\n5. Join a gang or create your own.\n\nIf you need help, post in the Help & Support board.');
+
+UPDATE `forum_topics` SET `ft_latest_post` = `ft_id`, `ft_latest_time` = NOW() WHERE `ft_id` IN (1, 2, 3);
+
+UPDATE `forum_boards`
+SET `fb_topics` = 3, `fb_posts` = 3, `fb_latest_topic` = 3, `fb_latest_post` = 3, `fb_latest_poster` = 0, `fb_latest_time` = NOW()
+WHERE `fb_id` = 1;
+
 DROP TABLE IF EXISTS `gangarmory`;
 CREATE TABLE IF NOT EXISTS `gangarmory`
 (
