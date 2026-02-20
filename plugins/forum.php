@@ -211,7 +211,7 @@ function viewforum($db, $user_class, $parser)
     if ($topics !== null) {
         foreach ($topics as $topic) {
             $date_created = new DateTime($topic['ft_creation_time']);
-            $date_latest = new DateTime($topic['ft_latest_time']);
+            $date_latest = $topic['ft_latest_time'] ? new DateTime($topic['ft_latest_time']) : null;
             $creator = $topic['ft_creation_user'] ? new User($topic['ft_creation_user']) : (object) ['formattedname' => 'None']; ?><tr>
                 <td><?php
             echo $topic['ft_pinned'] ? '<img src="/images/silk/exclamation.png" title="Pinned" alt="Pinned" /> ' : '';
@@ -227,7 +227,7 @@ function viewforum($db, $user_class, $parser)
             if ($topic['ft_latest_user']) {
                 $poster = new User($topic['ft_latest_user']);
                 echo $poster->formattedname ?: 'Unknown'; ?><br />
-                        <span class="small"><?php echo $date_latest->format('F d, Y g:i:sa'); ?></span><br />
+                        <span class="small"><?php echo $date_latest ? $date_latest->format('F d, Y g:i:sa') : ''; ?></span><br />
                         <a href="plugins/forum.php?viewtopic=<?php echo $topic['ft_id']; ?>&amp;latest"><img src="/images/silk/arrow_right.png" title="Go to latest post" alt="Go to latest post" /></a><?php
             } else {
                 echo 'No responses yet';
@@ -480,7 +480,7 @@ function newtopic($db, $user_class, $parser)
         $db->query('INSERT INTO forum_posts (fp_board, fp_topic, fp_poster, fp_text) VALUES (?, ?, ?, ?)');
         $db->execute([$board['fb_id'], $topicID, $user_class->id, $_POST['message']]);
         $postID = $db->id();
-        $db->query('UPDATE forum_topics SET ft_latest_post = ? WHERE ft_id = ?');
+        $db->query('UPDATE forum_topics SET ft_latest_post = ?, ft_latest_time = NOW() WHERE ft_id = ?');
         $db->execute([$postID, $topicID]);
         $db->query('UPDATE forum_boards SET fb_topics = fb_topics + 1, fb_posts = fb_posts + 1, fb_latest_topic = ?, fb_latest_post = ?, fb_latest_poster = ?, fb_latest_time = NOW() WHERE fb_id = ?');
         $db->execute([$topicID, $postID, $user_class->id, $board['fb_id']]);
@@ -542,8 +542,8 @@ function reply($db, $user_class, $parser)
     $db->trans('start');
     if ($notify !== null) {
         foreach ($notify as $user) {
-            if ($user != $user_class->id) {
-                Send_Event($user, '{extra} has posted on your subscription: <a href="plugins/forum.php?viewtopic='.$topic['ft_id'].'&amp;latest">'.format($topic['ft_name']).'</a>', $user_class->id);
+            if ($user['userid'] != $user_class->id) {
+                Send_Event($user['userid'], '{extra} has posted on your subscription: <a href="plugins/forum.php?viewtopic='.$topic['ft_id'].'&amp;latest">'.format($topic['ft_name']).'</a>', $user_class->id);
             }
         }
     }
