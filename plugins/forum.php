@@ -297,7 +297,7 @@ function viewtopic($db, $user_class, $parser)
         <div class="pure-g center">
             <div class="pure-u-1-2">
                 <form action="plugins/forum.php?act=move&amp;topic=<?php echo $topic['ft_id']; ?>" method="post" class="pure-form pure-form-aligned">
-                    <?php echo csrf_create(); ?>
+                    <?php echo csrf_create('csrf_move'); ?>
                     <div class="pure-control-group">
                         <label for="board">Move topic to</label>
                         <?php echo forums_boards('board'); ?>
@@ -830,7 +830,7 @@ function deletopic($db, $user_class, $parser)
 }
 function move($db, $user_class, $parser)
 {
-    if (!csrf_check('csrf', $_POST)) {
+    if (!csrf_check('csrf_move', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
     if ($user_class->admin != 1) {
