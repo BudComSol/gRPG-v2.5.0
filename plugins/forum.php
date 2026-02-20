@@ -314,36 +314,6 @@ function viewtopic($db, $user_class, $parser)
             </div>
         </div><?php
     }
-    $subWhich = isset($topic['subbed']) ? 'Uns' : 'S'; ?><div class="pure-g center"><?php
-    if ($topic['ft_locked'] && $user_class->admin != 1) {
-        ?><div class="pure-u-1-1 pure-info-message">This topic is locked. Only staff members can respond</div><?php
-    } else {
-        $csrfReply = csrf_create(); ?><div class="pure-u-1-1 center">
-                <form action="plugins/forum.php?reply=<?php echo $topic['ft_id']; ?>" method="post" class="pure-form pure-form-aligned">
-                    <?php echo $csrfReply; ?>
-                    <div class="pure-control-group">
-                        <label for="message">Enter a response</label>
-                        <textarea name="message" id="message" rows="7" cols="85%" required></textarea>
-                    </div>
-                    <div class="pure-controls">
-                        <button type="submit" class="pure-button pure-button-primary"><i class="fa fa-cog" aria-hidden="true"></i> Post Response</button>
-                    </div>
-                </form>
-            </div><?php
-    } ?>
-    </div>
-    <div class="pure-g center">
-        <div class="pure-u-1-6">
-            <a href="plugins/forum.php?act=sub&amp;topic=<?php echo $topic['ft_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>" class="pure-button pure-button-grey"><i class="fa fa-envelope" aria-hidden="true"></i> <?php echo $subWhich; ?>ubscribe</a>
-        </div>
-    </div>
-</td>
-</tr>
-<tr>
-    <th class="content-head">&nbsp;</th>
-</tr>
-<tr>
-    <td class="content"><?php
     echo $pages->display_pages(); ?>
     <table class="pure-table pure-table-horizontal" width="100%">
         <thead>
@@ -427,7 +397,14 @@ function viewtopic($db, $user_class, $parser)
         </form><?php
     } else {
         echo '<span class="italic">This topic has been locked, you can\'t respond</span>';
-    } ?></td></tr><?php
+    } ?>
+    <div class="pure-g center">
+        <div class="pure-u-1-6">
+            <?php $subWhich = isset($topic['subbed']) ? 'Uns' : 'S'; ?>
+            <a href="plugins/forum.php?act=sub&amp;topic=<?php echo $topic['ft_id']; ?>&amp;csrfg=<?php echo $csrfg; ?>" class="pure-button pure-button-grey"><i class="fa fa-envelope" aria-hidden="true"></i> <?php echo $subWhich; ?>ubscribe</a>
+        </div>
+    </div>
+</td></tr><?php
 }
 function newtopic($db, $user_class, $parser)
 {
