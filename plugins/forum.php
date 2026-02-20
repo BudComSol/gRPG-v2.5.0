@@ -224,8 +224,8 @@ function viewforum($db, $user_class, $parser)
                     <span class="small"><?php echo $date_created->format('F d, Y g:i:sa'); ?></span>
                 </td>
                 <td><?php
-            if ($topic['ft_latest_user']) {
-                $poster = new User($topic['ft_latest_user']);
+            if ($topic['ft_latest_post']) {
+                $poster = $topic['ft_latest_user'] ? new User($topic['ft_latest_user']) : (object) ['formattedname' => 'System'];
                 echo $poster->formattedname ?: 'Unknown'; ?><br />
                         <span class="small"><?php echo $date_latest ? $date_latest->format('F d, Y g:i:sa') : ''; ?></span><br />
                         <a href="plugins/forum.php?viewtopic=<?php echo $topic['ft_id']; ?>&amp;latest"><img src="/images/silk/arrow_right.png" title="Go to latest post" alt="Go to latest post" /></a><?php
@@ -951,6 +951,9 @@ function recache_topic($id = 0)
         if ($post !== null) {
             $postCount = getCount($post['fp_board'], 'posts_boards');
             $topicCount = getCount($post['fp_board'], 'topics');
+            $db->query('UPDATE forum_topics SET ft_latest_time = ?, ft_latest_user = ?, ft_latest_post = ? WHERE ft_id = ?', [
+                $post['fp_time'], $post['fp_poster'], $post['fp_id'], $id
+            ]);
             $db->query('UPDATE forum_boards SET fb_topics = ?, fb_posts = ?, fb_latest_topic = ?, fb_latest_post = ?, fb_latest_poster = ?, fb_latest_time = ? WHERE fb_id = ?', [
                 $topicCount, $postCount, $post['fp_topic'], $post['fp_id'], $post['fp_poster'], $post['fp_time'], $post['fp_board']
             ]);
