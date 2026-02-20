@@ -391,8 +391,13 @@ function viewtopic($db, $user_class, $parser)
             <?php echo $csrfReply; ?>
             <fieldset>
                 <legend>Post a reply to this topic</legend>
-                <textarea name="message" rows="7" cols="40" required></textarea>
-                <button type="submit" class="pure-button pure-button-primary"><i class="fa fa-cog" aria-hidden="true"></i> Post Response</button>
+                <div class="pure-control-group">
+                    <label for="message">Your reply</label>
+                    <textarea name="message" id="message" rows="7" cols="40" required></textarea>
+                </div>
+                <div class="pure-controls">
+                    <button type="submit" class="pure-button pure-button-primary"><i class="fa fa-cog" aria-hidden="true"></i> Post Response</button>
+                </div>
             </fieldset>
         </form><?php
     } else {
@@ -535,7 +540,7 @@ function reply($db, $user_class, $parser)
     $db->execute([$user_class->id]);
     tag($_POST['message'], false, $topic['ft_id']);
     $db->trans('end');
-    echo Message('Your response has been posted', 'Success');
+    $_SESSION['success'] = 'Your response has been posted';
     $_GET['latest'] = true;
     $_GET['viewtopic'] = $_GET['reply'];
     viewtopic($db, $user_class, $parser);
@@ -712,8 +717,9 @@ function edit($db, $user_class, $parser)
         }
         $db->query('UPDATE forum_posts SET fp_text = ?, fp_edit_times = fp_edit_times + 1, fp_edit_reason = ?, fp_edit_time = NOW() WHERE fp_id = ?');
         $db->execute([$_POST['message'], $_POST['reason'], $_GET['post']]);
-        echo Message('Your edits has been posted', 'Success');
+        $_SESSION['success'] = 'Your edits have been posted';
         $_GET['viewtopic'] = $_GET['topic'];
+        $_GET['latest'] = true;
         exit(viewtopic($db, $user_class, $parser));
     } ?><form action="plugins/forum.php?act=edit&amp;topic=<?php echo $topic['ft_id']; ?>&amp;post=<?php echo $post['fp_id']; ?>" method="post" class="pure-form">
         <div class="pure-control-group">
@@ -764,9 +770,8 @@ function delepost($db, $user_class, $parser)
     recache_topic($post['fp_topic']);
     recache_forum($post['fp_board']);
     $db->trans('end');
-    $_GET['viewtopic'] = $topic['ft_id'];
-    echo Message('Post #'.format($post['fp_id']).' has been deleted', 'Success');
-    viewtopic($db, $user_class, $parser);
+    $_SESSION['success'] = 'Post #'.format($post['fp_id']).' has been deleted';
+    exit(header('Location: forum.php?viewtopic='.$topic['ft_id']));
 }
 function deletopic($db, $user_class, $parser)
 {
@@ -846,9 +851,8 @@ function move($db, $user_class, $parser)
     recache_forum($board['fb_id']);
     recache_forum($topic['ft_board']);
     $db->trans('end');
-    echo Message('You\'ve moved '.format($topic['ft_name']).' to '.format($board['fb_name']), 'Success');
-    $_GET['viewtopic'] = $topic['ft_id'];
-    viewtopic($db, $user_class, $parser);
+    $_SESSION['success'] = 'You\'ve moved '.format($topic['ft_name']).' to '.format($board['fb_name']);
+    exit(header('Location: forum.php?viewtopic='.$topic['ft_id']));
 }
 function lock($db, $user_class, $parser)
 {
