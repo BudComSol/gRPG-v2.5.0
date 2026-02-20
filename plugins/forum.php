@@ -587,7 +587,22 @@ function quote($db, $user_class, $parser)
     accessCheck($board, $user_class);
     if ($topic['ft_locked'] && $user_class->admin != 1) {
         echo Message('This topic has been locked. No further responses are permitted', 'Error', true);
-    } ?><form action="plugins/forum.php?reply=<?php echo $topic['ft_id']; ?>&amp;csrfg=<?php echo csrf_create('csrfg', false); ?>" method="post" class="pure-form pure-form-aligned">
+    } ?>
+    <table class="pure-table pure-table-horizontal" width="100%">
+        <thead>
+            <tr>
+                <th width="25%">Poster</th>
+                <th width="75%">Post being quoted</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><?php echo $quoter->formattedname; ?></td>
+                <td><?php echo tag($parser->getAsHTML($parser->parse(nl2br(format($post['fp_text'])))), true); ?></td>
+            </tr>
+        </tbody>
+    </table><br />
+    <form action="plugins/forum.php?reply=<?php echo $topic['ft_id']; ?>&amp;csrfg=<?php echo csrf_create('csrfg', false); ?>" method="post" class="pure-form pure-form-aligned">
         <?php echo csrf_create(); ?>
         <div class="pure-control-group">
             <label for="message">Quote/Response</label>
@@ -721,7 +736,20 @@ function edit($db, $user_class, $parser)
         $_GET['viewtopic'] = $_GET['topic'];
         $_GET['latest'] = true;
         exit(viewtopic($db, $user_class, $parser));
-    } ?><form action="plugins/forum.php?act=edit&amp;topic=<?php echo $topic['ft_id']; ?>&amp;post=<?php echo $post['fp_id']; ?>" method="post" class="pure-form">
+    } ?>
+    <table class="pure-table pure-table-horizontal" width="100%">
+        <thead>
+            <tr>
+                <th width="100%">Original Post</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><?php echo tag($parser->getAsHTML($parser->parse(nl2br(format($post['fp_text'])))), true); ?></td>
+            </tr>
+        </tbody>
+    </table><br />
+    <form action="plugins/forum.php?act=edit&amp;topic=<?php echo $topic['ft_id']; ?>&amp;post=<?php echo $post['fp_id']; ?>" method="post" class="pure-form">
         <div class="pure-control-group">
             <label for="message">Post</label><br />
             <textarea name="message" rows="7" cols="40" autofocus><?php echo format($post['fp_text']); ?></textarea>
