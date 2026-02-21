@@ -19,7 +19,7 @@ if (!empty($rows)) {
     <td class="content-city"><?php echo format($user_class->citydesc); ?></td>
 </tr>
 <tr>
-    <th class="content-head">Baddest Citizens in <?php echo format($user_class->cityname); ?></th>
+    <th class="content-head">Badass Citizens of <?php echo format($user_class->cityname); ?></th>
 </tr>
 <tr>
     <td class="content">
