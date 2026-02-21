@@ -8,19 +8,19 @@ $db->execute();
 $tickets = $db->result();
 ?>
 <div>
-    <div class="headbox leftmenu">Return</div>
-    <a href="index.php" class="leftmenu">Back to the game</a>
+    <div class="headbox leftmenu">Game</div>
+    <a href="index.php" class="leftmenu">Back To Game</a>
 </div>
 <div>
     <div class="headbox leftmenu">Control Panel</div>
     <a href="plugins/control.php?page=site_settings" class="leftmenu">Site Settings</a>
-    <a href="plugins/control.php" class="leftmenu">Marquee/Maintenance</a>
+    <a href="plugins/control.php" class="leftmenu">Marquee</a>
     <a href="plugins/control.php?page=rmoptions" class="leftmenu">RM Options</a>
     <a href="plugins/control.php?page=rmpacks" class="leftmenu">RM Upgrades</a>
     <a href="plugins/control.php?page=setplayerstatus" class="leftmenu">Player Options</a>
     <a href="plugins/massmail.php" class="leftmenu">Mass Mail</a>
     <a href="plugins/control.php?page=referrals" class="leftmenu">Manage Referrals</a>
-    <div class="headbox">Game Modification</div>
+    <div class="headbox">Modifications</div>
     <a class="leftmenu" href="plugins/control.php?page=cars">Manage Cars</a>
     <a class="leftmenu" href="plugins/control.php?page=cities">Manage Cities</a>
     <a class="leftmenu" href="plugins/control.php?page=crimes">Manage Crimes</a>
@@ -32,6 +32,6 @@ $tickets = $db->result();
     <a class="leftmenu" href="plugins/control.php?page=voting">Manage Voting</a>
 </div>
 <div>
-    <div class="headbox leftmenu">Misc</div>
+    <div class="headbox leftmenu">Miscellaneous</div>
     <a href="plugins/managetickets.php" class="leftmenu">Support Desk [<?php echo $tickets; ?>]</a>
 </div>
