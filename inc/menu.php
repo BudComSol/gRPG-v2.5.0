@@ -27,7 +27,7 @@ global $owner;
     if ($user_class->admin == 1) {
         ?>
         <div class="headbox" style="color:yellow;">Staff</div>
-        <a class="leftmenu" href="plugins/control.php">Staff Control Panel</a><?php
+        <a class="leftmenu" href="plugins/control.php">Control Panel</a><?php
     } ?>
     <div class="headbox">Account</div><?php
 if ($user_class->rmdays) {
