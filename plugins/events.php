@@ -68,20 +68,22 @@ if ($rows !== null) {
             $date = new DateTime($row['time_added']); ?><table width="100%" class="pure-table pure-table-horizontal">
                 <tr>
                     <th>Received</th>
-                    <td colspan="3"><?php echo $date->format(DEFAULT_DATE_FORMAT); ?></td>
+                    <td colspan="3"><?php echo $date->format(DEFAULT_DATE_FORMAT); ?></td><br>
                 </tr>
+                <br>
                 <tr>
-                    <td colspan="4" class="textm">Event:&nbsp;&nbsp;<?php echo $row['content']; ?></td>
+                    <td colspan="4" class="textm"><br>Event:&nbsp;&nbsp;<?php echo $row['content']; ?></td>
                 </tr>
             </table>
             <table width="100%" class="center">
                 <tr>
+                  <br>
                     <td>
-                        <form action="events.php" method="post" class="pure-form">
+                        <form action="plugins/events.php" method="post" class="pure-form">
                             <?php echo $csrf; ?>
                             <input type="hidden" name="event_id" value="<?php echo $row['id']; ?>" />
-                            <div class="pure-controls">
-                                <button type="submit" name="delete" class="pure-button pure-button-primary">Delete</button>
+                            <div class=" pure-controls">
+                                <button type="submit" name="delete" class="pure-button pure-button-primary">Delete My Events</button>
                             </div>
                         </form>
                     </td>
