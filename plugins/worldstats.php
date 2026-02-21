@@ -7,15 +7,15 @@ $db->query('SELECT * FROM (
 $db->execute();
 $stats = $db->fetch(true);
 ?><tr>
-    <th class="content-head">World Stats (more will be added soon)</th>
+    <th class="content-head">World Statistics</th>
 </tr>
 <tr>
     <td class="content">
         <table width="100%" cellpadding="4" cellspacing="0">
             <tr>
                 <td class="textl" width="15%">Citizens:</td>
-                <td class="textr" width="35%"><?php echo format($stats['total']); ?></td>
-                <td class="textl" width="15%">Respected Citizens:</td>
+                <td class="textr" width="20%"><?php echo format($stats['total']); ?></td>
+                <td class="textl" width="30%">Respected Citizens:</td>
                 <td class="textr" width="35%"><?php echo format($stats['upgraded']); ?></td>
            </tr>
         </table>
