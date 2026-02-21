@@ -83,8 +83,8 @@ $csrfg = csrf_create('csrfg', false);
 </tr>
 <tr>
     <td class="content">
-        <strong>Current Hookers:</strong> <?php echo prettynum($user_class->hookers); ?><br />
-        <strong>Cash on Hand:</strong> <?php echo prettynum($user_class->money, true); ?>
+        <strong><p>Current Hookers:</strong> <?php echo prettynum($user_class->hookers); ?></p>
+        <strong><p>Cash on Hand:</strong> <?php echo prettynum($user_class->money, true); ?></p>
     </td>
 </tr>
 <tr>
@@ -96,23 +96,23 @@ $csrfg = csrf_create('csrfg', false);
           <br>
             <tr>
                 <td width="50%">1 Hooker - <?php echo prettynum(1000, true); ?></td>
-                <td width="50%">[<a href="plugins/whorehouse.php?spend=1&amp;csrfg=<?php echo $csrfg; ?>">Hire</a>]</td>
+                <td width="50%">[<a href="plugins/whorehouse.php?spend=1&amp;csrfg=<?php echo $csrfg; ?>">Hire Whores</a>]</td>
             </tr>
             <tr>
                 <td>5 Hookers - <?php echo prettynum(5000, true); ?></td>
-                <td>[<a href="plugins/whorehouse.php?spend=5&amp;csrfg=<?php echo $csrfg; ?>">Hire</a>]</td>
+                <td>[<a href="plugins/whorehouse.php?spend=5&amp;csrfg=<?php echo $csrfg; ?>">Hire Whores</a>]</td>
             </tr>
             <tr>
                 <td>10 Hookers - <?php echo prettynum(10000, true); ?></td>
-                <td>[<a href="plugins/whorehouse.php?spend=10&amp;csrfg=<?php echo $csrfg; ?>">Hire</a>]</td>
+                <td>[<a href="plugins/whorehouse.php?spend=10&amp;csrfg=<?php echo $csrfg; ?>">Hire Whores</a>]</td>
             </tr>
             <tr>
                 <td>20 Hookers - <?php echo prettynum(20000, true); ?></td>
-                <td>[<a href="plugins/whorehouse.php?spend=20&amp;csrfg=<?php echo $csrfg; ?>">Hire</a>]</td>
+                <td>[<a href="plugins/whorehouse.php?spend=20&amp;csrfg=<?php echo $csrfg; ?>">Hire Whores</a>]</td>
             </tr>
             <tr>
                 <td>50 Hookers - <?php echo prettynum(50000, true); ?></td>
-                <td>[<a href="plugins/whorehouse.php?spend=50&amp;csrfg=<?php echo $csrfg; ?>">Hire</a>]</td>
+                <td>[<a href="plugins/whorehouse.php?spend=50&amp;csrfg=<?php echo $csrfg; ?>">Hire Whores</a>]</td>
             </tr>
         </table><br>
     </td><br>
@@ -123,6 +123,6 @@ $csrfg = csrf_create('csrfg', false);
 <tr>
     <td class="content">
         <p>Release all your hookers and collect their earnings (<?php echo prettynum($user_class->hookers * EARNINGS_PER_HOOKER, true); ?>).</p>
-         <a href="plugins/whorehouse.php?cash=1&amp;csrfg=<?php echo $csrfg; ?>"><p>Cash Out All Hookers</p></a>
+         <a href="plugins/whorehouse.php?cash=1&amp;csrfg=<?php echo $csrfg; ?>"><p>Cash Out All Your Whores And Earn</p></a>
     </td>
 </tr>
