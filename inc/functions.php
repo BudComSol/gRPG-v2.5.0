@@ -1474,3 +1474,70 @@ function csrf_check($name, $which, $exception = false, $time = 600, $multiple = 
         return false;
     }
 }
+
+function getCount($id = null, $type = null)
+{
+    global $db;
+    if (!ctype_digit((string)$id)) {
+        return 0;
+    }
+    switch ($type) {
+        case 'boards':
+            $db->query('SELECT COUNT(fb_id) FROM forum_boards');
+            $db->execute();
+
+            return $db->result();
+        break;
+        case 'topics':
+            $db->query('SELECT COUNT(ft_id) FROM forum_topics WHERE ft_board = ?');
+            $db->execute([$id]);
+
+            return $db->result();
+        break;
+        case 'posts_boards':
+            $db->query('SELECT COUNT(fp_id) FROM forum_posts WHERE fp_board = ?');
+            $db->execute([$id]);
+
+            return $db->result();
+        break;
+        case 'posts_topics':
+            $db->query('SELECT COUNT(fp_id) FROM forum_posts WHERE fp_topic = ?');
+            $db->execute([$id]);
+
+            return $db->result();
+        break;
+        case 'posts_user':
+            $db->query('SELECT COUNT(fp_id) FROM forum_posts WHERE fp_poster = ?');
+            $db->execute([$id]);
+
+            return $db->result();
+        break;
+        default:
+            return 0;
+        break;
+    }
+}
+
+function recache_forum($id = 0)
+{
+    global $db;
+    if (!$id || !ctype_digit((string)$id)) {
+        return false;
+    }
+    $db->query('SELECT fp_id, fp_poster, fp_time, ft_id, ft_name
+        FROM forum_posts
+        LEFT JOIN forum_topics ON fp_topic = ft_id
+        WHERE fp_board = ?
+        ORDER BY fp_time DESC LIMIT 1');
+    $db->execute([$id]);
+    if ($db->count()) {
+        $row = $db->fetch(true);
+        $postCount = getCount($id, 'posts_boards');
+        $topicCount = getCount($id, 'topics');
+        $db->query('UPDATE forum_boards SET fb_topics = ?, fb_posts = ?, fb_latest_topic = ?, fb_latest_post = ?, fb_latest_poster = ?, fb_latest_time = ? WHERE fb_id = ?');
+        $db->execute([$topicCount, $postCount, $row['ft_id'], $row['fp_id'], $row['fp_poster'], $row['fp_time'], $id]);
+    } else {
+        $db->query('UPDATE forum_boards SET fb_topics = 0, fb_posts = 0, fb_latest_topic = 0, fb_latest_post = 0, fb_latest_poster = 0, fb_latest_time = NULL WHERE fb_id = ?');
+        $db->execute([$id]);
+    }
+}

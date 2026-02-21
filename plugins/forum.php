@@ -962,6 +962,7 @@ function recache_topic($id = 0)
         }
     }
 }
+if (!function_exists('recache_forum')) {
 function recache_forum($id = 0)
 {
     global $db;
@@ -984,6 +985,7 @@ function recache_forum($id = 0)
         $db->query('UPDATE forum_boards SET fb_topics = 0, fb_posts = 0, fb_latest_topic = 0, fb_latest_post = 0, fb_latest_poster = 0, fb_latest_time = NULL WHERE fb_id = ?');
         $db->execute([$id]);
     }
+}
 }
 function accessCheck($data, $user_class)
 {
@@ -1018,6 +1020,7 @@ function accessCheck($data, $user_class)
         echo Message('You don\'t have access', 'Error', true);
     }
 }
+if (!function_exists('getCount')) {
 function getCount($id = null, $type = null)
 {
     global $db;
@@ -1059,6 +1062,7 @@ function getCount($id = null, $type = null)
             return 0;
         break;
     }
+}
 }
 function trashTopic($id = null)
 {
