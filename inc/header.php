@@ -88,7 +88,11 @@ if ($site_url !== false && $site_url !== '') {
             <table width="100%" border="0" cellpadding="0" cellspacing="0">
                 <tr>
                     <td valign="top" width="150"><?php
-                        require_once __DIR__.'/menu.php';
+                        if (defined('STAFF_FILE') && $user_class->admin) {
+                            require_once __DIR__.'/menu_staff.php';
+                        } else {
+                            require_once __DIR__.'/menu.php';
+                        }
                     ?></td>
                     <td valign="top">
                         <table border="0" cellspacing="0" cellpadding="0" width="100%">

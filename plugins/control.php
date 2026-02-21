@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+define('STAFF_FILE', true);
 require_once __DIR__.'/../inc/header.php';
 $auths = ['public', 'staff'];
 if (!$user_class->admin) {
