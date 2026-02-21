@@ -12,7 +12,7 @@ if (!empty($_GET['jailbreak'])) {
     }
     $jailed_person = new User($_GET['jailbreak']);
     if (!$jailed_person->jail) {
-        $errors[] = $jailed_person->formattedname.' isn\'t in jail';
+        $errors[] = $jailed_person->formattedname.' isn\'t in jail.';
     }
     if ($jailed_person->id == $user_class->id) {
         $errors[] = 'You can not bust yourself from jail';
@@ -78,7 +78,7 @@ if ($rows !== null) {
         }
     } else {
         ?><tr>
-                    <td colspan="3" class="center"><p>There's no-one in jail</p></td>
+                    <td colspan="3" class="center"><p>There's no-one in jail at the moment.</p></td>
                 </tr><?php
     }
 ?></table>
