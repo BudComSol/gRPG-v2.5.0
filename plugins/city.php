@@ -19,7 +19,7 @@ if (!empty($rows)) {
     <td class="content-city"><?php echo format($user_class->citydesc); ?></td>
 </tr>
 <tr>
-    <th class="content-head">Most Nefarious Citizens in <?php echo format($user_class->cityname); ?></th>
+    <th class="content-head">Baddest Citizens in <?php echo format($user_class->cityname); ?></th>
 </tr>
 <tr>
     <td class="content">
@@ -39,33 +39,32 @@ for ($i = 1; $i <= 3; ++$i) {
     </td>
 </tr>
 <tr>
-    <th class="content-head">Places To Go</th>
+    <th class="content-head">The World Is Your Oyster</th>
 </tr>
 <tr>
     <td class="content">
         <table width="100%" class="pure-table pure-table-horizontal">
             <tr>
                 <td width="33%" class="top" style="padding-bottom:10px;">
-                    <h3 style="padding:0;margin:0;font-size:1.4em;">Market</h3><br />
-                    <a href="plugins/astore.php">Armor Emporium</a><br />
-                    <a href="plugins/store.php">Weapon Sales</a><br />
-                    <a href="plugins/itemmarket.php">Item Market</a><br />
-                    <a href="plugins/pointmarket.php">Points Market</a><br />
-                    <a href="plugins/spendpoints.php">Point Shop</a><br />
+                    <h3 style="padding:0;margin:0;font-size:1.4em;">Markets</h3><br />
                     <a href="plugins/pharmacy.php">Pharmacy</a><br />
+                    <a href="plugins/spendpoints.php">Point Store</a><br />
+                    <a href="plugins/itemmarket.php">Item Market</a><br />                    
+                    <a href="plugins/pointmarket.php">Points Market</a><br />
+                    <a href="plugins/store.php">Weapon Sales</a><br />
+                    <a href="plugins/astore.php">Armor Emporium</a><br />                    
                     <?php echo $user_class->city == 2 ? '<a href="plugins/carlot.php">Big Bob\'s Used Car Lot</a>' : ''; ?>
                 </td>
                 <td width="34%" class="top" style="padding-bottom:10px;">
                     <h3 style="padding:0;margin:0;font-size:1.4em;">Town Hall</h3><br />
-                    <a href="plugins/halloffame.php">Hall Of Fame</a><br />
-                    <a href="plugins/worldstats.php">World Stats</a><br />
-                    <a href="plugins/viewstaff.php">Town Hall</a><br />
-                    <a href="plugins/search.php">Citizen Search</a><br />
+                    <a href="plugins/halloffame.php">HoF</a><br />
+                    <a href="plugins/worldstats.php">World Stats</a><br />                     
                     <a href="plugins/citizens.php">Citizens List</a><br />
+                    <a href="plugins/search.php">Citizen Search</a><br />
                     <a href="plugins/online.php">Citizens Online</a><br />                    
                 </td>
                 <td width="33%" class="top" style="padding-bottom:10px;">
-                    <h3 style="padding:0;margin:0;font-size:1.4em;">Gaming</h3><br />
+                    <h3 style="padding:0;margin:0;font-size:1.4em;">Punting</h3><br />
                     <a href="plugins/5050game.php">50/50</a><br />
                     <a href="plugins/lottery.php">Lottery</a><br />
                     <a href="plugins/slots.php">Slot Machine</a><br />
@@ -74,9 +73,9 @@ for ($i = 1; $i <= 3; ++$i) {
             </tr>
             <tr>
                 <td class="top" style="padding-bottom:10px;">
-                    <h3 style="padding:0;margin:0;font-size:1.4em;">Residential</h3><br />
-                    <a href="plugins/pms.php">Mailbox <!_-mail-_!></a><br />
-                    <a href="plugins/events.php">Events <!_-events-_!></a><br />                    
+                    <h3 style="padding:0;margin:0;font-size:1.4em;">Uptown</h3><br />
+                    <a href="plugins/events.php">Events <!_-events-_!></a><br />
+                    <a href="plugins/pms.php">Mailbox <!_-mail-_!></a><br />                                        
                     <a href="plugins/inventory.php">Inventory</a><br />                    
                     <a href="plugins/house.php">Move House</a><br />
                     <a href="plugins/fields.php">Manage Land</a>
@@ -89,18 +88,16 @@ for ($i = 1; $i <= 3; ++$i) {
                 </td>
                 <td class="top" style="padding-bottom:10px;">
                     <h3 style="padding:0;margin:0;font-size:1.4em;">Downtown</h3><br />
-                    <a href="bank.php">Bank</a><br />                        
-                    <a href="plugins/jobs.php">Job Center</a><br />
-                    <a href="plugins/gang_list.php">Gang List</a><br />
-                    <a href="<?php echo !$user_class->gang ? 'create' : ''; ?>gang.php">Your Gang</a><br />                     
+                    <a href="bank.php">Bank</a><br />
+                    <a href="plugins/viewstaff.php">Game Staff</a><br />                                         
                     <a href="plugins/downtown.php">Search Downtown</a><br />                  
                 </td>
             </tr>  
             <td class="top" style="padding-bottom:10px;">
-                    <h3 style="padding:0;margin:0;font-size:1.4em;">Southside</h3><br />                    
-                    <a href="plugins/jobs.php">Job Center</a><br />
-                    <a href="plugins/gang_list.php">Gang List</a><br />
+                    <h3 style="padding:0;margin:0;font-size:1.4em;">Southside</h3><br />
+                    <a href="plugins/gang_list.php">Gangs</a><br />
                     <a href="<?php echo !$user_class->gang ? 'create' : ''; ?>gang.php">Your Gang</a><br />                    
+                    <a href="plugins/jobs.php">Jobs Center</a><br />                                        
                     <a href="plugins/realestate.php">Real Estate Agency</a>
                 </td>
             <td class="top" style="padding-bottom:10px;">
@@ -113,11 +110,9 @@ for ($i = 1; $i <= 3; ++$i) {
                 </td>                
                 <td class="top" style="padding-bottom:10px;">
                     <h3 style="padding:0;margin:0;font-size:1.4em;">Northside</h3><br />
-                    <a href="plugins/downtown.php">Search Downtown</a><br />
-                    <a href="plugins/viewstocks.php">View Stock Market</a><br />
+                    <a href="plugins/portfolio.php">View Portfolio</a><br />
                     <a href="plugins/brokerage.php">Brokerage Firm</a><br />
-                    <a href="plugins/portfolio.php">View Portfolio</a>
-                    
+                    <a href="plugins/viewstocks.php">View Stock Market</a><br />                    
                 </td>
             </tr>
         </table>
