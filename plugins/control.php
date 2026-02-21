@@ -1509,9 +1509,9 @@ if (isset($_POST['addrmpack'])) {
 </tr>
 <tr>
     <td class="content">
-        Welcome to the control panel. Here you can do just about anything, from giving players items they have paid for with real money, to adding, changing, or deleting jobs, cities, items, etc.<br /><br />
-        Please send any ideas for things that need to be added to the control panel to comments@thegrpg.com <br /><br />
-        If you are experiencing problems with any of the options, try clicking the submit button instead of pressing the enter key.
+        <p>Give players items they have paid for with cash, adding, changing, or deleting jobs, cities, items, etc.</p>
+        <p>Send ideas for things that need to be added to the control panel to the admins RM.</p>
+        <p>Any problems with any of the options, try clicking the submit button instead of pressing the enter key.</p>
     </td>
 </tr><?php
 if (count($errors)) {
@@ -1530,7 +1530,7 @@ if (empty($_GET['page'])) {
                 <?php echo csrf_create('admin_message'); ?>
                 <fieldset>
                     <div class="pure-control-group">
-                        <textarea name="message" id="message" cols="53" rows="7"><?php echo format($set['messagefromadmin']); ?></textarea>
+                        <textarea name="message" id="message" cols="40" rows="7"><?php echo format($set['messagefromadmin']); ?></textarea>
                     </div>
                 </fieldset>
                 <div class="pure-controls">
@@ -1548,7 +1548,8 @@ if (empty($_GET['page'])) {
                 <?php echo csrf_create('admin_serverdown'); ?>
                 <fieldset>
                     <div class="pure-control-group">
-                        <textarea name="message" id="message" cols="53" rows="7"><?php echo format($set['serverdown']); ?></textarea>
+                        <textarea name="message" id="message" cols="40
+                        " rows="7"><?php echo format($set['serverdown']); ?></textarea>
                     </div>
                 </fieldset>
                 <div class="pure-controls">
@@ -2279,15 +2280,18 @@ if (empty($_GET['page'])) {
                     </div>
                     <div class="pure-control-group">
                         <label for="stext">Success message</label>
-                        <textarea name="stext" id="stext" cols="53" rows="7" placeholder="Success message"></textarea>
+                        <textarea name="stext" id="stext" cols="40
+                        " rows="7" placeholder="Success message"></textarea>
                     </div>
                     <div class="pure-control-group">
                         <label for="ftext">Fail message</label>
-                        <textarea name="ftext" id="ftext" cols="53" rows="7" placeholder="Fail message"></textarea>
+                        <textarea name="ftext" id="ftext" cols="40
+                        " rows="7" placeholder="Fail message"></textarea>
                     </div>
                     <div class="pure-control-group">
                         <label for="ctext">Fail and caught message</label>
-                        <textarea name="ctext" id="ctext" cols="53" rows="7" placeholder="Fail and caught message"></textarea>
+                        <textarea name="ctext" id="ctext" cols="40
+                        " rows="7" placeholder="Fail and caught message"></textarea>
                     </div>
                 </fieldset>
                 <div class="pure-controls">
@@ -2337,15 +2341,18 @@ if (empty($_GET['page'])) {
                             </div>
                             <div class="pure-control-group">
                                 <label for="stext">Success message</label>
-                                <textarea name="stext" id="stext" cols="53" rows="7" placeholder="Success message"><?php echo format($row['stext']); ?></textarea>
+                                <textarea name="stext" id="stext" cols="40
+                                " rows="7" placeholder="Success message"><?php echo format($row['stext']); ?></textarea>
                             </div>
                             <div class="pure-control-group">
                                 <label for="ftext">Fail message</label>
-                                <textarea name="ftext" id="ftext" cols="53" rows="7" placeholder="Fail message"><?php echo format($row['ftext']); ?></textarea>
+                                <textarea name="ftext" id="ftext" cols="40
+                                " rows="7" placeholder="Fail message"><?php echo format($row['ftext']); ?></textarea>
                             </div>
                             <div class="pure-control-group">
                                 <label for="ctext">Fail and caught message</label>
-                                <textarea name="ctext" id="ctext" cols="53" rows="7" placeholder="Fail and caught message"><?php echo format($row['ctext']); ?></textarea>
+                                <textarea name="ctext" id="ctext" cols="40
+                                " rows="7" placeholder="Fail and caught message"><?php echo format($row['ctext']); ?></textarea>
                             </div>
                         </fieldset>
                         <div class="pure-controls">
@@ -2419,7 +2426,8 @@ if (empty($_GET['page'])) {
                     </div>
                     <div class="pure-control-group">
                         <label for="description">Description</label>
-                        <textarea name="description" id="description" cols="53" rows="7" placeholder="Description goes here..."></textarea>
+                        <textarea name="description" id="description" cols="40
+                        " rows="7" placeholder="Description goes here..."></textarea>
                     </div>
                 </fieldset>
                 <div class="pure-controls">
@@ -2477,7 +2485,8 @@ if (empty($_GET['page'])) {
                             </div>
                             <div class="pure-control-group">
                                 <label for="description">Description</label>
-                                <textarea name="description" id="description" cols="53" rows="7" placeholder="Description goes here..."><?php echo format($row['description']); ?></textarea>
+                                <textarea name="description" id="description" cols="40
+                                " rows="7" placeholder="Description goes here..."><?php echo format($row['description']); ?></textarea>
                             </div>
                         </fieldset>
                         <div class="pure-controls">
