@@ -85,7 +85,7 @@ if (count($errors)) {
                 <th width="25%">Job</th>
                 <th width="35%">Requirements</th>
                 <th width="20%">Daily Payment</th>
-                <th width="20%">Apply For Job</th>
+                <th width="20%">Apply</th>
             </tr><?php
 if ($rows !== null) {
         foreach ($rows as $row) {
