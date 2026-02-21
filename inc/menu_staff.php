@@ -27,6 +27,7 @@ $tickets = $db->result();
     <a class="leftmenu" href="plugins/control.php?page=forum">Manage Forum</a>
     <a class="leftmenu" href="plugins/control.php?page=houses">Manage Houses</a>
     <a class="leftmenu" href="plugins/control.php?page=playeritems">Manage Items</a>
+    <a class="leftmenu" href="plugins/control.php?page=giveuseritem">Give Item to User</a>
     <a class="leftmenu" href="plugins/control.php?page=jobs">Manage Jobs</a>
     <a class="leftmenu" href="plugins/control.php?page=voting">Manage Voting</a>
 </div>

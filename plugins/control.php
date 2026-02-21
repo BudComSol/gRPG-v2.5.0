@@ -892,23 +892,23 @@ if (isset($_POST['addrmpack'])) {
     } else {
         display_errors($errors);
     }
-} elseif (isset($_GET['action']) && $_GET['action'] === 'deleteallfromip') {
-    if (!csrf_check('ip_delete', $_GET)) {
+} elseif (isset($_POST['deleteallfromip'])) {
+    if (!csrf_check('ip_delete', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
-    $_GET['ip'] = isset($_GET['ip']) && filter_var($_GET['ip'], FILTER_VALIDATE_IP) ? $_GET['ip'] : null;
-    if (empty($_GET['ip'])) {
+    $_POST['ip'] = isset($_POST['ip']) && filter_var($_POST['ip'], FILTER_VALIDATE_IP) ? $_POST['ip'] : null;
+    if (empty($_POST['ip'])) {
         $errors[] = 'You didn\'t enter a valid IP address';
     }
     $db->query('SELECT COUNT(id) FROM users WHERE ip = ?');
-    $db->execute([$_GET['ip']]);
+    $db->execute([$_POST['ip']]);
     $cnt = $db->result();
     if (!$cnt) {
-        $errors[] = 'There are no players on IP: '.format($_GET['ip']);
+        $errors[] = 'There are no players on IP: '.format($_POST['ip']);
     }
     if (!count($errors)) {
         $db->query('DELETE FROM users WHERE ip = ?');
-        $db->execute([$_GET['ip']]);
+        $db->execute([$_POST['ip']]);
         echo Message(format($cnt).' account'.s($cnt).' '.($cnt == 1 ? 'has' : 'have').' been deleted');
     } else {
         display_errors($errors);
@@ -1934,6 +1934,25 @@ if (empty($_GET['page'])) {
                 </fieldset>
                 <div class="pure-controls">
                     <button type="submit" name="impeachcongress" class="pure-button pure-button-primary">Impeach Congressman</button>
+                </div>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <th class="content-head">Delete All Accounts From IP</th>
+    </tr>
+    <tr>
+        <td class="content">
+            <form action="plugins/control.php?page=setplayerstatus" method="post" class="pure-form pure-form-aligned">
+                <?php echo csrf_create('ip_delete'); ?>
+                <fieldset>
+                    <div class="pure-control-group">
+                        <label for="ip">IP Address</label>
+                        <input type="text" name="ip" id="ip" size="20" maxlength="45" placeholder="e.g. 192.168.1.1" pattern="^(\d{1,3}\.){3}\d{1,3}$|^([0-9a-fA-F:]{2,39})$" />
+                    </div>
+                </fieldset>
+                <div class="pure-controls">
+                    <button type="submit" name="deleteallfromip" class="pure-button pure-button-primary">Delete All From IP</button>
                 </div>
             </form>
         </td>
