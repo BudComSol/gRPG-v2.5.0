@@ -17,7 +17,7 @@ if (!empty($_GET['action']) && $_GET['action'] === 'quit') {
         $db->query('UPDATE users SET job = 0 WHERE id = ?');
         $db->execute([$user_class->id]);
         $user_class = new User($user_class->id);
-        echo Message('You\'ve quit your job');
+        echo Message('You\'ve quit your job.');
     }
 }
 if (!empty($_GET['take'])) {
@@ -25,7 +25,7 @@ if (!empty($_GET['take'])) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
     if ($user_class->job) {
-        $errors[] = 'You already have a job';
+        $errors[] = 'You already have a job, numpty.';
     }
     $db->query('SELECT * FROM jobs WHERE id = ?');
     $db->execute([$_GET['take']]);
@@ -61,16 +61,16 @@ if ($user_class->job) {
         $db->execute([$user_class->job]);
         echo Message('You\'ve just been made redundant..', 'Error', true);
     }
-    $row = $db->fetch(true); ?><tr>
-        <th class="content-head">Current Job</th>
-    </tr>
+    $row = $db->fetch(true); ?>
     <tr>
         <td class="content">
-            You're currently a <?php echo format($row['name']); ?><br />
-            You make <?php echo prettynum($row['money'], true); ?> a day.<br /><br />
-            <a href="jobs.php?action=quit&amp;csrfg=<?php echo $csrfg; ?>">Quit Job</a>
+            <p>You're currently an <?php echo format($row['name']); ?>
+            and making <?php echo prettynum($row['money'], true); ?> a day.</p>
+            <a href="plugins/jobs.php?action=quit&amp;csrfg=<?php echo $csrfg; ?>"><p>Quit This Job</p></a>
         </td>
-    </tr><?php
+      </tr>
+    <th class="content-head">Available Jobs</th></tr>
+    <?php
 }
 $db->query('SELECT * FROM jobs ORDER BY money ');
 $db->execute();
@@ -100,9 +100,9 @@ if ($rows !== null) {
                     <td><?php echo prettynum($row['money'], true); ?></td>
                     <td><?php
         if ($row['id'] > $user_class->job) {
-            ?><a href="jobs.php?take=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>">Take Job</a><?php
+            ?><a href="plugins/jobs.php?take=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>">Take This Job</a><?php
         } elseif ($row['id'] == $user_class->job) {
-            ?><span class="green italic">Working here</span><?php
+            ?><span class="green italic">Working Here</span><?php
         } ?></td>
                 </tr><?php
         }
