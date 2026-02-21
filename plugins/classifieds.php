@@ -105,5 +105,5 @@ if ($rows !== null) {
         </tr><?php
     }
 } else {
-    echo Message('There are no ads');
+    echo Message('<p>There are no ads at this time.</p>');
 }
