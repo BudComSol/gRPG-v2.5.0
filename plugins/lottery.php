@@ -38,13 +38,16 @@ if (count($errors)) {
 }
 ?><tr>
     <td class="content">
-        Do you want to buy a ticket for the daily lottery? You can buy up to 5 tickets a day for <?php echo prettynum(1000, true); ?> a ticket. The more people that enter, the more that the winner will win. If your ticket is drawn at the end of the day, you win 75% of the ticket revenue!<br /><br />
-        <a href="lottery.php?buy&amp;csrfg=<?php echo csrf_create('csrfg', false); ?>">Buy Ticket</a>
+        <p>Do you want to buy a ticket for the daily lottery?</p>
+        <p>You can buy up to 5 tickets a day for <?php echo prettynum(1000, true); ?> a ticket.</p>
+        <p>The more that enter, the bigger the prize.</p>
+        <p>If your ticket is drawn at the end of the day, you win 75% of the ticket revenue!</p>
+        <a href="plugins/lottery.php?buy&amp;csrfg=<?php echo csrf_create('csrfg', false); ?>"><p>Buy Lottery Ticket</p></a>
     </td>
 </tr>
 <tr>
     <td class="content">
-        There <?php echo $tickets == 1 ? 'has' : 'have'; ?> been <?php echo format($tickets); ?> Lotto Ticket<?php echo s($tickets); ?> bought today<br />
-        The pot is currently standing at <?php echo prettynum($pot, true); ?>
+        <p>There <?php echo $tickets == 1 ? 'has' : 'have'; ?> been <?php echo format($tickets); ?> Lotto Ticket<?php echo s($tickets); ?> bought today.</p>
+        <p>The pot is currently standing at <?php echo prettynum($pot, true); ?></p>
     </td>
 </tr>
