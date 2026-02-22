@@ -148,7 +148,7 @@ if (array_key_exists('submit', $_POST)) {
         $user_class->avatar = (string)$avatarPath;
         $user_class->gender = (string)$_POST['gender'];
         $user_class->quote = (string)$_POST['quote'];
-        echo Message('Your preferences have been saved.');
+        echo Message('<p>Your preferences have been saved.</p>');
     }
 }
 ?><tr>
