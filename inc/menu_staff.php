@@ -14,7 +14,7 @@ $tickets = $db->result();
 <div>
     <div class="headbox leftmenu">Control Panel</div>
     <a href="plugins/control.php?page=site_settings" class="leftmenu">Site Settings</a>
-    <a href="plugins/control.php" class="leftmenu">Marquee</a>
+    <a href="plugins/control.php?page=marquee" class="leftmenu">Marquee</a>
     <a href="plugins/control.php?page=rmoptions" class="leftmenu">RM Options</a>
     <a href="plugins/control.php?page=rmpacks" class="leftmenu">RM Upgrades</a>
     <a href="plugins/control.php?page=setplayerstatus" class="leftmenu">Player Options</a>
