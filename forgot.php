@@ -130,7 +130,7 @@ if (array_key_exists('submit', $_POST)) {
             $errors[] = 'Invalid combination';
         }
         if (!count($errors)) {
-            $token = substr(md5((string)time()), 0, mt_rand(8, 10));
+            $token = bin2hex(random_bytes(16));
             $message = 'This message has been sent to you because you requested your gRPG account information to be updated.'."\n";
             $message .= 'Simply click this URL to start the password reset process: '.BASE_URL.'/forgot.php?token='.$token;
             $db->query('INSERT INTO forgot_password (userid, email, token) VALUES (?, ?, ?)');
