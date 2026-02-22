@@ -1563,7 +1563,7 @@ if (empty($_GET['page'])) {
     $db->query('SELECT * FROM serverconfig');
     $db->execute();
     $set = $db->fetch(true); ?><tr>
-        <th class="content-head">Change Message From The Admin</th>
+        <th class="content-head">Change Admin Message</th>
     </tr>
     <tr>
         <td class="content">
