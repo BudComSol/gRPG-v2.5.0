@@ -3125,7 +3125,7 @@ if (empty($_GET['page'])) {
                     }
                 } else { ?>
                     <tr>
-                        <td colspan="4" class="center">There are no marquee items</td>
+                        <td colspan="4" class="center"><p>There are presently no marquee items.</p></td>
                     </tr><?php
                 } ?>
                 </tbody>
@@ -3133,7 +3133,7 @@ if (empty($_GET['page'])) {
         </td>
     </tr>
     <tr>
-        <th class="content-head">Add Marquee Item</th>
+        <th class="content-head">Add Marquee Banner</th>
     </tr>
     <tr>
         <td class="content">
@@ -3148,7 +3148,7 @@ if (empty($_GET['page'])) {
                     <textarea name="message" id="message" class="pure-u-1-2 pure-u-md-1-2" required></textarea>
                 </div>
                 <div class="pure-controls">
-                    <button type="submit" name="addmarquee" class="pure-button pure-button-primary">Add Marquee Item</button>
+                    <button type="submit" name="addmarquee" class="pure-button pure-button-primary">Add Marquee Banner Now</button>
                 </div>
             </form>
         </td>
