@@ -55,11 +55,13 @@ if (!empty($_GET['token'])) {
         }
     }
     if (!array_key_exists('submit', $_POST) || count($errors)) {
+        ?>
+        <tr><th class="content-head">Password Reset</th></tr>
+        <?php
         if (count($errors)) {
             display_errors($errors);
         }
         ?>
-        <tr><th class="content-head">Password Reset</th></tr>
         <tr><td class="content">
             <form action="forgot.php?token=<?php echo $_GET['token']; ?>" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('step_2'); ?>
@@ -138,6 +140,8 @@ if (array_key_exists('submit', $_POST)) {
             try {
                 mail($row['email'], 'Account Info For gRPG', $message);
                 echo Message('An email has been sent');
+                require_once __DIR__.'/inc/nlifooter.php';
+                exit;
             } catch(Exception $e) {
                 $errors[] = 'Failed to send email '.(DEBUG === true ? '; '.$e->getMessage() : '');
             }
