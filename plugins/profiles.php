@@ -55,7 +55,7 @@ if ($user_class->admin) {
                 <td><strong>Online</strong>:</td>
                 <td><?php echo $profile_class->formattedonline; ?></td>
                 <td><strong>Gang</strong>:</td>
-                <td><?php echo $profile_class->formattedgang; ?></td>
+                <td><?php echo !empty($profile_class->formattedgang) ? $profile_class->formattedgang : 'None'; ?></td>
             </tr>
             <tr>
                 <td><strong>City</strong>:</td>
