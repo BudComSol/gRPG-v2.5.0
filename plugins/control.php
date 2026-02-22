@@ -3162,8 +3162,9 @@ if (empty($_GET['page'])) {
         <td class="content">
             <form action="plugins/control.php?page=site_settings&amp;settings" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create(); ?>
-                <div class="pure-control-group">
-                    <label for="registration">Registration</label>
+                 <br>
+                   <div class="pure-control-group">
+                    <label for="registration">Site Registration</label>
                     <select name="registration" id="registration">
                         <option value="open"<?php echo $registration === 'open' ? ' selected' : ''; ?>>Open</option>
                         <option value="closed"<?php echo $registration === 'closed' ? ' selected' : ''; ?>>Closed</option>
