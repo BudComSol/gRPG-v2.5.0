@@ -54,8 +54,8 @@ function db_timestamp($time = null)
 function ordinal($num, $format = false)
 {
     $ret = $format === true ? format($num) : $num;
-    if (!in_array((str_replace(',', '', $num) % 100), [11, 12, 13])) {
-        switch (str_replace(',', '', $num) % 10) {
+    if (!in_array((str_replace(',', '', (string)$num) % 100), [11, 12, 13])) {
+        switch (str_replace(',', '', (string)$num) % 10) {
             case 1:
                 return $ret . 'st';
                 break;
