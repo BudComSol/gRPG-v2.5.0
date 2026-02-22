@@ -11,17 +11,15 @@ if (array_key_exists('submit', $_POST) && $registration === 'open') {
         require_once __DIR__.'/inc/nlifooter.php';
         exit;
     } else {
-    // if (defined('CAPTCHA_REGISTRATION') && CAPTCHA_REGISTRATION == true) {
-    //     $_POST['captcha_code'] = array_key_exists('captcha_code', $_POST) && ctype_alnum($_POST['captcha_code']) ? $_POST['captcha_code'] : null;
-    //     if (empty($_POST['captcha_code'])) {
-    //         $errors[] = 'You didn\'t enter a valid captcha code';
-    //     }
-    //     require_once __DIR__.'/inc/securimage/securimage.php';
-    //     $securimage = new Securimage();
-    //     if (!$securimage->check($_POST['captcha_code'])) {
-    //         $errors[] = 'Invalid captcha code';
-    //     }
-    // }
+    if (defined('CAPTCHA_REGISTRATION') && CAPTCHA_REGISTRATION == true) {
+        $_POST['captcha_code'] = array_key_exists('captcha_code', $_POST) && ctype_alnum($_POST['captcha_code']) ? $_POST['captcha_code'] : null;
+        if (empty($_POST['captcha_code'])) {
+            $errors[] = 'You didn\'t enter a valid captcha code';
+        }
+        if (!$securimage->check($_POST['captcha_code'])) {
+            $errors[] = 'Invalid captcha code';
+        }
+    }
     $_POST['username'] = array_key_exists('username', $_POST) && is_string($_POST['username']) ? strip_tags(trim($_POST['username'])) : null;
     if (empty($_POST['username'])) {
         $errors[] = 'You didn\'t enter a valid name';
@@ -126,7 +124,7 @@ foreach ($classes as $opt) {
         } ?></select>
                 </div>
             </fieldset><?php
-if (false) { // if (defined('CAPTCHA_REGISTRATION') && CAPTCHA_REGISTRATION == true) {
+if (defined('CAPTCHA_REGISTRATION') && CAPTCHA_REGISTRATION == true) {
             ?><legend>Captcha</legend>
                 <fieldset>
                     <div class="pure-control-group">
