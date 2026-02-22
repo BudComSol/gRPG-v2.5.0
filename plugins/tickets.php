@@ -15,9 +15,9 @@ $status = [
 </tr>
 <tr>
     <td class="content">
-        Got an issue? Have you found a bug? Does something seem "off"?<br />
-        If so, you're in the right place. Simply open a ticket and we'll do what we can to resolve your situation<br /><br />
-        <a href="tickets.php?action=add">Click here to open a ticket</a>
+        <p>Got an issue? Have you found a bug? Does something seem "off"?</p>
+        <p>Simply open a ticket and we'll do what we can to resolve your situation.</p>
+        <a href="tickets.php?action=add"><p>Click Here To Open A Ticket</p></a>
     </td>
 </tr><?php
 if (empty($_GET['action'])) {
@@ -25,7 +25,7 @@ if (empty($_GET['action'])) {
     $db->execute([$user_class->id]);
     $cnt = $db->result();
     if (!$cnt) {
-        echo Message('You haven\'t opened any tickets', 'Error', true);
+        echo Message('<p>You haven\'t opened any tickets.</p>', 'Error', true);
     }
     $pages = new Paginator($cnt);
     $db->query('SELECT id, subject, status, time_added FROM tickets WHERE userid = ? ORDER BY FIELD(status, \'pending\', \'open\', \'closed\', \'locked\') , time_added DESC' .$pages->limit);
