@@ -1,836 +1,113 @@
-.leftmenu {
-    margin-left: 8px;
-    background-color: #333;
-    color: #ffffff;
-    display: block;
-    padding: 2px;
-    border-style: solid;
-    border-color: #444;
-    border-width: 0 1px 0 1px;
-    width: 145px;
-    font-weight: normal;
-    text-align: left;
-}
+<?php
+declare(strict_types=1);
+require_once __DIR__.'/inc/header.php';
+?><tr>
+    <th class="content-head">General</th>
+</tr>
+<tr>
+    <td class="content">
+        <table width="100%" class="pure-table pure-table-horizontal">
+            <tr>
+                <th width="12.5%">Name:</th>
+                <td width="37.5%"><?php echo $user_class->formattedname; ?></td>
+                <th width="12.5%">HP:</th>
+                <td width="37.5%"><?php echo $user_class->formattedhp; ?></td>
+            </tr>
+            <tr>
+                <th>Level:</th>
+                <td><?php echo format($user_class->level); ?></td>
+                <th>Energy:</th>
+                <td><?php echo $user_class->formattedenergy; ?></td>
+            </tr>
+            <tr>
+                <th>Money:</th>
+                <td><?php echo prettynum($user_class->money, true); ?></td>
+                <th>Awake:</th>
+                <td><?php echo $user_class->formattedawake; ?></td>
+            </tr>
+            <tr>
+                <th>Bank:</th>
+                <td width='35%'><?php echo prettynum($user_class->bank, true); ?></td>
+                <th>Nerve:</th>
+                <td><?php echo $user_class->formattednerve; ?></td>
+            </tr>
+            <tr>
+                <th>EXP:</th>
+                <td><?php echo $user_class->formattedexp; ?></td>
+                <th>Work EXP:</th>
+                <td><?php echo format($user_class->workexp); ?></td>
+            </tr>
+            <tr>
+                <th>Whores:</th>
+                <td><?php echo format($user_class->hookers); ?></td>
+                <th>Marijuana:</th>
+                <td><?php echo format($user_class->marijuana); ?></td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<tr>
+    <th class="content-head">Attributes</th>
+</tr>
+<tr>
+    <td class="content">
+        <table width="100%" class="pure-table pure-table-horizontal">
+            <tr>
+                <th width="12.5%">Strength:</th>
+                <td width="37.5%"><?php echo format($user_class->strength); ?></td>
+                <th width="12.5%">Defense:</th>
+                <td width="37.5%"><?php echo format($user_class->defense); ?></td>
+            </tr>
+            <tr>
+                <th>Speed:</th>
+                <td><?php echo format($user_class->speed); ?></td>
+                <th>Total:</th>
+                <td><?php echo format($user_class->totalattrib); ?></td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<tr>
+    <th class="content-head">Battle Statistics</th>
+</tr>
+<tr>
+    <td class="content">
+        <table width="100%" class="pure-table pure-table-horizontal">
+            <tr>
+                <th width="12.5%">Won:</th>
+                <td width="37.5%"><?php echo format($user_class->battlewon); ?></td>
+                <th width="12.5%">Lost:</th>
+                <td width="37.5%"><?php echo format($user_class->battlelost); ?></td>
+            </tr>
+            <tr>
+                <th>Total:</th>
+                <td><?php echo format($user_class->battletotal); ?></td>
+                <th>$ Gain:</th>
+                <td><?php echo format($user_class->battlemoney); ?></td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<tr>
+    <th class="content-head">Crime Statistics</th>
+</tr>
+<tr>
+    <td class="content">
+        <table width="100%" class="pure-table pure-table-horizontal">
+            <tr>
+                <th width="12.5%">Succeeded:</th>
+                <td width="37.5%"><?php echo format($user_class->crimesucceeded); ?></td>
+                <th width="12.5%">Failed:</th>
+                <td width="37.5%"><?php echo format($user_class->crimefailed); ?></td>
+            </tr>
+            <tr>
+                <th>Total:</th>
+                <td><?php echo format($user_class->crimetotal); ?></td>
+                <th>$ Gain:</th>
+                <td><?php echo format($user_class->crimemoney); ?></td>
+            </tr>
+        </table>
+    </td>
+</tr>
 
-.gap {
-    line-height: 3px;
-}
 
-.topbar {
-    width: 100%;    
-    background-color: #333;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #444;    
-    color: #ddd;
-    font-weight: bold;
-    font-size: 18px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.content {
-    width: 100%;
-    padding: 0;
-}
-
-.content-head {
-    background-color: #111;
-    border: 1px solid #444;
-    padding: 5px;
-    color: #ddd;
-    font-weight: bold;
-    font-size: 12px;
-}
-
-.content-marquee {
-    color: #ffcc00;
-    font-size: 13px;
-    font-weight: bold;
-}
-
-.content-head-marquee {
-    text-align: left;
-}
-
-.content {
-    background-color: #333;
-    border: 1px solid #444;
-    padding: 3px;
-    color: #ddd;
-    font-size: 11px;
-}
-
-.bar_a {
-    width: 100;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #000000;
-    background-color: #666666;
-}
-
-.bar_b {
-    font-size: 10;
-    background-color: #FFFF00;
-}
-
-body {
-    width: 100%;
-    max-width: 828px;
-    margin: auto;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #333;    
-    background-color: #000000;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: normal;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    box-sizing: border-box;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: "Trebuchet MS", Verdana, "Lucida Sans", Arial, Geneva, Helvetica, Helv, "Myriad Web", Syntax, sans-serif;
-    font-weight: normal;
-}
-
-.head, .headbox, .dynabox, a.leftmenu, a.topmenu {
-    margin-left: 8px;
-    font-weight: bold;
-    text-decoration: none;
-    font-size: 80%;
-    font-family: Verdana, "Lucida Sans", Arial, Geneva, Helvetica, Helv, "Myriad Web", Syntax, sans-serif;
-}
-
-a {
-    color: #000000;
-}
-
-.body a:hover, .dynabox .headbox a:hover {
-    color: #ffffff;
-}
-
-.pos0 {
-    background-color: #ffffff;
-    color: #000000;
-}
-
-.pos1 {
-    background-color: #1E1E1E;
-}
-
-.mainbox, .dynabox, a.leftmenu:link, a.leftmenu:visited {
-    background-color: #333;
-    border: 1px solid #444;
-    color: #ffffff;
-}
-
-.pos2, .topnav, a.leftmenu:hover {
-    background-color: #333;
-    color: #ffcc00;
-    border: 1px solid #444;
-}
-
-.neg0 {
-    background-color: #000000;
-}
-
-.neg1, a.topmenu:hover {
-    background-color: #4d75a0;
-    color: #ffffff;
-    border: #000000;
-}
-
-.neg2, .headbox, a.topmenu:link, a.topmenu:visited {
-    background-color: #7d9fc4;
-    color: #ffffff;
-    border: #000000;
-}
-
-a.leftmenu:link {
-    display: block;
-    padding: 2px;
-    border-style: solid;
-    border-width: 0 1px 1px 1px;
-    width: 145px;
-    font-weight: normal;
-    text-align: left;
-}
-
-a.leftmenu:hover {
-    display: block;
-    padding: 2px;
-    border-style: solid;
-    border-width: 0 1px 1px 1px;
-    width: 145px;
-    font-weight: normal;
-    text-align: left;
-}
-
-a.leftmenu:visited {
-    display: block;
-    padding-left: 2px;
-    border-style: solid;
-    border-width: 0 1px 1px 1px;
-    width: 145px;
-    font-weight: normal;
-    text-align: left;
-}
-
-a.topmenu:link {
-    display: inline;
-    padding: 5px 0 5px 0;
-    border-style: solid;
-    border-width: 0 0 0 1px;
-    text-align: center;
-}
-
-a.topmenu:hover {
-    background-color: #4d75a0;
-    display: inline;
-    padding: 5px 0 5px 0;
-    border-style: solid;
-    border-width: 0 0 0 1px;
-    text-align: center;
-}
-
-a.topmenu:visited {
-    display: inline;
-    padding: 5px 0 5px 0;
-    border-style: solid;
-    border-width: 0 0 0 1px;
-    text-align: center;
-}
-
-.headbox {
-    background-color: #111;
-    border: 1px solid #444;
-    padding: 5px;
-    color: #ddd;
-    display: block;
-    width: 139px;
-    text-align: left;
-}
-
-.topbox {
-    margin-left: 8px;
-    margin-right: 8px;
-    margin-top: 8px;
-    color: #ffffff;
-    border: 1px solid #333;
-    background-color: #000000;
-    height: 140px;
-    padding-right: 5px;
-    padding-bottom: 0;
-}
-
-.topnav {
-    border: solid;
-    border-width: 0 1px 1px;
-    padding-top: 3px;
-    padding-bottom: 0;
-}
-
-.mainbox {
-    border: none;
-    background-color: #1E1E1E;
-    border-width: 1px 0 1px 1px;
-    padding: 5px;
-}
-
-.mainbox p a {
-    font-weight: bold;
-    font-size: 90%;
-}
-
-.dynabox {
-    border: 1px solid #333;
-    text-align: center;
-}
-
-.dynabox .headbox {
-    border-style: dashed;
-    border-top-style: solid;
-    border-right-width: 0;
-    border-left-width: 0;
-    padding: 3px 0 3px 0;
-}
-
-.dynacontent {
-    padding: 3px 5px 3px 5px;
-    text-align: left;
-    font-size: 70%;
-    font-weight: normal;
-}
-
-a {
-    color: #FFCC00;
-}
-
-a:hover {
-    color: #FFFF33;
-}
-
-.center {
-    text-align: center;
-}
-
-.center-img {
-    padding-top: 30px;
-    text-align: center;
-}
-
-.leftmenu {
-    margin-left: 8px;
-    display: block;
-    padding: 2px;
-    border-style: solid;
-    border-width: 1px;
-    width: 145px;
-    font-weight: normal;
-    text-align: left;
-}
-
-.gap {
-    line-height: 3px;
-}
-
-.content {
-    width: 100%;
-    padding: 0;
-}
-
-.content-head {
-    text-align: center;
-    padding: 10px;
-    font-weight: bold;
-    font-size: 16px;
-}
-
-.content {
-    padding: 3px;
-    font-size: 14px;
-    text-align: center;    
-}
-
-.content-home {
-    text-align: left;
-}
-
-.bar_a {
-    width: 100;
-}
-
-.bar_b {
-    font-size: 10;
-}
-
-.head, .headbox, .dynabox, a.leftmenu, a.topmenu {
-    margin-left: 8px;
-    font-weight: bold;
-    text-decoration: none;
-    font-size: 80%;
-    font-family: Verdana, "Lucida Sans", Arial, Geneva, Helvetica, Helv, "Myriad Web", Syntax, sans-serif;
-}
-
-a.leftmenu:link {
-    display: block;
-    padding: 2px 2px 2px 2px;
-    border-style: solid;
-    border-width: 0 1px 1px 1px;
-    width: 145px;
-    font-weight: normal;
-    text-align: left;
-}
-
-a.leftmenu:hover {
-    display: block;
-    padding: 2px 2px 2px 2px;
-    border-style: solid;
-    border-width: 0 1px 1px 1px;
-    width: 145px;
-    font-weight: normal;
-    text-align: left;
-}
-
-a.leftmenu:visited {
-    display: block;
-    padding: 2px 2px 2px 2px;
-    border-style: solid;
-    border-width: 0 1px 1px 1px;
-    width: 145px;
-    font-weight: normal;
-    text-align: left;
-}
-
-a.topmenu:link {
-    display: inline;
-    padding: 5px 0 5px 0;
-    border-style: solid;
-    border-width: 0 0 0 1px;
-    text-align: center;
-}
-
-a.topmenu:hover {
-    display: inline;
-    padding: 5px 0 5px 0;
-    border-style: solid;
-    border-width: 0 0 0 1px;
-    text-align: center;
-}
-
-a.topmenu:visited {
-    display: inline;
-    padding: 5px 0 5px 0;
-    border-style: solid;
-    border-width: 0 0 0 1px;
-    text-align: center;
-    font-size: 16px;
-}
-
-.headbox {
-    padding: 10px;
-    display: block;
-    width: 130px;
-    text-align: center;
-    font-size: 16px;
-}
-
-.topnav {
-    border-style: solid;
-    border-width: 0 1px 1px;
-    height: 158px;
-    margin-left: 8px;
-    margin-right: 8px;
-    margin-top: 8px;
-    padding-top: 3px;
-    padding-right: 5px;
-    padding-bottom: 0;
-}
-
-.dynabox .headbox {
-    border-style: dashed;
-    border-top-style: solid;
-    border-right-width: 0;
-    border-left-width: 0;
-    padding: 3px 0 3px 0;
-}
-
-.dynacontent {
-    padding: 3px 5px 3px 5px;
-    text-align: left;
-    font-size: 70%;
-    font-weight: normal;
-}
-
-.dynabox {
-    text-align: center;
-}
-
-.mainbox {
-    border: none;
-    border-width: 1px 0 1px 1px;
-    padding: 5px 5px 5px 5px;
-}
-
-.mainbox p a {
-    font-weight: bold;
-    font-size: 90%;
-}
-
-.style1 {
-    color: #BDBDBD;
-}
-
-.shopitem {
-    border: 1px solid #333;
-}
-
-.box1, .box2, .box3 {
-    display: inline-block;
-    border: 1px solid black;
-    text-align: center;
-    width: 33%;
-}
-
-.city>span {
-    display: block;
-}
-
-.top {
-    vertical-align: top;
-}
-
-.disabled {
-    text-decoration: line-through;
-}
-
-.bold, .strong {
-    font-weight: 700;
-}
-
-.italic, .italics {
-    font-style: italic;
-}
-
-.underline, .underlined {
-    text-decoration: underline;
-}
-
-.strike, .strikethrough {
-    text-decoration: line-through;
-}
-
-.red {
-    color: red;
-}
-
-.yellow {
-    color: yellow;
-}
-
-.green {
-    color: green;
-}
-
-.blue {
-    color: blue;
-}
-
-.orange {
-    color: orange;
-}
-
-.purple {
-    color: purple;
-}
-
-.right {
-    text-align: right;
-}
-
-.underlined, .underline {
-    text-decoration: underline;
-}
-
-.clicky {
-    cursor: pointer;
-}
-
-fieldset {
-    border: 0;
-}
-
-.pure-button-green, .pure-button-red, .pure-button-orange, .pure-button-secondary, .pure-button-blue-light {
-    color: white;
-    border-radius: 4px;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-}
-
-.pure-button-green {
-    background: rgb(28, 184, 65) !important;
-}
-
-.pure-button-red {
-    background: rgb(202, 60, 60) !important;
-}
-
-.pure-button-orange {
-    background: rgb(223, 117, 20) !important;
-}
-
-.pure-button-secondary, .pure-button-blue-light {
-    background: rgb(66, 184, 221) !important;
-}
-
-.big {
-    font-size: 1.2em;
-}
-
-.small {
-    font-size: .8em;
-}
-
-.todo-grpg {
-    border: none;
-    display: block;
-    height: 600px;
-    width: 100%;
-    clear: both;
-}
-
-.pure-form {
-    width: 70%!important;
-}
-
-/* Register page form styling */
-.pure-form-aligned .pure-control-group {
-    text-align: right;
-}
-
-.pure-form-aligned .pure-controls {
-    text-align: center;
-}
-
-/* Make select dropdown match input field width 
- * Width set to 32.3% to match the visual width of input fields (185px)
- * when accounting for different box-sizing, padding, and border styles
- * between select and input elements from CDN Pure CSS.
- * !important flags are necessary to override CDN Pure CSS defaults.
- */
-.pure-form-aligned select,
-.pure-form select {
-    width: 32.3% !important;
-    box-sizing: content-box !important;
-    padding: 1px 2px !important;
-    border: 2px inset rgb(118, 118, 118) !important;
-}
-
-/* Cookie Consent Banner */
-#cookie-consent-banner {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: #111;
-    border-top: 2px solid #444;
-    padding: 15px 20px;
-    z-index: 9999;
-    display: none;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
-}
-
-#cookie-consent-banner .cookie-content {
-    max-width: 800px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 15px;
-}
-
-#cookie-consent-banner .cookie-message {
-    flex: 1;
-    color: #ddd;
-    font-size: 13px;
-    line-height: 1.5;
-}
-
-#cookie-consent-banner .cookie-message a {
-    color: #ffcc00;
-    text-decoration: underline;
-}
-
-#cookie-consent-banner .cookie-message a:hover {
-    color: #ffff33;
-}
-
-#cookie-consent-banner .cookie-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-#cookie-consent-banner button {
-    padding: 8px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: bold;
-    transition: background-color 0.3s;
-}
-
-#cookie-consent-accept {
-    background-color: #28b841;
-    color: white;
-}
-
-#cookie-consent-accept:hover {
-    background-color: #24a03a;
-}
-
-@media (max-width: 600px) {
-    #cookie-consent-banner .cookie-content {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    
-    #cookie-consent-banner .cookie-buttons {
-        width: 100%;
-        justify-content: center;
-    }
-}
-
-/* Responsive Design for Mobile and Tablet */
-@media (max-width: 1024px) {
-    body {
-        max-width: none;
-        margin-top: 0;
-        margin-bottom: 0;
-        border-left: none;
-        border-right: none;
-    }
-    
-    .topbox {
-        margin-left: 0;
-        margin-right: 0;
-        margin-top: 0;
-    }
-    
-    .topbox table {
-        width: 100%;
-    }
-}
-
-@media (max-width: 768px) {
-    body {
-        margin: 0;
-        padding: 0;
-    }
-    
-    /* Make main content tables responsive */
-    .mainbox table,
-    .content table {
-        width: 100%;
-    }
-    
-    /* Adjust left menu */
-    .leftmenu, a.leftmenu:link, a.leftmenu:hover, a.leftmenu:visited, .headbox {
-        width: 100%;
-        margin-left: 0;
-        box-sizing: border-box;
-    }
-    
-    /* Make main content full width on mobile */
-    .mainbox {
-        padding: 10px;
-    }
-    
-    .topbox {
-        height: auto;
-        padding: 10px;
-        margin: 0;
-    }
-    
-    .topnav {
-        height: auto;
-        margin: 0;
-    }
-    
-    /* Responsive forms */
-    .pure-form {
-        width: 100%;
-    }
-    
-    .pure-control-group {
-        display: block;
-    }
-    
-    .pure-control-group label {
-        display: block;
-        margin-bottom: 5px;
-    }
-    
-    .pure-control-group input {
-        width: 100%;
-        max-width: 300px;
-        box-sizing: border-box;
-    }
-    
-    /* Responsive tables */
-    .pure-table {
-        font-size: 12px;
-    }
-    
-    .pure-table th,
-    .pure-table td {
-        padding: 5px;
-    }
-    
-    /* Make boxes responsive */
-    .box1, .box2, .box3 {
-        display: block;
-        width: 100%;
-        margin-bottom: 10px;
-    }
-    
-    /* Adjust images */
-    img {
-        max-width: 100%;
-        height: auto;
-    }
-    
-    /* Stack layout vertically on mobile */
-    table[width="100%"] > tbody > tr > td[valign="top"] {
-        display: block;
-        width: 100%;
-    }
-    
-    td[width="150"],
-    td[valign="top"][width="150"] {
-        width: 100%;
-    }
-    
-    /* Adjust topbar */
-    .topbar {
-        font-size: 12px;
-        padding: 5px;
-        margin: 0;
-    }
-    
-    /* Adjust content areas */
-    .content {
-        font-size: 12px;
-        overflow-x: auto;
-    }
-    
-    .content-head {
-        font-size: 14px;
-    }
-}
-
-@media (max-width: 480px) {
-    /* Extra small mobile devices */
-    body {
-        font-size: 12px;
-    }
-    
-    .topbar {
-        font-size: 11px;
-        padding: 3px;
-    }
-    
-    .content {
-        font-size: 11px;
-        padding: 5px;
-    }
-    
-    .content-head {
-        font-size: 12px;
-        padding: 3px;
-    }
-    
-    /* Make small buttons and text more readable */
-    .pure-button {
-        padding: 10px 15px;
-        font-size: 14px;
-    }
-    
-    /* Reduce table padding on very small screens */
-    .pure-table th,
-    .pure-table td {
-        padding: 3px;
-        font-size: 11px;
-    }
-    
-    /* Ensure form inputs are touch-friendly */
-    input[type="text"],
-    input[type="password"],
-    input[type="email"],
-    select,
-    textarea {
-        min-height: 40px;
-        font-size: 16px; /* Prevents zoom on iOS */
-    }
-}
