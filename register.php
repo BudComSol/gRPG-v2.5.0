@@ -49,11 +49,12 @@ if (array_key_exists('submit', $_POST) && $registration === 'open') {
     $_POST['email'] = array_key_exists('email', $_POST) && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) ? $_POST['email'] : null;
     if (empty($_POST['email'])) {
         $errors[] = 'You didn\'t enter a valid email address';
-    }
-    $db->query('SELECT COUNT(id) FROM users WHERE email = ?');
-    $db->execute([$_POST['email']]);
-    if ($db->result()) {
-        $errors[] = 'That email is already in use';
+    } else {
+        $db->query('SELECT COUNT(id) FROM users WHERE email = ?');
+        $db->execute([$_POST['email']]);
+        if ($db->result()) {
+            $errors[] = 'That email is already in use';
+        }
     }
     $_POST['class'] = array_key_exists('class', $_POST) && in_array($_POST['class'], $classes) ? $_POST['class'] : null;
     if (empty($_POST['class'])) {
