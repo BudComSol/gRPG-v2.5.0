@@ -23,15 +23,16 @@ if (array_key_exists('submit', $_POST) && $registration === 'open') {
     $_POST['username'] = array_key_exists('username', $_POST) && is_string($_POST['username']) ? strip_tags(trim($_POST['username'])) : null;
     if (empty($_POST['username'])) {
         $errors[] = 'You didn\'t enter a valid name';
-    }
-    $len = strlen($_POST['username']);
-    if ($len < 4 || $len > 20) {
-        $errors[] = 'Usernames must be between 4 and 20 characters';
-    }
-    $db->query('SELECT COUNT(id) FROM users WHERE username = ?');
-    $db->execute([$_POST['username']]);
-    if ($db->result()) {
-        $errors[] = 'That username has already been taken';
+    } else {
+        $len = strlen($_POST['username']);
+        if ($len < 4 || $len > 20) {
+            $errors[] = 'Usernames must be between 4 and 20 characters';
+        }
+        $db->query('SELECT COUNT(id) FROM users WHERE username = ?');
+        $db->execute([$_POST['username']]);
+        if ($db->result()) {
+            $errors[] = 'That username has already been taken';
+        }
     }
     $signuptime = time();
     $_POST['pass'] = array_key_exists('pass', $_POST) && is_string($_POST['pass']) ? $_POST['pass'] : null;

@@ -16,7 +16,7 @@ if (!empty($_GET['token'])) {
         if (!csrf_check('step_2', $_POST)) {
             echo Message(SECURITY_TIMEOUT_MESSAGE);
         }
-        if (defined('CAPTCHA_FORGOT_PASSWORD') && CAPTCHA_FORGOT_PASSWORD == true) {
+        if (defined('CAPTCHA_FORGOT_PASS') && CAPTCHA_FORGOT_PASS == true) {
             $_POST['captcha_code'] = array_key_exists('captcha_code', $_POST) && ctype_alnum($_POST['captcha_code']) ? $_POST['captcha_code'] : null;
             if (empty($_POST['captcha_code'])) {
                 $errors[] = 'You didn\'t enter a valid captcha code';
@@ -70,7 +70,7 @@ if (!empty($_GET['token'])) {
                         <label for="conf">Confirm Password</label>
                         <input type="password" name="conf" id="conf" />
                     </div><?php
-                    if (defined('CAPTCHA_FORGOT_PASSWORD') && CAPTCHA_FORGOT_PASSWORD == true) {
+                    if (defined('CAPTCHA_FORGOT_PASS') && CAPTCHA_FORGOT_PASS == true) {
                         ?>
                         <div class="pure-control-group">
                             <label for="captcha_code">Code</label>
@@ -95,7 +95,7 @@ if (array_key_exists('submit', $_POST)) {
     if (!csrf_check('step_1', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
-    if (defined('CAPTCHA_FORGOT_PASSWORD') && CAPTCHA_FORGOT_PASSWORD == true) {
+    if (defined('CAPTCHA_FORGOT_PASS') && CAPTCHA_FORGOT_PASS == true) {
         $_POST['captcha_code'] = array_key_exists('captcha_code', $_POST) && ctype_alnum($_POST['captcha_code']) ? $_POST['captcha_code'] : null;
         if (empty($_POST['captcha_code'])) {
             $errors[] = 'You didn\'t enter a valid captcha code';
@@ -153,7 +153,7 @@ if (count($errors)) {
                 <label for="email">Email</label>
                 <input type="text" name="email" id="email" />
             </div><?php
-            if (defined('CAPTCHA_FORGOT_PASSWORD') && CAPTCHA_FORGOT_PASSWORD == true) {
+            if (defined('CAPTCHA_FORGOT_PASS') && CAPTCHA_FORGOT_PASS == true) {
                 ?>
                 <div class="pure-control-group">
                     <label for="captcha_code">Code</label>

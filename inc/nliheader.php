@@ -4,7 +4,7 @@ if (!defined('GRPG_INC')) {
     define('GRPG_INC', true);
 }
 require_once __DIR__.'/dbcon.php';
-if ((defined('CAPTCHA_REGISTRATION') && CAPTCHA_REGISTRATION === true) || (defined('CAPTCHA_LOGIN') && CAPTCHA_LOGIN === true) || (defined('CAPTCHA_FORGOT_PASSWORD') && CAPTCHA_FORGOT_PASSWORD === true)) {
+if ((defined('CAPTCHA_REGISTRATION') && CAPTCHA_REGISTRATION === true) || (defined('CAPTCHA_LOGIN') && CAPTCHA_LOGIN === true) || (defined('CAPTCHA_FORGOT_PASS') && CAPTCHA_FORGOT_PASS === true)) {
     require_once __DIR__.'/securimage/securimage.php';
     $securimage = new Securimage();
 }
