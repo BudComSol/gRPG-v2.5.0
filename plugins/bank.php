@@ -34,7 +34,7 @@ if (array_key_exists('open', $_GET)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
     if (5000 > $user_class->money) {
-        echo Message('You don\'t have enough money to open an account', 'Error', true);
+        echo Message('<p>You don\'t have enough money to open an account, numpty.</p>', 'Error', true);
     }
     $db->query('UPDATE users SET whichbank = 1, money = GREATEST(money - 5000, 0) WHERE id = ?');
     $db->execute([$user_class->id]);
