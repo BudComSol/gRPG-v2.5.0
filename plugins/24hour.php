@@ -6,7 +6,7 @@ $db->execute();
 $rows = $db->fetch();
 $lines = [];
 ?><tr>
-    <th class="content-head">Users Online In The Last 24 Hours</th>
+    <th class="content-head">Citizens Online Last 24 Hours</th>
 </tr>
 <tr>
     <td class="content">
