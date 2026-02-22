@@ -94,7 +94,7 @@ if ($site_url !== false && $site_url !== '') {
         }
         ?>
     <tr>
-        <td colspan="3" class="content-head">
+        <td colspan="3" class="content-head content-head-marquee">
             <marquee class="content-marquee" behavior="scroll" direction="left"><?php echo implode(' &nbsp;&bull;&nbsp; ', $ad_items); ?></marquee>
         </td>
     </tr>
