@@ -71,7 +71,7 @@ $rows = $db->fetch();
 </tr>
 <tr>
     <td class="content">
-        This game is simple. 2 people bet the same amount of money, then a winner is randomly picked. The winner recieves all of the money!
+        <p>2 people bet the same amount, a winner is randomly picked and the winner recieves all the money.</p>
     </td>
 </tr>
 <tr>
@@ -80,7 +80,7 @@ $rows = $db->fetch();
             <?php echo csrf_create('makebet_csrf'); ?>
             <fieldset>
                 <div class="pure-control-group">
-                    <label for="amount">Amount of money to bid  (minimum of <?php echo prettynum(1000, true); ?> bet)</label>
+                    <label for="amount">Bid (min <?php echo prettynum(1000, true); ?>)</label>
                     $<input type="text" name="amount" id="amount" size="10" maxlength="20" value="<?php echo $user_class->money; ?>" />
                 </div>
             </fieldset>
@@ -120,7 +120,7 @@ if ($rows !== null) {
         }
     } else {
         ?><tr>
-                    <td colspan="3" class="center">There currently aren't any challenges</td>
+                    <td colspan="3" class="center"><p>There currently aren't any challenges.</p></td>
                 </tr><?php
     }
 ?></table>
