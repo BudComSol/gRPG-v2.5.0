@@ -2,45 +2,45 @@
 declare(strict_types=1);
 require_once __DIR__.'/inc/header.php';
 ?><tr>
-    <th class="content-head">General Information</th>
+    <th class="content-head">General</th>
 </tr>
 <tr>
     <td class="content">
         <table width="100%" class="pure-table pure-table-horizontal">
             <tr>
-                <th width="12.5%">Name</th>
+                <th width="12.5%">Name:</th>
                 <td width="37.5%"><?php echo $user_class->formattedname; ?></td>
-                <th width="12.5%">HP</th>
+                <th width="12.5%">HP:</th>
                 <td width="37.5%"><?php echo $user_class->formattedhp; ?></td>
             </tr>
             <tr>
-                <th>Level</th>
+                <th>Level:</th>
                 <td><?php echo format($user_class->level); ?></td>
-                <th>Energy</th>
+                <th>Energy:</th>
                 <td><?php echo $user_class->formattedenergy; ?></td>
             </tr>
             <tr>
-                <th>Money</th>
+                <th>Money:</th>
                 <td><?php echo prettynum($user_class->money, true); ?></td>
-                <th>Awake</th>
+                <th>Awake:</th>
                 <td><?php echo $user_class->formattedawake; ?></td>
             </tr>
             <tr>
-                <th>Bank</th>
+                <th>Bank:</th>
                 <td width='35%'><?php echo prettynum($user_class->bank, true); ?></td>
-                <th>Nerve</th>
+                <th>Nerve:</th>
                 <td><?php echo $user_class->formattednerve; ?></td>
             </tr>
             <tr>
-                <th>EXP</th>
+                <th>EXP:</th>
                 <td><?php echo $user_class->formattedexp; ?></td>
-                <th>Work EXP</th>
+                <th>Work EXP:</th>
                 <td><?php echo format($user_class->workexp); ?></td>
             </tr>
             <tr>
-                <th>Prostitutes</th>
+                <th>Whores:</th>
                 <td><?php echo format($user_class->hookers); ?></td>
-                <th>Marijuana</th>
+                <th>Marijuana:</th>
                 <td><?php echo format($user_class->marijuana); ?></td>
             </tr>
         </table>
@@ -82,7 +82,7 @@ require_once __DIR__.'/inc/header.php';
             <tr>
                 <th>Total:</th>
                 <td><?php echo format($user_class->battletotal); ?></td>
-                <th>Money Gain:</th>
+                <th>$ Gain:</th>
                 <td><?php echo format($user_class->battlemoney); ?></td>
             </tr>
         </table>
@@ -103,7 +103,7 @@ require_once __DIR__.'/inc/header.php';
             <tr>
                 <th>Total:</th>
                 <td><?php echo format($user_class->crimetotal); ?></td>
-                <th>Money Gain:</th>
+                <th>$ Gain:</th>
                 <td><?php echo format($user_class->crimemoney); ?></td>
             </tr>
         </table>
