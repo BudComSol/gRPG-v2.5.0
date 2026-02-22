@@ -71,7 +71,7 @@ $rows = $db->fetch();
 </tr>
 <tr>
     <td class="content">
-        <p>2 people bet the same amount, a winner is randomly picked and the winner recieves all the money.</p>
+        <p>2 people bet same amount, a winner is randomly picked and the winner recieves all the money.</p>
     </td>
 </tr>
 <tr>
