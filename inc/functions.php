@@ -1001,7 +1001,6 @@ function Message($text, $head = null, $kill = false)
 {
     if ($text === SECURITY_TIMEOUT_MESSAGE) {
         $head = 'Security Error';
-        $kill = $kill !== null;
     } ?>
     <tr>
     <th class="content-head"><?php echo $head ?? '✸ Important Message ✸'; ?></th>
