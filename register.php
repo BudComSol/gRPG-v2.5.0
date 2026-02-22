@@ -83,15 +83,15 @@ if (array_key_exists('submit', $_POST) && $registration === 'open') {
         }
     }
 }
-if (count($errors)) {
-    display_errors($errors);
-}
 $_GET['referer'] = array_key_exists('referer', $_GET) && ctype_digit($_GET['referer']) ? $_GET['referer'] : null;
 ?><tr>
     <th class="content-head">Register</th>
 </tr><?php
 if ($csrfError) {
     echo Message(SECURITY_TIMEOUT_MESSAGE);
+}
+if (count($errors)) {
+    display_errors($errors);
 }
 ?><tr>
     <td class="content"><?php
