@@ -43,6 +43,12 @@
     font-size: 12px;
 }
 
+.content-head marquee {
+    color: #ffcc00;
+    font-size: 13px;
+    font-weight: bold;
+}
+
 .content {
     background-color: #333;
     border: 1px solid #444;
