@@ -4,12 +4,11 @@ require_once __DIR__.'/inc/nliheader.php';
 error_reporting(E_ALL);
 $classes = ['Mastermind', 'Assassin', 'Bodyguard', 'Smuggler', 'Thief'];
 $errors = [];
+$csrfError = false;
 $registration = settings('registration');
 if (array_key_exists('submit', $_POST) && $registration === 'open') {
     if (!csrf_check('csrf', $_POST)) {
-        echo Message(SECURITY_TIMEOUT_MESSAGE);
-        require_once __DIR__.'/inc/nlifooter.php';
-        exit;
+        $csrfError = true;
     } else {
     if (defined('CAPTCHA_REGISTRATION') && CAPTCHA_REGISTRATION == true) {
         $_POST['captcha_code'] = array_key_exists('captcha_code', $_POST) && ctype_alnum($_POST['captcha_code']) ? $_POST['captcha_code'] : null;
@@ -78,7 +77,9 @@ if (array_key_exists('submit', $_POST) && $registration === 'open') {
             $db->execute(['Email: '.$_POST['email']."\n".'Validation Code: '.$validationCode]);
             $output = 'A validation email couldn\'t be sent. A support ticket has been generated for you';
         }
-        echo Message($output, null, true);
+        echo Message($output);
+        require_once __DIR__.'/inc/nlifooter.php';
+        exit;
         }
     }
 }
@@ -88,8 +89,11 @@ if (count($errors)) {
 $_GET['referer'] = array_key_exists('referer', $_GET) && ctype_digit($_GET['referer']) ? $_GET['referer'] : null;
 ?><tr>
     <th class="content-head">Register</th>
-</tr>
-<tr>
+</tr><?php
+if ($csrfError) {
+    echo Message(SECURITY_TIMEOUT_MESSAGE);
+}
+?><tr>
     <td class="content"><?php
     if ($registration === 'open') {
         ?>
