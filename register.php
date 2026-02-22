@@ -8,6 +8,8 @@ $registration = settings('registration');
 if (array_key_exists('submit', $_POST) && $registration === 'open') {
     if (!csrf_check('csrf', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
+        require_once __DIR__.'/inc/nlifooter.php';
+        exit;
     } else {
     // if (defined('CAPTCHA_REGISTRATION') && CAPTCHA_REGISTRATION == true) {
     //     $_POST['captcha_code'] = array_key_exists('captcha_code', $_POST) && ctype_alnum($_POST['captcha_code']) ? $_POST['captcha_code'] : null;
