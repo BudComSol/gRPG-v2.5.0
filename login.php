@@ -98,7 +98,7 @@ if (defined('CAPTCHA_LOGIN') && CAPTCHA_LOGIN == true) {
         <td>
             <table class="topbar">
                 <tr>
-                   <br><br><td>gRPG © ● 2007 - 2026 ● All Rights Reserved</td>
+                    <td>gRPG © ● 2007 - 2026 ● All Rights Reserved</td>
                 </tr>
             </table>
         </td>
