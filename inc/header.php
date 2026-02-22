@@ -83,6 +83,22 @@ if ($site_url !== false && $site_url !== '') {
             </div>
         </td>
     </tr>
+    <?php
+    $db->query('SELECT title, message FROM ads ORDER BY time_added DESC LIMIT 10');
+    $db->execute();
+    $ads_rows = $db->fetch();
+    if ($ads_rows !== null && count($ads_rows) > 0) {
+        $ad_items = [];
+        foreach ($ads_rows as $ad_row) {
+            $ad_items[] = format($ad_row['title']).': '.format($ad_row['message']);
+        }
+        ?>
+    <tr>
+        <td colspan="3">
+            <marquee behavior="scroll" direction="left"><?php echo implode(' &nbsp;&bull;&nbsp; ', $ad_items); ?></marquee>
+        </td>
+    </tr>
+    <?php } ?>
     <tr>
         <td>
             <table width="100%" border="0" cellpadding="0" cellspacing="0">
