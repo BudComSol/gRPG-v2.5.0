@@ -13,23 +13,23 @@ $tickets = $db->result();
 </div>
 <div>
     <div class="headbox leftmenu">Control Panel</div>
-    <a href="plugins/control.php?page=site_settings" class="leftmenu">Site Settings</a>
     <a href="plugins/control.php?page=marquee" class="leftmenu">Marquee</a>
+    <a href="plugins/massmail.php" class="leftmenu">Mass Mail</a>
+    <a href="plugins/control.php?page=site_settings" class="leftmenu">Site Closed</a>    
     <a href="plugins/control.php?page=rmoptions" class="leftmenu">RM Options</a>
     <a href="plugins/control.php?page=rmpacks" class="leftmenu">RM Upgrades</a>
-    <a href="plugins/control.php?page=setplayerstatus" class="leftmenu">Player Options</a>
-    <a href="plugins/massmail.php" class="leftmenu">Mass Mail</a>
+    <a href="plugins/control.php?page=setplayerstatus" class="leftmenu">Player Options</a>    
     <a href="plugins/control.php?page=referrals" class="leftmenu">Manage Referrals</a>
     <div class="headbox">Modifications</div>
+    <a class="leftmenu" href="plugins/control.php?page=jobs">Manage Jobs</a>
     <a class="leftmenu" href="plugins/control.php?page=cars">Manage Cars</a>
+    <a class="leftmenu" href="plugins/control.php?page=playeritems">Manage Items</a>
     <a class="leftmenu" href="plugins/control.php?page=cities">Manage Cities</a>
+    <a class="leftmenu" href="plugins/control.php?page=voting">Manage Voting</a>
     <a class="leftmenu" href="plugins/control.php?page=crimes">Manage Crimes</a>
     <a class="leftmenu" href="plugins/control.php?page=forum">Manage Forum</a>
-    <a class="leftmenu" href="plugins/control.php?page=houses">Manage Houses</a>
-    <a class="leftmenu" href="plugins/control.php?page=playeritems">Manage Items</a>
-    <a class="leftmenu" href="plugins/control.php?page=giveuseritem">Give Item to User</a>
-    <a class="leftmenu" href="plugins/control.php?page=jobs">Manage Jobs</a>
-    <a class="leftmenu" href="plugins/control.php?page=voting">Manage Voting</a>
+    <a class="leftmenu" href="plugins/control.php?page=houses">Manage Houses</a>    
+    <a class="leftmenu" href="plugins/control.php?page=giveuseritem">Give Item to User</a>    
 </div>
 <div>
     <div class="headbox leftmenu">Miscellaneous</div>
