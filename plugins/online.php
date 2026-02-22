@@ -5,7 +5,7 @@ $db->query('SELECT id FROM users WHERE lastactive >= DATE_SUB(NOW(), INTERVAL 5 
 $db->execute();
 $rows = $db->fetch();
 ?><tr>
-    <th class="content-head">Users Online In The Last 5 Minutes</th>
+    <th class="content-head">Citizens Online Last 5 Minutes</th>
 </tr>
 <tr>
     <td class="content">
