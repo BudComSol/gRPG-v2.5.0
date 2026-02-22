@@ -8,7 +8,7 @@ $registration = settings('registration');
 if (array_key_exists('submit', $_POST) && $registration === 'open') {
     if (!csrf_check('csrf', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
-    }
+    } else {
     // if (defined('CAPTCHA_REGISTRATION') && CAPTCHA_REGISTRATION == true) {
     //     $_POST['captcha_code'] = array_key_exists('captcha_code', $_POST) && ctype_alnum($_POST['captcha_code']) ? $_POST['captcha_code'] : null;
     //     if (empty($_POST['captcha_code'])) {
@@ -79,6 +79,7 @@ if (array_key_exists('submit', $_POST) && $registration === 'open') {
             $output = 'A validation email couldn\'t be sent. A support ticket has been generated for you';
         }
         echo Message($output, null, true);
+        }
     }
 }
 if (count($errors)) {
