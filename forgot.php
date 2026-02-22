@@ -14,44 +14,50 @@ if (!empty($_GET['token'])) {
     $row = $db->fetch(true);
     if (array_key_exists('submit', $_POST)) {
         if (!csrf_check('step_2', $_POST)) {
-            echo Message(SECURITY_TIMEOUT_MESSAGE);
-        }
-        if (defined('CAPTCHA_FORGOT_PASS') && CAPTCHA_FORGOT_PASS == true) {
-            $_POST['captcha_code'] = array_key_exists('captcha_code', $_POST) && ctype_alnum($_POST['captcha_code']) ? $_POST['captcha_code'] : null;
-            if (empty($_POST['captcha_code'])) {
-                $errors[] = 'You didn\'t enter a valid captcha code';
-            }
-            if (!$securimage->check($_POST['captcha_code'])) {
-                $errors[] = 'Invalid captcha code';
-            }
-        }
-        if (empty($_POST['email'])) {
-            $errors[] = 'You didn\'t enter a valid email address';
-        }
-        if ($_POST['email'] != $row['email']) {
-            $errors[] = 'Invalid token/email combination';
-        }
-        $_POST['pass'] = array_key_exists('pass', $_POST) && is_string($_POST['pass']) ? $_POST['pass'] : null;
-        if (empty($_POST['pass'])) {
-            $errors[] = 'You didn\'t enter a valid password';
-        }
-        $_POST['conf'] = array_key_exists('conf', $_POST) && is_string($_POST['conf']) ? $_POST['conf'] : null;
-        if (empty($_POST['conf'])) {
-            $errors[] = 'You didn\'t enter a valid confirmation password';
-        }
-        if ($_POST['pass'] !== $_POST['conf']) {
-            $errors[] = 'The passwords you entered didn\'t match';
+            $errors[] = SECURITY_TIMEOUT_MESSAGE;
         }
         if (!count($errors)) {
-            $db->trans('start');
-            $db->query('UPDATE users SET password = ? WHERE id = ?');
-            $db->execute([password_hash($_POST['pass'], PASSWORD_BCRYPT), $row['userid']]);
-            $db->query('DELETE FROM forgot_password WHERE email = ?');
-            $db->execute([$_POST['email']]);
-            $db->trans('end');
-            echo Message('You\'ve changed your password');
+            if (defined('CAPTCHA_FORGOT_PASS') && CAPTCHA_FORGOT_PASS == true) {
+                $_POST['captcha_code'] = array_key_exists('captcha_code', $_POST) && ctype_alnum($_POST['captcha_code']) ? $_POST['captcha_code'] : null;
+                if (empty($_POST['captcha_code'])) {
+                    $errors[] = 'You didn\'t enter a valid captcha code';
+                }
+                if (!$securimage->check($_POST['captcha_code'])) {
+                    $errors[] = 'Invalid captcha code';
+                }
+            }
+            if (empty($_POST['email'])) {
+                $errors[] = 'You didn\'t enter a valid email address';
+            }
+            if ($_POST['email'] != $row['email']) {
+                $errors[] = 'Invalid token/email combination';
+            }
+            $_POST['pass'] = array_key_exists('pass', $_POST) && is_string($_POST['pass']) ? $_POST['pass'] : null;
+            if (empty($_POST['pass'])) {
+                $errors[] = 'You didn\'t enter a valid password';
+            }
+            $_POST['conf'] = array_key_exists('conf', $_POST) && is_string($_POST['conf']) ? $_POST['conf'] : null;
+            if (empty($_POST['conf'])) {
+                $errors[] = 'You didn\'t enter a valid confirmation password';
+            }
+            if ($_POST['pass'] !== $_POST['conf']) {
+                $errors[] = 'The passwords you entered didn\'t match';
+            }
+            if (!count($errors)) {
+                $db->trans('start');
+                $db->query('UPDATE users SET password = ? WHERE id = ?');
+                $db->execute([password_hash($_POST['pass'], PASSWORD_BCRYPT), $row['userid']]);
+                $db->query('DELETE FROM forgot_password WHERE email = ?');
+                $db->execute([$_POST['email']]);
+                $db->trans('end');
+                echo Message('You\'ve changed your password');
+            }
         }
-    } else {
+    }
+    if (!array_key_exists('submit', $_POST) || count($errors)) {
+        if (count($errors)) {
+            display_errors($errors);
+        }
         ?>
         <tr><th class="content-head">Password Reset</th></tr>
         <tr><td class="content">
@@ -93,46 +99,48 @@ if (!empty($_GET['token'])) {
 }
 if (array_key_exists('submit', $_POST)) {
     if (!csrf_check('step_1', $_POST)) {
-        echo Message(SECURITY_TIMEOUT_MESSAGE);
-    }
-    if (defined('CAPTCHA_FORGOT_PASS') && CAPTCHA_FORGOT_PASS == true) {
-        $_POST['captcha_code'] = array_key_exists('captcha_code', $_POST) && ctype_alnum($_POST['captcha_code']) ? $_POST['captcha_code'] : null;
-        if (empty($_POST['captcha_code'])) {
-            $errors[] = 'You didn\'t enter a valid captcha code';
-        }
-        if (!$securimage->check($_POST['captcha_code'])) {
-            $errors[] = 'Invalid captcha code';
-        }
-    }
-    $_POST['name'] = array_key_exists('name', $_POST) && is_string($_POST['name']) ? strip_tags(trim($_POST['name'])) : null;
-    if (empty($_POST['name'])) {
-        $errors[] = 'You didn\'t enter your username';
-    }
-    $db->query('SELECT id, email FROM users WHERE username = ?');
-    $db->execute([$_POST['name']]);
-    if (empty($_POST['email'])) {
-        $errors[] = 'You didn\'t enter a valid email address';
-    }
-    $row = $db->fetch(true);
-    $db->query('SELECT COUNT(id) FROM users WHERE email = ?');
-    $db->execute([$_POST['email']]);
-    if (!$db->count()) {
-        $errors[] = 'An account with that email address doesn\'t exist';
-    }
-    if ($row['email'] != $_POST['email']) {
-        $errors[] = 'Invalid combination';
+        $errors[] = SECURITY_TIMEOUT_MESSAGE;
     }
     if (!count($errors)) {
-        $token = substr(md5((string)time()), 0, mt_rand(8, 10));
-        $message = 'This message has been sent to you because you requested your gRPG account information to be updated.'."\n";
-        $message .= 'Simply click this URL to start the password reset process: '.BASE_URL.'/forgot.php?token='.$token;
-        $db->query('INSERT INTO forgot_password (userid, email, token) VALUES (?, ?, ?)');
-        $db->execute([$row['id'], $row['email'], $token]);
-        try {
-            mail($row['email'], 'Account Info For gRPG', $message);
-            echo Message('An email has been sent');
-        } catch(Exception $e) {
-            $errors[] = 'Failed to send email '.(DEBUG === true ? '; '.$e->getMessage() : '');
+        if (defined('CAPTCHA_FORGOT_PASS') && CAPTCHA_FORGOT_PASS == true) {
+            $_POST['captcha_code'] = array_key_exists('captcha_code', $_POST) && ctype_alnum($_POST['captcha_code']) ? $_POST['captcha_code'] : null;
+            if (empty($_POST['captcha_code'])) {
+                $errors[] = 'You didn\'t enter a valid captcha code';
+            }
+            if (!$securimage->check($_POST['captcha_code'])) {
+                $errors[] = 'Invalid captcha code';
+            }
+        }
+        $_POST['name'] = array_key_exists('name', $_POST) && is_string($_POST['name']) ? strip_tags(trim($_POST['name'])) : null;
+        if (empty($_POST['name'])) {
+            $errors[] = 'You didn\'t enter your username';
+        }
+        $db->query('SELECT id, email FROM users WHERE username = ?');
+        $db->execute([$_POST['name']]);
+        if (empty($_POST['email'])) {
+            $errors[] = 'You didn\'t enter a valid email address';
+        }
+        $row = $db->fetch(true);
+        $db->query('SELECT COUNT(id) FROM users WHERE email = ?');
+        $db->execute([$_POST['email']]);
+        if (!$db->count()) {
+            $errors[] = 'An account with that email address doesn\'t exist';
+        }
+        if ($row['email'] != $_POST['email']) {
+            $errors[] = 'Invalid combination';
+        }
+        if (!count($errors)) {
+            $token = substr(md5((string)time()), 0, mt_rand(8, 10));
+            $message = 'This message has been sent to you because you requested your gRPG account information to be updated.'."\n";
+            $message .= 'Simply click this URL to start the password reset process: '.BASE_URL.'/forgot.php?token='.$token;
+            $db->query('INSERT INTO forgot_password (userid, email, token) VALUES (?, ?, ?)');
+            $db->execute([$row['id'], $row['email'], $token]);
+            try {
+                mail($row['email'], 'Account Info For gRPG', $message);
+                echo Message('An email has been sent');
+            } catch(Exception $e) {
+                $errors[] = 'Failed to send email '.(DEBUG === true ? '; '.$e->getMessage() : '');
+            }
         }
     }
 } ?>
@@ -175,7 +183,7 @@ if (count($errors)) {
         <td>
             <table class="topbar">
                 <tr>
-                   <br><br><td>gRPG © ● 2007 - 2026 ● All Rights Reserved</td>
+                    <td>gRPG © ● 2007 - 2026 ● All Rights Reserved</td>
                 </tr>
             </table>
         </td>
