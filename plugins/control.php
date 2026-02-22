@@ -818,6 +818,47 @@ if (isset($_POST['addrmpack'])) {
     $db->query('UPDATE serverconfig SET serverdown = ? WHERE id = 1');
     $db->execute([$_POST['message']]);
     echo Message('You\'ve changed the server down text.');
+} elseif (isset($_POST['addmarquee'])) {
+    if (!csrf_check('marquee_add', $_POST)) {
+        echo Message(SECURITY_TIMEOUT_MESSAGE);
+    }
+    $_POST['title'] = (isset($_POST['title']) && is_string($_POST['title'])) ? strip_tags(trim($_POST['title'])) : '';
+    if (empty($_POST['title'])) {
+        $errors[] = 'You didn\'t enter a valid title';
+    }
+    if (empty($_POST['message'])) {
+        $errors[] = 'You didn\'t enter a valid message';
+    }
+    if (!count($errors)) {
+        $db->query('INSERT INTO ads (poster, title, message) VALUES (?, ?, ?)');
+        $db->execute([$user_class->id, $_POST['title'], $_POST['message']]);
+        echo Message('Marquee item has been added.');
+    } else {
+        display_errors($errors);
+    }
+} elseif (isset($_GET['deletemarquee'])) {
+    $_GET['deletemarquee'] = ctype_digit($_GET['deletemarquee']) ? $_GET['deletemarquee'] : null;
+    if (empty($_GET['deletemarquee'])) {
+        echo Message('You didn\'t select a valid marquee item', 'Error', true);
+    }
+    $db->query('SELECT id, title FROM ads WHERE id = ?');
+    $db->execute([$_GET['deletemarquee']]);
+    if (!$db->count()) {
+        echo Message('That marquee item doesn\'t exist', 'Error', true);
+    }
+    $row = $db->fetch(true);
+    if (isset($_GET['ans'])) {
+        if (!csrf_check('csrf', $_GET)) {
+            echo Message(SECURITY_TIMEOUT_MESSAGE);
+        }
+        $db->query('DELETE FROM ads WHERE id = ?');
+        $db->execute([$row['id']]);
+        echo Message('You\'ve deleted the marquee item: '.format($row['title']));
+    } else {
+        ?>Are you sure you want to delete &ldquo;<?php echo format($row['title']); ?>&rdquo;?<br />
+        <a href="plugins/control.php?page=marquee&amp;deletemarquee=<?php echo $row['id']; ?>&amp;ans=yes&amp;csrf=<?php echo csrf_create('csrf', false); ?>" class="pure-button pure-button-red"><i class="fa fa-ban" aria-hidden="true"></i> I'm sure, delete it</a>
+        <a href="plugins/control.php?page=marquee" class="pure-button pure-button-primary"><i class="fa fa-tick" aria-hidden="true"></i> No, go back</a><?php
+    }
 } elseif (isset($_POST['addrmdays'])) {
     if (!csrf_check('rmoptions_days', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
@@ -3050,6 +3091,64 @@ if (empty($_GET['page'])) {
                 </div>
                 <div class="pure-controls">
                     <button type="submit" class="pure-button pure-button-primary">Add House</button>
+                </div>
+            </form>
+        </td>
+    </tr><?php
+    } elseif ($_GET['page'] === 'marquee') {
+        $db->query('SELECT id, title, message, time_added FROM ads ORDER BY time_added DESC');
+        $db->execute();
+        $rows = $db->fetch(); ?>
+    <tr>
+        <th class="content-head">Marquee Items</th>
+    </tr>
+    <tr>
+        <td class="content">
+            <table class="pure-table pure-table-horizontal" width="100%">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Message</th>
+                        <th>Added</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody><?php
+                if ($rows !== null) {
+                    foreach ($rows as $row) { ?>
+                        <tr>
+                            <td><?php echo format($row['title']); ?></td>
+                            <td><?php echo format($row['message']); ?></td>
+                            <td><?php echo format($row['time_added']); ?></td>
+                            <td>[<a href="plugins/control.php?page=marquee&amp;deletemarquee=<?php echo $row['id']; ?>&amp;csrfg=<?php echo csrf_create('csrf', false); ?>">Delete</a>]</td>
+                        </tr><?php
+                    }
+                } else { ?>
+                    <tr>
+                        <td colspan="4" class="center">There are no marquee items</td>
+                    </tr><?php
+                } ?>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <th class="content-head">Add Marquee Item</th>
+    </tr>
+    <tr>
+        <td class="content">
+            <form action="plugins/control.php?page=marquee" method="post" class="pure-form pure-form-aligned">
+                <?php echo csrf_create('marquee_add'); ?>
+                <div class="pure-control-group">
+                    <label for="title">Title</label>
+                    <input type="text" name="title" id="title" class="pure-u-1-2 pure-u-md-1-2" required autofocus />
+                </div>
+                <div class="pure-control-group">
+                    <label for="message">Message</label>
+                    <textarea name="message" id="message" class="pure-u-1-2 pure-u-md-1-2" required></textarea>
+                </div>
+                <div class="pure-controls">
+                    <button type="submit" name="addmarquee" class="pure-button pure-button-primary">Add Marquee Item</button>
                 </div>
             </form>
         </td>

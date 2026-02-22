@@ -28,11 +28,12 @@ CREATE TABLE IF NOT EXISTS `addptmarketlog`
 DROP TABLE IF EXISTS `ads`;
 CREATE TABLE IF NOT EXISTS `ads`
 (
+    `id`         int(10)       NOT NULL AUTO_INCREMENT,
     `time_added` timestamp    NOT NULL DEFAULT current_timestamp(),
     `poster`     int(10)      NOT NULL,
     `title`      varchar(100) NOT NULL,
-    `message`    text         NOT NULL
-
+    `message`    text         NOT NULL,
+    PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
