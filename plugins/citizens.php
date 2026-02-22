@@ -5,7 +5,7 @@ $db->query('SELECT id, lastactive FROM users ORDER BY id ');
 $db->execute();
 $rows = $db->fetch();
 ?><tr>
-    <th class="content-head">Total Users</th>
+    <th class="content-head">Total Citizens</th>
 </tr>
 <tr>
     <td class="content">
