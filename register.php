@@ -14,8 +14,7 @@ if (array_key_exists('submit', $_POST) && $registration === 'open') {
         $_POST['captcha_code'] = array_key_exists('captcha_code', $_POST) && ctype_alnum($_POST['captcha_code']) ? $_POST['captcha_code'] : null;
         if (empty($_POST['captcha_code'])) {
             $errors[] = 'You didn\'t enter a valid captcha code';
-        }
-        if (!$securimage->check($_POST['captcha_code'])) {
+        } elseif (!$securimage->check($_POST['captcha_code'])) {
             $errors[] = 'Invalid captcha code';
         }
     }
@@ -132,9 +131,9 @@ if (defined('CAPTCHA_REGISTRATION') && CAPTCHA_REGISTRATION == true) {
             ?><fieldset>
 <legend>Captcha</legend>
                     <div class="pure-control-group">
-                        <img id="captcha" src="/inc/securimage/securimage_show.php" alt="CaptCha Image" /><br />
+                        <img id="captcha" src="inc/securimage/securimage_show.php" alt="CaptCha Image" /><br />
                         <input type="text" name="captcha_code" id="captcha_code" size="23" maxlength="6" /><br /><br />
-                        [<a href="#" onclick="document.getElementById('captcha').src = '/inc/securimage/securimage_show.php?' + Math.random(); return false">Click This Link To Change Image</a>]
+                        [<a href="#" onclick="document.getElementById('captcha').src = 'inc/securimage/securimage_show.php?' + Math.random(); return false">Click This Link To Change Image</a>]
                     </div>                    
                 </fieldset><?php
         } ?><div class="pure-controls">
