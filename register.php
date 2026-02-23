@@ -68,7 +68,7 @@ if (array_key_exists('submit', $_POST) && $registration === 'open') {
         $message = 'You\'ve received this email because your email address was used to sign up to '.GAME_NAME."\n".
         'If you didn\'t do that, then just ignore this message'."\n".
         'If you did, then awesome! Simply visit the URL below to validate your account'."\n\n".
-        BASE_URL.'validate.php?email='.base64_encode($_POST['email']).'&token='.$validationCode;
+        BASE_URL.'/validate.php?email='.base64_encode($_POST['email']).'&token='.$validationCode;
         if (mail($_POST['email'], GAME_NAME.' Validation', $message, 'From: '.DEFAULT_EMAIL_ADDRESS)) {
             $output = 'A validation message has been sent to '.format($_POST['email']).'. It\'ll remain valid for 24 hours';
         } else {
