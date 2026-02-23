@@ -115,10 +115,14 @@ function index($db, $user_class, $parser)
                 $poster = $row['fb_latest_poster'] ? new User($row['fb_latest_poster']) : (object) ['formattedname' => 'None'];
                 $db->query('SELECT ft_name FROM forum_topics WHERE ft_id = ?');
                 $db->execute([$row['fb_latest_topic']]);
-                $date = new DateTime($row['fb_latest_time']);
-                echo $date->format('F d, Y g:i:sa'); ?><br />
+                if ($row['fb_latest_time'] !== null) {
+                    $date = new DateTime($row['fb_latest_time']);
+                    echo $date->format('F d, Y g:i:sa'); ?><br />
                         In: <a href="plugins/forum.php?viewtopic=<?php echo $row['fb_latest_topic']; ?>&amp;latest"><?php echo format($db->result() ?? '[Untitled]'); ?></a><br />
                         By: <?php echo $poster->formattedname ?: 'Unknown';
+                } else {
+                    echo format($db->result() ?? '[Untitled]').' by '.($poster->formattedname ?: 'Unknown');
+                }
             } else {
                 echo 'No posts';
             } ?></td>
@@ -154,10 +158,14 @@ function index($db, $user_class, $parser)
                     $poster = $row['fb_latest_poster'] ? new User($row['fb_latest_poster']) : (object) ['formattedname' => 'None'];
                     $db->query('SELECT ft_name FROM forum_topics WHERE ft_id = ?');
                     $db->execute([$row['fb_latest_topic']]);
-                    $date = new DateTime($row['fb_latest_time']);
-                    echo $date->format('F d, Y g:i:sa'); ?><br />
+                    if ($row['fb_latest_time'] !== null) {
+                        $date = new DateTime($row['fb_latest_time']);
+                        echo $date->format('F d, Y g:i:sa'); ?><br />
                             In: <a href="plugins/forum.php?viewtopic=<?php echo $row['fb_latest_topic']; ?>&amp;latest"><?php echo format($db->result() ?? '[Untitled]'); ?></a><br />
                             By: <?php echo $poster->formattedname ?: 'Unknown';
+                    } else {
+                        echo format($db->result() ?? '[Untitled]').' by '.($poster->formattedname ?: 'Unknown');
+                    }
                 } else {
                     echo 'No posts';
                 } ?></td>
