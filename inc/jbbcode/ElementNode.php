@@ -20,7 +20,7 @@ class ElementNode extends Node
     /* The child nodes contained within this element */
     protected array $children;
     /* The code definition that defines this element's behavior */
-    protected CodeDefinition $codeDefinition;
+    protected ?CodeDefinition $codeDefinition = null;
     /* How deeply this node is nested */
     protected int $nestDepth;
 
@@ -47,9 +47,9 @@ class ElementNode extends Node
     /**
      * Gets the CodeDefinition that defines this element.
      *
-     * @return CodeDefinition $this element's code definition
+     * @return ?CodeDefinition $this element's code definition
      */
-    public function getCodeDefinition(): CodeDefinition
+    public function getCodeDefinition(): ?CodeDefinition
     {
         return $this->codeDefinition;
     }
