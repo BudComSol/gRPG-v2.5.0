@@ -350,7 +350,7 @@ function viewtopic($db, $user_class, $parser)
             }
             $precache[$memb['id']] = $memb;
         }
-        if ($post['fp_edit_times']) {
+        if ($post['fp_edit_times'] && $post['fp_edit_time'] !== null) {
             $edit = new DateTime($post['fp_edit_time']);
             $post['fp_text'] .= "\n\n".'[i]Edited '.$edit->format('F d, Y g:i:sa').'. Reason: '.($post['fp_edit_reason'] ?: 'None').'[/i]';
         } ?><tr>

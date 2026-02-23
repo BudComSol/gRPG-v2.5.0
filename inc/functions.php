@@ -1437,6 +1437,7 @@ function forums_rank($tp = 0)
         2500 => '#14 Respect King',
         5000 => '#15 True Champion',
     ];
+    krsort($ranks);
     foreach ($ranks as $key => $value) {
         if ($tp >= $key) {
             $rank = $value;
