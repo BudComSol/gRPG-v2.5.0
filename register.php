@@ -31,6 +31,11 @@ if (array_key_exists('submit', $_POST) && $registration === 'open') {
         if ($db->result()) {
             $errors[] = 'That username has already been taken';
         }
+        $db->query('SELECT COUNT(id) FROM pending_validations WHERE LOWER(username) = ?');
+        $db->execute([strtolower($_POST['username'])]);
+        if ($db->result()) {
+            $errors[] = 'That username has already been taken';
+        }
     }
     $signuptime = time();
     $_POST['pass'] = array_key_exists('pass', $_POST) && is_string($_POST['pass']) ? $_POST['pass'] : null;
@@ -49,6 +54,11 @@ if (array_key_exists('submit', $_POST) && $registration === 'open') {
         $errors[] = 'You didn\'t enter a valid email address';
     } else {
         $db->query('SELECT COUNT(id) FROM users WHERE email = ?');
+        $db->execute([$_POST['email']]);
+        if ($db->result()) {
+            $errors[] = 'That email is already in use';
+        }
+        $db->query('SELECT COUNT(id) FROM pending_validations WHERE email = ?');
         $db->execute([$_POST['email']]);
         if ($db->result()) {
             $errors[] = 'That email is already in use';
