@@ -1457,7 +1457,7 @@ function csrf_create($name = 'csrf', $html = true)
 
 function csrf_check($name, $which, $exception = false, $time = 600, $multiple = false)
 {
-    if (!in_array($which, [$_POST, $_GET, $_REQUEST, $_SESSION, $_COOKIE], true)) {
+    if (!is_array($which)) {
         return false;
     }
 
