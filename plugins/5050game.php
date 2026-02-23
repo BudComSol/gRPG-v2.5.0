@@ -61,7 +61,7 @@ if (array_key_exists('makebet', $_POST)) {
     $db->execute([$_POST['amount'], $user_class->id]);
     $db->trans('end');
     $user_class = new User($_SESSION['id']);
-    echo Message('You\'ve added '.prettynum($_POST['amount'], true));
+    echo Message('You\'ve added'.prettynum($_POST['amount'], true));
 }
 $db->query('SELECT id, owner, amount FROM 5050game ORDER BY amount DESC');
 $db->execute();
@@ -76,12 +76,12 @@ $rows = $db->fetch();
 </tr>
 <tr>
     <td class="content">
-        <form action="5050game.php" method="post" class="pure-form pure-form-aligned">
+        <form action="plugins/5050game.php" method="post" class="pure-form pure-form-aligned">
             <?php echo csrf_create('makebet_csrf'); ?>
             <fieldset>
                 <div class="pure-control-group">
                     <label for="amount">Bid (min <?php echo prettynum(1000, true); ?>)</label>
-                    $<input type="text" name="amount" id="amount" size="10" maxlength="20" value="<?php echo $user_class->money; ?>" />
+                    $ <input type="text" name="amount" id="amount" size="10" maxlength="20" value="<?php echo $user_class->money; ?>" />
                 </div>
             </fieldset>
             <div class="pure-controls">
@@ -108,7 +108,7 @@ if ($rows !== null) {
                     <td><?php echo prettynum($row['amount'], true); ?></td>
                     <td><?php
         if ($user_class->id != $user_points->id) {
-            ?><form action="5050game.php" method="post" class="pure-form">
+            ?><form action="plugins/5050game.php" method="post" class="pure-form">
                             <?php echo $csrf; ?>
                             <input type="hidden" name="bet_id" value="<?php echo $row['id']; ?>" />
                             <div class="pure-controls">
