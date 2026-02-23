@@ -127,7 +127,7 @@ function code_error($message, $level = E_USER_WARNING)
 function generate_ticket($subject = '', $body = '', $id = 0)
 {
     global $db, $user_class;
-    if (!$id || !ctype_digit($id)) {
+    if (!$id || !ctype_digit((string)$id)) {
         $id = isset($user_class) ? $user_class->id : 0;
     }
     $db->query('SELECT COUNT(id) FROM tickets WHERE subject = ? AND body = ? AND status IN(\'open\', \'pending\')');
@@ -1071,8 +1071,7 @@ function Is_User_Banned($id = 0)
 function Why_Is_User_Banned($id = 0)
 {
     global $db;
-    if (!ctype_digit($id)) {
-        code_error('Invalid argument passed to why_is_user_banned');
+    if (!ctype_digit((string)$id)) {
 
         return false;
     }
