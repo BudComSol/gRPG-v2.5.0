@@ -83,8 +83,8 @@ if (defined('CAPTCHA_LOGIN') && CAPTCHA_LOGIN == true) {
                         <input type="text" name="captcha_code" size="10" maxlength="6" />
                     </div>
                     <div class="pure-control-group">
-                        <img id="captcha" src="/inc/securimage/securimage_show.php" alt="CAPTCHA Image" /><br />
-                        [<a href="#" onclick="document.getElementById('captcha').src = '/inc/securimage/securimage_show.php?' + Math.random(); return false">Different Image</a>]
+                        <img id="captcha" src="inc/securimage/securimage_show.php" alt="CAPTCHA Image" /><br />
+                        [<a href="#" onclick="document.getElementById('captcha').src = 'inc/securimage/securimage_show.php?' + Math.random(); return false">Different Image</a>]
                     </div><?php
 } ?>
             </fieldset>

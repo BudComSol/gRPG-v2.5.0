@@ -7,7 +7,7 @@ if (!defined('GRPG_INC')) {
 }
 define('NO_CLASSES', true);
 define('NO_FUNCTIONS', true);
-define('NO_SESSIONS', true);
+define('NO_SESSION', true);
 define('NO_CSRF', true);
 require_once dirname(__DIR__) . '/dbcon.php';
 

@@ -21,8 +21,7 @@ if (!empty($_GET['token'])) {
                 $_POST['captcha_code'] = array_key_exists('captcha_code', $_POST) && ctype_alnum($_POST['captcha_code']) ? $_POST['captcha_code'] : null;
                 if (empty($_POST['captcha_code'])) {
                     $errors[] = 'You didn\'t enter a valid captcha code';
-                }
-                if (!$securimage->check($_POST['captcha_code'])) {
+                } elseif (!$securimage->check($_POST['captcha_code'])) {
                     $errors[] = 'Invalid captcha code';
                 }
             }
@@ -85,8 +84,8 @@ if (!empty($_GET['token'])) {
                             <input type="text" name="captcha_code" size="10" maxlength="6" />
                         </div>
                         <div class="pure-control-group">
-                            <img id="captcha" src="/inc/securimage/securimage_show.php" alt="CAPTCHA Image" /><br />
-                            [<a href="#" onclick="document.getElementById('captcha').src = '/inc/securimage/securimage_show.php?' + Math.random(); return false">Different Image</a>]
+                            <img id="captcha" src="inc/securimage/securimage_show.php" alt="CAPTCHA Image" /><br />
+                            [<a href="#" onclick="document.getElementById('captcha').src = 'inc/securimage/securimage_show.php?' + Math.random(); return false">Different Image</a>]
                         </div> <?php
                     } ?>
                 </fieldset>
@@ -108,8 +107,7 @@ if (array_key_exists('submit', $_POST)) {
             $_POST['captcha_code'] = array_key_exists('captcha_code', $_POST) && ctype_alnum($_POST['captcha_code']) ? $_POST['captcha_code'] : null;
             if (empty($_POST['captcha_code'])) {
                 $errors[] = 'You didn\'t enter a valid captcha code';
-            }
-            if (!$securimage->check($_POST['captcha_code'])) {
+            } elseif (!$securimage->check($_POST['captcha_code'])) {
                 $errors[] = 'Invalid captcha code';
             }
         }
@@ -172,8 +170,8 @@ if (count($errors)) {
                     <input type="text" name="captcha_code" size="10" maxlength="6" />
                 </div>
                 <div class="pure-control-group">
-                    <img id="captcha" src="/inc/securimage/securimage_show.php" alt="CAPTCHA Image" /><br />
-                    [<a href="#" onclick="document.getElementById('captcha').src = '/inc/securimage/securimage_show.php?' + Math.random(); return false">Different Image</a>]
+                    <img id="captcha" src="inc/securimage/securimage_show.php" alt="CAPTCHA Image" /><br />
+                    [<a href="#" onclick="document.getElementById('captcha').src = 'inc/securimage/securimage_show.php?' + Math.random(); return false">Different Image</a>]
                 </div> <?php
             } ?>
         </fieldset>
