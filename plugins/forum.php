@@ -1092,34 +1092,29 @@ function trashTopic($id = null)
 function tag($text, $display = false, $id = false)
 {
     global $db;
-    $cnt = 0;
     preg_match_all('/@(\w+)/', $text, $matches);
-    $ids = [];
-    if (count($matches) && count($matches[0])) {
-        foreach ($matches as $match) {
-            ++$cnt;
-            $db->query('SELECT id FROM users WHERE LOWER(username) = ? LIMIT 1', [str_replace('__', ' ', strtolower(ltrim($match[0], '@')))]);
-            $row = $db->fetch(true);
-            if ($row !== null) {
-                ++$cnt;
-                $tagged = new User($row['id']);
-                if (!$display && !isset($ids[$row['id']]) && !isset($event_sent)) {
-                    Send_Event($row['id'], 'You\'ve been tagged in the forum!<br /><a href="plugins/forum.php?viewtopic='.$id.'">View it here</a>');
-                    $event_sent = true;
-                } else {
-                    return preg_replace('/@(\w+)/', $tagged->formattedname, $text);
-                }
-                $ids[] = $row['id'];
-                if ($cnt == 10) {
-                    break;
-                }
-            } else {
-                return $display ? $text : null;
-            }
-        }
-    } else {
+    if (!count($matches[0])) {
         return $display ? $text : null;
     }
+    $cnt = 0;
+    $notified = [];
+    foreach ($matches[1] as $username) {
+        $db->query('SELECT id FROM users WHERE LOWER(username) = ? LIMIT 1', [str_replace('__', ' ', strtolower($username))]);
+        $row = $db->fetch(true);
+        if ($row !== null) {
+            $tagged = new User($row['id']);
+            if ($display) {
+                $text = str_replace('@'.$username, $tagged->formattedname, $text);
+            } elseif (!isset($notified[$row['id']])) {
+                Send_Event((string)$row['id'], 'You\'ve been tagged in the forum!<br /><a href="plugins/forum.php?viewtopic='.(int)$id.'">View it here</a>');
+                $notified[$row['id']] = true;
+            }
+            if (++$cnt >= 10) {
+                break;
+            }
+        }
+    }
+    return $display ? $text : null;
 }
 if ($_GET['act'] !== 'viewtopic') {
     ?>  </td>
