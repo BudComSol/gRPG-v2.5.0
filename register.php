@@ -102,8 +102,8 @@ echo csrf_create();
         if (!empty($_GET['referer'])) {
             ?><input type="hidden" name="referer" value="<?php echo $_GET['referer']; ?>" /><?php
         } ?>
-<legend>Account Setup</legend>
 <fieldset>
+<legend>Account Setup</legend>
     <div class="pure-control-group">
         <label for="username">Username</label>
         <input type="text" name="username" id="username" />
@@ -129,8 +129,8 @@ foreach ($classes as $opt) {
                 </div>
             </fieldset><?php
 if (defined('CAPTCHA_REGISTRATION') && CAPTCHA_REGISTRATION == true) {
-            ?><legend>Captcha</legend>
-                <fieldset>
+            ?><fieldset>
+<legend>Captcha</legend>
                     <div class="pure-control-group">
                         <img id="captcha" src="/inc/securimage/securimage_show.php" alt="CaptCha Image" /><br />
                         <input type="text" name="captcha_code" id="captcha_code" size="23" maxlength="6" /><br /><br />
