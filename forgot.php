@@ -133,15 +133,14 @@ if (array_key_exists('submit', $_POST)) {
             $token = bin2hex(random_bytes(16));
             $message = 'This message has been sent to you because you requested your gRPG account information to be updated.'."\n";
             $message .= 'Simply click this URL to start the password reset process: '.BASE_URL.'/forgot.php?token='.$token;
-            $db->query('INSERT INTO forgot_password (userid, email, token) VALUES (?, ?, ?)');
-            $db->execute([$row['id'], $row['email'], $token]);
-            try {
-                mail($row['email'], 'Account Info For gRPG', $message);
+            if (send_game_mail($row['email'], 'Account Info For gRPG', $message)) {
+                $db->query('INSERT INTO forgot_password (userid, email, token) VALUES (?, ?, ?)');
+                $db->execute([$row['id'], $row['email'], $token]);
                 echo Message('An email has been sent');
                 require_once __DIR__.'/inc/nlifooter.php';
                 exit;
-            } catch(Exception $e) {
-                $errors[] = 'Failed to send email '.(DEBUG === true ? '; '.$e->getMessage() : '');
+            } else {
+                $errors[] = 'Failed to send email. Please try again later or contact support';
             }
         }
     }
