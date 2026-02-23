@@ -22,7 +22,7 @@ if (array_key_exists('buy', $_GET)) {
         $db->query('UPDATE users SET money = GREATEST(money - 1000, 0) WHERE id = ?');
         $db->execute([$user_class->id]);
         $db->trans('end');
-        echo Message('You\'ve bought a lottery ticket');
+        echo Message('<p>You\'ve bought a lottery ticket.</p>');
     }
 }
 $db->query('SELECT COUNT(userid) FROM lottery');
