@@ -1585,6 +1585,7 @@ function send_game_mail(string $to, string $subject, string $body): bool
         log_error('SMTP connect failed: ' . $errstr, 'error', ['host' => $smtpHost, 'port' => $smtpPort]);
         return false;
     }
+    stream_set_timeout($socket, 10);
 
     /**
      * Helper: read one line from SMTP server and return the 3-digit code.
@@ -1597,8 +1598,8 @@ function send_game_mail(string $to, string $subject, string $body): bool
                 break;
             }
             $line .= $chunk;
-            // Multi-line responses end when the 4th char is a space
-            if (isset($line[3]) && $line[3] === ' ') {
+            // Multi-line responses end when the 4th char of the *current* line is a space
+            if (isset($chunk[3]) && $chunk[3] === ' ') {
                 break;
             }
         }
