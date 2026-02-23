@@ -8,7 +8,7 @@ if (array_key_exists('pull', $_GET)) {
     }
     $won = false;
     if ($user_class->money < 100) {
-        echo Message('You don\'t have enough money to play slots.', 'Error', true);
+        echo Message('<p>You don\'t have enough money to play slots.</p>', 'Error', true);
     }
     $money = $user_class->money - 100;
     $slot[1] = '<img src="../images/slots/7.png">';
@@ -28,7 +28,7 @@ if (array_key_exists('pull', $_GET)) {
     <tr>
         <td class="content" class="center"><?php echo $slot[$slot1].$slot[$slot2].$slot[$slot3]; ?></td>
     </tr><?php
-    echo Message($won ? 'You won '.prettynum(900, true) : 'You didn\'t win');
+    echo Message($won ? '<p>Congrats, you have won. '.prettynum(900, true) : '<p>Bummer, you didn\'t win.</p>');
 }
 ?><tr>
     <th class="content-head">Slot Machine</th>
@@ -36,7 +36,7 @@ if (array_key_exists('pull', $_GET)) {
 <tr>
     <td class="content">
         <?php $csrfg = csrf_create('csrfg', false); ?>
-        So, you fancy a try at the slot machine? Well, it just <?php echo prettynum(100, true); ?> a pull, so have at it.<br /><br />
-        <a href="slots.php?pull=lever&amp;csrfg=<?php echo $csrfg; ?>">Pull Lever</a>
+        <p>So, you fancy a try at the slot machine, well, it just <?php echo prettynum(100, true); ?> a pull, so have at it.</p>
+        <a href="plugins/slots.php?pull=lever&amp;csrfg=<?php echo $csrfg; ?>"><p>Pull The Lever</p></a>
     </td>
 </tr>
