@@ -17,7 +17,7 @@ if (!defined('GRPG_INC')) {
 class Paginator
 {
     public int $current_page = 1;
-    public int $items_per_page = 0;
+    public int|string $items_per_page = 0;
     public int $limit_end = 0;
     public int $limit_start = 0;
     public float $num_pages = 0;
@@ -70,7 +70,7 @@ class Paginator
             }
             $this->num_pages = (float)ceil($this->total_items / $this->items_per_page);
         }
-        $this->current_page = array_key_exists('page', $_GET) && ctype_digit($_GET['page']) ? $_GET['page'] : 1; // must be numeric > 0
+        $this->current_page = array_key_exists('page', $_GET) && ctype_digit($_GET['page']) ? (int)$_GET['page'] : 1; // must be numeric > 0
         if ($_GET) {
             $args = explode('&', $_SERVER['QUERY_STRING']);
             foreach ($args as $arg) {

@@ -1027,7 +1027,7 @@ function Message($text, $head = null, $kill = false)
 function Send_Event($id = 0, $text = '', $extra = 0)
 {
     global $db;
-    if (!ctype_digit($id) || !is_string($text)) {
+    if (!ctype_digit((string)$id) || !is_string($text)) {
         code_error('Invalid arguments passed to send_event');
 
         return false;
@@ -1418,7 +1418,7 @@ function points($amnt)
 function forums_rank($tp = 0)
 {
     $rank = '#0 Inactive';
-    if (!$tp || !ctype_digit($tp)) {
+    if (!$tp || !ctype_digit((string)$tp)) {
         return $rank;
     }
     $ranks = [
