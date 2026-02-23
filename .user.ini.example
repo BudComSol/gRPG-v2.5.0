@@ -11,9 +11,11 @@ expose_php = Off
 
 ; Session security
 session.cookie_httponly = 1
-; Note: session.cookie_secure requires HTTPS. Only enable if your site is served over HTTPS.
-; Set to 0 if you're using HTTP or you'll be unable to establish sessions.
-session.cookie_secure = 1
+; IMPORTANT: session.cookie_secure must only be enabled if your site is served over HTTPS.
+; Enabling this on an HTTP site will prevent sessions from working (cookies won't be sent),
+; which will break CSRF protection and cause "Security Error" messages on all forms.
+; Set to 1 ONLY for HTTPS sites:
+session.cookie_secure = 0
 session.use_only_cookies = 1
 session.use_strict_mode = 1
 
