@@ -71,24 +71,24 @@ if (array_key_exists('submit', $_POST) && $registration === 'open') {
     if (!count($errors)) {
         $validationCode = substr(md5((string)microtime(true)), 0, 15);
         $pass = password_hash($_POST['pass'], PASSWORD_BCRYPT);
-        $db->trans('start');
-        $db->query('INSERT INTO pending_validations (ip, username, password, email, class, validation_code) VALUES (?, ?, ?, ?, ?, ?)');
-        $db->execute([$_SERVER['REMOTE_ADDR'], $_POST['username'], $pass, $_POST['email'], $_POST['class'], $validationCode]);
-        $db->trans('end');
         $message = 'You\'ve received this email because your email address was used to sign up to '.GAME_NAME."\n".
         'If you didn\'t do that, then just ignore this message'."\n".
         'If you did, then awesome! Simply visit the URL below to validate your account'."\n\n".
         BASE_URL.'/validate.php?email='.base64_encode($_POST['email']).'&token='.$validationCode;
-        if (mail($_POST['email'], GAME_NAME.' Validation', $message, 'From: '.DEFAULT_EMAIL_ADDRESS)) {
+        if (send_game_mail($_POST['email'], GAME_NAME.' Validation', $message)) {
+            $db->trans('start');
+            $db->query('INSERT INTO pending_validations (ip, username, password, email, class, validation_code) VALUES (?, ?, ?, ?, ?, ?)');
+            $db->execute([$_SERVER['REMOTE_ADDR'], $_POST['username'], $pass, $_POST['email'], $_POST['class'], $validationCode]);
+            $db->trans('end');
             $output = 'A validation message has been sent to '.format($_POST['email']).'. It\'ll remain valid for 24 hours';
         } else {
-            $db->query('INSERT INTO tickets (subject, body) VALUES (\'Failed to send validation email\', ?)');
-            $db->execute(['Email: '.$_POST['email']."\n".'Validation Code: '.$validationCode]);
-            $output = 'A validation email couldn\'t be sent. A support ticket has been generated for you';
+            $errors[] = 'A validation email couldn\'t be sent. Please try again later or contact support';
         }
-        echo Message($output);
-        require_once __DIR__.'/inc/nlifooter.php';
-        exit;
+        if (!count($errors)) {
+            echo Message($output);
+            require_once __DIR__.'/inc/nlifooter.php';
+            exit;
+        }
         }
     }
 }

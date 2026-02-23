@@ -1540,3 +1540,163 @@ function recache_forum($id = 0)
         $db->execute([$id]);
     }
 }
+
+/**
+ * Sends a game email using SMTP (if configured via environment variables) or PHP's mail().
+ *
+ * Set the following in your .env to enable SMTP:
+ *   SMTP_HOST  - SMTP server hostname (e.g. smtp.gmail.com)
+ *   SMTP_PORT  - SMTP port (25, 465 for SSL, 587 for STARTTLS)
+ *   SMTP_USER  - SMTP username
+ *   SMTP_PASS  - SMTP password
+ *   SMTP_FROM  - From address (overrides DEFAULT_EMAIL_ADDRESS)
+ *   SMTP_ENCRYPTION - 'tls' (STARTTLS on port 587), 'ssl' (port 465), or '' for none
+ *
+ * @param string $to      Recipient email address
+ * @param string $subject Email subject
+ * @param string $body    Plain-text email body
+ * @return bool           True on success, false on failure
+ */
+function send_game_mail(string $to, string $subject, string $body): bool
+{
+    $smtpHost = getenv('SMTP_HOST');
+    $smtpPort = (int)(getenv('SMTP_PORT') ?: 587);
+    $smtpUser = getenv('SMTP_USER');
+    $smtpPass = getenv('SMTP_PASS');
+    $smtpFrom = getenv('SMTP_FROM') ?: DEFAULT_EMAIL_ADDRESS;
+    $smtpEncryption = strtolower((string)(getenv('SMTP_ENCRYPTION') ?: 'tls'));
+
+    if (!$smtpHost) {
+        // No SMTP configured — fall back to PHP's mail()
+        return mail($to, $subject, $body, 'From: ' . $smtpFrom);
+    }
+
+    // Determine socket transport
+    if ($smtpEncryption === 'ssl') {
+        $transport = 'ssl://' . $smtpHost;
+    } else {
+        $transport = $smtpHost;
+    }
+
+    $errno = 0;
+    $errstr = '';
+    $socket = @fsockopen($transport, $smtpPort, $errno, $errstr, 10);
+    if ($socket === false) {
+        log_error('SMTP connect failed: ' . $errstr, 'error', ['host' => $smtpHost, 'port' => $smtpPort]);
+        return false;
+    }
+
+    /**
+     * Helper: read one line from SMTP server and return the 3-digit code.
+     */
+    $read = static function () use ($socket): array {
+        $line = '';
+        while (!feof($socket)) {
+            $chunk = fgets($socket, 515);
+            if ($chunk === false) {
+                break;
+            }
+            $line .= $chunk;
+            // Multi-line responses end when the 4th char is a space
+            if (isset($line[3]) && $line[3] === ' ') {
+                break;
+            }
+        }
+        return [(int)substr($line, 0, 3), $line];
+    };
+
+    /**
+     * Helper: send a command and check for expected response code.
+     */
+    $cmd = static function (string $command, int $expected) use ($socket, $read): bool {
+        fwrite($socket, $command . "\r\n");
+        [$code] = $read();
+        return $code === $expected;
+    };
+
+    // Read server greeting
+    [$code] = $read();
+    if ($code !== 220) {
+        fclose($socket);
+        return false;
+    }
+
+    $ehloHost = $_SERVER['HTTP_HOST'] ?? 'localhost';
+
+    // EHLO
+    if (!$cmd('EHLO ' . $ehloHost, 250)) {
+        fclose($socket);
+        return false;
+    }
+
+    // STARTTLS upgrade if requested
+    if ($smtpEncryption === 'tls') {
+        if (!$cmd('STARTTLS', 220)) {
+            fclose($socket);
+            return false;
+        }
+        if (!stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
+            fclose($socket);
+            return false;
+        }
+        // Re-send EHLO after TLS upgrade
+        if (!$cmd('EHLO ' . $ehloHost, 250)) {
+            fclose($socket);
+            return false;
+        }
+    }
+
+    // AUTH LOGIN
+    if ($smtpUser && $smtpPass) {
+        if (!$cmd('AUTH LOGIN', 334)) {
+            fclose($socket);
+            return false;
+        }
+        if (!$cmd(base64_encode($smtpUser), 334)) {
+            fclose($socket);
+            return false;
+        }
+        if (!$cmd(base64_encode($smtpPass), 235)) {
+            fclose($socket);
+            return false;
+        }
+    }
+
+    // Envelope
+    if (!$cmd('MAIL FROM:<' . $smtpFrom . '>', 250)) {
+        fclose($socket);
+        return false;
+    }
+    if (!$cmd('RCPT TO:<' . $to . '>', 250)) {
+        fclose($socket);
+        return false;
+    }
+    if (!$cmd('DATA', 354)) {
+        fclose($socket);
+        return false;
+    }
+
+    // Headers + body
+    $date    = date('r');
+    $headers = "Date: {$date}\r\n"
+             . "From: " . GAME_NAME . " <{$smtpFrom}>\r\n"
+             . "To: {$to}\r\n"
+             . "Subject: {$subject}\r\n"
+             . "MIME-Version: 1.0\r\n"
+             . "Content-Type: text/plain; charset=UTF-8\r\n"
+             . "Content-Transfer-Encoding: 8bit\r\n";
+
+    // Normalise line endings to CRLF, then dot-stuff: RFC 5321 §4.5.2 requires
+    // that any line beginning with '.' has an extra '.' prepended so the SMTP
+    // server does not interpret it as the end-of-data marker.
+    $bodyNorm    = str_replace(["\r\n", "\r", "\n"], "\r\n", $body);
+    $bodyEscaped = str_replace("\r\n.", "\r\n..", $bodyNorm);
+    fwrite($socket, $headers . "\r\n" . $bodyEscaped . "\r\n.\r\n");
+    [$code] = $read();
+    $sent = ($code === 250);
+
+    $cmd('QUIT', 221);
+    fclose($socket);
+
+    return $sent;
+}
