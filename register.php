@@ -59,7 +59,7 @@ if (array_key_exists('submit', $_POST) && $registration === 'open') {
         $errors[] = 'You didn\'t select a valid class';
     }
     if (!count($errors)) {
-        $validationCode = substr(md5(microtime(true)), 0, 15);
+        $validationCode = substr(md5((string)microtime(true)), 0, 15);
         $pass = password_hash($_POST['pass'], PASSWORD_BCRYPT);
         $db->trans('start');
         $db->query('INSERT INTO pending_validations (ip, username, password, email, class, validation_code) VALUES (?, ?, ?, ?, ?, ?)');
