@@ -97,21 +97,21 @@ if (count($errors)) {
 $csrf = csrf_create();
 ?><tr>
     <td class="content">
-        Use this form to add points to the points market.<br /><br />
-        <form action="pointmarket.php" method="post" class="pure-form pure-form-aligned">
+         <p>Use this form to add points to the points market.</p>
+        <form action="plugins/pointmarket.php" method="post" class="pure-form pure-form-aligned">
             <?php echo $csrf; ?>
             <fieldset>
                 <div class="pure-control-group">
-                    <label for="amount">Amount of points</label>
+                    <label for="amount">Amount of Points</label>
                     <input type="text" name="amount" id="amount" size="10" maxlength="20" value="<?php echo format($user_class->points); ?>" />
                 </div>
                 <div class="pure-control-group">
-                    <label for="price">Price per point</label>
+                    <label for="price">Price per Point</label>
                     $<input type="text" name="price" id="price" size="10" maxlength="20" />
                 </div>
             </fieldset>
             <div class="pure-controls">
-                <button type="submit" name="addpoints" class="pure-button pure-button-primary">Add Points</button>
+                <button type="submit" name="addpoints" class="pure-button pure-button-primary">Add Your Points</button>
             </div>
         </form>
     </td>
@@ -122,7 +122,7 @@ if ($rows !== null) {
         foreach ($rows as $row) {
             $user_points = new User($row['owner']);
             echo $user_points->formattedname; ?> - <?php echo format($row['amount']); ?> point<?php echo s($row['amount']); ?> for <?php echo prettynum($row['price'], true); ?> per point<br />
-            <form action="pointmarket.php" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/pointmarket.php" method="post" class="pure-form pure-form-aligned">
                 <?php echo $csrf; ?>
                 <input type="hidden" name="points_id" value="<?php echo $row['id']; ?>" />
                 <fieldset>
@@ -136,7 +136,7 @@ if ($rows !== null) {
             </form><?php
         }
     } else {
-        ?>There are no listings<?php
+        ?><p>There are no listings at this time.</p><?php
     }
 ?></td>
 </tr>
