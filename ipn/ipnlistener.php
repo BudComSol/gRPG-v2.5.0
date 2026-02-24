@@ -63,8 +63,8 @@ class ipnlistener
     private string $post_uri = '';
     private string $response_status = '';
     private string $response = '';
-    public const PAYPAL_HOST = 'www.paypal.com';
-    public const SANDBOX_HOST = 'www.sandbox.paypal.com';
+    public const PAYPAL_HOST = 'ipnpb.paypal.com';
+    public const SANDBOX_HOST = 'ipnpb.sandbox.paypal.com';
 
     /**
      *  Post Back Using cURL.
