@@ -9,7 +9,7 @@ if (!empty($_GET['buy'])) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
     if ($drug[$_GET['buy']]['cost'] > $user_class->money) {
-        $errors[] = '<p>You don\'t have enough money.</p>';
+        $errors[] = '<p>Sorry but you don\'t have enough money to buy drugs.</p>';
     }
     if (!count($errors)) {
         $db->query('UPDATE users SET money = GREATEST(money - ?, 0), '.$drug[$_GET['buy']]['col'].' = '.$drug[$_GET['buy']]['col'].' + 1 WHERE id = ?');
