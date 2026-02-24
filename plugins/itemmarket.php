@@ -53,10 +53,10 @@ if ($rows !== null) {
         $csrfg = csrf_create('csrfg', false);
         foreach ($rows as $row) {
             $user_item = new User($row['userid']);
-            echo '<a href="itemmarket.php?buy='.$row['id'].'&amp;csrfg='.$csrfg.'">'.($row['userid'] == $user_class->id ? 'Remove Item' : 'Buy').'</a> '.item_popup($row['itemid'], $row['name']).' - '.prettynum($row['cost'], true).' from '.$user_item->formattedname.'<br />';
+            echo '<a href="plugins/itemmarket.php?buy='.$row['id'].'&amp;csrfg='.$csrfg.'">'.($row['userid'] == $user_class->id ? 'Remove Item' : 'Buy').'</a> '.item_popup($row['itemid'], $row['name']).' - '.prettynum($row['cost'], true).' from '.$user_item->formattedname.'<br />';
         }
     } else {
-        ?>There are no items listed on the Item Market<?php
+        ?><p>There are no items listed in the Item Market at this time.</p><?php
     }
 ?></td>
 </tr>
