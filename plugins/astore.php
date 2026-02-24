@@ -32,7 +32,7 @@ if (!empty($_GET['buy'])) {
 $db->query('SELECT id, image, name, cost FROM items WHERE defense > 0 AND buyable = 1 ORDER BY defense ');
 $db->execute();
 if (!$db->count()) {
-    echo Message('There are currently no armors available', 'Error', true);
+    echo Message('<p>There are currently no armors available, add some.</p>', 'Error', true);
 }
 $rows = $db->fetch();
 ?><tr>
@@ -55,7 +55,7 @@ foreach ($rows as $row) {
                     <img src="<?php echo format($row['image']); ?>" width="100" height="100" class="shopitem" /><br />
                     <?php echo item_popup($row['id'], $row['name']); ?> [x1]<br />
                     <?php echo prettynum($row['cost'], true); ?><br />
-                    [<a href="astore.php?buy=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>">Buy</a>]
+                    [<a href="plugins/astore.php?buy=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>">Buy</a>]
                 </td><?php
     if (!($cnt % 4)) {
         ?></tr>
