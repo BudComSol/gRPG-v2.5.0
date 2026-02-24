@@ -20,24 +20,24 @@ if (!empty($_GET['token'])) {
             if (defined('CAPTCHA_FORGOT_PASS') && CAPTCHA_FORGOT_PASS == true) {
                 $_POST['captcha_code'] = array_key_exists('captcha_code', $_POST) && ctype_alnum($_POST['captcha_code']) ? $_POST['captcha_code'] : null;
                 if (empty($_POST['captcha_code'])) {
-                    $errors[] = 'You didn\'t enter a valid captcha code';
+                    $errors[] = 'You didn\'t enter a valid captcha code.';
                 } elseif (!$securimage->check($_POST['captcha_code'])) {
                     $errors[] = 'Invalid captcha code';
                 }
             }
             if (empty($_POST['email'])) {
-                $errors[] = 'You didn\'t enter a valid email address';
+                $errors[] = 'You didn\'t enter a valid email address.';
             }
             if ($_POST['email'] != $row['email']) {
                 $errors[] = 'Invalid token/email combination';
             }
             $_POST['pass'] = array_key_exists('pass', $_POST) && is_string($_POST['pass']) ? $_POST['pass'] : null;
             if (empty($_POST['pass'])) {
-                $errors[] = 'You didn\'t enter a valid password';
+                $errors[] = 'You didn\'t enter a valid password.';
             }
             $_POST['conf'] = array_key_exists('conf', $_POST) && is_string($_POST['conf']) ? $_POST['conf'] : null;
             if (empty($_POST['conf'])) {
-                $errors[] = 'You didn\'t enter a valid confirmation password';
+                $errors[] = 'You didn\'t enter a valid confirmation password.';
             }
             if ($_POST['pass'] !== $_POST['conf']) {
                 $errors[] = 'The passwords you entered didn\'t match';
@@ -106,7 +106,7 @@ if (array_key_exists('submit', $_POST)) {
         if (defined('CAPTCHA_FORGOT_PASS') && CAPTCHA_FORGOT_PASS == true) {
             $_POST['captcha_code'] = array_key_exists('captcha_code', $_POST) && ctype_alnum($_POST['captcha_code']) ? $_POST['captcha_code'] : null;
             if (empty($_POST['captcha_code'])) {
-                $errors[] = 'You didn\'t enter a valid captcha code';
+                $errors[] = 'You didn\'t enter a valid captcha code.';
             } elseif (!$securimage->check($_POST['captcha_code'])) {
                 $errors[] = 'Invalid captcha code';
             }
@@ -118,7 +118,7 @@ if (array_key_exists('submit', $_POST)) {
         $db->query('SELECT id, email FROM users WHERE username = ?');
         $db->execute([$_POST['name']]);
         if (empty($_POST['email'])) {
-            $errors[] = 'You didn\'t enter a valid email address';
+            $errors[] = 'You didn\'t enter a valid email address.';
         }
         $row = $db->fetch(true);
         $db->query('SELECT COUNT(id) FROM users WHERE email = ?');
@@ -155,17 +155,17 @@ if (count($errors)) {
         <?php echo csrf_create('step_1'); ?>
         <fieldset>
             <div class="pure-control-group">
-                <label for="name">Username</label>
+                <label for="name">Username:</label>
                 <input type="text" name="name" id="name" required autofocus />
             </div>
             <div class="pure-control-group">
-                <label for="email">Email</label>
+                <label for="email">Email:</label>
                 <input type="text" name="email" id="email" />
             </div><?php
             if (defined('CAPTCHA_FORGOT_PASS') && CAPTCHA_FORGOT_PASS == true) {
                 ?>
                 <div class="pure-control-group">
-                    <label for="captcha_code">Code</label>
+                    <label for="captcha_code">Code:</label>
                     <input type="text" name="captcha_code" size="20" maxlength="6" />
                 </div>
                 <div class="pure-control-group">
