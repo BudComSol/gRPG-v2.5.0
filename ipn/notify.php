@@ -55,8 +55,19 @@ if ($verified) {
     if ($_POST['mc_currency'] != RMSTORE_CURRENCY) { // Ensure sent currency matches game's RMStore currency
         sendError('Currency Mismatch: (expected: '.RMSTORE_CURRENCY.', got: '.$_POST['mc_currency'].')', $listener);
     }
-    if (empty($_POST['item_number']) || !ctype_digit($_POST['item_number'])) { // Validate item number is sent
+    if (empty($_POST['custom'])) { // Validate custom field is sent
+        sendError('UserID Not Supplied', $listener);
+    }
+    $customParts = explode(':', $_POST['custom'], 3); // Format: packId:buyerId:recipientId (set by rmstore.php via custom_id)
+    if (count($customParts) < 2 || !ctype_digit($customParts[0])) { // Validate pack ID
         sendError('Invalid Pack ID', $listener);
+    }
+    [$packId, $buyer, $recipient] = array_pad($customParts, 3, null); // Assign "custom" parts to easy variables
+    if (!$buyer) { // Validate buyer
+        sendError('Buyer ID not given', $listener);
+    }
+    if (!$recipient) {
+        $recipient = $buyer;
     }
     /*
      *    End main validation
@@ -64,7 +75,7 @@ if ($verified) {
      *    Start pack validation
     */
     $db->query('SELECT * FROM rmstore_packs WHERE id = ?'); // Grab pack details
-    $db->execute([$_POST['item_number']]);
+    $db->execute([$packId]);
     if (!$db->count()) {
         sendError('Invalid ID', $listener);
     }
@@ -75,16 +86,6 @@ if ($verified) {
     }
     if ($_POST['mc_gross'] != $cost) { // Validate payment amount
         sendError('Cost Mismatch', $listener);
-    }
-    if (empty($_POST['custom'])) { // Validate custom field is sent
-        sendError('UserID Not Supplied', $listener);
-    }
-    [$buyer, $recipient] = explode(':', $_POST['custom']); // Assign "custom" parts to easy variables
-    if (!$buyer) { // Validate buyer
-        sendError('Buyer ID not given', $listener);
-    }
-    if (!$recipient) {
-        $recipient = $buyer;
     }
     $db->query('SELECT username FROM users WHERE id = ?');
     $db->execute([$recipient]);
@@ -121,14 +122,14 @@ if ($verified) {
         }
     }
     $db->query('INSERT INTO rmstore_ipn (userid, recipient, transaction_id, payer_email, pack_id, pack_cost, paid_amount, discount) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-    $db->execute([$buyer, $recipient, $_POST['txn_id'], $_POST['payer_email'], $_POST['item_number'], $pack['cost'], $cost, RMSTORE_DISCOUNT]);
+    $db->execute([$buyer, $recipient, $_POST['txn_id'], $_POST['payer_email'], $packId, $pack['cost'], $cost, RMSTORE_DISCOUNT]);
     Send_Event($buyer, 'Your RMStore Upgrade has been credited to '.($buyRecSame ? 'you' : '{extra}').'', $buyRecSame ? 0 : $recipient);
     if (!$buyRecSame) {
         Send_Event($recipient, '{extra} purchased the RMStore Upgrade: '.format($pack['name']).' for you', $buyer);
     }
     global $owner;
     // Comment out the line below if you don't want owner to be notified via event upon successful transaction
-    Send_Event($owner->id, 'Donation from {extra}. Pack '.format($_POST['item_number']), $buyer);
+    Send_Event($owner->id, 'Donation from {extra}. Pack '.format($packId), $buyer);
     $db->trans('end');
     // Comment out the mail(...) line below if you *don't* want to be notified via email (to errors@yoursite.tld) on a successful transaction
     // Recommending you leave this active so if there's an issue with the IPN (for example, when PayPal updated their systems and almost every IPN went down), you'll be notified

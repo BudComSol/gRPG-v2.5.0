@@ -5,7 +5,7 @@ require_once __DIR__.'/../inc/header.php';
 $errors = [];
 if (array_key_exists('cancel', $_GET)) {
     echo Message('You\'ve cancelled your purchase');
-}[];
+}
 if (array_key_exists('success', $_GET)) {
     echo Message('Your purchase was successful');
 }
@@ -48,7 +48,7 @@ $packs = $db->fetch();
 <tr>
     <td class="content">
         <form action="/plugins/rmstore.php" method="post" class="pure-form pure-form-aligned">
-            <div class="pure-info-message"><p>You're currently purchasing an RMStore Upgrade for <?php echo $target->id == $user_class->id ? 'yourself' : $target->formattedname.'</p> <span class="small italic">- [<a href="plugins/rmstore.php?reset">Reset</a>]</span>'; ?></div>
+            <div class="pure-info-message"><p>You're currently purchasing an RMStore Upgrade for <?php echo $target->id == $user_class->id ? 'yourself' : $target->formattedname; ?></p><?php if ($target->id != $user_class->id) : ?> <span class="small italic">- [<a href="plugins/rmstore.php?reset">Reset</a>]</span><?php endif; ?></div>
             <?php echo csrf_create('custom_for'); ?>
             <div class="pure-control-group">
                 <label for="customer">Purchase upgrade for:</label>
@@ -103,22 +103,11 @@ if ($packs !== null) {
         } ?></td>
                         <td><?php echo $pack['cost'] == $cost ? formatCurrency($pack['cost']) : '<span class="strike">'.formatCurrency($pack['cost']).'</span><br /><span class="green">'.formatCurrency($cost).'</span>'; ?></td>
                         <td>
-                            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" class="pure-form" target="new">
-                                <input type="hidden" name="cmd" value="_xclick" />
-                                <input type="hidden" name="business" value="<?php echo PAYPAL_ADDRESS; ?>" />
-                                <input type="hidden" name="item_name" value="<?php echo $pack['name']; ?>" />
-                                <input type="hidden" name="item_number" value="<?php echo $pack['id']; ?>" />
-                                <input type="hidden" name="custom" value="<?php echo $user_class->id.':'.$_SESSION['customer']; ?>" />
-                                <input type="hidden" name="amount" value="<?php echo formatCurrency($cost, ''); ?>" />
-                                <input type="hidden" name="no_shipping" value="1" />
-                                <input type="hidden" name="no_note" value="1" />
-                                <input type="hidden" name="notify_url" value="<?php echo BASE_URL; ?>ipn/notify.php" />
-                                <input type="hidden" name="currency_code" value="<?php echo RMSTORE_CURRENCY; ?>" />
-                                <input type="hidden" name="return" value="<?php echo BASE_URL; ?>plugins/rmstore.php?success" />
-                                <input type="hidden" name="return_cancel" value="<?php echo BASE_URL; ?>plugins/rmstore.php?cancel" />
-                                <input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but23.gif" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!" />
-                                <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
-                            </form>
+                            <?php if (PAYPAL_CLIENT_ID) : ?>
+                            <div id="paypal-button-<?php echo $pack['id']; ?>"></div>
+                            <?php else : ?>
+                            <span style="color:orange;">PayPal not configured.<br>Set PAYPAL_CLIENT_ID in .env</span>
+                            <?php endif; ?>
                         </td>
                     </tr><?php
         }
@@ -140,4 +129,42 @@ if ($packs !== null) {
         1. NO Refunds.<br />
         2. And you can still be banned for breaking the rules whether you have donated or not.</p>
     </td>
-</tr>
+</tr><?php
+if (PAYPAL_CLIENT_ID && $packs !== null) : ?>
+<script src="https://www.paypal.com/sdk/js?client-id=<?php echo PAYPAL_CLIENT_ID; ?>&currency=<?php echo RMSTORE_CURRENCY; ?>"></script>
+<script>
+<?php foreach ($packs as $pp) :
+    $ppCost = $pp['cost'];
+    if (RMSTORE_DISCOUNT > 0) {
+        $ppCost -= ($pp['cost'] / 100) * RMSTORE_DISCOUNT;
+    }
+    $ppCost = number_format((float)$ppCost, 2, '.', '');
+?>
+paypal.Buttons({
+    createOrder: function(data, actions) {
+        return actions.order.create({
+            purchase_units: [{
+                reference_id: <?php echo json_encode((string)$pp['id']); ?>,
+                description: <?php echo json_encode($pp['name']); ?>,
+                custom_id: <?php echo json_encode($pp['id'] . ':' . $user_class->id . ':' . $_SESSION['customer']); ?>,
+                amount: {
+                    currency_code: <?php echo json_encode(RMSTORE_CURRENCY); ?>,
+                    value: <?php echo json_encode($ppCost); ?>
+                }
+            }]
+            // Note: IPN notify_url must be configured in your PayPal Developer Dashboard under
+            // App Settings > Webhooks/IPN, or in your PayPal account under Profile > Instant Payment Notifications
+        });
+    },
+    onApprove: function(data, actions) {
+        return actions.order.capture().then(function() {
+            window.location.href = <?php echo json_encode(BASE_URL . 'plugins/rmstore.php?success'); ?>;
+        });
+    },
+    onCancel: function(data) {
+        window.location.href = <?php echo json_encode(BASE_URL . 'plugins/rmstore.php?cancel'); ?>;
+    }
+}).render('#paypal-button-<?php echo $pp['id']; ?>');
+<?php endforeach; ?>
+</script>
+<?php endif; ?>
