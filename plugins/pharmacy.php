@@ -35,8 +35,8 @@ $csrfg = csrf_create('csrfg', false);
         <table width="100%" class="center">
             <tr>
                 <td width="25%">
-                    <img src="../images/pharmacy/boosty.png" width="100" height="100" style="border: 1px solid #333;">
-                     <p>Boosty Alert</p>
+                    <img src="../images/pharmacy/nodoze.png" width="100" height="100" style="border: 1px solid #333;">
+                     <p>NoDoze Pills</p>
                     <?php echo prettynum($drug['no-doze']['cost'], true); ?><br />
                      <a href="plugins/pharmacy.php?buy=No-Doze&amp;csrfg=<?php echo $csrfg; ?>"><p>Buy Drugs</p></a>
                 </td>
