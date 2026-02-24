@@ -5,7 +5,7 @@ require_once __DIR__.'/../inc/header.php';
     <th class="content-head">Citizen Search</th>
 </tr>
 <tr>
-    <td class="content">Find Citizens that meet your search criteria.</td>
+    <td class="content"><p>Find Citizens that meet your search criteria.</p></td>
 </tr><?php
 if (array_key_exists('search', $_POST)) {
     if (!csrf_check('csrf', $_POST)) {
@@ -62,19 +62,19 @@ if (array_key_exists('search', $_POST)) {
 }
 ?><tr>
     <td class="content">
-        <form action="search.php" method="post" class="pure-form pure-form-aligned">
+        <form action="plugins/search.php" method="post" class="pure-form pure-form-aligned">
             <?php echo csrf_create(); ?>
             <fieldset>
                 <div class="pure-control-group">
-                    <label for="level">Level</label>
-                    <input type="text" name="level" id="level" size="7" maxlength="10" /> to <input type="text" name="level2" size="7" maxlength="10" />(inclusive)
+                    <label for="level">Level:</label>
+                    <input type="text" name="level" id="level" size="7" maxlength="10" /> to <input type="text" name="level2" size="7" maxlength="10" /> (inclusive)
                 </div>
                 <div class="pure-control-group">
-                    <label for="money">Money</label>
-                    $<input type="text" name="money" id="money" size="12" maxlength="16" /> and more
+                    <label for="money">Money:</label>
+                    $ <input type="text" name="money" id="money" size="12" maxlength="16" /> (and more)
                 </div>
                 <div class="pure-control-group">
-                    <label for="attack">Attackable</label>
+                    <label for="attack">Attackable:</label>
                     <select name="attack" id="attack">
                         <option value="1">Yes</option>
                         <option value="0">No</option>
@@ -82,7 +82,7 @@ if (array_key_exists('search', $_POST)) {
                 </div>
             </fieldset>
             <div class="pure-controls">
-                <button type="submit" name="search" class="pure-button pure-button-primary">Search</button>
+                <button type="submit" name="search" class="pure-button pure-button-primary">Search For Citizen</button>
             </div>
         </form>
     </td>
