@@ -36,7 +36,7 @@ if (array_key_exists('pull', $_GET)) {
 <tr>
     <td class="content">
         <?php $csrfg = csrf_create('csrfg', false); ?>
-        <p>So, you fancy a try at the slot machine, well, it just <?php echo prettynum(100, true); ?> a pull, so have at it.</p>
+        <p>So, you fancy a try at the slot machine, well, its just <?php echo prettynum(100, true); ?> a pull, so have at it.</p>
         <a href="plugins/slots.php?pull=lever&amp;csrfg=<?php echo $csrfg; ?>"><p>Pull The Lever</p></a>
     </td>
 </tr>
