@@ -44,7 +44,7 @@ foreach ($rows as $row) {
         '.formatImage($row['image']).'<br />
         '.item_popup($row['id'], $row['name']).'<br />
         '.prettynum($row['cost'], true).'<br />
-        [<a href="store.php?buy='.$row['id'].'&amp;csrfg='.$csrfg.'">Buy</a>]
+        [<a href="plugins/store.php?buy='.$row['id'].'&amp;csrfg='.$csrfg.'">Buy</a>]
     </td>';
     ++$cnt;
     if (!($cnt % 4)) {
@@ -66,7 +66,7 @@ if ($cnt) {
             </tr>
         </table><?php
     } else {
-        ?>There are no weapons available<?php
+        ?><p>There are no weapons available at this time.</p><?php
     }
 ?></td>
 </tr>
