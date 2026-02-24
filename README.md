@@ -23,6 +23,20 @@ Text-based online RPG-MMORPG-PBBG
 
 **Note:** All dependencies are now included locally - no need for Composer, Docker or other package managers, making it much simpler to install in shared hosting, particularly with the easy peasy installer!
 
+### PayPal Implementation ###
+
+* You add your details in the .env file found in the root directory.
+* PAYPAL_ADDRESS="you@yourpaypal.com".
+* PAYPAL_CLIENT_ID=""   # get from developer.paypal.com/dashboard/applications/.
+* RMSTORE_CURRENCY="USD".
+* RMSTORE_LOCALE="en_US".
+* RMSTORE_DISCOUNT="0".
+* RMSTORE_BOGOF="false".
+* You will need to configure your IPN URL once in your PayPal account.
+* PayPal account → Profile → Selling tools → Instant Payment Notifications → Edit → set URL to https://yourgame.com/ipn/notify.php.
+
+**Note:** All dependencies are now included locally - no need for Composer, Docker or other package managers, making it much simpler to install in shared hosting, particularly with the easy peasy installer!
+
 ### Game Administration ###
 
 After installation, administrators can manage game content through the Staff Control Panel:
