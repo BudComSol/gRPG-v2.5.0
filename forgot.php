@@ -166,16 +166,16 @@ if (count($errors)) {
                 ?>
                 <div class="pure-control-group">
                     <label for="captcha_code">Code</label>
-                    <input type="text" name="captcha_code" size="10" maxlength="6" />
+                    <input type="text" name="captcha_code" size="20" maxlength="6" />
                 </div>
                 <div class="pure-control-group">
                     <img id="captcha" src="inc/securimage/securimage_show.php" alt="CAPTCHA Image" /><br />
-                    [<a href="#" onclick="document.getElementById('captcha').src = 'inc/securimage/securimage_show.php?' + Math.random(); return false">Different Image</a>]
+                        <a href="#" onclick="document.getElementById('captcha').src = 'inc/securimage/securimage_show.php?' + Math.random(); return false"><p>Click Here To Change Image</p></a>
                 </div> <?php
             } ?>
         </fieldset>
         <div class="pure-controls">
-            <button type="submit" name="submit" class="pure-button pure-button-primary">Send Reset Email Now</button>
+            <p><button type="submit" name="submit" class="pure-button pure-button-primary">Send Reset Email Now</button></p>
         </div>
     </form>
   </td>
