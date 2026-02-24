@@ -97,7 +97,7 @@ if (count($errors)) {
 $csrf = csrf_create();
 ?><tr>
     <td class="content">
-         <p>Use this form to add points to the points market.</p>
+         <p>Use This Form To Add Points To The Point Market.</p>
         <form action="plugins/pointmarket.php" method="post" class="pure-form pure-form-aligned">
             <?php echo $csrf; ?>
             <fieldset>
@@ -107,7 +107,7 @@ $csrf = csrf_create();
                 </div>
                 <div class="pure-control-group">
                     <label for="price">Price per Point</label>
-                    $<input type="text" name="price" id="price" size="10" maxlength="20" />
+                    $ <input type="text" name="price" id="price" size="10" maxlength="20" />
                 </div>
             </fieldset>
             <div class="pure-controls">
