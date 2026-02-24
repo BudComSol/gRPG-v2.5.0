@@ -11,12 +11,12 @@ $rank = 0;
 </tr>
 <tr>
     <td class="content">
-        <a href="halloffame.php?view=experience"<?php echo $_GET['view'] === 'experience' ? ' class="bold"' : ''; ?>>Level</a> |
-        <a href="halloffame.php?view=strength"<?php echo $_GET['view'] === 'strength' ? ' class="bold"' : ''; ?>>Strength</a> |
-        <a href="halloffame.php?view=defense"<?php echo $_GET['view'] === 'defense' ? ' class="bold"' : ''; ?>>Defense</a> |
-        <a href="halloffame.php?view=speed"<?php echo $_GET['view'] === 'speed' ? ' class="bold"' : ''; ?>>Speed</a> |
-        <a href="halloffame.php?view=money"<?php echo $_GET['view'] === 'money' ? ' class="bold"' : ''; ?>>Money</a> |
-        <a href="halloffame.php?view=points"<?php echo $_GET['view'] === 'points' ? ' class="bold"' : ''; ?>>Points</a>
+        <a href="plugins/halloffame.php?view=experience"<?php echo $_GET['view'] === 'experience' ? ' class="bold"' : ''; ?>>Level</a> |
+        <a href="plugins/halloffame.php?view=strength"<?php echo $_GET['view'] === 'strength' ? ' class="bold"' : ''; ?>>Strength</a> |
+        <a href="plugins/halloffame.php?view=defense"<?php echo $_GET['view'] === 'defense' ? ' class="bold"' : ''; ?>>Defense</a> |
+        <a href="plugins/halloffame.php?view=speed"<?php echo $_GET['view'] === 'speed' ? ' class="bold"' : ''; ?>>Speed</a> |
+        <a href="plugins/halloffame.php?view=money"<?php echo $_GET['view'] === 'money' ? ' class="bold"' : ''; ?>>Money</a> |
+        <a href="plugins/halloffame.php?view=points"<?php echo $_GET['view'] === 'points' ? ' class="bold"' : ''; ?>>Points</a>
     </td>
 </tr>
 <tr>
