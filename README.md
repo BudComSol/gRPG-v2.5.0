@@ -32,10 +32,8 @@ Text-based online RPG-MMORPG-PBBG
 * RMSTORE_LOCALE="en_US".
 * RMSTORE_DISCOUNT="0".
 * RMSTORE_BOGOF="false".
-* You will need to configure your IPN URL once in your PayPal account.
-* PayPal account → Profile → Selling tools → Instant Payment Notifications → Edit → set URL to https://yourgame.com/ipn/notify.php.
 
-**Note:** All dependencies are now included locally - no need for Composer, Docker or other package managers, making it much simpler to install in shared hosting, particularly with the easy peasy installer!
+**Note:** You will need to configure your IPN URL once in your PayPal account here: PayPal account → Profile → Selling tools → Instant Payment Notifications → Edit → set URL to https://yourgame.com/ipn/notify.php.
 
 ### Game Administration ###
 
