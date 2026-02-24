@@ -20,7 +20,7 @@ if (array_key_exists('takebet', $_POST)) {
     }
     $user_points = new User($worked['owner']);
     if ($worked['amount'] > $user_class->money) {
-        echo Message('You don\'t have enough money to match their bet.', 'Error', true);
+        echo Message('<p>You don\'t have enough money to match their bet.</p>', 'Error', true);
     }
     $db->trans('start');
     $db->query('UPDATE users SET money = GREATEST(money - ?, 0) WHERE id = ?');
@@ -49,7 +49,7 @@ if (array_key_exists('makebet', $_POST)) {
         echo Message('What\'s going on here?', 'Error', true);
     }
     if ($_POST['amount'] > $user_class->money) {
-        echo Message('You don\'t have that much money.', 'Error', true);
+        echo Message('<p>You don\'t have that much money.</p>', 'Error', true);
     }
     if ($_POST['amount'] < 1000) {
         echo Message('Please enter a valid amount of money.', 'Error', true);
@@ -61,7 +61,7 @@ if (array_key_exists('makebet', $_POST)) {
     $db->execute([$_POST['amount'], $user_class->id]);
     $db->trans('end');
     $user_class = new User($_SESSION['id']);
-    echo Message('You\'ve added'.prettynum($_POST['amount'], true));
+    echo Message('You\'ve added' .prettynum($_POST['amount'], true));
 }
 $db->query('SELECT id, owner, amount FROM 5050game ORDER BY amount DESC');
 $db->execute();
