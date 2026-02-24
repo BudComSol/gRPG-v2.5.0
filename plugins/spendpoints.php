@@ -5,10 +5,10 @@ $errors = [];
 $_GET['spend'] = array_key_exists('spend', $_GET) && in_array($_GET['spend'], ['energy', 'nerve', 'awake', 'HP']) ? $_GET['spend'] : null;
 if ($_GET['spend'] === 'energy') {
     if (10 > $user_class->points) {
-        $errors[] = 'You don\'t have enough points';
+        $errors[] = '<p>You don\'t have enough points  for this.</p>';
     }
     if ($user_class->energy == $user_class->maxenergy) {
-        $errors[] = 'You\'re already full of energy';
+        $errors[] = '<p>You\'re already full of energy chump.</p>';
     }
     if (!count($errors)) {
         $db->query('UPDATE users SET energy = ?, points = GREATEST(points - 10, 0) WHERE id = ?');
@@ -18,10 +18,10 @@ if ($_GET['spend'] === 'energy') {
 }
 if ($_GET['spend'] === 'nerve') {
     if (10 > $user_class->points) {
-        $errors[] = 'You don\'t have enough points';
+        $errors[] = '<p>You don\'t have enough points for this.</p>';
     }
     if ($user_class->nerve == $user_class->maxnerve) {
-        $errors[] = 'You\'re already as brave as you\'re gonna get';
+        $errors[] = '<p>You\'re already as brave as you\'re gonna get chump.</p>';
     }
     if (!count($errors)) {
         $db->query('UPDATE users SET nerve = ?, points = GREATEST(points - 10, 0) WHERE id = ?');
@@ -31,10 +31,10 @@ if ($_GET['spend'] === 'nerve') {
 }
 if ($_GET['spend'] === 'awake') {
     if (10 > $user_class->points) {
-        $errors[] = 'You don\'t have enough points';
+        $errors[] = '<p>You don\'t have enough points for this.</p>';
     }
     if ($user_class->awake == $user_class->maxawake) {
-        $errors[] = 'You\'re already as brave as you\'re gonna get';
+        $errors[] = '<p>You\'re already as brave as you\'re gonna get chump.</p>';
     }
     if (!count($errors)) {
         $db->query('UPDATE users SET awake = ?, points = GREATEST(points - 10, 0) WHERE id = ?');
@@ -44,10 +44,10 @@ if ($_GET['spend'] === 'awake') {
 }
 if ($_GET['spend'] === 'HP') {
     if (10 > $user_class->points) {
-        $errors[] = 'You don\'t have enough points';
+        $errors[] = '<p>You don\'t have enough points for this.</p>';
     }
     if ($user_class->hp == $user_class->maxhp) {
-        $errors[] = 'You\'re already as healthy as you\'re gonna get';
+        $errors[] = '<p>You\'re already as healthy as you\'re gonna get chump.</p>';
     }
     if (!count($errors)) {
         $db->query('UPDATE users SET hp = ?, points = GREATEST(points - 10, 0) WHERE id = ?');
@@ -62,27 +62,27 @@ if (count($errors)) {
     display_errors($errors);
 }
 ?><tr>
-    <td class="content">Welcome to the Point Shop, here you can spend your points on various things.</td>
+    <td class="content"><p>Welcome to the Point Shop, here you can spend your points on various things.</p></td>
 </tr>
 <tr>
     <td class="content">
         <table width="100%" class="pure-table pure-table-horizontal">
             <tr>
-                <td><a href="spendpoints.php?spend=energy">Refil Energy</a></td>
+                <td><a href="plugins/spendpoints.php?spend=HP">Refill HP</a></td>
+                <td> - 10 Points</td>
+            </tr>            
+            <tr>
+                <td><a href="plugins/spendpoints.php?spend=nerve">Refill Nerve</a></td>
                 <td> - 10 Points</td>
             </tr>
             <tr>
-                <td><a href="spendpoints.php?spend=nerve">Refil Nerve</a></td>
+                <td><a href="plugins/spendpoints.php?spend=awake">Refill Awake</a></td>
                 <td> - 10 Points</td>
             </tr>
             <tr>
-                <td><a href="spendpoints.php?spend=awake">Refil Awake</a></td>
+                <td><a href="plugins/spendpoints.php?spend=energy">Refill Energy</a></td>
                 <td> - 10 Points</td>
-            </tr>
-            <tr>
-                <td><a href="spendpoints.php?spend=HP">Refil HP</a></td>
-                <td> - 10 Points</td>
-            </tr>
+            </tr>            
         </table>
     </td>
 </tr>
