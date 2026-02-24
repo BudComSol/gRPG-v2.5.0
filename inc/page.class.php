@@ -17,7 +17,8 @@ if (!defined('GRPG_INC')) {
 class Paginator
 {
     public int $current_page = 1;
-    public int|string $items_per_page = 0;
+    /** @var int|string */
+    public $items_per_page = 0;
     public int $limit_end = 0;
     public int $limit_start = 0;
     public float $num_pages = 0;
