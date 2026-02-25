@@ -13,18 +13,18 @@ if (array_key_exists('submit', $_POST) && $registration === 'open') {
     if (defined('CAPTCHA_REGISTRATION') && CAPTCHA_REGISTRATION == true) {
         $_POST['captcha_code'] = array_key_exists('captcha_code', $_POST) && ctype_alnum($_POST['captcha_code']) ? $_POST['captcha_code'] : null;
         if (empty($_POST['captcha_code'])) {
-            $errors[] = 'You didn\'t enter a valid captcha code';
+            $errors[] = 'You didn\'t enter a valid captcha code.';
         } elseif (!$securimage->check($_POST['captcha_code'])) {
             $errors[] = 'Invalid captcha code';
         }
     }
     $_POST['username'] = array_key_exists('username', $_POST) && is_string($_POST['username']) ? strip_tags(trim($_POST['username'])) : null;
     if (empty($_POST['username'])) {
-        $errors[] = 'You didn\'t enter a valid name';
+        $errors[] = 'You didn\'t enter a valid name.';
     } else {
         $len = strlen($_POST['username']);
         if ($len < 4 || $len > 20) {
-            $errors[] = 'Usernames must be between 4 and 20 characters';
+            $errors[] = 'Usernames must be between 4 and 20 characters.';
         }
         $db->query('SELECT COUNT(id) FROM users WHERE username = ?');
         $db->execute([$_POST['username']]);
@@ -34,24 +34,24 @@ if (array_key_exists('submit', $_POST) && $registration === 'open') {
         $db->query('SELECT COUNT(id) FROM pending_validations WHERE LOWER(username) = ?');
         $db->execute([strtolower($_POST['username'])]);
         if ($db->result()) {
-            $errors[] = 'That username has already been taken';
+            $errors[] = 'That username has already been taken.';
         }
     }
     $signuptime = time();
     $_POST['pass'] = array_key_exists('pass', $_POST) && is_string($_POST['pass']) ? $_POST['pass'] : null;
     if (empty($_POST['pass'])) {
-        $errors[] = 'You didn\'t enter a valid password';
+        $errors[] = 'You didn\'t enter a valid password.';
     }
     $_POST['conf_pass'] = array_key_exists('conf_pass', $_POST) && is_string($_POST['conf_pass']) ? $_POST['conf_pass'] : null;
     if (empty($_POST['conf_pass'])) {
-        $errors[] = 'You didn\'t enter a valid confirmation password';
+        $errors[] = 'You didn\'t enter a valid confirmation password.';
     }
     if ($_POST['pass'] !== $_POST['conf_pass']) {
-        $errors[] = 'The passwords you entered didn\'t match. Passwords are case-sensitive';
+        $errors[] = 'The passwords you entered didn\'t match, passwords are case-sensitive.';
     }
     $_POST['email'] = array_key_exists('email', $_POST) && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) ? $_POST['email'] : null;
     if (empty($_POST['email'])) {
-        $errors[] = 'You didn\'t enter a valid email address';
+        $errors[] = 'You didn\'t enter a valid email address.';
     } else {
         $db->query('SELECT COUNT(id) FROM users WHERE email = ?');
         $db->execute([$_POST['email']]);
@@ -61,7 +61,7 @@ if (array_key_exists('submit', $_POST) && $registration === 'open') {
         $db->query('SELECT COUNT(id) FROM pending_validations WHERE email = ?');
         $db->execute([$_POST['email']]);
         if ($db->result()) {
-            $errors[] = 'That email is already in use';
+            $errors[] = 'That email is already in use.';
         }
     }
     $_POST['class'] = array_key_exists('class', $_POST) && in_array($_POST['class'], $classes) ? $_POST['class'] : null;
@@ -69,7 +69,7 @@ if (array_key_exists('submit', $_POST) && $registration === 'open') {
         $errors[] = 'You didn\'t select a valid class';
     }
     if (!array_key_exists('agree_terms', $_POST) || $_POST['agree_terms'] !== '1') {
-        $errors[] = 'You must agree to the Terms of Service to register';
+        $errors[] = '<p>You must agree to the Terms of Service to register.</p>';
     }
     if (!count($errors)) {
         $validationCode = substr(md5((string)microtime(true)), 0, 15);
@@ -141,7 +141,6 @@ foreach ($classes as $opt) {
                 </div>
             </fieldset>
 <fieldset>
-<legend><a href="terms.php" target="_blank">Terms of Service</a></legend>
     <div class="pure-controls">
         <label for="agree_terms">I agree to the <a href="terms.php" target="_blank">Terms of Service</a></label>
         <input type="checkbox" name="agree_terms" id="agree_terms" value="1" />
