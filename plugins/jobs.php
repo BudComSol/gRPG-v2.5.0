@@ -108,7 +108,7 @@ if ($rows !== null) {
         }
     } else {
         ?><tr>
-                    <td colspan="4" class="center">There are no jobs going</td>
+                    <td colspan="4" class="center"><p>Times are tough, there are no jobs going at the moment.</p></td>
                 </tr><?php
     }
 ?></table>
