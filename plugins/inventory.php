@@ -16,7 +16,7 @@ if ($user_class->eqweapon) {
                     <?php echo item_popup($user_class->eqweapon, $user_class->weaponname); ?><br />
                     [<a href="equip.php?unequip=weapon&amp;csrfg=<?php echo $csrfg; ?>">Unequip</a>]<?php
 } else {
-        ?>You don't have a weapon equipped<?php
+        ?><p>You Don't Have A Weapon Equipped.</p><?php
     }
 ?></td>
                 <td width="50%"><?php
@@ -25,7 +25,7 @@ if ($user_class->eqarmor) {
                     <?php echo item_popup($user_class->eqarmor, $user_class->armorname); ?><br />
                     [<a href="equip.php?unequip=armor&amp;csrfg=<?php echo $csrfg; ?>">Unequip</a>]<?php
 } else {
-        ?>You don't have any armor equipped<?php
+        ?><p>You Don't Have Any Armor Equipped.</p><?php
     }
 ?></td>
             </tr>
@@ -39,7 +39,7 @@ WHERE userid = ?
 ORDER BY name ');
 $db->execute([$user_class->id]);
 if (!$db->count()) {
-    echo Message('You don\'t have any items', 'Error', true);
+    echo Message('<p>You don\'t have any items at this time.</p>', 'Error', true);
 }
 $rows = $db->fetch();
 $weaponsCnt = 0;
