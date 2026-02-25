@@ -3,6 +3,7 @@ declare(strict_types=1);
 define('STAFF_FILE', true);
 global $parser;
 require_once __DIR__.'/../inc/header.php';
+require_once __DIR__.'/../inc/page.class.php';
 if (isset($_SESSION['msg'])) {
     echo Message($_SESSION['msg'], 'Success');
     unset($_SESSION['msg']);
@@ -17,7 +18,7 @@ if ($user_class->admin != 1) {
     echo Message("You don't have access", 'Error', true);
 }
 require_once __DIR__.'/../inc/jbbcode/Parser.php';
-switch ($_GET['action']) {
+switch ($_GET['action'] ?? null) {
     case 'respond':
         if (empty($_GET['id'])) {
             echo Message("You didn't supply a valid ticket ID", 'Warning');
