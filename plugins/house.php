@@ -35,7 +35,7 @@ $rows = $db->fetch();
 </tr><?php
 if ($user_class->house > 0) {
     ?><tr>
-        <td class="content center"><a href="house.php?action=sell">Sell Your House</a></td>
+        <td class="content center"><a href="plugins/house.php?action=sell">Sell Your House</a></td>
     </tr><?php
 }
 ?><tr>
@@ -56,12 +56,12 @@ if ($rows !== null) {
                     <td><?php echo format($row['name']); ?></td>
                     <td><?php echo format($row['awake']); ?></td>
                     <td><?php echo prettynum($row['cost'], true); ?></td>
-                    <td><?php echo $row['id'] > $user_class->house ? '<a href="house.php?buy='.$row['id'].'&amp;csrfg='.$csrfg.'">Move In</a>' : '&nbsp;'; ?></td>
+                    <td><?php echo $row['id'] > $user_class->house ? '<a href="plugins/house.php?buy='.$row['id'].'&amp;csrfg='.$csrfg.'">Move In</a>' : '&nbsp;'; ?></td>
                 </tr><?php
         }
     } else {
         ?><tr>
-                    <td colspan="4" class="center">There are no properties</td>
+                    <td colspan="4" class="center"><p>Sorry But There Are No Properties At This Time.</p></td>
                 </tr><?php
     }
 ?></table>
