@@ -68,6 +68,9 @@ if (array_key_exists('submit', $_POST) && $registration === 'open') {
     if (empty($_POST['class'])) {
         $errors[] = 'You didn\'t select a valid class';
     }
+    if (!array_key_exists('agree_terms', $_POST) || $_POST['agree_terms'] !== '1') {
+        $errors[] = 'You must agree to the Terms of Service to register';
+    }
     if (!count($errors)) {
         $validationCode = substr(md5((string)microtime(true)), 0, 15);
         $pass = password_hash($_POST['pass'], PASSWORD_BCRYPT);
@@ -136,7 +139,14 @@ foreach ($classes as $opt) {
             printf('<option value="%1$s">%1$s</option>', $opt);
         } ?></select>
                 </div>
-            </fieldset><?php
+            </fieldset>
+<fieldset>
+<legend>Terms of Service</legend>
+    <div class="pure-control-group">
+        <label for="agree_terms">Agree to Terms</label>
+        <input type="checkbox" name="agree_terms" id="agree_terms" value="1" /><label for="agree_terms"> I agree to the <a href="terms.php" target="_blank">Terms of Service</a></label>
+    </div>
+</fieldset><?php
 if (defined('CAPTCHA_REGISTRATION') && CAPTCHA_REGISTRATION == true) {
             ?><fieldset>
 <legend>Captcha</legend>
