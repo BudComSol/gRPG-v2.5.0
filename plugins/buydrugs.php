@@ -52,13 +52,15 @@ if ($user_class->rmdays) {
     $csrfg = csrf_create('csrfg', false); ?>Hey there buddy. Want to buy some cocaine? It'll make you faster and help you pull off those bigger crimes! Best of all it will last you 15 minutes!<br />
         Cocaine is only <?php echo prettynum($cost, true); ?>, so what are you waiting for? Or perhaps you want to get into the drug dealing business yourself...<br />
         For <?php echo prettynum($cost, true); ?> I will give enough seeds to plant an acre of sweet sticky weed. I will also buy weed at <?php echo prettynum(100, true); ?> and ounce.<br /><br />
-        <a href="buydrugs.php?buy=cocaine&amp;csrfg=<?php echo $csrfg; ?>">Buy Cocaine</a> |
-        <a href="buydrugs.php?buy=potseeds&amp;csrfg=<?php echo $csrfg; ?>">Buy Marijuana Seeds</a> |
-        <a href="buydrugs.php?sell=pot&amp;csrfg=<?php echo $csrfg; ?>">Sell all Weed</a> |
-        <a href="city.php">You're a bad man, I'm leaving!</a><?php
+        <a href="plugins/buydrugs.php?buy=cocaine&amp;csrfg=<?php echo $csrfg; ?>">Buy Cocaine</a> |
+        <a href="plugins/buydrugs.php?buy=potseeds&amp;csrfg=<?php echo $csrfg; ?>">Buy Marijuana Seeds</a> |
+        <a href="plugins/buydrugs.php?sell=pot&amp;csrfg=<?php echo $csrfg; ?>">Sell all Weed</a> |
+        <a href="plugins/city.php">You're a bad man, I'm leaving!</a><?php
 } else {
-        ?>Hmm... How do I know you won't squeal? You aren't respected enough to buy from me. Come back when you are a respected citizen.<br /><br />
-        <a href="city.php">Back to the city</a><?php
+        ?><p>Hmm... How do I know you won't squeal?</p>
+        <p>You aren't respected enough to buy from me at this time.</p>
+        <p>Come back when you are a respected citizen and we will see what we can do.</p>
+        <p><a href="plugins/city.php">Back to City</a></p><?php
     }
 ?></td>
 </tr>
