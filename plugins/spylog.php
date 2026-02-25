@@ -33,7 +33,7 @@ if ($rows !== null) {
         }
     } else {
         ?><tr>
-                    <td colspan="7" class="center">You haven't hired a Private Investigator yet</td>
+                    <td colspan="7" class="center"><p>You haven't hired a Private Investigator yet.</p></td>
                 </tr><?php
     }
 ?></table>
