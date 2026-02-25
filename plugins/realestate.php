@@ -40,7 +40,7 @@ if (array_key_exists('buyland', $_POST)) {
 </tr>
 <tr>
     <td class="content">
-        <p>Land available from REAG in <?php echo format($user_class->cityname); ?>: <?php echo format($row['landleft']); ?> acre<?php echo s($row['landleft' . '</p>']);
+        <p>Land available from REAG in <?php echo format($user_class->cityname); ?>: <?php echo format($row['landleft']); ?> acre<?php echo s($row['landleft']); ?></p><?php
 if ($row['landleft'] > 0) {
     ?><form action="plugins/realestate.php" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create(); ?>
