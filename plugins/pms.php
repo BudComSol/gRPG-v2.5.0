@@ -32,7 +32,7 @@ if (array_key_exists('deleteall', $_GET)) {
         $errors[] = '<p>You don\'t have any message to delete.</p>';
     }
     if (!count($errors)) {
-        $db->query('DELETE FROM pms WHERE recipient = ? AND viewed = 1');
+        $db->query('DELETE FROM pms WHERE recipient = ?');
         $db->execute([$user_class->id]);
         echo Message(format($cnt).' message'.s($cnt).' deleted');
     }
@@ -76,12 +76,14 @@ if (!empty($_GET['reply'])) {
     $db->execute([$_GET['reply']]);
     if (!$db->count()) {
         $errors[] = '<p>The message you selected doesn\'t exist.</p>';
+    } else {
+        $mes = $db->fetch(true);
+        if ($mes['recipient'] != $user_class->id) {
+            $errors[] = '<p>That isn\'t your message.</p>';
+        } else {
+            $reply_class = new User($mes['sender']);
+        }
     }
-    $mes = $db->fetch(true);
-    if ($mes['recipient'] != $user_class->id) {
-        $errors[] = '<p>That isn\'t your message.</p>';
-    }
-    $reply_class = new User($mes['sender']);
 }
 $db->query('SELECT * FROM pms WHERE recipient = ? ORDER BY timesent DESC');
 $db->execute([$user_class->id]);
@@ -109,7 +111,7 @@ $replyTo = isset($reply_class) ? $reply_class->username : '';
                 </div>
                 <div class="pure-control-group">
                     <label for="subject">Subject:</label>
-                    <input type="text" name="subject" id="subject" size="35" maxlength="75" value="<?php echo isset($mes) ? 'Re: '.ltrim('Re: ', format($mes['subject'])) : null; ?>" />
+                    <input type="text" name="subject" id="subject" size="35" maxlength="75" value="<?php echo isset($mes) ? 'Re: '.ltrim(format($mes['subject']), 'Re: ') : null; ?>" />
                 </div>
                 <div class="pure-control-group">
                     <label for="msgtext">Message:</label>
