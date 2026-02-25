@@ -129,7 +129,7 @@ $replyTo = isset($reply_class) ? $reply_class->username : '';
         <table width="100%" class="pure-table pure-table-horizontal">
             <thead>
                 <tr>
-                    <td width="25%">Time Received</td>
+                    <td width="25%">Received</td>
                     <td width="25%">Subject</td>
                     <td width="25%">From</td>
                     <td width="20%">Viewed</td>
