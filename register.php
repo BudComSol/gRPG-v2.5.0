@@ -141,10 +141,10 @@ foreach ($classes as $opt) {
                 </div>
             </fieldset>
 <fieldset>
-<legend>Terms of Service</legend>
-    <div class="pure-control-group">
-        <label for="agree_terms">Agree to Terms</label>
-        <input type="checkbox" name="agree_terms" id="agree_terms" value="1" /><label for="agree_terms"> I agree to the <a href="terms.php" target="_blank">Terms of Service</a></label>
+<legend><a href="terms.php" target="_blank">Terms of Service</a></legend>
+    <div class="pure-controls">
+        <label for="agree_terms">I agree to the <a href="terms.php" target="_blank">Terms of Service</a></label>
+        <input type="checkbox" name="agree_terms" id="agree_terms" value="1" />
     </div>
 </fieldset><?php
 if (defined('CAPTCHA_REGISTRATION') && CAPTCHA_REGISTRATION == true) {
