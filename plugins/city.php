@@ -96,7 +96,7 @@ for ($i = 1; $i <= 3; ++$i) {
             <td class="top" style="padding-bottom:10px;">
                     <h3 style="padding:0;margin:0;font-size:1.4em;">Southside</h3><br />
                     <a href="plugins/gang_list.php">Gangs</a><br />
-                    <a href="<?php echo !$user_class->gang ? 'create' : ''; ?>gang.php">Your Gang</a><br />                    
+                    <a href="<?php echo !$user_class->gang ? 'create' : ''; ?>plugins/gang.php">Your Gang</a><br />                    
                     <a href="plugins/jobs.php">Jobs Center</a><br />                                        
                     <a href="plugins/realestate.php">Real Estate Agency</a>
                 </td>
