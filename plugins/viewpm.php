@@ -9,10 +9,10 @@ if (empty($_GET['id'])) {
 }
 $db->query('SELECT id, recipient, sender, subject, msgtext, timesent FROM pms WHERE id = ?');
 $db->execute([$_GET['id']]);
-if (!$db->count()) {
+$row = $db->fetch(true);
+if ($row === null) {
     echo Message('The message you selected doesn\'t exist', 'Error', true);
 }
-$row = $db->fetch(true);
 if ($row['recipient'] != $user_class->id) {
     echo Message('This isn\'t your message', 'Error', true);
 }
@@ -34,7 +34,7 @@ $csrfg = csrf_create('csrfg', false);
             </tr>
             <tr>
                 <td>Received:</td>
-                <td colspan="3"><?php echo date('F d, Y g:i:sa', $row['timesent']); ?></td>
+                <td colspan="3"><?php echo date('F d, Y g:i:sa', (int)$row['timesent']); ?></td>
             </tr>
             <tr>
                 <td colspan="4" class="textm">Message:<hr /><?php echo nl2br(format($row['msgtext'])); ?></td>

@@ -140,7 +140,7 @@ if ($rows !== null) {
         $csrfg = csrf_create('csrfg', false);
         foreach ($rows as $row) {
             $from_user_class = new User($row['sender']); ?><tr>
-                    <td><?php echo date('F d, Y g:i:sa', $row['timesent']); ?></td>
+                    <td><?php echo date('F d, Y g:i:sa', (int)$row['timesent']); ?></td>
                     <td><a href="plugins/viewpm.php?id=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><?php echo $row['subject'] ? format($row['subject']) : 'No subject'; ?></a></td>
                     <td><?php echo $from_user_class->formattedname; ?></td>
                     <td><?php echo !$row['viewed'] ? 'No' : 'Yes'; ?></td>
