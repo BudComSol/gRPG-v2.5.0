@@ -5,7 +5,7 @@ $db->query('SELECT id FROM users WHERE admin > 0 ORDER BY admin , id ');
 $db->execute();
 $rows = $db->fetch();
 ?><tr>
-    <th class="content-head">Town Hall (Staff)</th>
+    <th class="content-head">Our Friendly Staff</th>
 </tr>
 <tr>
     <td class="content"><?php
