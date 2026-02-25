@@ -2,7 +2,7 @@
 declare(strict_types=1);
 require_once __DIR__.'/../inc/header.php';
 if (!$user_class->searchdowntown) {
-    echo Message('You\'ve already searched down town as much as you can today', 'Error', true);
+    echo Message('<p>You\'ve already searched down town as much as you can today.</p>', 'Error', true);
 }
 ?><tr>
     <th class="content-head">Search Downtown</th>
@@ -14,10 +14,10 @@ $ret = '';
 for ($i = 1; $i <= 100; ++$i) {
     $rand = mt_rand(0, 20);
     $total += $rand;
-    $ret .= $i.') '.($rand ? 'You found '.prettynum($rand, true) : 'You didn\'t find anything').'<br />';
+    $ret .= $i.') '.($rand ? 'You found '.prettynum($rand, true) : '<p>Krap, you didn\'t find anything today.</p>').'<br />';
 }
 $db->query('UPDATE users SET money = money + ?, searchdowntown = 0 WHERE id = ?');
 $db->execute([$total, $user_class->id]);
-?>You found a total of <?php echo prettynum($total, true); ?> whilst searching down town
+?><p>You found a total of <?php echo prettynum($total, true); ?> whilst searching downtown.</p>
     </td>
 </tr>
