@@ -45,7 +45,9 @@ $rows = $db->fetch();
 </tr>
 <tr>
     <td class="content">
-        Welcome! We are here to help further your wealth, so if there is anything we can do, just let us know! Please keep in mind that we will be charging a 10% transaction fee on your stock exchange when you buy or sell. Thanks for being so understanding!
+        <p>We are here to help further your wealth, if there is anything we can do, just let us know.</p>
+        <p>Keep in mind that we charge a 10% transaction fee on your stock exchange when trading.</p>
+        <p>Thanks for being so understanding!</p>
     </td>
 </tr>
 
@@ -69,7 +71,7 @@ if ($rows !== null) {
                     <td><?php echo format($row['company_name']); ?></td>
                     <td><?php echo prettynum($row['cost'], true); ?></td>
                     <td>
-                        <form action="brokerage.php" method="post" class="pure-form pure-form-aligned">
+                        <form action="plugins/brokerage.php" method="post" class="pure-form pure-form-aligned">
                             <?php echo $csrf; ?>
                             <input type="hidden" name="stocks_id" value="<?php echo $row['id']; ?>" />
                             <fieldset>
@@ -86,7 +88,7 @@ if ($rows !== null) {
         }
     } else {
         ?><tr>
-                    <td colspan="4" class="center">There are currently no stocks</td>
+                    <td colspan="4" class="center"><p>There are currently no stocks in your portfolio.</p></td>
                 </tr><?php
     }
 ?></table>
