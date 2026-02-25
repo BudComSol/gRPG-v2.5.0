@@ -100,7 +100,7 @@ function ticketIndex($db)
                 } ?><tr>
                     <td>#<?php echo format($row['id']); ?></td>
                     <td>
-                        <a href="managetickets.php?action=view&amp;id=<?php echo $row['id']; ?>"><?php echo format($row['subject']); ?></a><br />
+                        <a href="plugins/managetickets.php?action=view&amp;id=<?php echo $row['id']; ?>"><?php echo format($row['subject']); ?></a><br />
                         <strong>Reporter:</strong> <?php echo $reporter->formattedname; ?><br /><?php
                         if ($row['status'] !== 'closed') {
                             echo '<strong>Last Responder:</strong> '.$responder->formattedname;
@@ -108,7 +108,7 @@ function ticketIndex($db)
                     <td><?php echo $date->format('d F Y, g:i:sa'); ?></td>
                     <td><?php
                     if ($row['status'] !== 'closed') {
-                        ?><form action="managetickets.php?action=status&amp;id=<?php echo $row['id']; ?>" method="post"><?php
+                        ?><form action="plugins/managetickets.php?action=status&amp;id=<?php echo $row['id']; ?>" method="post"><?php
                             $opts = [
                                 'open' => '<span class="red">Open</span>',
                                 'pending' => '<span class="orange">Pending</span>',
@@ -145,7 +145,7 @@ function changeTicketStatus($db)
     $db->trans('start');
     $db->query('UPDATE tickets SET status = ? WHERE id = ?');
     $db->execute([$_POST['status'], $_GET['id']]);
-    Send_Event($row['userid'], 'Your ticket (<a href="tickets.php?action=view&amp;id='.$_GET['id'].'">ID #'.format($_GET['id']).'</a>) has been marked as '.ucfirst(strtolower($_POST['status'])));
+    Send_Event($row['userid'], 'Your ticket (<a href="plugins/tickets.php?action=view&amp;id='.$_GET['id'].'">ID #'.format($_GET['id']).'</a>) has been marked as '.ucfirst(strtolower($_POST['status'])));
     $_SESSION['msg'] = 'You\'ve marked ticket ID #'.$_GET['id'].' as '.ucfirst(strtolower($_POST['status']));
     $db->query('INSERT INTO ticketreplies (ticketid, userid, body) VALUES (?, 0, ?)');
     $db->execute([$_GET['id'], 'Ticket marked as '.strtolower($_POST['status']).' by staff']);
@@ -169,15 +169,15 @@ function viewTicket($db, $parser)
     $db->execute([$_GET['id']]);
     $rows = $db->fetch(); ?><table id='mttable' width='100%'>
         <tr>
-            <th colspan="2"><?php echo format($row['subject']); ?> (by <?php echo $reporter->formattedname; ?>) [<a href="managetickets.php?action=assign&amp;id=<?php echo $_GET['id']; ?>">Reassign ticket</a>]</th>
+            <th colspan="2"><?php echo format($row['subject']); ?> (by <?php echo $reporter->formattedname; ?>) [<a href="plugins/managetickets.php?action=assign&amp;id=<?php echo $_GET['id']; ?>">Reassign Ticket</a>]</th>
         </tr>
         <tr>
             <td colspan="2"><?php echo format($row['body'], true); ?></td>
         </tr>
         <tr>
-            <th>Mark Ticket</th>
+          <th>Mark Ticket</th>
             <td>
-                <form action="managetickets.php?action=status&amp;id=<?php echo $_GET['id']; ?>&amp;view=true" method="post" class="pure-form">
+                <form action="plugins/managetickets.php?action=status&amp;id=<?php echo $_GET['id']; ?>&amp;view=true" method="post" class="pure-form">
                     <div class="pure-control-group">
                         <label for="status">Status</label><?php
                         $opts = [
@@ -188,7 +188,7 @@ function viewTicket($db, $parser)
     foreach ($opts as $opt => $disp) {
         printf('<input type="radio" name="status" value="%s"%s /> %s&nbsp;&nbsp;', $opt, $opt == $row['status'] ? ' checked' : '', $disp);
     } ?>&nbsp;&nbsp;
-                    </div>
+                    </div><br>
                     <div class="pure-controls">
                         <button type="submit" name="submit" class="pure-button pure-button-primary">Change Status</button>
                     </div>
@@ -196,15 +196,14 @@ function viewTicket($db, $parser)
             </td>
         </tr>
         <tr>
-            <th width="25%">Response</th>
+            <th width="25%">Response:</th>
             <td width="75%">
-                <form action="managetickets.php?action=respond&amp;id=<?php echo $_GET['id']; ?>" method="post" class="pure-form pure-form-aligned">
-                    <div class="pure-control-group">
-                        <label for="response">Response</label>
-                        <textarea name="response" id="response" rows="12" cols="70"></textarea>
+                <form action="plugins/managetickets.php?action=respond&amp;id=<?php echo $_GET['id']; ?>" method="post" class="pure-form pure-form-aligned">
+                    <div class="pure-control-group">                        
+                        <textarea name="response" id="response" rows="12" cols="40"></textarea>
                     </div>
                     <div class="pure-controls">
-                        <button type="submit" name="submit" class="pure-button pure-button-primary">Respond</button>
+                        <button type="submit" name="submit" class="pure-button pure-button-primary">Respond To Ticket</button>
                     </div>
                 </form>
             </td>
@@ -213,7 +212,7 @@ function viewTicket($db, $parser)
             <th colspan="2">Responses</th>
         </tr>
         <tr>
-            <th>Responder</th>
+            <th>Responder</th>            
             <th>Message</th>
         </tr><?php
         if ($rows !== null) {
@@ -229,7 +228,7 @@ function viewTicket($db, $parser)
                     }
                     $parser->parse(format($row['body'], true)); ?><tr>
                         <td>
-                            <a href="profiles.php?id=<?php echo $responder->id; ?>"><img height="100" width="100" style="border:1px solid #000000" src="<?php echo $responder->avatar; ?>" /></a><br /><?php echo $responder->formattedname; ?><br />
+                            <a href="plugins/profiles.php?id=<?php echo $responder->id; ?>"><img height="100" width="100" style="border:1px solid #000000" src="<?php echo $responder->avatar; ?>" /></a><br /><?php echo $responder->formattedname; ?><br />
                             <strong>Date:</strong> <?php echo $date->format('d F Y, g:i:sa'); ?>
                         </td>
                         <td><?php echo $parser->getAsHTML(); ?></td>
@@ -241,7 +240,7 @@ function viewTicket($db, $parser)
                 }
             }
         } else {
-            echo "<tr><td colspan='2' class='center'>There are no responses</td></tr>";
+            echo "<tr><td colspan='2' class='center'><p>There Are No Responses To Date.</p></td></tr>";
         } ?></table><?php
 }
 function respondToTicket($db)
@@ -264,7 +263,7 @@ function respondToTicket($db)
     }
     $db->query('UPDATE tickets SET time_last_response = NOW() WHERE id = ?');
     $db->execute([$_GET['id']]);
-    Send_Event($row['userid'], 'You\'ve received a response to your ticket (<a href="tickets.php?action=view&amp;id='.$_GET['id'].'">ID #'.$_GET['id'].'</a>)');
+    Send_Event($row['userid'], 'You\'ve received a response to your ticket (<a href="plugins/tickets.php?action=view&amp;id='.$_GET['id'].'">ID #'.$_GET['id'].'</a>)');
     $db->trans('end');
     $_SESSION['msg'] = 'You\'ve responded to ticket ID #'.$_GET['id'];
     header('Location: managetickets.php');
@@ -299,7 +298,7 @@ function assignTicketToUser($db, $user_class)
         $db->query('SELECT id, username FROM users ORDER BY id ');
         $db->execute();
         $users = $db->fetch(); ?>
-        <form action="managetickets.php?action=assign&amp;id=<?php echo $_GET['id']; ?>" method="post">
+        <form action="plugins/managetickets.php?action=assign&amp;id=<?php echo $_GET['id']; ?>" method="post">
             <div class="pure-control-group">
                 <label for="user">Assign to</label>
                 <select name="user" id="user"><?php
