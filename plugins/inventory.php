@@ -14,7 +14,7 @@ $csrfg = csrf_create('csrfg', false);
 if ($user_class->eqweapon) {
     echo formatImage($user_class->weaponimg); ?><br />
                     <?php echo item_popup($user_class->eqweapon, $user_class->weaponname); ?><br />
-                    [<a href="equip.php?unequip=weapon&amp;csrfg=<?php echo $csrfg; ?>">Unequip</a>]<?php
+                    [<a href="plugins/equip.php?unequip=weapon&amp;csrfg=<?php echo $csrfg; ?>">Unequip</a>]<?php
 } else {
         ?><p>You Don't Have A Weapon Equipped.</p><?php
     }
@@ -23,7 +23,7 @@ if ($user_class->eqweapon) {
 if ($user_class->eqarmor) {
     echo formatImage($user_class->armorimg); ?><br />
                     <?php echo item_popup($user_class->eqarmor, $user_class->armorname); ?><br />
-                    [<a href="equip.php?unequip=armor&amp;csrfg=<?php echo $csrfg; ?>">Unequip</a>]<?php
+                    [<a href="plugins/equip.php?unequip=armor&amp;csrfg=<?php echo $csrfg; ?>">Unequip</a>]<?php
 } else {
         ?><p>You Don't Have Any Armor Equipped.</p><?php
     }
@@ -59,10 +59,10 @@ foreach ($rows as $row) {
             '.formatImage($row['image']).'<br />
             '.item_popup($row['itemid'], $row['name']).' [x'.format($row['quantity']).']<br />
             '.prettynum($row['cost'], true).'<br />
-            '.($row['cost'] ? '[<a href="sellitem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Sell</a>]' : '').'
-            [<a href="putonmarket.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Market</a>]
-            [<a href="senditem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Send</a>]
-            [<a href="equip.php?eq=weapon&amp;id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Equip</a>]
+            '.($row['cost'] ? '[<a href="plugins/sellitem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Sell</a>]' : '').'
+            [<a href="plugins/putonmarket.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Market</a>]
+            [<a href="plugins/senditem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Send</a>]
+            [<a href="plugins/equip.php?eq=weapon&amp;id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Equip</a>]
         </td>';
         if (!($weaponsCnt % 4)) {
             $weapons .= '</tr><tr>';
@@ -75,10 +75,10 @@ foreach ($rows as $row) {
             '.formatImage($row['image']).'<br />
             '.item_popup($row['itemid'], $row['name']).' [x'.format($row['quantity']).']<br />
             '.prettynum($row['cost'], true).'<br />
-            '.($row['cost'] ? '[<a href="sellitem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Sell</a>]' : '').'
-            [<a href="putonmarket.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Market</a>]
-            [<a href="senditem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Send</a>]
-            [<a href="equip.php?eq=armor&amp;id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Equip</a>]
+            '.($row['cost'] ? '[<a href="plugins/sellitem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Sell</a>]' : '').'
+            [<a href="plugins/putonmarket.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Market</a>]
+            [<a href="plugins/senditem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Send</a>]
+            [<a href="plugins/equip.php?eq=armor&amp;id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Equip</a>]
         </td>';
         if (!($armorCnt % 4)) {
             $armor .= '</tr><tr>';
@@ -91,10 +91,10 @@ foreach ($rows as $row) {
             '.formatImage($row['image']).'<br />
             '.item_popup($row['itemid'], $row['name']).' [x'.format($row['quantity']).']<br />
             '.prettynum($row['cost'], true).'<br />
-            '.($row['cost'] ? '[<a href="sellitem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Sell</a>]' : '').'
-            [<a href="putonmarket.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Market</a>]
-            [<a href="senditem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Send</a>]
-            [<a href="equip.php?eq=armor&amp;id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Equip</a>]
+            '.($row['cost'] ? '[<a href="plugins/sellitem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Sell</a>]' : '').'
+            [<a href="plugins/putonmarket.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Market</a>]
+            [<a href="plugins/senditem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Send</a>]
+            [<a href="plugins/equip.php?eq=armor&amp;id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Equip</a>]
         </td>';
         if (!($healCnt % 4)) {
             $heal .= '</tr><tr>';
@@ -107,9 +107,9 @@ foreach ($rows as $row) {
     //         '.formatImage($row['image']).'<br />
     //         '.item_popup($row['itemid'], $row['name']).' [x'.format($row['quantity']).']<br />
     //         '.prettynum($row['cost'], true).'<br />
-    //         '.($row['cost'] ? '[<a href="sellitem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Sell</a>]' : '').'
-    //         [<a href="putonmarket.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Market</a>]
-    //         [<a href="senditem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Send</a>]
+    //         '.($row['cost'] ? '[<a href="plugins/sellitem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Sell</a>]' : '').'
+    //         [<a href="plugins/putonmarket.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Market</a>]
+    //         [<a href="plugins/senditem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Send</a>]
     //     </td>';
     //     if (!($drugsCnt % 4)) {
     //         $drugs .= '</tr><tr>';
@@ -122,9 +122,9 @@ foreach ($rows as $row) {
             '.formatImage($row['image']).'<br />
             '.item_popup($row['itemid'], $row['name']).' [x'.format($row['quantity']).']<br />
             '.prettynum($row['cost'], true).'<br />
-            '.($row['cost'] ? '[<a href="sellitem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Sell</a>]' : '').'
-            [<a href="putonmarket.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Market</a>]
-            [<a href="senditem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Send</a>]
+            '.($row['cost'] ? '[<a href="plugins/sellitem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Sell</a>]' : '').'
+            [<a href="plugins/putonmarket.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Market</a>]
+            [<a href="plugins/senditem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Send</a>]
         </td>';
         if (!($miscCnt % 4)) {
             $misc .= '</tr><tr>';
@@ -137,10 +137,10 @@ foreach ($rows as $row) {
             '.formatImage($row['image']).'<br />
             '.item_popup($row['itemid'], $row['name']).' [x'.format($row['quantity']).']<br />
             '.prettynum($row['cost'], true).'<br />
-            '.($row['cost'] ? '[<a href="sellitem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Sell</a>]' : '').'
-            [<a href="putonmarket.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Market</a>]
-            [<a href="senditem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Send</a>]
-            [<a href="useitem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Use</a>]
+            '.($row['cost'] ? '[<a href="plugins/sellitem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Sell</a>]' : '').'
+            [<a href="plugins/putonmarket.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Market</a>]
+            [<a href="plugins/senditem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Send</a>]
+            [<a href="plugins/useitem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Use</a>]
         </td>';
         if (!($miscCnt % 4)) {
             $misc .= '</tr><tr>';
@@ -154,7 +154,7 @@ if ($user_class->cocaine) {
         '.formatImage('images/noimage.png').'<br />
         Cocaine [x'.format($user_class->cocaine).']<br />
         '.prettynum(0, true).'<br />
-        [<a href="drugs.php?use=cocaine&amp;csrfg='.$csrfg.'">Use</a>]
+        [<a href="plugins/drugs.php?use=cocaine&amp;csrfg='.$csrfg.'">Use</a>]
     </td>';
 }
 if ($user_class->nodoze) {
@@ -163,7 +163,7 @@ if ($user_class->nodoze) {
         '.formatImage('images/noimage.png').'<br />
         No-Doze [x'.format($user_class->nodoze).']<br />
         '.prettynum(0, true).'<br />
-        [<a href="drugs.php?use=nodoze&amp;csrfg='.$csrfg.'">Use</a>]
+        [<a href="plugins/drugs.php?use=nodoze&amp;csrfg='.$csrfg.'">Use</a>]
     </td>';
 }
 if ($user_class->genericsteroids) {
@@ -172,7 +172,7 @@ if ($user_class->genericsteroids) {
         '.formatImage('images/noimage.png').'<br />
         Generic Steroids [x'.format($user_class->genericsteroids).']<br />
         '.prettynum(0, true).'<br />
-        [<a href="drugs.php?use=genericsteroids&amp;csrfg='.$csrfg.'">Use</a>]
+        [<a href="plugins/drugs.php?use=genericsteroids&amp;csrfg='.$csrfg.'">Use</a>]
     </td>';
 }
 ?><tr>
