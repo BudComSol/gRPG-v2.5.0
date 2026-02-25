@@ -17,7 +17,7 @@ $status = [
     <td class="content">
         <p>Got an issue? Have you found a bug? Does something seem "off"?</p>
         <p>Simply open a ticket and we'll do what we can to resolve your situation.</p>
-        <a href="tickets.php?action=add"><p>Click Here To Open A Ticket</p></a>
+        <a href="plugins/tickets.php?action=add"><p>Click Here To Open A Ticket</p></a>
     </td>
 </tr><?php
 if (empty($_GET['action'])) {
@@ -47,7 +47,7 @@ if (empty($_GET['action'])) {
         foreach ($rows as $row) {
             $date = new DateTime($row['time_added']); ?><tr>
                         <td><?php echo format($row['id']); ?></td>
-                        <td><a href="tickets.php?action=view&amp;id=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><?php echo format($row['subject']); ?></a></td>
+                        <td><a href="plugins/tickets.php?action=view&amp;id=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><?php echo format($row['subject']); ?></a></td>
                         <td><?php echo $date->format('F d, Y, H:i:s'); ?></td>
                         <td><?php echo $status[$row['status']]; ?></td>
                     </tr><?php
@@ -106,7 +106,7 @@ if (empty($_GET['action'])) {
         <tr>
             <td class="content"><?php
         if (in_array($ticket['status'], ['open', 'pending'])) {
-            ?><form action="tickets.php?action=view&amp;id=<?php echo $ticket['id']; ?>" method="post" class="pure-form pure-form-aligned">
+            ?><form action="plugins/tickets.php?action=view&amp;id=<?php echo $ticket['id']; ?>" method="post" class="pure-form pure-form-aligned">
                         <?php echo csrf_create(); ?>
                         <div class="pure-control-group">
                             <label for="response">Response</label>
@@ -144,7 +144,7 @@ if (empty($_GET['action'])) {
         }
     } elseif ($_GET['action'] === 'add') {
         ?><tr>
-        <th class="content-head">Opening a support ticket</th>
+        <th class="content-head">Open A Ticket</th>
     </tr><?php
     if (array_key_exists('submit', $_POST)) {
         if (!csrf_check('csrf', $_POST)) {
@@ -165,23 +165,23 @@ if (empty($_GET['action'])) {
         if (!count($errors)) {
             $db->query('INSERT INTO tickets (userid, subject, body) VALUES (?, ?, ?)');
             $db->execute([$user_class->id, $_POST['subject'], $_POST['ticket']]);
-            echo Message('Your ticket has been created', 'Error', true);
+            echo Message('<p>Your Ticket Has Been Created.</p>', 'Error', true);
         }
     }
         if (count($errors)) {
             display_errors($errors);
         } ?><tr>
         <td class="content">
-            <form action="tickets.php?action=add" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/tickets.php?action=add" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create(); ?>
                 <fieldset>
                     <div class="pure-control-group">
-                        <label for="subject">Subject</label>
+                        <label for="subject">Subject:</label>
                         <input type="text" name="subject" id="subject" required autofocus />
                     </div>
                     <div class="pure-control-group">
-                        <label for="ticket">Ticket</label>
-                        <textarea name="ticket" id="ticket" rows="5" cols="53" placeholder="Be as clear and concise as possible. If you're reporting a bug, please include the URL and a description of what you were doing too - it'll help us rectify the bug faster" required></textarea>
+                        <label for="ticket">Ticket:</label>
+                        <textarea name="ticket" id="ticket" rows="5" cols="40" placeholder="Be as clear and concise as possible. If you're reporting a bug, please include the URL and a description of what you were doing too - it'll help us rectify the bug faster" required></textarea>
                     </div>
                 </fieldset>
                 <div class="pure-controls">
@@ -201,10 +201,10 @@ if (empty($_GET['action'])) {
         }
         $row = $db->fetch(true);
         if ($row['userid'] != $user_class->id) {
-            $errors[] = 'That ticket doesn\'t belong to you';
+            $errors[] = '<p>That ticket doesn\'t belong to you.</p>';
         }
         if (!in_array($row['status'], ['open', 'pending', 'closed'])) {
-            $errors[] = 'You can\'t change the status of this ticket';
+            $errors[] = '<p>You can\'t change the status of this ticket.</p>';
         }
         if (!count($errors)) {
             $status = $row['status'] === 'closed' ? 'open' : 'close';
@@ -224,7 +224,7 @@ if (empty($_GET['action'])) {
                 ?><tr>
                 <td class="content">
                     Are you sure you want to <?php echo $status; ?> ticket #<?php echo $row['id']; ?>: <?php echo format($row['subject']); ?>?<br />
-                    <a href="tickets.php?action=status&amp;id=<?php echo $row['id']; ?>&amp;ans=yes&amp;csrfg=<?php echo csrf_create('csrfg', false); ?>" class="pure-button pure-button-primary">Yes, I'm sure</a>
+                    <a href="plugins/tickets.php?action=status&amp;id=<?php echo $row['id']; ?>&amp;ans=yes&amp;csrfg=<?php echo csrf_create('csrfg', false); ?>" class="pure-button pure-button-primary">Yes, I'm sure</a>
                 </td>
             </tr><?php
             }
