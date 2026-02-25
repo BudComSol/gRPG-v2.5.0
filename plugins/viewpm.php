@@ -40,10 +40,10 @@ $csrfg = csrf_create('csrfg', false);
                 <td colspan="4" class="textm">Message:<hr /><?php echo nl2br(format($row['msgtext'])); ?></td>
             </tr>
             <tr>
-                <td colspan="4" class="center"><a href="pms.php?delete=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>">Delete</a> | <a href="pms.php?reply=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>">Reply</a></td>
+                <td colspan="4" class="center"><a href="plugins/pms.php?delete=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>">Delete</a> | <a href="plugins/pms.php?reply=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>">Reply</a></td>
             </tr>
             <tr>
-                <td colspan="4" class="center"><a href="pms.php">Back To Mailbox</a></td>
+                <td colspan="4" class="center"><a href="plugins/pms.php">Back To Mailbox</a></td>
             </tr>
         </table>
     </td>
