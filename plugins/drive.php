@@ -7,7 +7,7 @@ $db->query('SELECT COUNT(id) FROM cars WHERE userid = ?');
 $db->execute([$user_class->id]);
 $cnt = $db->result();
 if (!$cnt) {
-    echo Message('You don\'t have a car', 'Error', true);
+    echo Message('<p>You silly sausage, you don\'t have a car.</p>', 'Error', true);
 }
 $errors = [];
 $_GET['go'] = array_key_exists('go', $_GET) && ctype_digit($_GET['go']) ? $_GET['go'] : null;
@@ -18,7 +18,7 @@ if (!empty($_GET['go'])) {
     $db->query('SELECT id, name, levelreq FROM cities WHERE id = ?');
     $db->execute([$_GET['go']]);
     if (!$db->count()) {
-        $errors[] = 'The city you selected doesn\'t exist';
+        $errors[] = '<p>The city you selected doesn\'t exist.</p>';
     }
     $row = $db->fetch(true);
     if ($_GET['go'] == $user_class->city) {
@@ -64,12 +64,12 @@ if ($rows !== null) {
             ?><tr>
                     <td><?php echo format($row['name']); ?></td>
                     <td><?php echo format($row['levelreq']); ?></td>
-                    <td><a href="drive.php?go=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>">Drive</a></td>
+                    <td><a href="plugins/drive.php?go=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>">Drive</a></td>
                 </tr><?php
         }
     } else {
         ?><tr>
-                    <td colspan="3" class="center">There are no other cities you can currently reach</td>
+                    <td colspan="3" class="center"><p>There are no other cities you can currently reach.</p></td>
                 </tr><?php
     }
 ?></table>
