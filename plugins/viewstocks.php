@@ -30,7 +30,7 @@ if ($rows !== null) {
         }
     } else {
         ?><tr>
-                    <td colspan="3" class="center">There are no stocks</td>
+                    <td colspan="3" class="center"><p>There are currently no stocks to trade.</p></td>
                 </tr><?php
     }
 ?></table>
