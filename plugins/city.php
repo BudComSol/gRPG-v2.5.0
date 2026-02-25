@@ -103,7 +103,7 @@ for ($i = 1; $i <= 3; ++$i) {
             <td class="top" style="padding-bottom:10px;">
                     <h3 style="padding:0;margin:0;font-size:1.4em;">Back Alley</h3><br />
                     <a href="plugins/spylog.php">Spy Log</a><br />
-                    <a href="plugin/refer.php">Referrals</a><br />
+                    <a href="plugins/refer.php">Referrals</a><br />
                     <a href="plugins/garage.php">Your Garage</a><br />
                     <a href="plugins/buydrugs.php">Shady Dude</a><br /> 
                     <a href="plugins/whorehouse.php">Whorehouse</a><br />                  
