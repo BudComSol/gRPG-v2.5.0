@@ -56,7 +56,7 @@ if (count($errors)) {
     display_errors($errors);
 }
 ?><tr>
-    <td class="content">Here you can view, compare, and sell your shares.</td>
+    <td class="content"><p>Here You Can View, Compare And Sell Your Shares.</p></td>
 </tr>
 <tr>
     <th class="content-head">View Stocks</th>
@@ -80,7 +80,7 @@ if ($rows !== null) {
                     <td><?php echo format($row['amount']); ?></td>
                     <td><?php echo prettynum($row['amount'] * $row['cost'], true); ?></td>
                     <td>
-                        <form action="portfolio.php" method="post" class="pure-form pure-form-aligned">
+                        <form action="plugins/portfolio.php" method="post" class="pure-form pure-form-aligned">
                             <?php echo $csrf; ?>
                             <input type="hidden" name="stocks_id" value="<?php echo $row['companyid']; ?>" />
                             <fieldset>
@@ -97,7 +97,7 @@ if ($rows !== null) {
         }
     } else {
         ?><tr>
-                    <td colspan="5" class="center">You have nothing in your portfolio</td>
+                    <td colspan="5" class="center"><p>You have nothing in your portfolio, buy some shares.</p></td>
                 </tr><?php
     }
 ?></table>
