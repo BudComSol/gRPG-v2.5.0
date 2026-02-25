@@ -12,7 +12,7 @@ $rows = $db->fetch();
     <th class="content-head">Your Garage</th>
 </tr>
 <tr>
-    <td class="content">Here is where you keep all of your sweet rides.</td>
+    <td class="content"><p>Here Is Where You Keep All Your Sweet Rides.</p></td>
 </tr>
 <tr>
     <td class="content">
@@ -31,7 +31,7 @@ if ($rows !== null) {
             ++$cnt;
         }
     } else {
-        ?>You don't have any cars<?php
+        ?><p>There are no cars parked in the garage, find some.</p><?php
     }
 ?></tr>
         </table>
