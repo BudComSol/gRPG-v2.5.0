@@ -36,17 +36,17 @@ if (array_key_exists('buyland', $_POST)) {
     <th class="content-head">Real Estate Agency Of Generica</th>
 </tr>
 <tr>
-    <td class="content">Welcome to REAG! If we have any land left available, you can purchase it from here.</td>
+    <td class="content"><p>Welcome to REAG!</p><p>If we have any land left available, you can purchase it from here.</p></td>
 </tr>
 <tr>
     <td class="content">
-        Land available from REAG in <?php echo format($user_class->cityname); ?>: <?php echo format($row['landleft']); ?> acre<?php echo s($row['landleft']);
+        <p>Land available from REAG in <?php echo format($user_class->cityname); ?>: <?php echo format($row['landleft']); ?> acre<?php echo s($row['landleft' . '</p>']);
 if ($row['landleft'] > 0) {
-    ?><form action="realestate.php" method="post" class="pure-form pure-form-aligned">
+    ?><form action="plugins/realestate.php" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create(); ?>
                 <fieldset>
                     <div class="pure-control-group">
-                        <label for="amount">Acres to purchase</label>
+                        <label for="amount">Acres To Purchase</label>
                         <input type="text" name="amount" id="amount" size="3" maxlength="20" value="<?php echo format($row['landleft']); ?>" />
                     </div>
                 </fieldset>
