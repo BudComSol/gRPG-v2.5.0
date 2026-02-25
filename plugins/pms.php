@@ -13,12 +13,12 @@ if (!empty($_GET['delete'])) {
     $db->execute([$_GET['delete']]);
     $to = $db->result();
     if ($to != $user_class->id) {
-        $errors[] = 'That isn\'t your message';
+        $errors[] = '<p>That isn\'t your message.</p>';
     }
     if (!count($errors)) {
         $db->query('DELETE FROM pms WHERE id = ?');
         $db->execute([$_GET['delete']]);
-        echo Message('Message deleted!');
+        echo Message('<p>Message has been deleted.</p>');
     }
 }
 if (array_key_exists('deleteall', $_GET)) {
@@ -29,7 +29,7 @@ if (array_key_exists('deleteall', $_GET)) {
     $db->execute([$user_class->id]);
     $cnt = $db->result();
     if (!$cnt) {
-        $errors[] = 'You don\'t have any message to delete';
+        $errors[] = '<p>You don\'t have any message to delete.</p>';
     }
     if (!count($errors)) {
         $db->query('DELETE FROM pms WHERE recipient = ? AND viewed = 1');
@@ -43,11 +43,11 @@ if (array_key_exists('newmessage', $_POST)) {
     }
     $_POST['to'] = array_key_exists('to', $_POST) && is_string($_POST['to']) ? strip_tags(trim($_POST['to'])) : null;
     if (empty($_POST['to'])) {
-        $errors[] = 'You didn\'t select a valid recipient';
+        $errors[] = '<p>You didn\'t select a valid recipient.</p>';
     }
     $id = Get_ID($_POST['to']);
     if (!$id) {
-        $errors[] = 'The player you selected doesn\'t exist';
+        $errors[] = '<p>The player you selected doesn\'t exist.</p>';
     }
     $target = new User($id);
     $db->query('SELECT COUNT(id) FROM users_blocked WHERE (userid = ? AND blocked_id = ?) OR (blocked_id = ? AND userid = ?)');
@@ -58,28 +58,28 @@ if (array_key_exists('newmessage', $_POST)) {
     $_POST['subject'] = array_key_exists('subject', $_POST) && is_string($_POST['subject']) ? strip_tags(trim($_POST['subject'])) : 'No subject';
     $_POST['msgtext'] = array_key_exists('msgtext', $_POST) && is_string($_POST['msgtext']) ? strip_tags(trim($_POST['msgtext'])) : null;
     if (empty($_POST['msgtext'])) {
-        $errors[] = 'You didn\'t enter a valid message';
+        $errors[] = '<p>You didn\'t enter a valid message</p>';
     }
     $db->query('SELECT COUNT(id) FROM pms WHERE subject = ? AND msgtext = ? AND sender = ? AND recipient = ? ORDER BY id DESC LIMIT 1');
     $db->execute([$_POST['subject'], $_POST['msgtext'], $user_class->id, $target->id]);
     if ($db->result()) {
-        $errors[] = 'Double send detected';
+        $errors[] = '<p>Double send detected.</p>';
     }
     if (!count($errors)) {
         $db->query('INSERT INTO pms (recipient, sender, timesent, subject, msgtext) VALUES (?, ?, ?, ?, ?)');
         $db->execute([$target->id, $user_class->id, time(), $_POST['subject'], $_POST['msgtext']]);
-        echo Message('Your message has been sent to '.$target->formattedname);
+        echo Message('<p>Your message has been sent to '.$target->formattedname . '.</p>');
     }
 }
 if (!empty($_GET['reply'])) {
     $db->query('SELECT recipient, sender, subject, msgtext FROM pms WHERE id = ?');
     $db->execute([$_GET['reply']]);
     if (!$db->count()) {
-        $errors[] = 'The message you selected doesn\'t exist';
+        $errors[] = '<p>The message you selected doesn\'t exist.</p>';
     }
     $mes = $db->fetch(true);
     if ($mes['recipient'] != $user_class->id) {
-        $errors[] = 'That isn\'t your message';
+        $errors[] = '<p>That isn\'t your message.</p>';
     }
     $reply_class = new User($mes['sender']);
 }
@@ -99,25 +99,25 @@ $replyTo = isset($reply_class) ? $reply_class->username : '';
 </tr>
 <tr>
     <td class="content">
-        <a href="pms.php?deleteall&amp;csrfa=<?php echo $csrfa; ?>"><p>Delete All PMs In Your Inbox</p></a><br /><br />
-        <form action="pms.php" method="post" class="pure-form pure-form-aligned">
+        <a href="plugins/pms.php?deleteall&amp;csrfa=<?php echo $csrfa; ?>"><p>Delete All PMs In Your Inbox</p></a>
+        <form action="plugins/pms.php" method="post" class="pure-form pure-form-aligned">
             <?php echo csrf_create(); ?>
             <fieldset>
                 <div class="pure-control-group">
-                    <label for="to">Send Message To</label>
+                    <label for="to">Send To:</label>
                     <input type="text" name="to" id="to" value="<?php echo !empty($_GET['to']) ? $_GET['to'] : $replyTo; ?>" />
                 </div>
                 <div class="pure-control-group">
-                    <label for="subject">Subject</label>
+                    <label for="subject">Subject:</label>
                     <input type="text" name="subject" id="subject" size="35" maxlength="75" value="<?php echo isset($mes) ? 'Re: '.ltrim('Re: ', format($mes['subject'])) : null; ?>" />
                 </div>
                 <div class="pure-control-group">
-                    <label for="msgtext">Message</label>
+                    <label for="msgtext">Message:</label>
                     <textarea name="msgtext" id="msgtext" cols="35" rows="7"><?php echo isset($mes) ? "\n\n\n--------\n".format($mes['msgtext']) : ''; ?></textarea>
                 </div>
             </fieldset>
             <div class="pure-controls">
-                <button type="submit" name="newmessage" class="pure-button pure-button-primary">Send</button>
+                <button type="submit" name="newmessage" class="pure-button pure-button-primary">Send Message Now</button>
             </div>
         </form>
     </td>
@@ -139,10 +139,10 @@ if ($rows !== null) {
         foreach ($rows as $row) {
             $from_user_class = new User($row['sender']); ?><tr>
                     <td><?php echo date('F d, Y g:i:sa', $row['timesent']); ?></td>
-                    <td><a href="viewpm.php?id=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><?php echo $row['subject'] ? format($row['subject']) : 'No subject'; ?></a></td>
+                    <td><a href="plugins/viewpm.php?id=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>"><?php echo $row['subject'] ? format($row['subject']) : 'No subject'; ?></a></td>
                     <td><?php echo $from_user_class->formattedname; ?></td>
                     <td><?php echo !$row['viewed'] ? 'No' : 'Yes'; ?></td>
-                    <td><a href="pms.php?delete=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>">Delete</a></td>
+                    <td><a href="plugins/pms.php?delete=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>">Delete</a></td>
                 </tr><?php
         }
     } else {
