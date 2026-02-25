@@ -31,7 +31,7 @@ if ($rows !== null) {
         }
     } else {
         ?><tr>
-                    <td colspan="5" class="center">There are no gangs</td>
+                    <td colspan="5" class="center"><p>There are no gangs at this time, create one.</p></td>
                 </tr><?php
     }
 ?></table>
