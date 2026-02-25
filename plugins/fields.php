@@ -65,7 +65,7 @@ $amount = $amount > 0 ? $amount : 0;
     <th class="content-head">Manage Land</th>
 </tr>
 <tr>
-    <td class="content">Here is where you can manage your acres of land.</td>
+    <td class="content"><p>Here Is Where You Manage Your Acres Of Land.</p></td>
 </tr>
 <tr>
     <th class="content-head">Plant</th>
@@ -75,7 +75,7 @@ $amount = $amount > 0 ? $amount : 0;
 if ($amount) {
     $available = floor($user_class->potseeds / 100); ?>You have <?php echo format($amount); ?> acre<?php echo s($amount); ?> of land in <?php echo $user_class->cityname; ?> and <?php echo $user_class->potseeds; ?> marijuana seed<?php echo s($user_class->potseeds); ?>,
         which is enough to grow <?php echo format($available); ?> acre<?php echo s($available); ?> of weed<br />
-        <form action="fields.php" method="post" class="pure-form pure-form-aligned">
+        <form action="plugins/fields.php" method="post" class="pure-form pure-form-aligned">
             <?php echo csrf_create(); ?>
             <fieldset>
                 <div class="pure-control-group">
@@ -88,7 +88,7 @@ if ($amount) {
             </div>
         </form><?php
 } else {
-        ?>You don't have any land here in <?php echo $user_class->cityname;
+        ?>You don't have any land here in <?php echo $user_class->cityname; 
     }
 ?></td>
 </tr>
@@ -119,11 +119,11 @@ if ($amount > 0) {
                     <td><?php echo format($row['croptype']); ?></td>
                     <td><?php echo format($row['amount']); ?></td>
                     <td><?php echo format($row['cropamount']); ?></td>
-                    <td><?php echo time() >= $time ? 'Ready! <a href="fields.php?harvest='.$row['id'].'&amp;csrfg='.$csrfg.'">Harvest Now</a>' : howlongtil($row['time_ended']); ?></td>
+                    <td><?php echo time() >= $time ? 'Ready! <a href="plugins/fields.php?harvest='.$row['id'].'&amp;csrfg='.$csrfg.'">Harvest Now</a>' : howlongtil($row['time_ended']); ?></td>
                 </tr><?php
     } ?></table><?php
 } else {
-        ?>You don't currently have any land with crops growing on it.<?php
+        ?><p>You don't currently have any land with crops growing on it.</p><?php
     }
 ?></td>
 </tr>
