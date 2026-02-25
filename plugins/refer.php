@@ -9,9 +9,10 @@ $rows = $db->fetch();
 </tr>
 <tr>
     <td class="content">
-        Your Referer Link: <?php echo BASE_URL; ?>register.php?referer=<?php echo $user_class->id; ?><br />
-        UPDATE: You will receive your points only <em>after</em> we filter out multis. This is due to too many people abusing the referral system.<br />
-        Because we have to do this manually now, this could take anywhere from an hour to 2 days, but rest assured that you will receive your points.
+        <p><b>Your Referer Link: <?php echo BASE_URL; ?>register.php?referer=<?php echo $user_class->id; ?></b></p>
+        <p>UPDATE: You will receive your points only <em>after</em> we filter out multis.</p>
+        <p>This is due to too many people abusing the referral system.</p>
+        <p>Because we have to do this manually now, it could take anywhere from an hour to 2 days, but rest assured that you will receive your points.</p>
     </td>
 </tr>
 <tr>
@@ -24,7 +25,7 @@ if ($rows !== null) {
             $referred = new User(Get_ID($row['referred'])); ?><div><?php echo $referred->formattedname; ?> - <?php echo !$row['credited'] ? 'Pending' : 'Accepted'; ?></div><?php
         }
     } else {
-        ?>You haven't referred anyone<?php
+        ?><p>You haven't referred anyone yet, c'mon and get the lead out.</p><?php
     }
 ?></td>
 </tr>
