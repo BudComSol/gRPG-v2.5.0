@@ -570,7 +570,7 @@ class User
             ];
         }
         $this->formattedonline = '<span style="color:'.$conf['color'].';padding:2px;font-weight:bold;">'.$conf['text'].'</span>';
-        $this->formattedrespected = $this->rmdays > 0 ? 'Yes' : 'No';
+        $this->formattedrespected = $this->rmdays > 0 ? '<span style="color:gold;">Yes</span>' : 'No';
         if ($this->exp >= $this->maxexp) {
             ++$this->level;
             $expRemaining = $this->exp - $this->maxexp;
