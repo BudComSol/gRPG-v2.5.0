@@ -35,7 +35,9 @@ if ($user_class->admin) {
             </tr>
             <tr>
                 <td><strong>HP</strong>:</td>
-                <td colspan="3"><?php echo $profile_class->formattedhp; ?></td>
+                <td><?php echo $profile_class->formattedhp; ?></td>
+                <td><strong>Points</strong>:</td>
+                <td><?php echo $profile_class->points; ?></td>
             </tr>
             <tr>
                 <td><strong>Type</strong>:</td>
