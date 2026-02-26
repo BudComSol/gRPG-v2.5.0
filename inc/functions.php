@@ -766,7 +766,7 @@ function Check_Item(int $itemid = 0, int $userid = 0)
 function Check_Land($city = 0, $userid = 0)
 {
     global $db;
-    if (!ctype_digit($city) || !ctype_digit($userid)) {
+    if (!ctype_digit((string)$city) || !ctype_digit((string)$userid)) {
         return 0;
     }
     $db->query('SELECT amount FROM land WHERE userid = ? AND city = ?', [$userid, $city]);
@@ -875,7 +875,7 @@ function Check_Share($stock = 0, $userid = 0)
 function Give_Land($city = 0, $userid = 0, $quantity = 1)
 {
     global $db;
-    if (!ctype_digit($userid) || !ctype_digit($city)) {
+    if (!ctype_digit((string)$userid) || !ctype_digit((string)$city)) {
         code_error('Invalid arguments passed to give_land');
 
         return false;
@@ -887,7 +887,7 @@ function Give_Land($city = 0, $userid = 0, $quantity = 1)
     } else {
         $db->query('INSERT INTO land (amount, userid, city) VALUES (?, ?, ?)');
     }
-    $db->execute([$city, $userid, $quantity]);
+    $db->execute([$quantity, $userid, $city]);
 
     return true;
 }
@@ -905,7 +905,7 @@ function Give_Land($city = 0, $userid = 0, $quantity = 1)
 function Take_Land($city = 0, $userid = 0, $quantity = 1)
 {
     global $db;
-    if (!ctype_digit($userid) || !ctype_digit($city)) {
+    if (!ctype_digit((string)$userid) || !ctype_digit((string)$city)) {
         code_error('Invalid arguments passed to take_land');
 
         return false;
