@@ -30,6 +30,17 @@ if ($siteURL !== false && $siteURL !== '') {
     integrity="sha384-+YK1ur0Mr74WEZWTMC6oMb5fojhkGm6EpjgVheKlE9urf2PbykYP7MxdwPpruQB8" crossorigin="anonymous"/>
     <link rel="stylesheet" href="css/custom-styles.css">      
     <script src="js/cookie-consent.js"></script>
+    <?php
+    $ga_id = settings('google_analytics');
+    if (!empty($ga_id)) { ?>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo htmlspecialchars($ga_id, ENT_QUOTES, 'UTF-8'); ?>"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '<?php echo htmlspecialchars($ga_id, ENT_QUOTES, 'UTF-8'); ?>');
+    </script>
+    <?php } ?>
 </head>
 <body>
 <!-- Cookie Consent Banner -->

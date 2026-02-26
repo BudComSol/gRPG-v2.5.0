@@ -894,7 +894,8 @@ CREATE TABLE IF NOT EXISTS `settings`
   DEFAULT CHARSET = latin1;
 INSERT INTO `settings` (`settings`, `conf_name`, `conf_value`)
 VALUES (1, 'registration', 'open'),
-       (2, 'bus_travel_cost', '5000');
+       (2, 'bus_travel_cost', '5000'),
+       (3, 'google_analytics', '');
 
 DROP TABLE IF EXISTS `shares`;
 CREATE TABLE IF NOT EXISTS `shares`

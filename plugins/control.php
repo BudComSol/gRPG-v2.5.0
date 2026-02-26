@@ -1532,6 +1532,12 @@ if (isset($_POST['addrmpack'])) {
         $db->execute([$_POST['registration']]);
         $updated[] = 'registration';
     }
+    $_POST['google_analytics'] = isset($_POST['google_analytics']) ? trim($_POST['google_analytics']) : '';
+    if ($_POST['google_analytics'] != settings('google_analytics')) {
+        $db->query('UPDATE settings SET conf_value = ? WHERE conf_name = \'google_analytics\'');
+        $db->execute([$_POST['google_analytics']]);
+        $updated[] = 'Google Analytics';
+    }
     $db->trans('end');
     $cnt = count($updated);
     if (!$cnt) {
@@ -3154,7 +3160,8 @@ if (empty($_GET['page'])) {
         </td>
     </tr><?php
     } elseif ($_GET['page'] === 'site_settings') {
-        $registration = settings('registration'); ?>
+        $registration = settings('registration');
+        $google_analytics = settings('google_analytics'); ?>
     <tr>
         <th class="content-head">Site Settings</th>
     </tr>
@@ -3169,6 +3176,10 @@ if (empty($_GET['page'])) {
                         <option value="open"<?php echo $registration === 'open' ? ' selected' : ''; ?>>Open</option>
                         <option value="closed"<?php echo $registration === 'closed' ? ' selected' : ''; ?>>Closed</option>
                     </select>
+                </div>
+                <div class="pure-control-group">
+                    <label for="google_analytics">Google Analytics ID</label>
+                    <input type="text" name="google_analytics" id="google_analytics" value="<?php echo htmlspecialchars($google_analytics ?? '', ENT_QUOTES, 'UTF-8'); ?>" placeholder="G-XXXXXXXXXX" maxlength="191" />
                 </div>
                 <div class="pure-controls">
                     <button type="submit" class="pure-button pure-button-primary">Update Settings</button>
