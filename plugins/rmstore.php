@@ -39,7 +39,9 @@ $packs = $db->fetch();
 </tr>
 <tr>
     <td class="content">
-        <p>* For those days you will gain energy and nerve twice as quick.<br /> * For those days you will gain 4% bank interest instead of 2%.</p>
+        <p>Are what you become by purchasing RM Days.</p>
+        <p>* For those days you will gain energy and nerve twice as quick.</p>
+        <p>* For those days you will gain 4% bank interest instead of 2%.</p>
     </td>
 </tr>
 <tr>
@@ -47,13 +49,13 @@ $packs = $db->fetch();
 </tr>
 <tr>
     <td class="content">
-        <form action="/plugins/rmstore.php" method="post" class="pure-form pure-form-aligned">
+        <form action="/plugins/rmstore.php" method="post" class="pure-form-rmstore">
             <div class="pure-info-message"><p>You're currently purchasing an RMStore Upgrade for <?php echo $target->id == $user_class->id ? 'yourself' : $target->formattedname; ?></p><?php if ($target->id != $user_class->id) : ?> <span class="small italic">- [<a href="plugins/rmstore.php?reset">Reset</a>]</span><?php endif; ?></div>
             <?php echo csrf_create('custom_for'); ?>
             <div class="pure-control-group">
-                <label for="customer">Purchase upgrade for:</label>
+                <label for="customer">Purchase Upgrade For:</label>
                 <input type="text" name="customer" id="customer" placeholder="<?php echo format($target->username); ?>" />
-            </div>
+            </div><br>
             <div class="pure-controls">
                 <button type="submit" name="update_customer" class="pure-button pure-button-primary">Update Recipient</button>
             </div>
