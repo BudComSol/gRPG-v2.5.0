@@ -58,7 +58,7 @@ function blockListIndex($db, $user_class)
                     </tr><?php
         }
     } else {
-        echo '<tr><td colspan="3" class="centre">You haven\'t blocked anyone</td></tr>';
+        echo '<tr><td colspan="3" class="centre"><p>You haven\'t blocked anyone yet.</p></td></tr>';
     } ?></table>
         </td>
     </tr><?php
