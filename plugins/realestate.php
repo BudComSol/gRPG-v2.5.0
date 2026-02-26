@@ -20,7 +20,9 @@ if (array_key_exists('buyland', $_POST)) {
     if ($cost > $user_class->money) {
         $errors[] = 'You don\'t have enough money';
     }
-    if (!count($errors)) {
+    if (count($errors)) {
+        display_errors($errors);
+    } else {
         $db->trans('start');
         $db->query('UPDATE users SET money = GREATEST(money - ?, 0) WHERE id = ?');
         $db->execute([$cost, $user_class->id]);
