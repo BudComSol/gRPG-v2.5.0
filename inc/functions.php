@@ -37,8 +37,7 @@ function db_timestamp($time = null)
     if ($time === null) {
         $time = time();
     }
-    $str = ctype_digit($time) ? $time : '@' . $time;
-    $date = new DateTime($str);
+    $date = new DateTime('@' . $time);
 
     return $date->format('Y-m-d H:i:s');
 }
@@ -235,7 +234,7 @@ function userExists($id = 0)
     if (!$id) {
         return false;
     }
-    if (!ctype_digit($id)) {
+    if (!ctype_digit((string)$id)) {
         $id = Get_ID($id);
         if (!$id) {
             return false;
@@ -260,7 +259,7 @@ function itemExists($id = 0)
     if (!$id) {
         return false;
     }
-    if (!ctype_digit($id)) {
+    if (!ctype_digit((string)$id)) {
         $db->query('SELECT id FROM items WHERE name = ?', [$id]);
         $tmp = $db->result();
         if (!$tmp) {
@@ -528,7 +527,7 @@ function getHttpResponseCode_using_getheaders($url, $followredirects = true, $bo
 function checkUserStatus($which = 'all', $user = 0)
 {
     global $db, $user_class;
-    if (!$user || !ctype_digit($user)) {
+    if (!$user || !ctype_digit((string)$user)) {
         $user = $user_class->id;
     }
     $status_class = $user != $user_class->id ? new User($user) : $user_class;
@@ -788,7 +787,7 @@ function Check_Land($city = 0, $userid = 0)
 function Give_Share($stock = 0, $userid = 0, $quantity = 1)
 {
     global $db;
-    if (!ctype_digit($userid) || !ctype_digit($stock)) {
+    if (!ctype_digit((string)$userid) || !ctype_digit((string)$stock)) {
         code_error('Invalid arguments passed to give_share');
 
         return false;
@@ -818,7 +817,7 @@ function Give_Share($stock = 0, $userid = 0, $quantity = 1)
 function Take_Share($stock = 0, $userid = 0, $quantity = 1)
 {
     global $db;
-    if (!ctype_digit($userid) || !ctype_digit($stock)) {
+    if (!ctype_digit((string)$userid) || !ctype_digit((string)$stock)) {
         code_error('Invalid arguments passed to take_share');
 
         return false;
@@ -850,7 +849,7 @@ function Take_Share($stock = 0, $userid = 0, $quantity = 1)
 function Check_Share($stock = 0, $userid = 0)
 {
     global $db;
-    if (!ctype_digit($userid) || !ctype_digit($stock)) {
+    if (!ctype_digit((string)$userid) || !ctype_digit((string)$stock)) {
         code_error('Invalid arguments passed to check_share');
 
         return false;
