@@ -11,7 +11,7 @@ text-based online RPG-MMORPG-PBBG script.
 * Because we can, and by the way, you get the same files here as the demo site demonstrates.
 * Because it does not deserve to be thrown on the scrap heap and should be preserved for posterity.
 * The codebase has been around for a long time with many people contributing, which is reflected in the different coding styles found about the place.
-* This is an attempt to update this codebase with some uniformity without resorting to frameworks 'cause I like old stuff but frameworks not so much.
+* This is an attempt to update this codebase with some uniformity, improve its visual appeal and knock over a few bugs, all done without resorting to frameworks 'cause I like old stuff but frameworks not so much.
 
 ### How Do I Get Setup? ###
 
