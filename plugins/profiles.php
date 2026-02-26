@@ -34,20 +34,20 @@ if ($user_class->admin) {
                 <td width="37.5%"><?php echo $profile_class->formattedrespected; ?></td>
             </tr>
             <tr>
+                <td><strong>Type</strong>:</td>
+                <td><?php echo $profile_class->type; ?></td>
+                <td><strong>Level</strong>:</td>
+                <td><?php echo $profile_class->level; ?></td>
+            </tr>
+            <tr>
                 <td><strong>HP</strong>:</td>
                 <td><?php echo $profile_class->formattedhp; ?></td>
                 <td><strong>Points</strong>:</td>
                 <td><?php echo $profile_class->points; ?></td>
             </tr>
             <tr>
-                <td><strong>Type</strong>:</td>
-                <td><?php echo $profile_class->type; ?></td>
                 <td><strong>Crimes</strong>:</td>
                 <td><?php echo $profile_class->crimetotal; ?></td>
-            </tr>
-            <tr>
-                <td><strong>Level</strong>:</td>
-                <td><?php echo $profile_class->level; ?></td>
                 <td><strong>Money</strong>:</td>
                 <td>$<?php echo $profile_class->money; ?></td>
             </tr>
