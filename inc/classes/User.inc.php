@@ -227,6 +227,10 @@ class User
      */
     public string $formattedonline = '';
     /**
+     * @var string
+     */
+    public string $formattedrespected = '';
+    /**
      * @var float
      */
     public float $weaponoffense = 0;
@@ -566,6 +570,7 @@ class User
             ];
         }
         $this->formattedonline = '<span style="color:'.$conf['color'].';padding:2px;font-weight:bold;">'.$conf['text'].'</span>';
+        $this->formattedrespected = $this->rmdays > 0 ? '<span style="color:gold;font-weight:bold;">Respected</span>' : 'No';
         if ($this->exp >= $this->maxexp) {
             ++$this->level;
             $expRemaining = $this->exp - $this->maxexp;

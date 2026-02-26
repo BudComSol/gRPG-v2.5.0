@@ -30,8 +30,12 @@ if ($user_class->admin) {
             <tr>
                 <td width="12.5%"><strong>Name</strong>:</td>
                 <td width="37.5%"><?php echo $profile_class->formattedname; ?></td>
-                <td width="12.5%"><strong>HP</strong>:</td>
-                <td width="37.5%"><?php echo $profile_class->formattedhp; ?></td>
+                <td width="12.5%"><strong>Respected</strong>:</td>
+                <td width="37.5%"><?php echo $profile_class->formattedrespected; ?></td>
+            </tr>
+            <tr>
+                <td><strong>HP</strong>:</td>
+                <td colspan="3"><?php echo $profile_class->formattedhp; ?></td>
             </tr>
             <tr>
                 <td><strong>Type</strong>:</td>
