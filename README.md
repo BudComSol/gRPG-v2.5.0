@@ -46,7 +46,7 @@ After installation, administrators can manage game content through the Staff Con
 * **Player Management:** Edit player stats, ban users, manage referrals
 * **And More:** Cars, houses, forum categories, voting sites, and RM store options
 
-The game comes with default content including 7 sample crimes ranging from Pickpocket to Bank Robbery. Administrators can customize all messages and add new content as needed.
+Remember, the script is a starting point which comes with default content including 7 sample crimes ranging from Pickpocket to Bank Robbery and Administrators can customize all messages and add new content as needed or to suit their own individual requirements.
 
 ### Error Logging ###
 
