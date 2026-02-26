@@ -74,9 +74,9 @@ if (array_key_exists('submit', $_POST) && $registration === 'open') {
     if (!count($errors)) {
         $validationCode = substr(md5((string)microtime(true)), 0, 15);
         $pass = password_hash($_POST['pass'], PASSWORD_BCRYPT);
-        $message = 'You\'ve received this email because your email address was used to sign up to '.GAME_NAME."\n".
-        'If you didn\'t do that, then just ignore this message'."\n".
-        'If you did, then awesome! Simply visit the URL below to validate your account'."\n\n".
+        $message = 'You\'ve received this email because email address was used to sign up to '.GAME_NAME."\n".
+        'If you didn\'t do that, then just ignore this message.'."\n".
+        'If you did then awesome, simply visit the URL below to validate your account now.'."\n\n".
         BASE_URL.'/validate.php?email='.base64_encode($_POST['email']).'&token='.$validationCode;
         if (send_game_mail($_POST['email'], GAME_NAME.' Validation', $message)) {
             $db->trans('start');
