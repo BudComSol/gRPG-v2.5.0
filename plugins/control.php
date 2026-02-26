@@ -11,7 +11,7 @@ if (defined('PRUNE_INACTIVE_ACCOUNTS') && PRUNE_INACTIVE_ACCOUNTS == true) {
     $db->query('SELECT id FROM users WHERE DATE_SUB(NOW(), INTERVAL 1 MONTH) > lastactive ORDER BY id ');
     $db->execute();
     $rows = $db->fetch();
-    foreach ($rows as $row) {
+    foreach ($rows ?? [] as $row) {
         $ids[] = $row['id'];
     }
     if (count($ids)) {
@@ -31,7 +31,7 @@ foreach ($nums2 as $what) {
 $strs = array_unique(['name', 'description', 'image', 'username', 'message', 'items']);
 foreach ($strs as $what) {
     $_POST[$what] = (isset($_POST[$what]) && is_string($_POST[$what])) ? strip_tags(trim($_POST[$what])) : '';
-    if ($what === 'image' && !isImage($_POST[$what])) {
+    if ($what === 'image' && !empty($_POST[$what]) && !isImage($_POST[$what])) {
         $_POST[$what] = '';
     }
 }
@@ -461,7 +461,7 @@ if (isset($_POST['addrmpack'])) {
         display_errors($errors);
     }
 } elseif (!empty($_GET['deletecity'])) {
-    if (!csrf_check('delete_city_'.$_GET['deletecity'], $_POST)) {
+    if (!csrf_check('delete_city_'.$_GET['deletecity'], $_GET)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
     $db->query('SELECT name FROM cities WHERE id = ?');
@@ -528,7 +528,7 @@ if (isset($_POST['addrmpack'])) {
         display_errors($errors);
     }
 } elseif (!empty($_GET['deletecrime'])) {
-    if (!csrf_check('delete_crime_'.$_GET['deletecrime'], $_POST)) {
+    if (!csrf_check('delete_crime_'.$_GET['deletecrime'], $_GET)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
     $db->query('SELECT name FROM crimes WHERE id = ?');
@@ -1275,7 +1275,7 @@ if (isset($_POST['addrmpack'])) {
         echo Message('You\'ve added the house: '.format($_POST['name']));
     }
 } elseif (isset($_GET['edithouse'])) {
-    if ($_GET['id'] === null) {
+    if (empty($_GET['id'])) {
         echo Message('You didn\'t select a valid house', 'Error', true);
     }
     $db->query('SELECT * FROM houses WHERE id = ?');
@@ -1285,13 +1285,13 @@ if (isset($_POST['addrmpack'])) {
     }
     $row = $db->fetch(true);
     if (isset($_POST['submit'])) {
-        if ($_POST['name'] === null) {
+        if (empty($_POST['name'])) {
             $errors[] = 'You didn\'t enter a valid name';
         }
         if ($_POST['awake'] < 100) {
             $errors[] = 'You didn\'t enter a valid amount of awake';
         }
-        if ($_POST['cost'] === null) {
+        if (empty($_POST['cost'])) {
             $errors[] = 'You didn\'t enter a valid cost';
         }
         $db->query('SELECT COUNT(id) FROM houses WHERE awake = ? AND id <> ?');
@@ -1341,7 +1341,7 @@ if (isset($_POST['addrmpack'])) {
         </tr><?php
     }
 } elseif (isset($_GET['deletehouse'])) {
-    if ($_GET['id'] === null) {
+    if (empty($_GET['id'])) {
         echo Message('You didn\'t select a valid house', 'Error', true);
     }
     $db->query('SELECT id, name, awake FROM houses WHERE id = ?');
@@ -1374,19 +1374,19 @@ if (isset($_POST['addrmpack'])) {
     if (!csrf_check('csrf', $_POST)) {
          echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
-    if ($_POST['name'] === null) {
+    if (empty($_POST['name'])) {
         $errors[] = 'You didn\'t enter a valid name';
     }
     if ($_POST['level'] < 1) {
         $errors[] = 'You didn\'t enter a valid level';
     }
-    if ($_POST['cost'] === null) {
+    if (empty($_POST['cost'])) {
         $errors[] = 'You didn\'t enter a valid cost';
     }
-    if ($_POST['description'] === null) {
+    if (empty($_POST['description'])) {
         $errors[] = 'You didn\'t enter a valid description';
     }
-    if ($_POST['image'] === null) {
+    if (empty($_POST['image'])) {
         $errors[] = 'You didn\'t enter a valid image URL';
     }
     if (!isImage($_POST['image'])) {
@@ -1405,7 +1405,7 @@ if (isset($_POST['addrmpack'])) {
         echo Message('You\'ve added the car: '.format($_POST['name']));
     }
 } elseif (isset($_GET['editcar'])) {
-    if ($_GET['id'] === null) {
+    if (empty($_GET['id'])) {
         echo Message('You didn\'t select a valid car', 'Error', true);
     }
     $db->query('SELECT * FROM carlot WHERE id = ?');
@@ -1418,19 +1418,19 @@ if (isset($_POST['addrmpack'])) {
         if (!csrf_check('editcsrf', $_POST)) {
             echo Message(SECURITY_TIMEOUT_MESSAGE);
         }
-        if ($_POST['name'] === null) {
+        if (empty($_POST['name'])) {
             $errors[] = 'You didn\'t enter a valid name';
         }
         if ($_POST['level'] < 1) {
             $errors[] = 'You didn\'t enter a valid level';
         }
-        if ($_POST['cost'] === null) {
+        if (empty($_POST['cost'])) {
             $errors[] = 'You didn\'t enter a valid cost';
         }
-        if ($_POST['description'] === null) {
+        if (empty($_POST['description'])) {
             $errors[] = 'You didn\'t enter a valid description';
         }
-        if ($_POST['image'] === null) {
+        if (empty($_POST['image'])) {
             $errors[] = 'You didn\'t enter a valid image URL';
         }
         if (!isImage($_POST['image'])) {
@@ -1491,7 +1491,7 @@ if (isset($_POST['addrmpack'])) {
         </tr><?php
     }
 } elseif (isset($_GET['deletecar'])) {
-    if ($_GET['id'] === null) {
+    if (empty($_GET['id'])) {
         echo Message('You didn\'t select a valid car', 'Error', true);
     }
     $db->query('SELECT id, name, cost FROM carlot WHERE id = ?');
@@ -2250,7 +2250,7 @@ if (empty($_GET['page'])) {
     if ($rows !== null) {
         $cache = [];
         foreach ($rows as $row) {
-            $date = new DateTime($row['time_added']);
+            $date = new DateTime($row['time_added'] ?? 'now');
             if (!isset($cache[$row['referrer']])) {
                 $ref = new User($row['referrer']);
                 $cache[$row['referrer']] = $ref->formattedname;
@@ -2262,8 +2262,8 @@ if (empty($_GET['page'])) {
                     <?php echo $row['id']; ?>.)
                     <?php echo $cache[$row['referred']]; ?> was referred by <?php echo $cache[$row['referrer']]; ?>.
                     (<?php echo $date->format('F d, Y g:i:sa'); ?>)
-                    <a href="plugins/control.php?page=referrals&amp;givecredit=<?php echo $row['id']; ?>&amp;csrfg=<?php echo csrf_create('referral_credit_'.$row['id'], false); ?>">Credit</a> |
-                    <a href="plugins/control.php?page=referrals&amp;denycredit=<?php echo $row['id']; ?>&amp;csrfg=<?php echo csrf_create('referral_deny_'.$row['id'], false); ?>">Deny</a>
+                    <a href="plugins/control.php?page=referrals&amp;givecredit=<?php echo $row['id']; ?>&amp;<?php echo 'referral_credit_'.$row['id']; ?>=<?php echo csrf_create('referral_credit_'.$row['id'], false); ?>">Credit</a> |
+                    <a href="plugins/control.php?page=referrals&amp;denycredit=<?php echo $row['id']; ?>&amp;<?php echo 'referral_deny_'.$row['id']; ?>=<?php echo csrf_create('referral_deny_'.$row['id'], false); ?>">Deny</a>
                 </div><?php
         }
     } else {
@@ -2293,7 +2293,7 @@ if (empty($_GET['page'])) {
                         <td><?php echo $row['id']; ?></td>
                         <td><?php echo format($row['name']); ?></td>
                         <td><?php echo format($row['nerve']); ?></td>
-                        <td>[<a href="plugins/control.php?page=crimes&amp;deletecrime=<?php echo $row['id']; ?>&amp;csrfg=<?php echo csrf_create('delete_crime_'.$row['id'], false); ?>">Delete Crime</a>]</td>
+                        <td>[<a href="plugins/control.php?page=crimes&amp;deletecrime=<?php echo $row['id']; ?>&amp;<?php echo 'delete_crime_'.$row['id']; ?>=<?php echo csrf_create('delete_crime_'.$row['id'], false); ?>">Delete Crime</a>]</td>
                     </tr><?php
         }
     } else {
@@ -2431,7 +2431,7 @@ if (empty($_GET['page'])) {
                         <td><?php echo format($row['levelreq']); ?></td>
                         <td><?php echo format($row['landleft']); ?></td>
                         <td><?php echo prettynum($row['landprice'], true); ?></td>
-                        <td>[<a href="plugins/control.php?page=cities&amp;deletecity=<?php echo $row['id']; ?>&amp;csrfg=<?php echo csrf_create('delete_city_'.$row['id'], false); ?>">Delete City</a>]</td>
+                        <td>[<a href="plugins/control.php?page=cities&amp;deletecity=<?php echo $row['id']; ?>&amp;<?php echo 'delete_city_'.$row['id']; ?>=<?php echo csrf_create('delete_city_'.$row['id'], false); ?>">Delete City</a>]</td>
                     </tr><?php
         }
     } else {
@@ -2569,7 +2569,7 @@ if (empty($_GET['page'])) {
                         <td><?php echo format($row['defense']); ?></td>
                         <td><?php echo format($row['speed']); ?></td>
                         <td><?php echo format($row['level']); ?></td>
-                        <td>[<a href="plugins/control.php?page=jobs&amp;deletejob=<?php echo $row['id']; ?>&amp;csrfg=<?php echo csrf_create('delete_job_'.$row['id'], false); ?>">Delete Job</a>]</td>
+                        <td>[<a href="plugins/control.php?page=jobs&amp;deletejob=<?php echo $row['id']; ?>&amp;<?php echo 'delete_job_'.$row['id']; ?>=<?php echo csrf_create('delete_job_'.$row['id'], false); ?>">Delete Job</a>]</td>
                     </tr><?php
         }
     } else {
