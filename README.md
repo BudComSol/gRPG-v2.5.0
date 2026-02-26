@@ -1,6 +1,6 @@
 # gRPG v2.5.0
 Full Stack - PHP, MySQL, HTML, CSS.
-Text-based online RPG-MMORPG-PBBG
+Text-based online RPG-MMORPG-PBBG script.
 
 ### Credits ###
 
