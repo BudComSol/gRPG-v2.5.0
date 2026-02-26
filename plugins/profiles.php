@@ -54,7 +54,7 @@ if ($user_class->admin) {
             <tr>
                 <td><strong>Age</strong>:</td>
                 <td><?php echo $profile_class->age; ?></td>
-                <td><strong>Last Active</strong>:</td>
+                <td><strong>Active</strong>:</td>
                 <td><?php echo $profile_class->formattedlastactive; ?></td>
             </tr>
             <tr>
