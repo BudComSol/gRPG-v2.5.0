@@ -50,14 +50,14 @@ $packs = $db->fetch();
 <tr>
     <td class="content">
         <form action="/plugins/rmstore.php" method="post" class="pure-form-rmstore">
-            <div class="pure-info-message"><p>You're currently purchasing an RMStore Upgrade for <?php echo $target->id == $user_class->id ? 'yourself' : $target->formattedname; ?></p><?php if ($target->id != $user_class->id) : ?> <span class="small italic">- [<a href="plugins/rmstore.php?reset">Reset</a>]</span><?php endif; ?></div>
+            <div class="pure-info-message"><p>You're currently purchasing an RMStore Upgrade for <?php echo $target->id == $user_class->id ? 'yourself' : $target->formattedname; ?>.</p><?php if ($target->id != $user_class->id) : ?> <span class="small italic">- [<a href="plugins/rmstore.php?reset">Reset</a>]</span><?php endif; ?></div>
             <?php echo csrf_create('custom_for'); ?>
             <div class="pure-control-group">
                 <label for="customer">Purchase Upgrade For:</label>
                 <input type="text" name="customer" id="customer" placeholder="<?php echo format($target->username); ?>" />
             </div><br>
             <div class="pure-controls">
-                <button type="submit" name="update_customer" class="pure-button pure-button-primary">Update Recipient</button>
+                <button type="submit" name="update_customer" class="pure-button pure-button-primary">Update This Recipient</button>
             </div>
         </form>
     </td>
