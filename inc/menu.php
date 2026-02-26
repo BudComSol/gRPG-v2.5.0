@@ -31,7 +31,7 @@ global $owner;
     } ?>
     <div class="headbox">Account</div><?php
 if ($user_class->rmdays) {
-        ?><a class="leftmenu" href="plugins/blocklist.php">Blocklist</a><?php
+        ?><a class="leftmenu" href="plugins/blocklist.php">Block</a><?php
     }
 ?><a class="leftmenu" href="index.php?logout">Logout</a>
     <a class="leftmenu" href="plugins/preferences.php">Preferences</a>
