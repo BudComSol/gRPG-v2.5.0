@@ -45,7 +45,7 @@ $packs = $db->fetch();
     </td>
 </tr>
 <tr>
-    <th class="content-head">Stuff To Buy</th>
+    <th class="content-head">Buy Some Stuff</th>
 </tr>
 <tr>
     <td class="content">
@@ -128,7 +128,7 @@ if ($packs !== null) {
     <td class="content">
         <p>If you have any questions, PM me (<?php echo $owner->formattedname; ?>).<br />
         Before you buy you must be clear of the following things:<br /><br />
-        1. NO Refunds.<br />
+        1. NO Refunds or Chargebacks, you know what you're getting.<br />
         2. And you can still be banned for breaking the rules whether you have donated or not.</p>
     </td>
 </tr><?php
