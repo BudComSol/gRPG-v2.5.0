@@ -32,7 +32,7 @@ Text-based online RPG-MMORPG-PBBG
 * RMSTORE_DISCOUNT="0".
 * RMSTORE_BOGOF="false".
 
-**Note:** You will need to configure your IPN URL once in your PayPal account here: PayPal account → Profile → Selling tools → Instant Payment Notifications → Edit → set URL to https://yourgame.com/ipn/notify.php.
+**Note:** You will need to configure your IPN URL once only in your PayPal account here: PayPal account → Profile → Selling tools → Instant Payment Notifications → Edit → set URL to https://yourgame.com/ipn/notify.php.
 
 ### Game Administration ###
 
