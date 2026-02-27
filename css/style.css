@@ -788,14 +788,14 @@ fieldset {
 
 /* Newspaper plugin styles */
 .newspaper {font-family:arial;font-size:12px;cursor:default;color:#AAAAAA}
-.newspaper td {font-family:arial;font-size:12px;cursor:default;color:#AAAAAA}
+.newspaper td {font-family:arial;font-size:14px;cursor:default;color:#FFFFFF;text-align:center;padding-bottom:10px;background-color:#3a1515;}
 .newspaper a {color:#FFBA27;text-decoration:none;font-size:16px}
 .newspaper a:hover {color:#FFBA27;text-decoration:underline}
 .newspaper input {border-width:1px;font-family:arial;font-size:12px;padding:2px;height:21px;border-color:#CCCCCC;border-style:solid;background-color:#F9F9F9;color:#999999}
-.newspaper-masthead {font-size:28px;color:#FFBA27}
+.newspaper-masthead {display:block;font-size:32px;color:#FFBA27;text-align:center;margin-top:20px;margin-bottom:20px;}
 .newspaper-spacer {font-size:6px}
-.newspaper-article-title {color:#FFBA27;font-size:15px}
-.newspaper-article-body {color:#999;line-height:1.6em}
+.newspaper-article-title {color:#FFBA27!important;font-size:16px!important}
+.newspaper-article-body {color:#999;line-height:1.4em;text-align:center}
 
 @media (max-width: 480px) {
     /* Extra small mobile devices */
