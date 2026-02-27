@@ -19,12 +19,12 @@ require_once __DIR__.'/../inc/header.php';
     <td class="content">
         <div class="newspaper">
             <div align="center">
-                <table width="750" border="0" cellpadding="0" cellspacing="0">
+                <table width="100%" border="0" cellpadding="0" cellspacing="0">
                     <tr>
-                        <td colspan="3" width="750">
-                            <table width="750" border="0" cellpadding="0" cellspacing="0">
+                        <td colspan="3" width="100%">
+                            <table width="100%" border="0" cellpadding="0" cellspacing="0">
                                 <tr>
-                                    <td width="750" colspan="3">
+                                    <td width="100%" colspan="3">
                                         <span style="font-size:28px;color:#FFBA27">GRPG Daily Herald </span></td>
                                 </tr>
                                 <tr>
@@ -45,17 +45,17 @@ require_once __DIR__.'/../inc/header.php';
                         <td colspan="3" height="10" bgcolor="#fff"></td>
                     </tr>
                     <tr>
-                        <td width="750" valign="top">
+                        <td width="100%" valign="top">
                             <span style="font-size:6px"><br /></span>
                             <div align="left">
-                                <table width="549" border="0" cellpadding="0" cellspacing="0">
+                                <table width="100%" border="0" cellpadding="0" cellspacing="0">
                                     <tr>
                                         <td colspan="4" height="1" bgcolor="#aaa"></td>
                                         <td width="5" height="1" bgcolor="#fff"></td>
                                     </tr>
                                     <tr>
                                         <td width="1" bgcolor="#aaa"></td>
-                                        <td rowspan="2" colspan="2" width="542" height="27" bgcolor="#f9f9f9" style="color:#FFBA27;font-size:15px">&nbsp;&nbsp;Resident Millionaire / Business Tycoon / Drug Lord BUSTED! by Publius </td>
+                                        <td rowspan="2" colspan="2" height="27" bgcolor="#f9f9f9" style="color:#FFBA27;font-size:15px">&nbsp;&nbsp;Resident Millionaire / Business Tycoon / Drug Lord BUSTED! by Publius </td>
                                         <td width="1" bgcolor="#aaa"></td>
                                         <td width="5" height="4" bgcolor="#fff"></td>
                                     </tr>
@@ -73,7 +73,7 @@ require_once __DIR__.'/../inc/header.php';
                                     <tr>
                                         <td width="1" bgcolor="#aaa"></td>
                                         <td colspan="2" bgcolor="#fff">
-                                            <table width="542" border="0" cellpadding="17" cellspacing="0">
+                                            <table width="100%" border="0" cellpadding="17" cellspacing="0">
                                                 <tr>
                                                     <td style="color:#999;line-height:1.6em">
                                                         <div align="justify">
@@ -104,14 +104,14 @@ require_once __DIR__.'/../inc/header.php';
                                         <td width="5" height="5" bgcolor="#f0f0f0"></td>
                                     </tr>
                                 </table><br /><br />
-                                <table width="549" border="0" cellpadding="0" cellspacing="0">
+                                <table width="100%" border="0" cellpadding="0" cellspacing="0">
                                     <tr>
                                         <td colspan="4" height="1" bgcolor="#aaa"></td>
                                         <td width="5" height="1" bgcolor="#fff"></td>
                                     </tr>
                                     <tr>
                                         <td width="1" bgcolor="#aaa"></td>
-                                        <td rowspan="2" colspan="2" width="542" height="27" bgcolor="#f9f9f9" style="color:#FFBA27;font-size:15px"> &nbsp;&nbsp;Evacuated Cities re-opened in Generica by Conor </td>
+                                        <td rowspan="2" colspan="2" height="27" bgcolor="#f9f9f9" style="color:#FFBA27;font-size:15px"> &nbsp;&nbsp;Evacuated Cities re-opened in Generica by Conor </td>
                                         <td width="1" bgcolor="#aaa"></td>
                                         <td width="5" height="4" bgcolor="#fff"></td>
                                     </tr>
@@ -129,7 +129,7 @@ require_once __DIR__.'/../inc/header.php';
                                     <tr>
                                         <td width="1" bgcolor="#aaa"></td>
                                         <td colspan="2" bgcolor="#fff">
-                                            <table width="542" border="0" cellpadding="17" cellspacing="0">
+                                            <table width="100%" border="0" cellpadding="17" cellspacing="0">
                                                 <tr>
                                                     <td style="color:#999;line-height:1.6em">
                                                         <div align="justify">
