@@ -6,10 +6,7 @@ require_once __DIR__.'/../inc/header.php';
 </tr>
 <tr>
     <td class="content">
-        <p>If you are interested in writing an article for the Newspaper, keep these things in mind.</p>
-        <p>Articles must be at least a pargraph long and about real events in gRPG (like a new feature being added, or a strong gang) or just about life in Generica.</p>
-        <p>Articles may be rejected for any reason at all but once submitted they become the sole property of gRPG.Me however you are credited with the article (you get a byline).</p>        
-        <p>To submit an article, PM it to CrazyElk (Admin) with the subject "Newspaper Article" and we will give it due consideration.</p>
+        <img src="images/headers/newspaper.webp" alt="gRPG Newspaper Header">
     </td>
 </tr>
 <tr>
@@ -22,7 +19,7 @@ require_once __DIR__.'/../inc/header.php';
                             <table width="100%" border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td width="100%" colspan="3">
-                                        <span class="newspaper-masthead">GRPG Daily Blurb</span></td>
+                                        <span class="newspaper-masthead">Daily Blurb</span></td>
                                 </tr>
                                 <tr>
                                     <td width="330">August 12, 2007 </td>
@@ -52,7 +49,7 @@ require_once __DIR__.'/../inc/header.php';
                                     </tr>
                                     <tr>
                                         <td width="1" bgcolor="#aaa"></td>
-                                        <td rowspan="2" colspan="2" height="27" bgcolor="#f9f9f9" class="newspaper-article-title">&nbsp;&nbsp;Resident Millionaire / Business Tycoon / Drug Lord BUSTED! by Publius </td>
+                                        <td rowspan="2" colspan="2" height="27" bgcolor="#f9f9f9" class="newspaper-article-title">❝ The gRPG Full Stack RPG Script Is Being Worked On. ❞</td>
                                         <td width="1" bgcolor="#aaa"></td>
                                         <td width="5" height="4" bgcolor="#fff"></td>
                                     </tr>
@@ -74,11 +71,10 @@ require_once __DIR__.'/../inc/header.php';
                                                 <tr>
                                                     <td class="newspaper-article-body">
                                                         <div align="justify">
-                                                            Just one week after buying all the land in Generica, the most hated yet respected man in Generica has been busted for selling drugs. After turning his newly acquired land into the basis of his new large-scale
-                                                            drug manufactoring operation, he planted acres upon acres of marijuana and harvested it a week later. He then proceeded to go in person to sell his green sticky gold downtown. Luckily for the youth
-                                                            of Generica, the local police force had already learned of this (how do you hide that many acres of pot?), and set up a sting operation to catch him in the act. When senatorhades attempted to sell
-                                                            the marijuana to the undercover police officer, he lost his weed, and gained a pair of handcuffs. He was hauled off to the local jail and was being held until trial, however he has recently dissapeared
-                                                            from the prison. It is unknown whether someone busted him out, or if he escaped on his own.
+                                                            Good news viewers, since finding the script on Github after being made open source, we forked a copy and commenced looking at what things we could do to enhance it.
+                                                            Well it turns out there were many things and so we set about changing those things we thought need changing, fixing bugs, addressing typo's, changing some css, changing
+                                                            some text and a whole lot of other things until we got to where we are now. Thats not to say we have stopped as there is still plenty to do and we have asked others to collaborate
+                                                            in the project as well.
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -108,7 +104,7 @@ require_once __DIR__.'/../inc/header.php';
                                     </tr>
                                     <tr>
                                         <td width="1" bgcolor="#aaa"></td>
-                                        <td rowspan="2" colspan="2" height="27" bgcolor="#f9f9f9" class="newspaper-article-title"> &nbsp;&nbsp;Evacuated Cities re-opened in Generica by Conor </td>
+                                        <td rowspan="2" colspan="2" height="27" bgcolor="#f9f9f9" class="newspaper-article-title">❝ Resident Millionaire / Business Tycoon / Drug Lord BUSTED by Publius. ❞</td>
                                         <td width="1" bgcolor="#aaa"></td>
                                         <td width="5" height="4" bgcolor="#fff"></td>
                                     </tr>
@@ -124,21 +120,20 @@ require_once __DIR__.'/../inc/header.php';
                                         <td width="5" bgcolor="#f0f0f0"></td>
                                     </tr>
                                     <tr>
+                                        <tr>
                                         <td width="1" bgcolor="#aaa"></td>
                                         <td colspan="2" bgcolor="#fff">
                                             <table width="100%" border="0" cellpadding="17" cellspacing="0">
                                                 <tr>
                                                     <td class="newspaper-article-body">
                                                         <div align="justify">
-                                                            <p>
-                                                                &nbsp; &nbsp; The Grand re-opening of Seattle and New York on the 12th of August<br /> sparked major global interest and billions tuned into watch the never before<br /> seen event.<br /> &nbsp; &nbsp;
-                                                                After the chemical bombs dropped on New York and Seattle just over a<br /> year ago by terrorists the two cities were finally deemed safe enough for<br /> the public to move back into there homes.
-                                                                Some parts of both cities are<br /> still under construction whilst other parts have been demolished in the last<br /> year.The majority of the public have returned to their original homes to<br />find no difference except a years worth of dust but some have returned to<br /> find their homes demolished after being titled "Dangerous". The only good<br /> coming out of this for these families
-                                                                is being built brand new caravans on<br /> large camping sites.<br /> &nbsp; &nbsp;Business has already sprung into action with many large businesses<br /> re-opening again, but small stores have yet
-                                                                to open. As read above the new,<br /> cheap land around both cities has already been snatched up by Ex-President<br /> and business tycoon "Senator Hades". And this land is out of the control of<br />the law enforcement.<br /> &nbsp; &nbsp;But already crime has re surfaced in the cities with the robbery's and<br /> shootings starting in the first night since re opening. Thugs already<br /> cropping
-                                                                up in alleys taking a chance to mug a passer by. Can the fresh new<br /> Law Enforcement take control? Or will crime spread in Seattle and New York<br /> making a new violent metropolis's? Will the
-                                                                new cities crime rise to rival<br /> that of New Jersey?
-                                                            </p>
+                                                            
+                                                            Just one week after buying all the land in Generica, the most hated yet respected man in Generica has been busted for selling drugs. After turning his newly acquired land into the basis of his new large-scale
+                                                            drug manufactoring operation, he planted acres upon acres of marijuana and harvested it a week later. He then proceeded to go in person to sell his green sticky gold downtown. Luckily for the youth
+                                                            of Generica, the local police force had already learned of this (how do you hide that many acres of pot?), and set up a sting operation to catch him in the act. When senatorhades attempted to sell
+                                                            the marijuana to the undercover police officer, he lost his weed, and gained a pair of handcuffs. He was hauled off to the local jail and was being held until trial, however he has recently dissapeared
+                                                            from the prison. It is unknown at this time whether someone busted him out, or if he escaped of his own accord.
+                                                            
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -164,12 +159,7 @@ require_once __DIR__.'/../inc/header.php';
                                 <span class="newspaper-spacer"><br /></span>
                             </div>
                         </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" bgcolor="#fff" align="right">
-                            <div align="left">Copyright &#0169; 2007, Brandon Werner (Publius)</div>
-                        </td>
-                    </tr>
+                    </tr>                    
                 </table>
             </div>
         </div>
