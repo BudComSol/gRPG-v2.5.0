@@ -786,6 +786,13 @@ fieldset {
     }
 }
 
+/* Newspaper plugin styles */
+.newspaper {font-family:arial;font-size:12px;cursor:default;color:#AAAAAA}
+.newspaper td {font-family:arial;font-size:12px;cursor:default;color:#AAAAAA}
+.newspaper a {color:#FFBA27;text-decoration:none;font-size:16px}
+.newspaper a:hover {color:#FFBA27;text-decoration:underline}
+.newspaper input {border-width:1px;font-family:arial;font-size:12px;padding:2px;height:21px;border-color:#CCCCCC;border-style:solid;background-color:#F9F9F9;color:#999999}
+
 @media (max-width: 480px) {
     /* Extra small mobile devices */
     body {
