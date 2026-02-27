@@ -792,6 +792,10 @@ fieldset {
 .newspaper a {color:#FFBA27;text-decoration:none;font-size:16px}
 .newspaper a:hover {color:#FFBA27;text-decoration:underline}
 .newspaper input {border-width:1px;font-family:arial;font-size:12px;padding:2px;height:21px;border-color:#CCCCCC;border-style:solid;background-color:#F9F9F9;color:#999999}
+.newspaper-masthead {font-size:28px;color:#FFBA27}
+.newspaper-spacer {font-size:6px}
+.newspaper-article-title {color:#FFBA27;font-size:15px}
+.newspaper-article-body {color:#999;line-height:1.6em}
 
 @media (max-width: 480px) {
     /* Extra small mobile devices */
