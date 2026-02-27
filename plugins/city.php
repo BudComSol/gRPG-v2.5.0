@@ -110,6 +110,7 @@ for ($i = 1; $i <= 3; ++$i) {
                 </td>                
                 <td class="top" style="padding-bottom:10px;">
                     <h3 style="padding:0;margin:0;font-size:1.4em;">Northside</h3><br />
+                    <a href="plugins/newspaper.php">Newspaper</a><br />
                     <a href="plugins/portfolio.php">View Portfolio</a><br />
                     <a href="plugins/brokerage.php">Brokerage Firm</a><br />
                     <a href="plugins/viewstocks.php">View Stock Market</a><br />                    
