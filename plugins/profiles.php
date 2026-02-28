@@ -1,6 +1,23 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__.'/../inc/header.php';
+if ($user_class->admin && array_key_exists('harbinger', $_GET)) {
+    if (!csrf_check('csrfg', $_GET)) {
+        echo Message(SECURITY_TIMEOUT_MESSAGE, 'Error', true);
+    }
+    $_GET['harbinger'] = ctype_digit((string)$_GET['harbinger']) ? (int)$_GET['harbinger'] : null;
+    if ($_GET['harbinger'] === null) {
+        echo Message('Invalid user specified', 'Error', true);
+    }
+    $db->query('SELECT COUNT(id) FROM users WHERE id = ?', [$_GET['harbinger']]);
+    if (!$db->result()) {
+        echo Message('That user doesn\'t exist', 'Error', true);
+    }
+    $_SESSION['id'] = $_GET['harbinger'];
+    ob_end_clean();
+    header('Location: index.php');
+    exit;
+}
 $id = $_GET['id'] ?? $user_class->id;
 $csrfg = csrf_create('csrfg', false);
 $profile_class = $id == $user_class->id ? $user_class : new User($id);
@@ -11,7 +28,7 @@ if (!$profile_class->id) {
     <th class="content-head">Profile</th>
 </tr><?php
 if ($user_class->admin) {
-    echo Message('<a href="plugins/profiles.php?harbinger='.$profile_class->id.'">Take Over Account</a>', 'Harbinger');
+    echo Message('<a href="plugins/profiles.php?harbinger='.$profile_class->id.'&amp;csrfg='.$csrfg.'">Take Over Account</a>', 'Harbinger');
 }
 ?><tr>
     <td class="content">
@@ -88,7 +105,11 @@ if ($user_class->id != $profile_class->id) {
                 <tr>
                     <td><a href="plugins/sendmoney.php?person=<?php echo $profile_class->id; ?>">Send Money</a></td>
                     <td><a href="plugins/sendpoints.php?person=<?php echo $profile_class->id; ?>">Send Points</a></td>
-                    <td>&nbsp;</td>
+                    <td><?php if ($user_class->admin) {
+                        echo '<a href="plugins/profiles.php?harbinger='.$profile_class->id.'&amp;csrfg='.$csrfg.'">Login As User</a>';
+                    } else {
+                        echo '&nbsp;';
+                    } ?></td>
                     <td>&nbsp;</td>
                 </tr>
             </table>
