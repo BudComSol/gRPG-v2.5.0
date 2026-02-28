@@ -147,12 +147,18 @@ $_GET['step'] = isset($_GET['step']) && is_numeric($_GET['step']) && in_array($_
         default:
         case 1:
             checkInstallation();
+            $mbstringEnabled = extension_loaded('mbstring');
             ?><h2 class="content-subhead">Let's do some checks first...</h2>
             <form action="install.php?step=2" method="post" class="pure-form pure-form-aligned">
                 <div class="pure-control-group">
                     <label for="version">PHP Version</label>
                     <span id="version"
                           class="<?php echo PHP_VERSION_ID >= 70400 ? 'green' : 'red'; ?>"><?php echo PHP_VERSION; ?></span>
+                </div>
+                <div class="pure-control-group">
+                    <label for="mbstring">PHP mbstring Extension</label>
+                    <span id="mbstring"
+                          class="<?php echo $mbstringEnabled ? 'green' : 'red'; ?>"><?php echo $mbstringEnabled ? 'Enabled' : 'Not enabled! Please enable the mbstring PHP extension.'; ?></span>
                 </div>
                 <div class="pure-control-group">
                     <label for="sql-file">SQL File</label>
