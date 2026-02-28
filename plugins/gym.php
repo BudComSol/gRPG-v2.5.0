@@ -74,6 +74,11 @@ if (array_key_exists('train', $_POST)) {
     <th class="content-head">Gym</th>
 </tr>
 <tr>
+    <td class="content">
+        <img src="images/headers/gym.webp" alt="gRPG Gym Header">
+    </td>
+</tr>
+<tr>
     <td class="content"><p>You Can Currently Train <?php echo format($user_class->energy); ?> Time<?php echo s($user_class->energy); ?></p></td>
 </tr>
 <tr>
