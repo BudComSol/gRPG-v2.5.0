@@ -32,7 +32,7 @@ if (array_key_exists('submit', $_POST)) {
         $db->execute([$_POST['amount'], $target->id]);
         Send_Event($target->id, '{extra} sent you '.format($_POST['amount']).' point'.s($_POST['amount']), $user_class->id);
         $db->trans('end');
-        echo Message('You\'ve sent '.format($_POST['amount']).' point'.s($_POST['amount']).' to '.$target->formattedname);
+        echo Message('<p>You\'ve sent '.format($_POST['amount']).' point'.s($_POST['amount']).' to '.$target->formattedname) . '</p>';
     }
 }
 ?><tr>
@@ -40,20 +40,20 @@ if (array_key_exists('submit', $_POST)) {
 </tr>
 <tr>
     <td class="content">
-        <form action="sendpoints.php" method="post" class="pure-form pure-form-aligned">
+        <form action="plugins/sendpoints.php" method="post" class="pure-form pure-form-aligned">
             <?php echo csrf_create(); ?>
             <fieldset>
                 <div class="pure-control-group">
-                    <label for="amount">Amount of points</label>
+                    <label for="amount">Number of Points:</label>
                     <input type="text" name="amount" id="amount" size="22" />
                 </div>
                 <div class="pure-control-group">
-                    <label for="theirid">Player ID</label>
+                    <label for="theirid">Player ID:</label>
                     <input type="text" name="theirid" id="theirid" size="22" value="<?php echo $_GET['person']; ?>" />
                 </div>
             </fieldset>
             <div class="pure-controls">
-                <button type="submit" name="submit" class="pure-button pure-button-primary">Send Points</button>
+                <button type="submit" name="submit" class="pure-button pure-button-primary">Send Those Points</button>
             </div>
         </form>
     </td>
