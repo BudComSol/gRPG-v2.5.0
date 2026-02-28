@@ -39,7 +39,8 @@ INNER JOIN items ON itemid = items.id
 WHERE userid = ?
 ORDER BY name ');
 $db->execute([$user_class->id]);
-if (!$db->count()) {
+$has_drugs = $user_class->cocaine || $user_class->nodoze || $user_class->genericsteroids;
+if (!$db->count() && !$has_drugs) {
     echo Message('<p>You don\'t have any items at this time.</p>', 'Error', true);
 }
 $rows = $db->fetch();
@@ -53,7 +54,7 @@ $armor = '';
 $misc = '';
 $drugs = '';
 $heal = '';
-foreach ($rows as $row) {
+foreach ($rows ?? [] as $row) {
     if ($row['offense']) {
         $weapons .= '
         <td width="25%" class="center">
