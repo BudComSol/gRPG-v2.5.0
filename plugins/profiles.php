@@ -15,7 +15,7 @@ if ($user_class->admin && array_key_exists('harbinger', $_GET)) {
     }
     $_SESSION['id'] = $_GET['harbinger'];
     ob_end_clean();
-    header('Location: index.php');
+    header('Location: /index.php');
     exit;
 }
 $id = $_GET['id'] ?? $user_class->id;
