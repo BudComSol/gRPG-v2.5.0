@@ -45,7 +45,7 @@ if (count($errors)) {
     display_errors($errors);
 }
 ?><tr>
-    <td class="content">Tired of <?php echo format($user_class->cityname); ?>? For <?php echo prettynum($cost, true); ?> you can get a bus ticket to anywhere you want to go.</td>
+    <td class="content"><p>Tired of <?php echo format($user_class->cityname); ?>, for <?php echo prettynum($cost, true); ?> you can get a bus ticket to anywhere you want to go.</p></td>
 </tr>
 <tr>
     <td class="content">
@@ -63,12 +63,12 @@ if ($rows !== null) {
             ?><tr>
                     <td><?php echo format($row['name']); ?></td>
                     <td><?php echo format($row['levelreq']); ?></td>
-                    <td><a href="bus.php?go=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>">Buy Ticket</a></td>
+                    <td><a href="plugins/bus.php?go=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>">Buy Ticket</a></td>
                 </tr><?php
         }
     } else {
         ?><tr>
-                    <td colspan="3" class="center">There are no other cities you can currently reach</td>
+                    <td colspan="3" class="center"><p>You will need to level up in order to go to other cities.</p></td>
                 </tr><?php
     }
 ?></table>
