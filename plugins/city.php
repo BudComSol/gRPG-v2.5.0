@@ -16,7 +16,9 @@ if (!empty($rows)) {
     <th class="content-head"><?php echo $user_class->cityname; ?></th>
 </tr>
 <tr>
-    <td class="content-city"><?php echo format($user_class->citydesc); ?></td>
+    <td class="content">
+        <img src="images/headers/city.png" alt="gRPG City Header">
+    </td>
 </tr>
 <tr>
     <th class="content-head">Badass Citizens of <?php echo format($user_class->cityname); ?></th>
