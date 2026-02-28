@@ -36,7 +36,7 @@ if (!empty($_GET['go'])) {
         echo Message('You paid '.prettynum($cost, true).' and arrived at your destination.', 'Error', true);
     }
 }
-$db->query('SELECT id, name, levelreq FROM cities WHERE ? >= levelreq AND id <> ? ORDER BY levelreq ', [$user_class->level, $user_class->city]);
+$db->query('SELECT id, name, levelreq FROM cities WHERE id <> ? ORDER BY levelreq', [$user_class->city]);
 $rows = $db->fetch();
 ?><tr>
     <th class="content-head">Bus Station</th>
@@ -63,7 +63,11 @@ if ($rows !== null) {
             ?><tr>
                     <td><?php echo format($row['name']); ?></td>
                     <td><?php echo format($row['levelreq']); ?></td>
-                    <td><a href="plugins/bus.php?go=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>">Buy Ticket</a></td>
+                    <td><?php if ($row['levelreq'] <= $user_class->level) {
+                        echo '<a href="plugins/bus.php?go='.htmlspecialchars($row['id'], ENT_QUOTES).'&amp;csrfg='.htmlspecialchars($csrfg, ENT_QUOTES).'">Buy Ticket</a>';
+                    } else {
+                        echo 'Requires Level '.(int)$row['levelreq'];
+                    } ?></td>
                 </tr><?php
         }
     } else {
