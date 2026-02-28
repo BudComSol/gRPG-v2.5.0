@@ -2,6 +2,7 @@
 declare(strict_types=1);
 require_once __DIR__.'/../inc/header.php';
 $csrfg = csrf_create('csrfg', false);
+$use_drug_csrf = csrf_create('use_drug', false);
 ?>
 <tr>
     <th class="content-head">Equipped</th>
@@ -154,7 +155,7 @@ if ($user_class->cocaine) {
         '.formatImage('images/noimage.png').'<br />
         Cocaine [x'.format($user_class->cocaine).']<br />
         '.prettynum(0, true).'<br />
-        [<a href="plugins/drugs.php?use=cocaine&amp;csrfg='.$csrfg.'">Use</a>]
+        [<a href="plugins/drugs.php?use=cocaine&amp;use_drug='.$use_drug_csrf.'">Use</a>]
     </td>';
 }
 if ($user_class->nodoze) {
@@ -163,7 +164,7 @@ if ($user_class->nodoze) {
         '.formatImage('images/noimage.png').'<br />
         No-Doze [x'.format($user_class->nodoze).']<br />
         '.prettynum(0, true).'<br />
-        [<a href="plugins/drugs.php?use=nodoze&amp;csrfg='.$csrfg.'">Use</a>]
+        [<a href="plugins/drugs.php?use=nodoze&amp;use_drug='.$use_drug_csrf.'">Use</a>]
     </td>';
 }
 if ($user_class->genericsteroids) {
@@ -172,7 +173,7 @@ if ($user_class->genericsteroids) {
         '.formatImage('images/noimage.png').'<br />
         Generic Steroids [x'.format($user_class->genericsteroids).']<br />
         '.prettynum(0, true).'<br />
-        [<a href="plugins/drugs.php?use=genericsteroids&amp;csrfg='.$csrfg.'">Use</a>]
+        [<a href="plugins/drugs.php?use=genericsteroids&amp;use_drug='.$use_drug_csrf.'">Use</a>]
     </td>';
 }
 ?><tr>
