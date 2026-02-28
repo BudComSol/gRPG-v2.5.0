@@ -25,6 +25,9 @@ if (!defined('INSTALLER') && file_exists(dirname(__DIR__) . '/.env')) {
         exit;
     }
 }
+if (!extension_loaded('mbstring')) {
+    exit('Fatal error: The PHP mbstring extension is required but not enabled. Please enable the mbstring extension in your PHP configuration (php.ini) and restart your web server.');
+}
 // Load local vendor autoloader (no Composer required)
 $autoloader = __DIR__ . '/vendor/autoload.php';
 if (!file_exists($autoloader)) {
