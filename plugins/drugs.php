@@ -2,8 +2,8 @@
 declare(strict_types=1);
 
 require_once __DIR__.'/../inc/header.php';
-if (!csrf_check('csrfg', $_GET)) {
-    echo Message(SECURITY_TIMEOUT_MESSAGE);
+if (!csrf_check('use_drug', $_GET)) {
+    echo Message(SECURITY_TIMEOUT_MESSAGE, 'Error', true);
 }
 $drug = array_key_exists('use', $_GET) && in_array($_GET['use'], ['cocaine', 'genericsteroids', 'nodoze']) ? $_GET['use'] : null;
 $which = ['cocaine' => 'Cocaine', 'genericsteroids' => 'Generic Steroids', 'nodoze' => 'No-Doze'];
