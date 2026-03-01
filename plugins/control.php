@@ -1370,7 +1370,7 @@ if (isset($_POST['addrmpack'])) {
             </td>
         </tr><?php
     }
-} elseif (isset($_GET['addcar'])) {
+} elseif (isset($_POST['addcar'])) {
     if (!csrf_check('csrf', $_POST)) {
          echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
@@ -3246,7 +3246,7 @@ if (empty($_GET['page'])) {
     </tr>
     <tr>
         <td class="content">
-            <form action="plugins/control.php?page=cars&amp;addcar" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/control.php?page=cars" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create(); ?>
                 <div class="pure-control-group">
                     <label for="name">Name</label>
@@ -3275,7 +3275,7 @@ if (empty($_GET['page'])) {
                     Buyable
                 </div>
                 <div class="pure-controls">
-                    <button type="submit" class="pure-button pure-button-primary">Add Car</button>
+                    <button type="submit" name="addcar" class="pure-button pure-button-primary">Add Car</button>
                 </div>
             </form>
         </td>
