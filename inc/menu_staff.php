@@ -29,7 +29,7 @@ $tickets = $db->result();
     <a class="leftmenu" href="plugins/control.php?page=crimes">Manage Crimes</a>
     <a class="leftmenu" href="plugins/control.php?page=forum">Manage Forum</a>
     <a class="leftmenu" href="plugins/control.php?page=houses">Manage Houses</a>    
-    <a class="leftmenu" href="plugins/control.php?page=giveuseritem">Give Item to User</a>    
+    <a class="leftmenu" href="plugins/control.php?page=giveuseritem">Give Item To User</a>    
 </div>
 <div>
     <div class="headbox leftmenu">Miscellaneous</div>
