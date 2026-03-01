@@ -64,7 +64,7 @@ if ($rows !== null) {
                     <td><?php echo format($row['name']); ?></td>
                     <td><?php echo format($row['levelreq']); ?></td>
                     <td><?php if ($row['levelreq'] <= $user_class->level) {
-                        echo '<a href="plugins/bus.php?go='.htmlspecialchars($row['id'], ENT_QUOTES).'&amp;csrfg='.htmlspecialchars($csrfg, ENT_QUOTES).'">Buy Ticket</a>';
+                        echo '<a href="plugins/bus.php?go='.htmlspecialchars($row['id'], ENT_QUOTES).'&amp;csrfg='.htmlspecialchars($csrfg, ENT_QUOTES).'">Travel Now</a>';
                     } else {
                         echo 'Requires Level '.(int)$row['levelreq'];
                     } ?></td>
