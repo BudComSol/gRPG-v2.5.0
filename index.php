@@ -26,6 +26,12 @@ require_once __DIR__.'/inc/header.php';
                 <td><?php echo prettynum($user_class->bank, true); ?></td>
             </tr>
             <tr>
+                <th>Points:</th>
+                <td><?php echo format($user_class->points); ?></td>
+                <th>RMDays:</th>
+                <td><?php echo format($user_class->rmdays); ?></td>
+            </tr>
+            <tr>
                 <th>Whores:</th>
                 <td><?php echo format($user_class->hookers); ?></td>
                 <th>Marijuana:</th>
