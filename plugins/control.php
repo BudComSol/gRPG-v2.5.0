@@ -1370,40 +1370,6 @@ if (isset($_POST['addrmpack'])) {
             </td>
         </tr><?php
     }
-} elseif (isset($_POST['addcar'])) {
-    if (!csrf_check('csrf', $_POST)) {
-         echo Message(SECURITY_TIMEOUT_MESSAGE);
-    }
-    if (empty($_POST['name'])) {
-        $errors[] = 'You didn\'t enter a valid name';
-    }
-    if ($_POST['level'] < 1) {
-        $errors[] = 'You didn\'t enter a valid level';
-    }
-    if (empty($_POST['cost'])) {
-        $errors[] = 'You didn\'t enter a valid cost';
-    }
-    if (empty($_POST['description'])) {
-        $errors[] = 'You didn\'t enter a valid description';
-    }
-    if (empty($_POST['image'])) {
-        $errors[] = 'You didn\'t enter a valid image URL';
-    }
-    if (!isImage($_POST['image'])) {
-        $errors[] = 'The image you selected didn\'t validate - are you sure it\'s a <strong>direct</strong> URL?';
-    }
-    $db->query('SELECT COUNT(id) FROM carlot WHERE name = ?');
-    $db->execute([$_POST['name']]);
-    if ($db->result()) {
-        $errors[] = 'Another car with the name of '.format($_POST['name']).' already exists';
-    }
-    if (count($errors)) {
-        display_errors($errors);
-    } else {
-        $db->query('INSERT INTO carlot (name, description, image, buyable, cost, level) VALUES (?, ?, ?, ?, ?, ?)');
-        $db->execute([$_POST['name'], $_POST['description'], $_POST['image'], $_POST['buyable'], $_POST['cost'], $_POST['level']]);
-        echo Message('You\'ve added the car: '.format($_POST['name']));
-    }
 } elseif (isset($_GET['editcar'])) {
     if (empty($_GET['id'])) {
         echo Message('You didn\'t select a valid car', 'Error', true);
@@ -1430,10 +1396,7 @@ if (isset($_POST['addrmpack'])) {
         if (empty($_POST['description'])) {
             $errors[] = 'You didn\'t enter a valid description';
         }
-        if (empty($_POST['image'])) {
-            $errors[] = 'You didn\'t enter a valid image URL';
-        }
-        if (!isImage($_POST['image'])) {
+        if (!empty($_POST['image']) && !isImage($_POST['image'])) {
             $errors[] = 'The image you selected didn\'t validate - are you sure it\'s a <strong>direct</strong> URL?';
         }
         $db->query('SELECT COUNT(id) FROM carlot WHERE name = ? AND id <> ?');
@@ -1471,7 +1434,7 @@ if (isset($_POST['addrmpack'])) {
                     </div>
                     <div class="pure-control-group">
                         <label for="image">Image</label>
-                        <input type="text" name="image" id="image" value="<?php echo format($row['image']); ?>" class="pure-u-1-2 pure-u-md-1-2" required />
+                        <input type="text" name="image" id="image" value="<?php echo format($row['image']); ?>" class="pure-u-1-2 pure-u-md-1-2" />
                     </div>
                     <div class="pure-control-group">
                         <label for="description">Description</label>
@@ -3188,6 +3151,39 @@ if (empty($_GET['page'])) {
         </td>
     </tr><?php
     } elseif ($_GET['page'] === 'cars') {
+        if (isset($_POST['addcar'])) {
+            if (!csrf_check('csrf', $_POST)) {
+                echo Message(SECURITY_TIMEOUT_MESSAGE);
+            }
+            $car_errors = [];
+            if (empty($_POST['name'])) {
+                $car_errors[] = 'You didn\'t enter a valid name';
+            }
+            if ($_POST['level'] < 1) {
+                $car_errors[] = 'You didn\'t enter a valid level';
+            }
+            if (empty($_POST['cost'])) {
+                $car_errors[] = 'You didn\'t enter a valid cost';
+            }
+            if (empty($_POST['description'])) {
+                $car_errors[] = 'You didn\'t enter a valid description';
+            }
+            if (!empty($_POST['image']) && !isImage($_POST['image'])) {
+                $car_errors[] = 'The image you selected didn\'t validate - are you sure it\'s a <strong>direct</strong> URL?';
+            }
+            $db->query('SELECT COUNT(id) FROM carlot WHERE name = ?');
+            $db->execute([$_POST['name']]);
+            if ($db->result()) {
+                $car_errors[] = 'Another car with the name of '.format($_POST['name']).' already exists';
+            }
+            if (count($car_errors)) {
+                display_errors($car_errors);
+            } else {
+                $db->query('INSERT INTO carlot (name, description, image, buyable, cost, level) VALUES (?, ?, ?, ?, ?, ?)');
+                $db->execute([$_POST['name'], $_POST['description'], $_POST['image'], $_POST['buyable'], $_POST['cost'], $_POST['level']]);
+                echo Message('You\'ve added the car: '.format($_POST['name']));
+            }
+        }
         $db->query('SELECT * FROM carlot ORDER BY level , cost ');
         $db->execute();
         $rows = $db->fetch(); ?>
@@ -3262,7 +3258,7 @@ if (empty($_GET['page'])) {
                 </div>
                 <div class="pure-control-group">
                     <label for="image">Image</label>
-                    <input type="text" name="image" id="image" class="pure-u-1-2 pure-u-md-1-2" required />
+                    <input type="text" name="image" id="image" class="pure-u-1-2 pure-u-md-1-2" />
                 </div>
                 <div class="pure-control-group">
                     <label for="description">Description</label>
