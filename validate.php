@@ -15,8 +15,8 @@ if ($_GET['email'] !== null) {
         $row = $db->fetch(true);
         if ($row !== null) {
             $db->trans('start');
-            $db->query('INSERT INTO users (ip, username, password, email, class) VALUES (?, ?, ?, ?, ?)');
-            $db->execute([$_SERVER['REMOTE_ADDR'], $row['username'], $row['password'], $row['email'], $row['class']]);
+            $db->query('INSERT INTO users (ip, username, loginame, password, email, class) VALUES (?, ?, ?, ?, ?, ?)');
+            $db->execute([$_SERVER['REMOTE_ADDR'], $row['username'], $row['username'], $row['password'], $row['email'], $row['class']]);
             $userid = $db->id();
             $_POST['referer'] = array_key_exists('referer', $_POST) && ctype_digit($_POST['referer']) && $_POST['referer'] > 0 ? $_POST['referer'] : null;
             if ($_POST['referer'] !== null) {
