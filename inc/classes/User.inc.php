@@ -442,7 +442,7 @@ class User
         $this->id = (int)$row['id'];
         $this->ip = $row['ip'];
         $this->exp = (float)$row['experience'];
-        $this->level = (int)$row['level'];
+        $this->level = max((int)$row['level'], (int)Get_The_Level($this->exp));
         $this->maxexp = experience($this->level + 1);
         $this->exppercent = (float)($this->exp > 0 && $this->maxexp > 0 ? floor(($this->exp / $this->maxexp) * 100) : 0);
         $this->city = (int)$row['city'];
