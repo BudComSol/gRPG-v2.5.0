@@ -14,14 +14,14 @@ require_once __DIR__.'/inc/header.php';
                 <td width="37.5%"><?php echo $user_class->formattedrespected; ?></td>
             </tr>
             <tr>
-                <th>HP:</th>
-                <td><?php echo $user_class->formattedhp; ?></td>
                 <th>Role:</th>
                 <td><?php echo htmlspecialchars($user_class->type); ?></td>
-            </tr>
-            <tr>
                 <th>Level:</th>
                 <td><?php echo format($user_class->level); ?></td>
+            </tr>
+            <tr>
+                <th>HP:</th>
+                <td><?php echo $user_class->formattedhp; ?></td>
                 <th>Energy:</th>
                 <td><?php echo $user_class->formattedenergy; ?></td>
             </tr>
