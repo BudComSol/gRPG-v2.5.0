@@ -20,20 +20,20 @@ require_once __DIR__.'/inc/header.php';
                 <td><?php echo format($user_class->level); ?></td>
             </tr>
             <tr>
+                <th>Money:</th>
+                <td><?php echo prettynum($user_class->money, true); ?></td>
+                <th>Bank:</th>
+                <td><?php echo prettynum($user_class->bank, true); ?></td>
+            </tr>
+            <tr>
                 <th>HP:</th>
                 <td><?php echo $user_class->formattedhp; ?></td>
                 <th>Energy:</th>
                 <td><?php echo $user_class->formattedenergy; ?></td>
             </tr>
             <tr>
-                <th>Money:</th>
-                <td><?php echo prettynum($user_class->money, true); ?></td>
                 <th>Awake:</th>
                 <td><?php echo $user_class->formattedawake; ?></td>
-            </tr>
-            <tr>
-                <th>Bank:</th>
-                <td width='35%'><?php echo prettynum($user_class->bank, true); ?></td>
                 <th>Nerve:</th>
                 <td><?php echo $user_class->formattednerve; ?></td>
             </tr>
