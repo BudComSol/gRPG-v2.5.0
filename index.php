@@ -10,8 +10,14 @@ require_once __DIR__.'/inc/header.php';
             <tr>
                 <th width="12.5%">Name:</th>
                 <td width="37.5%"><?php echo $user_class->formattedname; ?></td>
-                <th width="12.5%">HP:</th>
-                <td width="37.5%"><?php echo $user_class->formattedhp; ?></td>
+                <th width="12.5%">Respected:</th>
+                <td width="37.5%"><?php echo $user_class->formattedrespected; ?></td>
+            </tr>
+            <tr>
+                <th>HP:</th>
+                <td><?php echo $user_class->formattedhp; ?></td>
+                <th></th>
+                <td></td>
             </tr>
             <tr>
                 <th>Level:</th>
