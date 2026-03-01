@@ -156,7 +156,7 @@ $_GET['step'] = isset($_GET['step']) && is_numeric($_GET['step']) && in_array($_
                           class="<?php echo PHP_VERSION_ID >= 70400 ? 'green' : 'red'; ?>"><?php echo PHP_VERSION; ?></span>
                 </div>
                 <div class="pure-control-group">
-                    <label for="mbstring">PHP mbstring Extension</label>
+                    <label for="mbstring">PHP mbstring Ext</label>
                     <span id="mbstring"
                           class="<?php echo $mbstringEnabled ? 'green' : 'red'; ?>"><?php echo $mbstringEnabled ? 'Enabled' : 'Not enabled! Please enable the mbstring PHP extension.'; ?></span>
                 </div>
