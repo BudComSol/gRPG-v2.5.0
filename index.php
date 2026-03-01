@@ -26,16 +26,16 @@ require_once __DIR__.'/inc/header.php';
                 <td><?php echo prettynum($user_class->bank, true); ?></td>
             </tr>
             <tr>
-                <th>EXP:</th>
-                <td><?php echo $user_class->formattedexp; ?></td>
-                <th>Work EXP:</th>
-                <td><?php echo format($user_class->workexp); ?></td>
-            </tr>
-            <tr>
                 <th>Whores:</th>
                 <td><?php echo format($user_class->hookers); ?></td>
                 <th>Marijuana:</th>
                 <td><?php echo format($user_class->marijuana); ?></td>
+            </tr>
+            <tr>
+                <th>EXP:</th>
+                <td><?php echo $user_class->formattedexp; ?></td>
+                <th>Work EXP:</th>
+                <td><?php echo format($user_class->workexp); ?></td>
             </tr>
             <tr>
                 <th>HP:</th>
