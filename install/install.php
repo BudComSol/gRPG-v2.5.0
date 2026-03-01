@@ -182,6 +182,9 @@ $_GET['step'] = isset($_GET['step']) && is_numeric($_GET['step']) && in_array($_
             break;
         case 2:
             checkInstallation();
+            if (!extension_loaded('mbstring')) {
+                error('The PHP mbstring extension is required but not enabled. Please enable the mbstring extension in your PHP configuration (php.ini) and restart your web server before continuing.');
+            }
             $_POST['gamedir'] = isset($_POST['gamedir']) && is_string($_POST['gamedir']) ? $_POST['gamedir'] : null;
             $path = ltrim(DIRECTORY_SEPARATOR . (!empty($_POST['gamedir']) ? $_POST['gamedir'] : DIRECTORY_SEPARATOR),
                 DIRECTORY_SEPARATOR);
