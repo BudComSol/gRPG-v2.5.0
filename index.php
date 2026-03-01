@@ -32,12 +32,6 @@ require_once __DIR__.'/inc/header.php';
                 <td><?php echo $user_class->formattedenergy; ?></td>
             </tr>
             <tr>
-                <th>Awake:</th>
-                <td><?php echo $user_class->formattedawake; ?></td>
-                <th>Nerve:</th>
-                <td><?php echo $user_class->formattednerve; ?></td>
-            </tr>
-            <tr>
                 <th>EXP:</th>
                 <td><?php echo $user_class->formattedexp; ?></td>
                 <th>Work EXP:</th>
@@ -48,6 +42,12 @@ require_once __DIR__.'/inc/header.php';
                 <td><?php echo format($user_class->hookers); ?></td>
                 <th>Marijuana:</th>
                 <td><?php echo format($user_class->marijuana); ?></td>
+            </tr>
+            <tr>
+                <th>Awake:</th>
+                <td><?php echo $user_class->formattedawake; ?></td>
+                <th>Nerve:</th>
+                <td><?php echo $user_class->formattednerve; ?></td>
             </tr>
         </table>
     </td>
