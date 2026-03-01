@@ -16,7 +16,7 @@ require_once __DIR__.'/inc/header.php';
             <tr>
                 <th>HP:</th>
                 <td><?php echo $user_class->formattedhp; ?></td>
-                <th>Account Type:</th>
+                <th>Role:</th>
                 <td><?php echo htmlspecialchars($user_class->type); ?></td>
             </tr>
             <tr>
