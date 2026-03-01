@@ -36,7 +36,8 @@ if (!empty($_GET['go'])) {
         echo Message('You paid '.prettynum($cost, true).' and arrived at your destination.', 'Error', true);
     }
 }
-$db->query('SELECT id, name, levelreq FROM cities WHERE id <> ? ORDER BY levelreq', [$user_class->city]);
+$db->query('SELECT id, name, levelreq FROM cities ORDER BY levelreq');
+$db->execute();
 $rows = $db->fetch();
 ?><tr>
     <th class="content-head">Bus Station</th>
@@ -63,7 +64,9 @@ if ($rows !== null) {
             ?><tr>
                     <td><?php echo format($row['name']); ?></td>
                     <td><?php echo format($row['levelreq']); ?></td>
-                    <td><?php if ($row['levelreq'] <= $user_class->level) {
+                    <td><?php if ($row['id'] == $user_class->city) {
+                        echo 'Current City';
+                    } elseif ($row['levelreq'] <= $user_class->level) {
                         echo '<a href="plugins/bus.php?go='.htmlspecialchars($row['id'], ENT_QUOTES).'&amp;csrfg='.htmlspecialchars($csrfg, ENT_QUOTES).'">Travel Now</a>';
                     } else {
                         echo 'Requires Level '.(int)$row['levelreq'];
@@ -72,7 +75,7 @@ if ($rows !== null) {
         }
     } else {
         ?><tr>
-                    <td colspan="3" class="center"><p>You will need to level up in order to go to other cities.</p></td>
+                    <td colspan="3" class="center"><p>No cities are available.</p></td>
                 </tr><?php
     }
 ?></table>
