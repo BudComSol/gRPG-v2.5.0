@@ -33,7 +33,7 @@ if (!empty($_GET['go'])) {
     if (!count($errors)) {
         $db->query('UPDATE users SET city = ?, money = GREATEST(money - ?, 0) WHERE id = ?');
         $db->execute([$_GET['go'], $cost, $user_class->id]);
-        echo Message('You paid '.prettynum($cost, true).' and arrived at your destination.', 'Error', true);
+        echo Message('<p>You paid '.prettynum($cost, true).' and arrived at your destination.', 'Error', true) . '</p>';
     }
 }
 $db->query('SELECT id, name, levelreq FROM cities ORDER BY levelreq');
@@ -66,9 +66,9 @@ if ($rows !== null) {
                     <td><?php echo format($row['name']); ?></td>
                     <td><?php echo format($row['levelreq']); ?></td>
                     <td><?php if ((int)$row['id'] === $user_class->city) {
-                        echo 'Current City';
+                        echo 'You\'re Current City';
                     } elseif ((int)$row['levelreq'] <= $user_class->level) {
-                        echo '<a href="plugins/bus.php?go='.(int)$row['id'].'&amp;csrfg='.htmlspecialchars($csrfg, ENT_QUOTES).'">Travel Now</a>';
+                        echo '<a href="plugins/bus.php?go='.(int)$row['id'].'&amp;csrfg='.htmlspecialchars($csrfg, ENT_QUOTES).'">Buy a Ticket</a>';
                     } else {
                         echo 'Requires Level '.(int)$row['levelreq'];
                     } ?></td>
