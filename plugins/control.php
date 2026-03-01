@@ -3152,8 +3152,9 @@ if (empty($_GET['page'])) {
     </tr><?php
     } elseif ($_GET['page'] === 'cars') {
         if (isset($_POST['addcar'])) {
-            if (!csrf_check('csrf', $_POST)) {
+            if (!csrf_check('car_add', $_POST)) {
                 echo Message(SECURITY_TIMEOUT_MESSAGE);
+                return;
             }
             $car_errors = [];
             if (empty($_POST['name'])) {
@@ -3243,7 +3244,7 @@ if (empty($_GET['page'])) {
     <tr>
         <td class="content">
             <form action="plugins/control.php?page=cars" method="post" class="pure-form pure-form-aligned">
-                <?php echo csrf_create(); ?>
+                <?php echo csrf_create('car_add'); ?>
                 <div class="pure-control-group">
                     <label for="name">Name</label>
                     <input type="text" name="name" id="name" class="pure-u-1-2 pure-u-md-1-2" required autofocus />
