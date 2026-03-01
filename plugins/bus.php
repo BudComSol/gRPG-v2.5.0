@@ -21,10 +21,10 @@ if (!empty($_GET['go'])) {
     if ($user_class->hospital) {
         $errors[] = 'You can\'t board a bus whilst in hospital';
     }
-    if ($_GET['go'] == $user_class->city) {
-        $errors[] = 'You\'re already in '.format($city['name']);
+    if ((int)$_GET['go'] === $user_class->city) {
+        $errors[] = 'You\'re already in '.($city !== null ? format($city['name']) : '');
     }
-    if ($city['levelreq'] > $user_class->level) {
+    if ($city !== null && (int)$city['levelreq'] > $user_class->level) {
         $errors[] = 'You\'re not a high enough level to travel to '.format($city['name']);
     }
     if ($cost > $user_class->money) {
@@ -57,17 +57,18 @@ if (count($errors)) {
                     <th width="34%">Level Requirement</th>
                     <th width="33%">Travel</th>
                 </tr>
-            </thead><?php
+            </thead>
+            <tbody><?php
 if ($rows !== null) {
         $csrfg = csrf_create('csrfg', false);
         foreach ($rows as $row) {
             ?><tr>
                     <td><?php echo format($row['name']); ?></td>
                     <td><?php echo format($row['levelreq']); ?></td>
-                    <td><?php if ($row['id'] == $user_class->city) {
+                    <td><?php if ((int)$row['id'] === $user_class->city) {
                         echo 'Current City';
-                    } elseif ($row['levelreq'] <= $user_class->level) {
-                        echo '<a href="plugins/bus.php?go='.htmlspecialchars($row['id'], ENT_QUOTES).'&amp;csrfg='.htmlspecialchars($csrfg, ENT_QUOTES).'">Travel Now</a>';
+                    } elseif ((int)$row['levelreq'] <= $user_class->level) {
+                        echo '<a href="plugins/bus.php?go='.(int)$row['id'].'&amp;csrfg='.htmlspecialchars($csrfg, ENT_QUOTES).'">Travel Now</a>';
                     } else {
                         echo 'Requires Level '.(int)$row['levelreq'];
                     } ?></td>
@@ -78,6 +79,7 @@ if ($rows !== null) {
                     <td colspan="3" class="center"><p>No cities are available.</p></td>
                 </tr><?php
     }
-?></table>
+?></tbody>
+        </table>
     </td>
 </tr>
