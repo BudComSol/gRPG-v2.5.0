@@ -276,6 +276,10 @@ a:hover {
     text-align: center;
 }
 
+.medals-img {
+    margin-top:10px;    
+}
+
 .leftmenu {
     margin-left: 8px;
     display: block;
