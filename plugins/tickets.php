@@ -165,7 +165,9 @@ if (empty($_GET['action'])) {
         if (!count($errors)) {
             $db->query('INSERT INTO tickets (userid, subject, body) VALUES (?, ?, ?)');
             $db->execute([$user_class->id, $_POST['subject'], $_POST['ticket']]);
-            echo Message('<p>Your Ticket Has Been Created.</p>', 'Error', true);
+            $ticket_id = $db->id();
+            Send_Event($user_class->id, 'Your support ticket (<a href="plugins/tickets.php?action=view&amp;id='.(int)$ticket_id.'">ID #'.(int)$ticket_id.'</a>) has been created successfully.');
+            echo Message('<p>Your Ticket Has Been Created.</p>', 'Success', true);
         }
     }
         if (count($errors)) {
