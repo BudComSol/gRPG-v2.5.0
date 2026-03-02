@@ -11,9 +11,10 @@ if (!function_exists('microtime_float')) {
 }
 define('LOAD_TIME_START', microtime_float());
 require_once __DIR__.'/dbcon.php';
+$_login_url = (BASE_URL ? rtrim(BASE_URL, '/') . '/login.php' : '/login.php');
 // Check if user is logged in
 if (!array_key_exists('id', $_SESSION) || !$_SESSION['id'] || !is_numeric($_SESSION['id'])) {
-    header('Location: login.php');
+    header('Location: ' . $_login_url);
     exit;
 }
 // Check for logout
@@ -28,7 +29,7 @@ $db->query('UPDATE users SET lastactive = CURRENT_TIMESTAMP WHERE id = ? AND las
 $user_class = new User($_SESSION['id']);
 if (!$user_class->id) {
     session_destroy();
-    header('Location: login.php');
+    header('Location: ' . $_login_url);
     exit;
 }
 $time = date('F d, Y g:i:sa');
