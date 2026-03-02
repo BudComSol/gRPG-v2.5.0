@@ -24,7 +24,7 @@ $nums = array_unique(['givecredit', 'denycredit', 'deletejob', 'deletecrime', 'd
 foreach ($nums as $what) {
     $_GET[$what] = (isset($_GET[$what]) && ctype_digit($_GET[$what])) ? $_GET[$what] : null;
 }
-$nums2 = array_unique(['money', 'strength', 'defense', 'speed', 'level', 'landleft', 'landprice', 'levelreq', 'nerve', 'cost', 'offense', 'heal', 'reduce', 'itemnumber', 'itemquantity', 'rmdays', 'points', 'hookers', 'crimeid', 'cityid', 'jobid', 'id', 'board', 'forum', 'forum2', 'recycle', 'delete', 'awake', 'buyable']);
+$nums2 = array_unique(['money', 'strength', 'defense', 'speed', 'level', 'landleft', 'landprice', 'levelreq', 'nerve', 'cost', 'offense', 'heal', 'reduce', 'itemnumber', 'itemquantity', 'rmdays', 'points', 'hookers', 'crimeid', 'cityid', 'jobid', 'id', 'board', 'forum', 'forum2', 'recycle', 'delete', 'awake', 'buyable', 'basemod']);
 foreach ($nums2 as $what) {
     $_POST[$what] = (isset($_POST[$what]) && ctype_digit(str_replace(',', '', $_POST[$what]))) ? str_replace(',', '', $_POST[$what]) : 0;
 }
@@ -1407,8 +1407,8 @@ if (isset($_POST['addrmpack'])) {
         if (count($errors)) {
             display_errors($errors);
         } else {
-            $db->query('UPDATE carlot SET name = ?, description = ?, image = ?, buyable = ?, cost = ?, level = ? WHERE id = ?');
-            $db->execute([$_POST['name'], $_POST['description'], $_POST['image'], $_POST['buyable'], $_POST['cost'], $_POST['level'], $row['id']]);
+            $db->query('UPDATE carlot SET name = ?, description = ?, image = ?, buyable = ?, cost = ?, level = ?, basemod = ? WHERE id = ?');
+            $db->execute([$_POST['name'], $_POST['description'], $_POST['image'] ?: 'images/noimage.png', $_POST['buyable'], $_POST['cost'], $_POST['level'], $_POST['basemod'], $row['id']]);
             echo Message('You\'ve edited the car: '.format($_POST['name']));
         }
     } else {
@@ -1435,6 +1435,10 @@ if (isset($_POST['addrmpack'])) {
                     <div class="pure-control-group">
                         <label for="image">Image</label>
                         <input type="text" name="image" id="image" value="<?php echo format($row['image']); ?>" class="pure-u-1-2 pure-u-md-1-2" />
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="basemod">Base Modifier</label>
+                        <input type="text" name="basemod" id="basemod" value="<?php echo format($row['basemod']); ?>" class="pure-u-1-2 pure-u-md-1-2" required />
                     </div>
                     <div class="pure-control-group">
                         <label for="description">Description</label>
@@ -3180,8 +3184,8 @@ if (empty($_GET['page'])) {
             if (count($car_errors)) {
                 display_errors($car_errors);
             } else {
-                $db->query('INSERT INTO carlot (name, description, image, buyable, cost, level) VALUES (?, ?, ?, ?, ?, ?)');
-                $db->execute([$_POST['name'], $_POST['description'], $_POST['image'], $_POST['buyable'], $_POST['cost'], $_POST['level']]);
+                $db->query('INSERT INTO carlot (name, description, image, buyable, cost, level, basemod) VALUES (?, ?, ?, ?, ?, ?, ?)');
+                $db->execute([$_POST['name'], $_POST['description'], $_POST['image'] ?: 'images/noimage.png', $_POST['buyable'], $_POST['cost'], $_POST['level'], $_POST['basemod']]);
                 echo Message('You\'ve added the car: '.format($_POST['name']));
             }
         }
@@ -3259,7 +3263,11 @@ if (empty($_GET['page'])) {
                 </div>
                 <div class="pure-control-group">
                     <label for="image">Image</label>
-                    <input type="text" name="image" id="image" class="pure-u-1-2 pure-u-md-1-2" />
+                    <input type="text" name="image" id="image" class="pure-u-1-2 pure-u-md-1-2" value="images/noimage.png" />
+                </div>
+                <div class="pure-control-group">
+                    <label for="basemod">Base Modifier</label>
+                    <input type="text" name="basemod" id="basemod" class="pure-u-1-2 pure-u-md-1-2" value="0" required />
                 </div>
                 <div class="pure-control-group">
                     <label for="description">Description</label>
