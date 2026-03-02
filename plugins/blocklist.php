@@ -34,7 +34,7 @@ function blockListIndex($db, $user_class)
     $db->execute([$user_class->id]);
     $rows = $db->fetch(); ?><tr>
         <td class="content">
-            <table class="pure-table pure-table-horizontal">
+            <table width="100%" class="pure-table pure-table-horizontal">
                 <thead>
                     <tr>
                         <th width="40%">Blocked <span class="right"><a href="blocklist.php?action=add" class="pure-button pure-button-green" title="Block Citizen"><i class="fa fa-plus"></i></a></th>
