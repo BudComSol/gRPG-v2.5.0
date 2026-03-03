@@ -438,6 +438,30 @@ a.topmenu:visited {
     font-size: 90%;
 }
 
+.menu-user-card {
+    text-align: center;
+    padding: 8px 4px;
+    border-bottom: 1px solid #444;
+    margin-bottom: 2px;
+}
+
+.menu-avatar {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border: 2px solid #555;
+    border-radius: 4px;
+    display: block;
+    margin: 0 auto 4px;
+}
+
+.menu-username {
+    font-size: 80%;
+    font-family: Verdana, "Lucida Sans", Arial, Geneva, Helvetica, Helv, "Myriad Web", Syntax, sans-serif;
+    font-weight: bold;
+    word-break: break-word;
+}
+
 .style1 {
     color: #BDBDBD;
 }

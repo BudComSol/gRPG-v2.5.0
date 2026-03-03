@@ -6,6 +6,12 @@ if (!defined('GRPG_INC')) {
 global $owner;
 ?>
 <div class="mainbox">
+    <div class="menu-user-card">
+        <a href="plugins/profiles.php?id=<?php echo $user_class->id; ?>">
+            <img src="<?php echo htmlspecialchars((!empty($user_class->avatar) && preg_match('/^(https?:\/\/|[a-zA-Z0-9_\-\/\.]+$)/', $user_class->avatar)) ? $user_class->avatar : 'images/noimage.png', ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($user_class->username, ENT_QUOTES, 'UTF-8'); ?>'s avatar" class="menu-avatar"/>
+        </a>
+        <div class="menu-username"><a href="plugins/profiles.php?id=<?php echo $user_class->id; ?>"><?php echo htmlspecialchars($user_class->username, ENT_QUOTES, 'UTF-8'); ?></a></div>
+    </div>
     <div class="headbox">Menu</div>
     
     <a class="leftmenu style1" href="index.php">Home</a>
