@@ -3310,7 +3310,7 @@ if (empty($_GET['page'])) {
                 if (empty($_GET['user'])) {
                     $errors[] = 'Invalid input.';
                 }
-                $db->query('SELECT id FROM users WHERE id = ?');
+                $db->query('SELECT id, username FROM users WHERE id = ?');
                 $db->execute([$_GET['user']]);
                 if (!$db->count()) {
                     $errors[] = 'Invalid user!';
@@ -3318,23 +3318,24 @@ if (empty($_GET['page'])) {
                 $user = $db->fetch(true);
                 if ($user) { ?>
                     <form method="POST" class="pure-form pure-form-aligned">
-                        <?php echo csrf_create('giveitem'); ?>
+                        <?php echo csrf_create('item_give'); ?>
                         <div class="pure-control-group">
-                            <label for="item">Item</label>
-                            <?php echo listItems('item', 0); ?>
+                            <label for="itemnumber">Item</label>
+                            <?php echo listItems('itemnumber', 0); ?>
                         </div>
                         <div class="pure-control-group">
-                            <label for="quantity">Quantity</label>
-                            <input type="number" name="quantity" id="quantity" min="1" value="1" required />
+                            <label for="itemquantity">Quantity</label>
+                            <input type="number" name="itemquantity" id="itemquantity" min="1" value="1" required />
                         </div>
                         <div class="pure-controls">
-                            <input type="hidden" name="user" value="<?php echo htmlspecialchars($_GET['user'], ENT_QUOTES, 'UTF-8'); ?>" />
+                            <input type="hidden" name="username" value="<?php echo htmlspecialchars($user['username'], ENT_QUOTES, 'UTF-8'); ?>" />
                             <button type="submit" name="giveitem" class="pure-button pure-button-primary">Give Item</button>
                         </div>
                     </form>
                 <?php }
             } else { ?>
-                <form method="GET" class="pure-form pure-form-aligned">
+                <form method="GET" action="plugins/control.php" class="pure-form pure-form-aligned">
+                    <input type="hidden" name="page" value="giveuseritem" />
                     <?php echo csrf_create(); ?>
                     <div class="pure-control-group">
                         <label for="user">Select User</label>
