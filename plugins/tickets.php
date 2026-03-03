@@ -95,7 +95,7 @@ if (empty($_GET['action'])) {
         if (count($errors)) {
             display_errors($errors);
         } else {
-            $db->query('SELECT userid, body FROM tickets_responses WHERE ticket_id = ? ORDER BY time_added DESC');
+            $db->query('SELECT userid, body, time_added FROM tickets_responses WHERE ticket_id = ? ORDER BY time_added DESC');
             $db->execute([$_GET['id']]);
             $rows = $db->fetch(); ?><tr>
             <th class="content-head">Ticket: #<?php echo $ticket['id']; ?> &middot; <?php echo format($ticket['subject']); ?></th>
@@ -126,13 +126,18 @@ if (empty($_GET['action'])) {
         if ($rows !== null) {
             foreach ($rows as $row) {
                 $date = new DateTime($row['time_added']);
-                $poster = $row['userid'] == $user_class->id ? $user_class : new User($row['userid']); ?><tr>
+                if (!$row['userid']) { ?><tr>
+                            <td colspan="2" class="center"><?php echo format($row['body']); ?> at <?php echo $date->format('F d, Y H:i:s'); ?></td>
+                        </tr><?php
+                } else {
+                    $poster = $row['userid'] == $user_class->id ? $user_class : new User($row['userid']); ?><tr>
                             <td>
                                 <?php echo $poster->formattedname; ?><br />
                                 <?php echo $date->format('F d, Y H:i:s'); ?>
                             </td>
-                            <td><?php echo nl2br(format($row['content'])); ?></td>
+                            <td><?php echo nl2br(format($row['body'])); ?></td>
                         </tr><?php
+                }
             }
         } else {
             ?><tr>
@@ -216,8 +221,8 @@ if (empty($_GET['action'])) {
                     echo Message(SECURITY_TIMEOUT_MESSAGE);
                 }
                 $db->trans('start');
-                $db->query('INSERT INTO tickets_responses (userid, body) VALUES (0, \'Ticket '.$status2.' by user\')');
-                $db->execute();
+                $db->query('INSERT INTO tickets_responses (ticket_id, userid, body) VALUES (?, 0, \'Ticket '.$status2.' by user\')');
+                $db->execute([$row['id']]);
                 $db->query('UPDATE tickets SET status = IF(status = \'closed\', \'open\', \'closed\') WHERE id = ?');
                 $db->execute([$row['id']]);
                 $db->trans('end');
