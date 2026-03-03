@@ -15,7 +15,7 @@ if (!$db->count()) {
 $row = $db->fetch(true); ?>
 <html>
     <head> <?php
-        if (defined('BASE_URL')) {
+        if (defined('BASE_URL') && BASE_URL) {
             ?>
             <base href="<?php echo BASE_URL; ?>" /> <?php
         } ?>
