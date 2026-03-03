@@ -1142,7 +1142,7 @@ DROP TABLE IF EXISTS `tickets_responses`;
 CREATE TABLE `tickets_responses`
 (
     id         INT(11)   NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    userid     INT(11)   NOT NULL,
+    userid     INT(11)   NULL,
     body       TEXT      NULL,
     ticket_id  INT(11)   NOT NULL,
     time_added TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

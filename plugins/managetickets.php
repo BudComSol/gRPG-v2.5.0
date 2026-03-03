@@ -147,7 +147,7 @@ function changeTicketStatus($db)
     $db->execute([$_POST['status'], $_GET['id']]);
     Send_Event($row['userid'], 'Your ticket (<a href="plugins/tickets.php?action=view&amp;id='.$_GET['id'].'">ID #'.format($_GET['id']).'</a>) has been marked as '.ucfirst(strtolower($_POST['status'])));
     $_SESSION['msg'] = 'You\'ve marked ticket ID #'.$_GET['id'].' as '.ucfirst(strtolower($_POST['status']));
-    $db->query('INSERT INTO tickets_responses (ticket_id, userid, body) VALUES (?, 0, ?)');
+    $db->query('INSERT INTO tickets_responses (ticket_id, userid, body) VALUES (?, NULL, ?)');
     $db->execute([$_GET['id'], 'Ticket marked as '.strtolower($_POST['status']).' by staff']);
     $db->trans('end');
     if (isset($_GET['view'])) {
@@ -258,7 +258,7 @@ function respondToTicket($db)
     if ($row['status'] === 'open') {
         $db->query('UPDATE tickets SET status = \'pending\' WHERE id = ?');
         $db->execute([$_GET['id']]);
-        $db->query('INSERT INTO tickets_responses (ticket_id, userid, body) VALUES (?, 0, ?)');
+        $db->query('INSERT INTO tickets_responses (ticket_id, userid, body) VALUES (?, NULL, ?)');
         $db->execute([$_GET['id'], 'Ticket automatically marked as pending by staff response']);
     }
     $db->query('UPDATE tickets SET time_last_response = NOW() WHERE id = ?');
