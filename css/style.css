@@ -452,7 +452,7 @@ a.topmenu:visited {
     border: 2px solid #555;
     border-radius: 4px;
     display: block;
-    margin: 0 auto 4px;
+    margin: 10px auto;
 }
 
 .menu-username {
