@@ -3336,6 +3336,7 @@ if (empty($_GET['page'])) {
             } else { ?>
                 <form method="GET" class="pure-form pure-form-aligned">
                     <?php echo csrf_create(); ?>
+                    <input type="hidden" name="page" value="giveuseritem" />
                     <div class="pure-control-group">
                         <label for="user">Select User</label>
                         <?php echo listCitizens(); ?>
