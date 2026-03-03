@@ -625,6 +625,10 @@ CREATE TABLE IF NOT EXISTS `items`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
+INSERT INTO `items` (`name`, `description`, `image`, `speed`, `defense`, `cost`, `offense`, `buyable`, `heal`, `level`, `reduce`)
+VALUES ('Energy Drink', 'A fizzy drink that gives you a small boost of energy.', 'images/items/energy-drink.png', 1, 0, 50, 0, 1, 5, 1, 0),
+       ('Trumpet',      'A shiny brass instrument that makes a lot of noise.',   'images/items/trumpet.png',      0, 1, 75, 1, 1, 0, 1, 0);
+
 DROP TABLE IF EXISTS `jobs`;
 CREATE TABLE IF NOT EXISTS `jobs`
 (
