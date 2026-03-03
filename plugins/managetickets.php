@@ -74,7 +74,7 @@ function ticketIndex($db)
     $db->execute();
     $cnt = $db->result();
     if (!$cnt) {
-        echo Message('There are no tickets', 'Information', true);
+        echo Message('<p>There are no tickets at this time.</p>', 'Information', true);
     }
     $pages = new Paginator($cnt);
     $db->query("SELECT * FROM tickets ORDER BY FIELD(status, 'pending', 'open', 'closed') , id DESC " .$pages->limit);
@@ -124,7 +124,7 @@ function ticketIndex($db)
                 </tr><?php
             }
         } else {
-            echo "<tr><td colspan='4' class='center'>There are no tickets</td></tr>";
+            echo "<tr><td colspan='4' class='center'><p>There are no tickets at this time.</p></td></tr>";
         } ?></table>
     <div class="paginate"><?php echo $pages->display_pages(); ?></div><?php
 }
