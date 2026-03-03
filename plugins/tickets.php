@@ -89,7 +89,7 @@ if (empty($_GET['action'])) {
             if (!count($errors)) {
                 $db->query('INSERT INTO tickets_responses (userid, body, ticket_id) VALUES (?, ?, ?)');
                 $db->execute([$user_class->id, $_POST['response'], $ticket['id']]);
-                echo Message('Your response has been posted', 'Success');
+                echo Message('<p>Your response has been posted.</p>', 'Success');
             }
         }
         if (count($errors)) {
@@ -141,7 +141,7 @@ if (empty($_GET['action'])) {
             }
         } else {
             ?><tr>
-                        <td colspan="2" class="center">There are no responses</td>
+                        <td colspan="2" class="center"><p>There are no responses at this time.</p></td>
                     </tr><?php
         } ?></table>
             </td>
@@ -165,13 +165,13 @@ if (empty($_GET['action'])) {
         $db->query('SELECT COUNT(id) FROM tickets WHERE userid = ? AND subject = ? AND body = ?');
         $db->execute([$user_class->id, $_POST['subject'], $_POST['ticket']]);
         if ($db->result()) {
-            $errors[] = 'You\'ve already submitted this ticket';
+            $errors[] = '<p>You\'ve already submitted this ticket.</p>';
         }
         if (!count($errors)) {
             $db->query('INSERT INTO tickets (userid, subject, body) VALUES (?, ?, ?)');
             $db->execute([$user_class->id, $_POST['subject'], $_POST['ticket']]);
             $ticket_id = $db->id();
-            Send_Event($user_class->id, 'Your support ticket (<a href="plugins/tickets.php?action=view&amp;id='.(int)$ticket_id.'">ID #'.(int)$ticket_id.'</a>) has been created successfully.');
+            Send_Event($user_class->id, '<p>Your support ticket (<a href="plugins/tickets.php?action=view&amp;id='.(int)$ticket_id.'">ID #'.(int)$ticket_id.'</a>) has been created successfully.</p>');
             echo Message('<p>Your Ticket Has Been Created.</p>', 'Success', true);
         }
     }
@@ -199,12 +199,12 @@ if (empty($_GET['action'])) {
     </tr><?php
     } elseif ($_GET['action'] === 'status') {
         if (empty($_GET['id'])) {
-            $errors[] = 'You didn\'t select a valid ticket';
+            $errors[] = '<p>You didn\'t select a valid ticket.</p>';
         }
         $db->query('SELECT id, subject, status, userid FROM tickets WHERE id = ?');
         $db->execute([$_GET['id']]);
         if (!$db->count()) {
-            $errors[] = 'The ticket you selected doesn\'t exist';
+            $errors[] = '<p>The ticket you selected doesn\'t exist.</p>';
         }
         $row = $db->fetch(true);
         if ($row['userid'] != $user_class->id) {
