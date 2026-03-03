@@ -29,10 +29,10 @@ if (array_key_exists('submit', $_POST)) {
         $db->query('SELECT id, password, ban, email FROM users WHERE LOWER(username) = ?', [$_POST['username']]);
         $row = $db->fetch(true);
         if ($row === null) {
-            echo Message('That account wasn\'t found', 'Error', true);
+            echo Message('<p>That account wasn\'t found, please try again.</p>', 'Error', true);
         }
         if ($row['ban']) {
-            echo Message('You\'ve been banned from the game', 'Error', true);
+            echo Message('<p>You\'ve been banned from the game chump.</p>', 'Error', true);
         }
         $db->query('SELECT COUNT(id) FROM pending_validations WHERE email = ?');
         $db->execute([$row['email']]);
