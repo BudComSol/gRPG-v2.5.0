@@ -3316,7 +3316,7 @@ if (empty($_GET['page'])) {
                     $errors[] = 'Invalid user!';
                 }
                 $user = $db->fetch(true);
-                if ($user) { ?>
+                if (is_array($user)) { ?>
                     <form method="POST" class="pure-form pure-form-aligned">
                         <?php echo csrf_create('item_give'); ?>
                         <div class="pure-control-group">
