@@ -147,7 +147,7 @@ function changeTicketStatus($db)
     $db->execute([$_POST['status'], $_GET['id']]);
     Send_Event($row['userid'], 'Your ticket (<a href="plugins/tickets.php?action=view&amp;id='.$_GET['id'].'">ID #'.format($_GET['id']).'</a>) has been marked as '.ucfirst(strtolower($_POST['status'])));
     $_SESSION['msg'] = 'You\'ve marked ticket ID #'.$_GET['id'].' as '.ucfirst(strtolower($_POST['status']));
-    $db->query('INSERT INTO ticketreplies (ticketid, userid, body) VALUES (?, 0, ?)');
+    $db->query('INSERT INTO tickets_responses (ticket_id, userid, body) VALUES (?, 0, ?)');
     $db->execute([$_GET['id'], 'Ticket marked as '.strtolower($_POST['status']).' by staff']);
     $db->trans('end');
     if (isset($_GET['view'])) {
@@ -165,7 +165,7 @@ function viewTicket($db, $parser)
     }
     $row = $db->fetch(true);
     $reporter = new User($row['userid']);
-    $db->query('SELECT * FROM ticketreplies WHERE ticketid = ? ORDER BY id DESC');
+    $db->query('SELECT id, ticket_id, userid, body, time_added FROM tickets_responses WHERE ticket_id = ? ORDER BY id DESC');
     $db->execute([$_GET['id']]);
     $rows = $db->fetch(); ?><table id='mttable' width='100%'>
         <tr>
@@ -253,12 +253,12 @@ function respondToTicket($db)
     }
     $row = $db->fetch(true);
     $db->trans('start');
-    $db->query('INSERT INTO ticketreplies (ticketid, userid, body) VALUES (?, ?, ?)');
+    $db->query('INSERT INTO tickets_responses (ticket_id, userid, body) VALUES (?, ?, ?)');
     $db->execute([$_GET['id'], $user_class->id, $_POST['response']]);
     if ($row['status'] === 'open') {
         $db->query('UPDATE tickets SET status = \'pending\' WHERE id = ?');
         $db->execute([$_GET['id']]);
-        $db->query('INSERT INTO ticketreplies (ticketid, userid, body) VALUES (?, 0, ?)');
+        $db->query('INSERT INTO tickets_responses (ticket_id, userid, body) VALUES (?, 0, ?)');
         $db->execute([$_GET['id'], 'Ticket automatically marked as pending by staff response']);
     }
     $db->query('UPDATE tickets SET time_last_response = NOW() WHERE id = ?');
