@@ -31,8 +31,18 @@ foreach ($nums2 as $what) {
 $strs = array_unique(['name', 'description', 'image', 'username', 'message', 'items']);
 foreach ($strs as $what) {
     $_POST[$what] = (isset($_POST[$what]) && is_string($_POST[$what])) ? strip_tags(trim($_POST[$what])) : '';
-    if ($what === 'image' && !empty($_POST[$what]) && !isImage($_POST[$what])) {
-        $_POST[$what] = '';
+    if ($what === 'image' && !empty($_POST[$what])) {
+        $img = $_POST[$what];
+        if (preg_match('/^https?:\/\//i', $img)) {
+            if (!isImage($img)) {
+                $_POST[$what] = '';
+            }
+        } else {
+            $root = (defined('BASE_PATH') && BASE_PATH) ? BASE_PATH : dirname(__DIR__); // dirname(__DIR__) = game root since this file lives in plugins/
+            if (!isImage(rtrim($root, '/') . '/' . ltrim($img, '/'), true)) {
+                $_POST[$what] = '';
+            }
+        }
     }
 }
 $errors = [];
@@ -626,7 +636,7 @@ if (isset($_POST['addrmpack'])) {
     }
     if (!count($errors)) {
         $db->query('INSERT INTO items (name, description, cost, image, offense, defense, heal, reduce, buyable, level) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-        $db->execute([$_POST['name'], $_POST['description'], $_POST['cost'], $_POST['image'], $_POST['offense'], $_POST['defense'], $_POST['heal'], $_POST['reduce'], $_POST['buyable'], $_POST['level']]);
+        $db->execute([$_POST['name'], $_POST['description'], $_POST['cost'], $_POST['image'] ?: 'images/noimage.png', $_POST['offense'], $_POST['defense'], $_POST['heal'], $_POST['reduce'], $_POST['buyable'], $_POST['level']]);
         echo Message('You\'ve added the item: '.format($_POST['name']));
     } else {
         display_errors($errors);
@@ -657,7 +667,7 @@ if (isset($_POST['addrmpack'])) {
     }
     if (!count($errors)) {
         $db->query('UPDATE items SET name = ?, description = ?, cost = ?, image = ?, offense = ?, defense = ?, heal = ?, reduce = ?, buyable = ?, level = ? WHERE id = ?');
-        $db->execute([$_POST['name'], $_POST['description'], $_POST['cost'], $_POST['image'], $_POST['offense'], $_POST['defense'], $_POST['heal'], $_POST['reduce'], $_POST['buyable'], $_POST['level'], $_POST['id']]);
+        $db->execute([$_POST['name'], $_POST['description'], $_POST['cost'], $_POST['image'] ?: 'images/noimage.png', $_POST['offense'], $_POST['defense'], $_POST['heal'], $_POST['reduce'], $_POST['buyable'], $_POST['level'], $_POST['id']]);
         echo Message('You\'ve edited the item: '.format($_POST['name']));
     } else {
         display_errors($errors);
@@ -2089,7 +2099,7 @@ if (empty($_GET['page'])) {
                         </div>
                         <div class="pure-control-group">
                             <label for="image">Image URL</label>
-                            <input type="text" name="image" id="image" size="10" maxlength="75" value="images/noimage.png" value="<?php echo format($row['image']); ?>" />
+                            <input type="text" name="image" id="image" size="10" maxlength="75" value="<?php echo format($row['image']); ?>" />
                         </div>
                         <div class="pure-control-group">
                             <label for="offense">Offense</label>
