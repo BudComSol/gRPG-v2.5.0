@@ -3316,7 +3316,8 @@ if (empty($_GET['page'])) {
                     $errors[] = 'Invalid user!';
                 }
                 $user = $db->fetch(true);
-                if (is_array($user)) { ?>
+                $username = is_array($user) && isset($user['username']) ? htmlspecialchars($user['username'], ENT_QUOTES, 'UTF-8') : null;
+                if ($username !== null) { ?>
                     <form method="POST" class="pure-form pure-form-aligned">
                         <?php echo csrf_create('item_give'); ?>
                         <div class="pure-control-group">
@@ -3328,7 +3329,7 @@ if (empty($_GET['page'])) {
                             <input type="number" name="itemquantity" id="itemquantity" min="1" value="1" required />
                         </div>
                         <div class="pure-controls">
-                            <input type="hidden" name="username" value="<?php echo htmlspecialchars($user['username'], ENT_QUOTES, 'UTF-8'); ?>" />
+                            <input type="hidden" name="username" value="<?php echo $username; ?>" />
                             <button type="submit" name="giveitem" class="pure-button pure-button-primary">Give Item</button>
                         </div>
                     </form>
