@@ -118,7 +118,7 @@ foreach ($rows ?? [] as $row) {
     //     }
     //     ++$drugsCnt;
     // }
-    if (!$row['offense'] && !$row['defense'] && !$row['heal'] && !$row['drugstr'] && !$row['drugspe'] && !$row['drugdef']) {
+    if (!$row['offense'] && !$row['defense'] && !$row['heal'] && !$row['drugstr'] && !$row['drugspe'] && !$row['drugdef'] && !$row['reduce']) {
         $misc .= '
         <td width="25%" class="center">
             '.formatImage($row['image']).'<br />
