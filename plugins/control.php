@@ -3303,7 +3303,7 @@ if (empty($_GET['page'])) {
         } ?>
         <tr><td class="content"> <?php
             if (isset($_GET['who'])) {
-                if (!csrf_check('csrf', $_GET)) {
+                if ($_SERVER['REQUEST_METHOD'] === 'GET' && !csrf_check('csrf', $_GET)) {
                     echo Message(SECURITY_TIMEOUT_MESSAGE);
                 }
                 $_GET['user'] = isset($_GET['user']) && ctype_digit($_GET['user']) ? abs((int) $_GET['user']) : 0;
@@ -3317,7 +3317,7 @@ if (empty($_GET['page'])) {
                 }
                 $user = $db->fetch(true);
                 if ($user) { ?>
-                    <form method="POST" class="pure-form pure-form-aligned">
+                    <form method="POST" action="plugins/control.php?page=giveuseritem&who=1&user=<?php echo (int)$_GET['user']; ?>" class="pure-form pure-form-aligned">
                         <?php echo csrf_create('item_give'); ?>
                         <div class="pure-control-group">
                             <label for="itemnumber">Item</label>
