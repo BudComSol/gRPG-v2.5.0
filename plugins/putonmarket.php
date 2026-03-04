@@ -37,7 +37,7 @@ if (array_key_exists('put', $_GET)) {
 <tr>
     <td class="content" class="center">
         You are selling <?php echo item_popup($row['id'], $row['name']); ?><br /><br />
-        <form action="putonmarket.php?id=<?php echo $_GET['id']; ?>&amp;put=true" method="post" class="pure-form pure-form-aligned">
+        <form action="plugins/putonmarket.php?id=<?php echo $_GET['id']; ?>&amp;put=true" method="post" class="pure-form pure-form-aligned">
             <?php echo csrf_create(); ?>
             <fieldset>
                 <div class="pure-control-group">
@@ -49,6 +49,6 @@ if (array_key_exists('put', $_GET)) {
                 <button type="submit" name="market" class="pure-button pure-button-primary">Add</button>
             </div>
         </form>
-        <a href="inventory.php">Back</a><br />
+        <a href="plugins/inventory.php">Back</a><br />
     </td>
 </tr>

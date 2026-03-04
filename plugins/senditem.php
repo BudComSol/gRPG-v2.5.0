@@ -39,7 +39,7 @@ if (array_key_exists('submit', $_POST)) {
 </tr>
 <tr>
     <td class="content">
-        <form action="senditem.php?id=<?php echo $row['id']; ?>" method="post" class="pure-form pure-form-aligned">
+        <form action="plugins/senditem.php?id=<?php echo $row['id']; ?>" method="post" class="pure-form pure-form-aligned">
             <?php echo csrf_create(); ?>
             <fieldset>
                 <div class="pure-control-group">
