@@ -70,8 +70,7 @@ foreach ($rows ?? [] as $row) {
             $weapons .= '</tr><tr>';
         }
         ++$weaponsCnt;
-    }
-    if ($row['defense']) {
+    } elseif ($row['defense']) {
         $armor .= '
         <td width="25%" class="center">
             '.formatImage($row['image']).'<br />
@@ -86,8 +85,7 @@ foreach ($rows ?? [] as $row) {
             $armor .= '</tr><tr>';
         }
         ++$armorCnt;
-    }
-    if ($row['heal']) {
+    } elseif ($row['heal']) {
         $heal .= '
         <td width="25%" class="center">
             '.formatImage($row['image']).'<br />
