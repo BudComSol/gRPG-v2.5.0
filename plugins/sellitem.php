@@ -30,6 +30,6 @@ if (array_key_exists('confirm', $_GET)) {
 <tr>
     <td class="content">
         Are you sure that you want to sell <?php echo aAn($row['name'], false).' '.$item; ?> for <?php echo prettynum($price, true); ?><br />
-        <a href="sellitem.php?id=<?php echo $row['id']; ?>&amp;confirm&amp;csrfg=<?php echo csrf_create('csrfg', false); ?>">Yes</a>
+        <a href="plugins/sellitem.php?id=<?php echo $row['id']; ?>&amp;confirm&amp;csrfg=<?php echo csrf_create('csrfg', false); ?>">Yes</a>
     </td>
 </tr>
