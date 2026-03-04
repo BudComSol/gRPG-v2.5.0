@@ -706,7 +706,7 @@ if (isset($_POST['addrmpack'])) {
         $errors[] = 'That player doesn\'t exist';
     }
     $target = new User($_GET['takealluser']);
-    $qty = Check_Item($_GET['takeallitem'], $_GET['takealluser']);
+    $qty = Check_Item((int)$_GET['takeallitem'], (int)$_GET['takealluser']);
     if (!$qty) {
         $errors[] = $target->formattedname.' doesn\'t have any '.$item.s(2);
     }
@@ -723,6 +723,7 @@ if (isset($_POST['addrmpack'])) {
 } elseif (isset($_POST['giveitem'])) {
     if (!csrf_check('item_give', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
+        return;
     }
     if (empty($_POST['itemnumber'])) {
         $errors[] = 'You didn\'t select a valid item';
@@ -734,17 +735,17 @@ if (isset($_POST['addrmpack'])) {
     if (empty($_POST['username'])) {
         $errors[] = 'You didn\'t select a valid player';
     }
-    $id = Get_ID($_POST['username']);
+    $id = (int)Get_ID($_POST['username']);
     if (!$id) {
         $errors[] = 'The player you selected doesn\'t exist';
     }
     if (!count($errors)) {
         $target = new User($id);
         $db->trans('start');
-        Give_Item($_POST['itemnumber'], $id, $_POST['itemquantity']);
+        Give_Item((int)$_POST['itemnumber'], $id, (int)$_POST['itemquantity']);
         Send_Event($id, 'You\'ve been credited with '.format($_POST['itemquantity']).' '.$item.s($_POST['itemquantity']));
         $db->trans('end');
-        $qty = Check_Item($_POST['itemnumber'], $id);
+        $qty = Check_Item((int)$_POST['itemnumber'], $id);
         echo Message('You\'ve credited '.format($_POST['itemquantity']).' '.$item.s($_POST['itemquantity']).' to '.$target->formattedname.'. They now have '.format($qty));
     } else {
         display_errors($errors);
@@ -752,6 +753,7 @@ if (isset($_POST['addrmpack'])) {
 } elseif (isset($_POST['takeitem'])) {
     if (!csrf_check('item_take', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
+        return;
     }
     if (empty($_POST['itemnumber'])) {
         $errors[] = 'You didn\'t select a valid item';
@@ -763,7 +765,7 @@ if (isset($_POST['addrmpack'])) {
     if (empty($_POST['username'])) {
         $errors[] = 'You didn\'t select a valid player';
     }
-    $id = Get_ID($_POST['username']);
+    $id = (int)Get_ID($_POST['username']);
     if (!$id) {
         $errors[] = 'The player you selected doesn\'t exist';
     }
@@ -771,10 +773,10 @@ if (isset($_POST['addrmpack'])) {
         $target = new User($id);
         $item = item_popup($_POST['itemnumber']);
         $db->trans('start');
-        Take_Item($_POST['itemnumber'], $id, $_POST['itemquantity']);
+        Take_Item((int)$_POST['itemnumber'], $id, (int)$_POST['itemquantity']);
         Send_Event($id, format($_POST['itemquantity']).' '.$item.s($_POST['itemquantity']).' have been taken from you by the Administration');
         $db->trans('end');
-        $qty = Check_Item($_POST['itemnumber'], $id);
+        $qty = Check_Item((int)$_POST['itemnumber'], $id);
         echo Message('You\'ve taken '.format($_POST['itemquantity']).' '.$item.s($_POST['itemquantity']).' from '.$target->formattedname.'. They now have '.format($qty));
     } else {
         display_errors($errors);
