@@ -15,7 +15,7 @@ if ($_GET['unequip'] === 'weapon' && $user_class->eqweapon != 0) {
     $db->query('UPDATE users SET eqweapon = 0 WHERE id = ?');
     $db->execute([$user_class->id]);
     $db->trans('end');
-    mrefresh('inventory.php');
+    mrefresh('plugins/inventory.php');
     echo Message('You\'ve unequipped your weapon.', 'Error', true);
 } elseif ($_GET['unequip'] === 'armor' && $user_class->eqarmor != 0) {
     $db->trans('start');
@@ -23,7 +23,7 @@ if ($_GET['unequip'] === 'weapon' && $user_class->eqweapon != 0) {
     $db->query('UPDATE users SET eqarmor = 0 WHERE id = ?');
     $db->execute([$user_class->id]);
     $db->trans('end');
-    mrefresh('inventory.php');
+    mrefresh('plugins/inventory.php');
     echo Message('You\'ve unequipped your armor', 'Error', true);
 }
 if (empty($_GET['id'])) {
@@ -58,5 +58,5 @@ if ($_GET['eq'] === 'weapon') {
     $db->execute([$_GET['id'], $user_class->id]);
 }
 $db->trans('end');
-mrefresh('inventory.php');
+mrefresh('plugins/inventory.php');
 echo Message('You\'ve succesfully equipped '.($_GET['eq'] === 'weapon' ? 'a ' : '').$_GET['eq']);
