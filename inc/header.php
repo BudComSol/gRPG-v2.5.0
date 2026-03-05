@@ -34,15 +34,28 @@ if (!$user_class->id) {
 }
 $time = date('F d, Y g:i:sa');
 $site_url = getenv('SITE_URL');
+if ($site_url === false || $site_url === '') {
+    // Auto-detect base URL when SITE_URL is not configured so that all
+    // plugins/-prefixed links resolve correctly from within the plugins/ directory.
+    $proto = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+    $host_raw  = $_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? 'localhost';
+    // Strip anything that is not a valid hostname/port character to prevent Host header injection.
+    $host = preg_replace('/[^\w\-\.:]/', '', $host_raw);
+    $script_dir = dirname($_SERVER['SCRIPT_NAME'] ?? '/');
+    // If the current script lives inside plugins/, step up one level to the game root.
+    if (basename($script_dir) === 'plugins') {
+        $script_dir = dirname($script_dir);
+    }
+    $base_path = rtrim($script_dir, '/');
+    $site_url  = $proto . '://' . $host . $base_path . '/';
+}
 ob_start(); ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head><?php
-if ($site_url !== false && $site_url !== '') {
     ?>
-    <base href="<?php echo rtrim($site_url, '/').'/'; ?>"/>
+    <base href="<?php echo htmlspecialchars(rtrim($site_url, '/').'/'); ?>"/>
     <?php
-    }
     ?>
     <title>gRPG - A Full Stack Game Engine</title>
     <meta name="description" content="gRPG is a full stack game engine with which to build your own RPG, MMORPG or PBBG game.">
