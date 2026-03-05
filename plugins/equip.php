@@ -8,6 +8,7 @@ if (!csrf_check('csrfg', $_GET)) {
 }
 $_GET['eq'] = array_key_exists('eq', $_GET) && in_array($_GET['eq'], ['weapon', 'armor']) ? $_GET['eq'] : null;
 $_GET['unequip'] = array_key_exists('unequip', $_GET) && in_array($_GET['unequip'], ['weapon', 'armor']) ? $_GET['unequip'] : null;
+$_GET['id'] = array_key_exists('id', $_GET) && ctype_digit($_GET['id']) ? (int)$_GET['id'] : null;
 if ($_GET['unequip'] === 'weapon' && $user_class->eqweapon != 0) {
     $db->trans('start');
     Give_Item($user_class->eqweapon, $user_class->id);

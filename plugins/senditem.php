@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__.'/../inc/header.php';
+$_GET['id'] = array_key_exists('id', $_GET) && ctype_digit($_GET['id']) ? (int)$_GET['id'] : null;
 $_GET['person'] = array_key_exists('person', $_GET) && ctype_digit($_GET['person']) ? $_GET['person'] : null;
 if (empty($_GET['id'])) {
     echo Message('You didn\'t select a valid item', 'Error', true);
@@ -11,6 +12,7 @@ if (!$db->count()) {
     echo Message('That item doesn\'t exist', 'Error', true);
 }
 $row = $db->fetch(true);
+$row['id'] = (int)$row['id'];
 $item = item_popup($row['id'], $row['name']);
 if (!Check_Item($_GET['id'], $user_class->id)) {
     echo Message('You don\'t have any '.$item.'s', 'Error', true);

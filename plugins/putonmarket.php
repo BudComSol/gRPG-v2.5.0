@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__.'/../inc/header.php';
+$_GET['id'] = array_key_exists('id', $_GET) && ctype_digit($_GET['id']) ? (int)$_GET['id'] : null;
 if (empty($_GET['id'])) {
     echo Message('You didn\'t select a valid item', 'Error', true);
 }
