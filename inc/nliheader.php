@@ -10,15 +10,27 @@ if ((defined('CAPTCHA_REGISTRATION') && CAPTCHA_REGISTRATION === true) || (defin
 }
 $time = date('F d, Y g:i:sa');
 $siteURL = getenv('SITE_URL');
+if ($siteURL === false || $siteURL === '') {
+    // Auto-detect base URL when SITE_URL is not configured so that all
+    // plugins/-prefixed links resolve correctly from within the plugins/ directory.
+    $proto = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+    $host_raw  = $_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? 'localhost';
+    // Strip anything that is not a valid hostname/port character to prevent Host header injection.
+    $host = preg_replace('/[^\w\-\.:]/', '', $host_raw);
+    $script_dir = dirname($_SERVER['SCRIPT_NAME'] ?? '/');
+    if (basename($script_dir) === 'plugins') {
+        $script_dir = dirname($script_dir);
+    }
+    $base_path = rtrim($script_dir, '/');
+    $siteURL   = $proto . '://' . $host . $base_path . '/';
+}
 ob_start(); ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head><?php
-if ($siteURL !== false && $siteURL !== '') {
     ?>
-    <base href="<?php echo rtrim($siteURL, '/').'/'; ?>"/>
+    <base href="<?php echo htmlspecialchars(rtrim($siteURL, '/').'/'); ?>"/>
     <?php
-    }
     ?>
     <title>gRPG - A Full Stack Game Engine</title>
     <meta name="description" content="gRPG is a full stack game engine with which to build your own RPG, MMORPG or PBBG game.">

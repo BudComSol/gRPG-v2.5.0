@@ -4,6 +4,7 @@ declare(strict_types=1);
 require_once __DIR__.'/../inc/header.php';
 if (!csrf_check('csrfg', $_GET)) {
     echo Message(SECURITY_TIMEOUT_MESSAGE);
+    exit;
 }
 $_GET['eq'] = array_key_exists('eq', $_GET) && in_array($_GET['eq'], ['weapon', 'armor']) ? $_GET['eq'] : null;
 $_GET['unequip'] = array_key_exists('unequip', $_GET) && in_array($_GET['unequip'], ['weapon', 'armor']) ? $_GET['unequip'] : null;
@@ -13,7 +14,7 @@ if ($_GET['unequip'] === 'weapon' && $user_class->eqweapon != 0) {
     $db->query('UPDATE users SET eqweapon = 0 WHERE id = ?');
     $db->execute([$user_class->id]);
     $db->trans('end');
-    mrefresh('plugins/inventory.php');
+    mrefresh('inventory.php');
     echo Message('You\'ve unequipped your weapon.', 'Error', true);
 } elseif ($_GET['unequip'] === 'armor' && $user_class->eqarmor != 0) {
     $db->trans('start');
@@ -21,7 +22,7 @@ if ($_GET['unequip'] === 'weapon' && $user_class->eqweapon != 0) {
     $db->query('UPDATE users SET eqarmor = 0 WHERE id = ?');
     $db->execute([$user_class->id]);
     $db->trans('end');
-    mrefresh('plugins/inventory.php');
+    mrefresh('inventory.php');
     echo Message('You\'ve unequipped your armor', 'Error', true);
 }
 if (empty($_GET['id'])) {
@@ -56,5 +57,5 @@ if ($_GET['eq'] === 'weapon') {
     $db->execute([$_GET['id'], $user_class->id]);
 }
 $db->trans('end');
-mrefresh('plugins/inventory.php');
+mrefresh('inventory.php');
 echo Message('You\'ve succesfully equipped '.($_GET['eq'] === 'weapon' ? 'a ' : '').$_GET['eq']);

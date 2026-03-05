@@ -658,16 +658,20 @@ function Get_ID($username = '')
 }
 
 /**
- *    Lazy meta-refresh.
+ *    Lazy JavaScript redirect with optional delay.
  *
- * @param string $url  [in-game page url]
- * @param int    $time [refresh wait time]
+ * Uses a JavaScript setTimeout so the URL is resolved relative to the current
+ * page location rather than any HTML <base> tag, which avoids double-prefixing
+ * issues (e.g. plugins/plugins/inventory.php) when SITE_URL is not configured.
  *
- * @return string
+ * @param string $url  [in-game page url, relative to the calling page's directory]
+ * @param int    $time [redirect delay in seconds]
+ *
+ * @return void
  */
 function mrefresh($url = '', $time = 1)
 {
-    echo '<meta http-equiv="refresh" content="' . $time . ';url=' . $url . '" />';
+    echo '<script>setTimeout(function(){window.location.href=' . json_encode($url) . ';}, ' . ((int)$time * 1000) . ');</script>';
 }
 
 /**
