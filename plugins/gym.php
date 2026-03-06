@@ -75,7 +75,7 @@ if (array_key_exists('train', $_POST)) {
 </tr>
 <tr>
     <td class="content">
-        <img src="images/headers/gym.webp" alt="gRPG Gym Header">
+        <img src="images/headers/gym.png" alt="gRPG Gym Header">
     </td>
 </tr>
 <tr>
