@@ -41,7 +41,7 @@ ORDER BY name ');
 $db->execute([$user_class->id]);
 $has_drugs = $user_class->cocaine || $user_class->nodoze || $user_class->genericsteroids;
 if (!$db->count() && !$has_drugs) {
-    echo Message('<p>You don\'t have any items at this time.</p>', 'Error', true);
+    echo Message('<p>You Don\'t Have Any Items At This Time.</p>', 'Error', true);
 }
 $rows = $db->fetch();
 $weaponsCnt = 0;
@@ -58,9 +58,9 @@ foreach ($rows ?? [] as $row) {
     if ($row['offense']) {
         $weapons .= '
         <td width="25%" class="center">
-            '.formatImage($row['image']).'<br />
-            '.item_popup($row['itemid'], $row['name']).' [x'.format($row['quantity']).']<br />
-            '.prettynum($row['cost'], true).'<br />
+            '.formatImage($row['image']).'
+            '.item_popup($row['itemid'], $row['name']).' [x'.format($row['quantity']).']
+            '.prettynum($row['cost'], true).'
             '.($row['cost'] ? '[<a href="plugins/sellitem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Sell</a>]' : '').'
             [<a href="plugins/putonmarket.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Market</a>]
             [<a href="plugins/senditem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Send</a>]
@@ -179,7 +179,7 @@ if ($user_class->genericsteroids) {
     <th class="content-head">Your Inventory</th>
 </tr>
 <tr>
-    <td class="content">Everything you have collected.</td>
+    <td class="content"><p>This Is Everything You Have Collected So Far.</p>.</td>
 </tr><?php
 if ($weapons) {
     ?><tr>
