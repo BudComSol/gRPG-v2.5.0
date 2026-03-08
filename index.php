@@ -10,12 +10,12 @@ require_once __DIR__.'/inc/header.php';
             <tr>
                 <th width="12.5%">Health:</th>
                 <td width="37.5%">
-                    <div class="bar_a"><div class="bar_b" style="width:<?php echo (int)$user_class->hppercent; ?>%;"></div></div>
+                    <div class="bar_a"><div class="bar_b bar_b_pink" style="width:<?php echo (int)$user_class->hppercent; ?>%;"></div></div>
                     <?php echo $user_class->formattedhp; ?>
                 </td>
                 <th width="12.5%">Energy:</th>
                 <td width="37.5%">
-                    <div class="bar_a"><div class="bar_b" style="width:<?php echo (int)$user_class->energypercent; ?>%;"></div></div>
+                    <div class="bar_a"><div class="bar_b bar_b_pink" style="width:<?php echo (int)$user_class->energypercent; ?>%;"></div></div>
                     <?php echo $user_class->formattedenergy; ?>
                 </td>
             </tr>

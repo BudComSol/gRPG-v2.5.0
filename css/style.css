@@ -77,6 +77,10 @@
     background-color: #00AA00;
 }
 
+.bar_b_pink {
+    background-color: #FF69B4;
+}
+
 body {
     width: 100%;
     max-width: 828px;
