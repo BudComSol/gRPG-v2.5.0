@@ -32,6 +32,7 @@ if (!$user_class->id) {
     header('Location: ' . $_login_url);
     exit;
 }
+require_once __DIR__.'/updates.php';
 $time = date('F d, Y g:i:sa');
 $site_url = getenv('SITE_URL');
 if ($site_url === false || $site_url === '') {
