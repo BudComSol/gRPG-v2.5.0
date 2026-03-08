@@ -70,6 +70,10 @@
 .bar_b {
     font-size: 10px;
     height: 12px;
+    background-color: #FFFF00;
+}
+
+.bar_b_exp {
     background-color: #00AA00;
 }
 

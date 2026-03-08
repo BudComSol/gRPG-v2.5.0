@@ -34,7 +34,7 @@ require_once __DIR__.'/inc/header.php';
             <tr>
                 <th>EXP:</th>
                 <td colspan="3">
-                    <div class="bar_a"><div class="bar_b" style="width:<?php echo (int)$user_class->exppercent; ?>%;"></div></div>
+                    <div class="bar_a"><div class="bar_b bar_b_exp" style="width:<?php echo (int)$user_class->exppercent; ?>%;"></div></div>
                     <?php echo $user_class->formattedexp; ?>
                 </td>
             </tr>
