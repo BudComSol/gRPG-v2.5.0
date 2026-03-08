@@ -319,14 +319,6 @@ a:hover {
     text-align: left;
 }
 
-.bar_a {
-    width: 100;
-}
-
-.bar_b {
-    font-size: 10;
-}
-
 .head, .headbox, .dynabox, a.leftmenu, a.topmenu {
     margin-left: 8px;
     font-weight: bold;
