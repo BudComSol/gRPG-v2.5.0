@@ -1,9 +1,6 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__.'/../inc/header.php';
-if ($user_class->city != 2) {
-    echo Message('You\'re not in the right location', 'Error', true);
-}
 $_GET['buy'] = array_key_exists('buy', $_GET) && ctype_digit($_GET['buy']) ? $_GET['buy'] : null;
 $errors = [];
 if (!empty($_GET['buy'])) {
