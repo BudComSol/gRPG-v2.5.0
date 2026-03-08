@@ -37,6 +37,9 @@ if ($row['reduce']) {
     if ($user_class->hospital < 1) {
         echo Message('You\'re not in hospital', 'Error', true);
     }
+    if ($user_class->maxhp <= 0) {
+        echo Message('Unable to heal: maximum HP is not set', 'Error', true);
+    }
     $perc = $row['heal'] / $user_class->maxhp * 100;
     $full = $user_class->hp + $perc >= $user_class->maxhp ? 'fully healed' : 'healed by '.format($perc).'%';
     $db->query('UPDATE users SET hp = LEAST(hp + ?, ?) WHERE id = ?');

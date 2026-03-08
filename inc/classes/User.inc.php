@@ -470,10 +470,10 @@ class User
         $this->maxnerve = $this->level + 4;
         $this->awake = (float)$row['awake'];
         $this->maxawake = (float)$this->houseawake;
-        $this->hppercent = ($this->hp > 0 && $this->maxhp > 0) ? floor(($this->hp / $this->maxhp) * 100) : 0;
-        $this->energypercent = ($this->energy > 0 && $this->maxenergy > 0) ? floor(($this->energy / $this->maxenergy) * 100) : 0;
-        $this->nervepercent = ($this->nerve > 0 && $this->maxnerve > 0) ? floor(($this->nerve / $this->maxnerve) * 100) : 0;
-        $this->awakepercent = ($this->awake > 0 && $this->maxawake > 0) ? floor(($this->awake / $this->maxawake) * 100) : 0;
+        $this->hppercent = (float)($this->hp > 0 && $this->maxhp > 0 ? min(100, floor(($this->hp / $this->maxhp) * 100)) : 0);
+        $this->energypercent = (float)($this->energy > 0 && $this->maxenergy > 0 ? min(100, floor(($this->energy / $this->maxenergy) * 100)) : 0);
+        $this->nervepercent = (float)($this->nerve > 0 && $this->maxnerve > 0 ? min(100, floor(($this->nerve / $this->maxnerve) * 100)) : 0);
+        $this->awakepercent = (float)($this->awake > 0 && $this->maxawake > 0 ? min(100, floor(($this->awake / $this->maxawake) * 100)) : 0);
         $this->formattedexp = $this->exp.' / '.$this->maxexp.' ['.$this->exppercent.'%]';
         $this->formattedhp = $this->hp.' / '.$this->maxhp.' ['.$this->hppercent.'%]';
         $this->formattedenergy = $this->energy.' / '.$this->maxenergy.' ['.$this->energypercent.'%]';

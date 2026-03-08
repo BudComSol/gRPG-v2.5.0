@@ -64,6 +64,7 @@
     border-style: solid;
     border-color: #000000;
     background-color: #666666;
+    overflow: hidden;
 }
 
 .bar_b {
