@@ -10,11 +10,11 @@ if (!empty($_GET['buy'])) {
     $db->query('SELECT id, name, cost, buyable FROM carlot WHERE id = ?');
     $db->execute([$_GET['buy']]);
     if (!$db->count()) {
-        $errors[] = 'Invalid car';
+        $errors[] = '<p> This Is An Invalid Vehicle.</p>';
     }
     $row = $db->fetch(true);
     if (!$row['buyable']) {
-        $errors[] = 'That car can\'t be bought this way';
+        $errors[] = '<p>That car can\'t be bought this way.</p>';
     }
     if ($row['cost'] > $user_class->money) {
         $errors[] = 'You don\'t have enough money to buy '.aAn($row['name']);
@@ -39,7 +39,8 @@ if (count($errors)) {
     display_errors($errors);
 }
 ?><tr>
-    <td class="content">Welcome to Big Bob's Used Car Lot! Just take your pick of any cars I have out in my lot.</td>
+    <td class="content"><p>Welcome to Big Bob's Used Car Lot.</p>
+    <p>Just Take Your Pick Of Any Car We Have On The Lot.</p></td>
 </tr>
 <tr>
     <td class="content">
@@ -61,7 +62,7 @@ if ($rows !== null) {
             }
         }
     } else {
-        ?><td>There are no cars</td><?php
+        ?><td><p>There Are Presently No Cars, We Just Had A Big Sale.</p></td><?php
     }
 ?></tr>
         </table>
