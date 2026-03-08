@@ -2,6 +2,46 @@
 declare(strict_types=1);
 require_once __DIR__.'/inc/header.php';
 ?><tr>
+    <th class="content-head">Progress</th>
+</tr>
+<tr>
+    <td class="content">
+        <table width="100%" class="pure-table pure-table-horizontal">
+            <tr>
+                <th width="12.5%">Health:</th>
+                <td width="37.5%">
+                    <div class="bar_a"><div class="bar_b" style="width:<?php echo (int)$user_class->hppercent; ?>%;"></div></div>
+                    <?php echo $user_class->formattedhp; ?>
+                </td>
+                <th width="12.5%">Energy:</th>
+                <td width="37.5%">
+                    <div class="bar_a"><div class="bar_b" style="width:<?php echo (int)$user_class->energypercent; ?>%;"></div></div>
+                    <?php echo $user_class->formattedenergy; ?>
+                </td>
+            </tr>
+            <tr>
+                <th>Awake:</th>
+                <td>
+                    <div class="bar_a"><div class="bar_b" style="width:<?php echo (int)$user_class->awakepercent; ?>%;"></div></div>
+                    <?php echo $user_class->formattedawake; ?>
+                </td>
+                <th>Nerve:</th>
+                <td>
+                    <div class="bar_a"><div class="bar_b" style="width:<?php echo (int)$user_class->nervepercent; ?>%;"></div></div>
+                    <?php echo $user_class->formattednerve; ?>
+                </td>
+            </tr>
+            <tr>
+                <th>EXP:</th>
+                <td colspan="3">
+                    <div class="bar_a"><div class="bar_b" style="width:<?php echo (int)$user_class->exppercent; ?>%;"></div></div>
+                    <?php echo $user_class->formattedexp; ?>
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<tr>
     <th class="content-head">General</th>
 </tr>
 <tr>
