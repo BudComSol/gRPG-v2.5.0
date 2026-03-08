@@ -55,7 +55,7 @@ for ($i = 1; $i <= 3; ++$i) {
                     <a href="plugins/pointmarket.php">Points Market</a><br />
                     <a href="plugins/store.php">Weapon Sales</a><br />
                     <a href="plugins/astore.php">Armor Emporium</a><br />                    
-                    <?php echo $user_class->city == 2 ? '<a href="plugins/carlot.php">Big Bob\'s Used Car Lot</a>' : ''; ?>
+                    <a href="plugins/carlot.php">Big Bob's Used Car Lot</a>
                 </td>
                 <td width="34%" class="top" style="padding-bottom:10px;">
                     <h3 style="padding:0;margin:0;font-size:1.4em;">Town Hall</h3><br />
