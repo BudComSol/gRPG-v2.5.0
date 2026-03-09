@@ -47,12 +47,12 @@ if (array_key_exists('newmessage', $_POST)) {
 </tr>
 <tr>
     <td class="content">
-        <form action="massmail.php" method="post" class="pure-form pure-form-aligned">
+        <form action="plugins/massmail.php" method="post" class="pure-form pure-form-aligned">
             <?php echo csrf_create(); ?>
             <fieldset>
                 <div class="pure-control-group">
                     <label for="subject">Subject</label>
-                    <input type="text" name="submit" id="subject" size="70" maxlength="75" value="MASS MAIL" />
+                    <input type="text" name="subject" id="subject" size="70" maxlength="75" value="MASS MAIL" />
                 </div>
                 <div class="pure-control-group">
                     <label for="msgtext">Message</label>
