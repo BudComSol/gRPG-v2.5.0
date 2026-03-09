@@ -1034,7 +1034,8 @@ CREATE TABLE IF NOT EXISTS `updates`
 (
     `id`       int(11)     NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `name`     varchar(75) NOT NULL DEFAULT '',
-    `lastdone` int(11)     NOT NULL DEFAULT 0
+    `lastdone` int(11)     NOT NULL DEFAULT 0,
+    UNIQUE KEY `uq_updates_name` (`name`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 INSERT INTO `updates` (`name`, `lastdone`)

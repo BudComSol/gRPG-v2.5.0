@@ -67,11 +67,9 @@ class Cron
     private function postRunCommands(string $cron, array $data): void
     {
         $leftOverTime = $data['timeSinceUpdate'] - (floor($data['timeSinceUpdate'] / $this->conf[$cron]['interval']) * $this->conf[$cron]['interval']);
-        $this->db->query('UPDATE updates SET lastdone = ? WHERE name = ?', [$this->currentTime, $cron]);
-        if ($leftOverTime > 0) {
-            $this->db->query('UPDATE updates SET lastdone = ? WHERE name = ?',
-                [$this->currentTime - $leftOverTime, $cron]);
-        }
+        $lastdone = $leftOverTime > 0 ? $this->currentTime - $leftOverTime : $this->currentTime;
+        $this->db->query('INSERT INTO updates (name, lastdone) VALUES (?, ?) ON DUPLICATE KEY UPDATE lastdone = VALUES(lastdone)');
+        $this->db->execute([$cron, $lastdone]);
     }
 
     private function runOneMinute(array $data): void
