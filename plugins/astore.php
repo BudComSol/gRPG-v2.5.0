@@ -5,28 +5,30 @@ declare(strict_types=1);
 //********************************************************
 require_once __DIR__.'/../inc/header.php';
 $errors = [];
-$_GET['buy'] = array_key_exists('buy', $_GET) && ctype_digit($_GET['buy']) ? $_GET['buy'] : null;
+$_GET['buy'] = array_key_exists('buy', $_GET) && ctype_digit($_GET['buy']) ? (int)$_GET['buy'] : null;
 if (!empty($_GET['buy'])) {
     if (!csrf_check('csrfg', $_GET)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
-    }
-    $db->query('SELECT id, name, cost FROM items WHERE id = ? AND buyable = 1');
-    $db->execute([$_GET['buy']]);
-    if (!$db->count()) {
-        $errors[] = 'The item you selected doesn\'t exist';
-    }
-    $row = $db->fetch(true);
-    $item = item_popup($row['id'], $row['name']);
-    if ($row['cost'] > $user_class->money) {
-        $errors[] = 'You don\'t have enough money to buy '.aAn($row['name'], false).$item;
-    }
-    if (!count($errors)) {
-        $db->trans('start');
-        $db->query('UPDATE users SET money = GREATEST(money - ?, 0) WHERE id = ?');
-        $db->execute([$row['cost'], $user_class->id]);
-        Give_Item($_GET['buy'], $user_class->id); //give the user their item they bought
-        $db->trans('end');
-        echo Message('You\'ve purchased '.aAn($row['name'], false).$item);
+    } else {
+        $db->query('SELECT id, name, cost FROM items WHERE id = ? AND buyable = 1');
+        $db->execute([$_GET['buy']]);
+        $row = $db->fetch(true);
+        if ($row === null) {
+            $errors[] = 'The item you selected doesn\'t exist';
+        } else {
+            $item = item_popup($row['id'], $row['name']);
+            if ($row['cost'] > $user_class->money) {
+                $errors[] = 'You don\'t have enough money to buy '.aAn($row['name'], false).$item;
+            }
+            if (!count($errors)) {
+                $db->trans('start');
+                $db->query('UPDATE users SET money = GREATEST(money - ?, 0) WHERE id = ?');
+                $db->execute([$row['cost'], $user_class->id]);
+                Give_Item((int)$_GET['buy'], $user_class->id); //give the user their item they bought
+                $db->trans('end');
+                echo Message('You\'ve purchased '.aAn($row['name'], false).' '.$item);
+            }
+        }
     }
 }
 $db->query('SELECT id, image, name, cost FROM items WHERE defense > 0 AND buyable = 1 ORDER BY defense ');
