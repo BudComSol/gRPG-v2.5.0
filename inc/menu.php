@@ -25,6 +25,8 @@ global $owner;
         <div class="bar_a"><div class="bar_b" style="width:<?php echo (int)$user_class->nervepercent; ?>%;"></div></div>
         <div class="menu-stat-label">Awake</div>
         <div class="bar_a"><div class="bar_b" style="width:<?php echo (int)$user_class->awakepercent; ?>%;"></div></div>
+        <div class="menu-stat-label">EXP</div>
+        <div class="bar_a"><div class="bar_b bar_b_exp" style="width:<?php echo (int)$user_class->exppercent; ?>%;"></div></div>
     </div>
     <div class="headbox">Menu</div>
     
