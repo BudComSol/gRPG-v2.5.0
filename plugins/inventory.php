@@ -58,9 +58,9 @@ foreach ($rows ?? [] as $row) {
     if ($row['offense']) {
         $weapons .= '
         <td width="25%" class="center">
-            '.formatImage($row['image']).'
-            '.item_popup($row['itemid'], $row['name']).' [x'.format($row['quantity']).']
-            '.prettynum($row['cost'], true).'
+            '.formatImage($row['image']).'<br />
+            '.item_popup($row['itemid'], $row['name']).' [x'.format($row['quantity']).']<br />
+            '.prettynum($row['cost'], true).'<br />
             '.($row['cost'] ? '[<a href="plugins/sellitem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Sell</a>]' : '').'
             [<a href="plugins/putonmarket.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Market</a>]
             [<a href="plugins/senditem.php?id='.$row['itemid'].'&amp;csrfg='.$csrfg.'">Send</a>]
