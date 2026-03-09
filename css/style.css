@@ -302,6 +302,25 @@ a:hover {
     text-align: left;
 }
 
+.menu-stats {
+    margin-left: 8px;
+    background-color: #333;
+    color: #ffffff;
+    display: block;
+    padding: 4px 2px;
+    border-style: solid;
+    border-color: #444;
+    border-width: 0 1px 1px 1px;
+    width: 145px;
+    font-size: 10px;
+}
+
+.menu-stat-label {
+    color: #aaaaaa;
+    font-size: 9px;
+    margin-top: 3px;
+}
+
 .gap {
     line-height: 3px;
 }
