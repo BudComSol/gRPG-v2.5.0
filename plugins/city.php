@@ -48,14 +48,12 @@ for ($i = 1; $i <= 3; ++$i) {
         <table width="100%" class="pure-table pure-table-horizontal">
             <tr>
                 <td width="33%" class="top" style="padding-bottom:10px;">
-                    <h3 style="padding:0;margin:0;font-size:1.4em;">Markets</h3><br />
-                    <a href="plugins/pharmacy.php">Pharmacy</a><br />
+                    <h3 style="padding:0;margin:0;font-size:1.4em;">Markets</h3><br />                    
                     <a href="plugins/spendpoints.php">Point Store</a><br />
                     <a href="plugins/itemmarket.php">Item Market</a><br />                    
                     <a href="plugins/pointmarket.php">Points Market</a><br />
                     <a href="plugins/store.php">Weapon Sales</a><br />
                     <a href="plugins/astore.php">Armor Emporium</a><br />                    
-                    <a href="plugins/carlot.php">Big Bob's Used Cars</a>
                 </td>
                 <td width="34%" class="top" style="padding-bottom:10px;">
                     <h3 style="padding:0;margin:0;font-size:1.4em;">Town Hall</h3><br />
@@ -66,11 +64,11 @@ for ($i = 1; $i <= 3; ++$i) {
                     <a href="plugins/online.php">Citizens Online</a><br />                    
                 </td>
                 <td width="33%" class="top" style="padding-bottom:10px;">
-                    <h3 style="padding:0;margin:0;font-size:1.4em;">Punting</h3><br />
+                    <h3 style="padding:0;margin:0;font-size:1.4em;">Pot Luck</h3><br />
                     <a href="plugins/5050game.php">50/50</a><br />
                     <a href="plugins/lottery.php">Lottery</a><br />
                     <a href="plugins/slots.php">Slot Machine</a><br />
-                    
+                    <a href="plugins/carlot.php">Bob's Used Cars</a>
                 </td>
             </tr>
             <tr>
@@ -79,18 +77,19 @@ for ($i = 1; $i <= 3; ++$i) {
                     <a href="plugins/events.php">Events <!_-events-_!></a><br />
                     <a href="plugins/pms.php">Mailbox <!_-mail-_!></a><br />                                        
                     <a href="plugins/inventory.php">Inventory</a><br />                    
-                    <a href="plugins/house.php">Move House</a><br />
                     <a href="plugins/fields.php">Manage Land</a>
                 </td>
                 <td class="top" style="padding-bottom:10px;">
                     <h3 style="padding:0;margin:0;font-size:1.4em;">Travel</h3><br />
-                    <a href="plugins/drive.php">Drive</a><br />
+                    <a href="plugins/drive.php">Drive</a><br />                    
                     <a href="plugins/bus.php">Bus Station</a><br />
+                    <a href="plugins/house.php">Move House</a><br />
                     <a href="plugins/expguide.php">Experience Guide</a><br />                    
                 </td>
                 <td class="top" style="padding-bottom:10px;">
                     <h3 style="padding:0;margin:0;font-size:1.4em;">Downtown</h3><br />
                     <a href="bank.php">Bank</a><br />
+                    <a href="plugins/pharmacy.php">Pharmacy</a><br />
                     <a href="plugins/viewstaff.php">Game Staff</a><br />                                         
                     <a href="plugins/downtown.php">Search Downtown</a><br />                  
                 </td>
