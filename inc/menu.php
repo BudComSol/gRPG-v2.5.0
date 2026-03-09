@@ -17,16 +17,26 @@ global $owner;
     <div class="menu-stats">
         <div class="menu-stat-row">Money: <span class="menu-stat-value"><?php echo prettynum($user_class->money, true); ?></span></div>
         <div class="menu-stat-row">Points: <span class="menu-stat-value"><?php echo format($user_class->points); ?></span></div>
-        <div class="menu-stat-label">HP</div>
-        <div class="bar_a"><div class="bar_b bar_b_pink" style="width:<?php echo (int)$user_class->hppercent; ?>%;"></div></div>
-        <div class="menu-stat-label">Energy</div>
-        <div class="bar_a"><div class="bar_b bar_b_pink" style="width:<?php echo (int)$user_class->energypercent; ?>%;"></div></div>
-        <div class="menu-stat-label">Nerve</div>
-        <div class="bar_a"><div class="bar_b" style="width:<?php echo (int)$user_class->nervepercent; ?>%;"></div></div>
-        <div class="menu-stat-label">Awake</div>
-        <div class="bar_a"><div class="bar_b" style="width:<?php echo (int)$user_class->awakepercent; ?>%;"></div></div>
-        <div class="menu-stat-label">EXP</div>
-        <div class="bar_a"><div class="bar_b bar_b_exp" style="width:<?php echo (int)$user_class->exppercent; ?>%;"></div></div>
+        <div class="menu-stat-bar-row">
+            <div class="menu-stat-label">HP</div>
+            <div class="bar_a"><div class="bar_b bar_b_pink" style="width:<?php echo (int)$user_class->hppercent; ?>%;"></div></div>
+        </div>
+        <div class="menu-stat-bar-row">
+            <div class="menu-stat-label">Energy</div>
+            <div class="bar_a"><div class="bar_b bar_b_pink" style="width:<?php echo (int)$user_class->energypercent; ?>%;"></div></div>
+        </div>
+        <div class="menu-stat-bar-row">
+            <div class="menu-stat-label">Nerve</div>
+            <div class="bar_a"><div class="bar_b" style="width:<?php echo (int)$user_class->nervepercent; ?>%;"></div></div>
+        </div>
+        <div class="menu-stat-bar-row">
+            <div class="menu-stat-label">Awake</div>
+            <div class="bar_a"><div class="bar_b" style="width:<?php echo (int)$user_class->awakepercent; ?>%;"></div></div>
+        </div>
+        <div class="menu-stat-bar-row">
+            <div class="menu-stat-label">EXP</div>
+            <div class="bar_a"><div class="bar_b bar_b_exp" style="width:<?php echo (int)$user_class->exppercent; ?>%;"></div></div>
+        </div>
     </div>
     <div class="headbox">Menu</div>
     
