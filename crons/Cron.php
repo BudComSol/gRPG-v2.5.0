@@ -41,8 +41,9 @@ class Cron
         if (!array_key_exists($cron, $this->conf)) {
             return null;
         }
-        $this->db->query('SELECT lastdone FROM updates WHERE name = ?', [$cron]);
-        $update = $this->db->result();
+        $this->db->query('SELECT lastdone FROM updates WHERE name = ?');
+        $this->db->execute([$cron]);
+        $update = (int)$this->db->result();
         $timeSinceUpdate = $this->currentTime - $update;
         if ($timeSinceUpdate >= $this->conf[$cron]['interval']) {
             return [
@@ -91,30 +92,32 @@ class Cron
         $this->db->query('SELECT id, rmdays FROM users');
         $this->db->execute();
         $users = $this->db->fetch();
-        $this->db->trans('start');
-        foreach ($users as $row) {
-            $user = new User($row['id']);
-            $multiplier = $row['rmdays'] ? 2 : 1;
-            $this->db->query('
-                UPDATE users SET
-                    awake = LEAST(awake + ?, ?),
-                    energy = LEAST(energy + ?, ?),
-                    nerve = LEAST(nerve + ?, ?),
-                    hp = LEAST(hp + ?, ?)
-                WHERE id = ?
-            ', [
-                ceil(($data['iterationCount'] * 5) * $multiplier),
-                $user->maxawake,
-                ceil(($data['iterationCount'] * 2) * $multiplier),
-                $user->maxenergy,
-                ceil(($data['iterationCount'] * 2) * $multiplier),
-                $user->maxnerve,
-                ceil(($data['iterationCount'] * 10) * $multiplier),
-                $user->maxhp,
-                $row['id'],
-            ]);
+        if ($users !== null) {
+            $this->db->trans('start');
+            foreach ($users as $row) {
+                $user = new User($row['id']);
+                $multiplier = $row['rmdays'] ? 2 : 1;
+                $this->db->query('
+                    UPDATE users SET
+                        awake = LEAST(awake + ?, ?),
+                        energy = LEAST(energy + ?, ?),
+                        nerve = LEAST(nerve + ?, ?),
+                        hp = LEAST(hp + ?, ?)
+                    WHERE id = ?
+                ', [
+                    ceil(($data['iterationCount'] * 5) * $multiplier),
+                    $user->maxawake,
+                    ceil(($data['iterationCount'] * 2) * $multiplier),
+                    $user->maxenergy,
+                    ceil(($data['iterationCount'] * 2) * $multiplier),
+                    $user->maxnerve,
+                    ceil(($data['iterationCount'] * 10) * $multiplier),
+                    $user->maxhp,
+                    $row['id'],
+                ]);
+            }
+            $this->db->trans('end');
         }
-        $this->db->trans('end');
     }
 
     private function updateStocks(): void
@@ -150,19 +153,21 @@ class Cron
         ');
         $this->db->execute();
         $rows = $this->db->fetch();
-        $this->db->trans('start');
-        foreach ($rows as $row) {
-            $updates_user = new User($row['id']);
-            $interest = $updates_user->rmdays ? .04 : .02;
-            $bank = ceil($updates_user->bank * $interest);
-            $money = (int) $row['wage'];
-            if ($updates_user->hookers) {
-                $money += $updates_user->hookers * 300;
+        if ($rows !== null) {
+            $this->db->trans('start');
+            foreach ($rows as $row) {
+                $updates_user = new User($row['id']);
+                $interest = $updates_user->rmdays ? .04 : .02;
+                $bank = ceil($updates_user->bank * $interest);
+                $money = (int) $row['wage'];
+                if ($updates_user->hookers) {
+                    $money += $updates_user->hookers * 300;
+                }
+                $this->db->query('UPDATE users SET money = money + ?, rmdays = GREATEST(rmdays - 1, 0), bank = IF(bank > 0, bank + ?, bank), searchdowntown = 100 WHERE id = ?');
+                $this->db->execute([$money, $bank, $row['id']]);
             }
-            $this->db->query('UPDATE users SET money = money + ?, rmdays = GREATEST(rmdays - 1, 0), bank = IF(bank > 0, bank + ?, bank), searchdowntown = 100 WHERE id = ?');
-            $this->db->execute([$money, $bank, $row['id']]);
+            $this->db->trans('end');
         }
-        $this->db->trans('end');
     }
 
     private function doGrow()
