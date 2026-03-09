@@ -52,12 +52,12 @@ $unread_mail = $db->result();
     <a class="leftmenu" href="plugins/forum.php">Forum</a>
     <a class="leftmenu" href="plugins/todo.php">To-Do</a>
     <a class="leftmenu" href="plugins/events.php">Events <!_-events-_!></a>    
-    <a class="leftmenu" href="plugins/city.php"><!_-cityname-_!></a>
-    <a class="leftmenu" href="plugins/pms.php">Mailbox <!_-mail-_!> [<?php echo $unread_mail; ?>]</a>    
+    <a class="leftmenu" href="plugins/city.php"><!_-cityname-_!></a>        
     <a class="leftmenu" href="plugins/hospital.php">Hospital <!_-hospital-_!></a>
     <a class="leftmenu" href="plugins/inventory.php">Inventory</a>
     <a class="leftmenu" href="<?php echo !$user_class->gang ? 'plugins/create' : 'plugins/'; ?>gang.php">Your Gang</a>
-    <a class="leftmenu" href="plugins/gym.php">Gymnasium</a>    
+    <a class="leftmenu" href="plugins/pms.php">Mailbox <!_-mail-_!> [<?php echo $unread_mail; ?>]</a>
+    <a class="leftmenu" href="plugins/gym.php">Gymnasium</a>        
     <a class="leftmenu" href="plugins/rmstore.php">Game Store</a><?php
     if ($user_class->admin == 1) {
         ?>
