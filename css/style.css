@@ -381,6 +381,15 @@ a:hover {
     font-size: 16px;
 }
 
+.content-head-marquee {
+    width: 98%;
+}
+
+.content-marquee {
+    width: 98%;
+    display: block;
+}
+
 .content {
     padding: 3px;
     font-size: 14px;
