@@ -9,7 +9,7 @@ if ($_GET['id'] !== null) {
     $db->query('SELECT * FROM crimes WHERE id = ?', [$_GET['id']]);
     $row = $db->fetch(true);
     if ($row === null) {
-        echo Message('That crime doesn\'t exist', 'Error', true);
+        echo Message('<p>That crime doesn\'t exist, ya numpty.</p>', 'Error', true);
     }
     $nerve = $row['nerve'];
     $stext = '[[We currently don\'t have a success message for this crime :( You can help us by submitting your idea for a message in the crime section of the forums!]]';
@@ -28,13 +28,13 @@ if ($_GET['id'] !== null) {
     }
     $exp = $money;
     if ($nerve > $user_class->nerve) {
-        echo Message('You don\'t have enough nerve for that crime', 'Error', true);
+        echo Message('<p>You don\'t have enough nerve for that crime.</p>', 'Error', true);
     } else {
         $csrfg = csrf_create('csrfg', false);
         if ($chance <= 75) {
             $db->query('UPDATE users SET experience = experience + ?, crimesucceeded = crimesucceeded + 1, crimemoney = crimemoney + ?, money = money + ?, nerve = GREATEST(nerve - ?, 0) WHERE id = ?');
             $db->execute([$exp, $money, $money, $nerve, $user_class->id]);
-            echo Message($stext.'<br /><br /><span style="color:green;">Success! You receive '.$exp.' exp and '.prettynum($money, true).'.</span><br /><a href="plugins/crime.php?id='.$_GET['id'].'&amp;csrfg='.$csrfg.'">Retry</a> | <a href="plugins/crime.php">Back</a>', 'Error', true);
+            echo Message($stext.'<p><span style="color:green;">Success pal, you receive '.$exp.' exp and '.prettynum($money, true).'.</span></p><br /><a href="plugins/crime.php?id='.$_GET['id'].'&amp;csrfg='.$csrfg.'">Retry</a> | <a href="plugins/crime.php">Back</a>', 'Error', true);
         } elseif ($chance >= 150) {
             $db->query('UPDATE users SET crimefailed = crimefailed + 1, jail = ?, nerve = GREATEST(nerve - ?, 0) WHERE id = ?');
             $db->execute([$_GET['id'] * 600, $nerve, $user_class->id]);
@@ -42,7 +42,7 @@ if ($_GET['id'] !== null) {
         } else {
             $db->query('UPDATE users SET crimefailed = crimefailed + 1, nerve = GREATEST(nerve - ?, 0) WHERE id = ?');
             $db->execute([$nerve, $user_class->id]);
-            echo Message($ftext.'<br /><br /><span style="color:red;">You failed.</span><br /><a href="plugins/crime.php?id='.$_GET['id'].'&amp;csrfg='.$csrfg.'">Retry</a> | <a href="plugins/crime.php">Back</a>', 'Error', true);
+            echo Message($ftext.'<span style="color:red;"><p>Sorry But You Failed To Commit This Crime.</p></span><br /><a href="plugins/crime.php?id='.$_GET['id'].'&amp;csrfg='.$csrfg.'">Retry</a> | <a href="plugins/crime.php">Back</a>', 'Error', true);
         }
     }
 }
@@ -83,7 +83,7 @@ if ($rows !== null) {
     } else {
         ?>
         <tr>
-            <td colspan="3" class="center">There are no crimes to commit.</td>
+            <td colspan="3" class="center"><p>There are no crimes to commit at this time.</p></td>
         </tr><?php
     }
 ?></table>
