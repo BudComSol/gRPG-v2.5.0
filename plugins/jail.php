@@ -8,21 +8,21 @@ if (!empty($_GET['jailbreak'])) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
     }
     if (!userExists($_GET['jailbreak'])) {
-        $errors[] = 'The player you selected doesn\'t exist';
+        $errors[] = '<p>The player you selected doesn\'t exist.</p>';
     }
     $jailed_person = new User($_GET['jailbreak']);
     if (!$jailed_person->jail) {
         $errors[] = $jailed_person->formattedname.' isn\'t in jail.';
     }
     if ($jailed_person->id == $user_class->id) {
-        $errors[] = 'You can not bust yourself from jail';
+        $errors[] = '<p>You can not bust yourself from jail, call a friend.</p>';
     }
     $nerve = ($jailed_person->level * 10) - 10;
     if ($nerve < 5) {
         $nerve = 5;
     }
     if ($nerve > $user_class->nerve) {
-        $errors[] = 'You don\'t have enough nerve. You\'ll need '.format($nerve).' to bust '.$jailed_person->formattedname;
+        $errors[] = 'You don\'t have enough nerve, you\'ll need '.format($nerve).' to bust '.$jailed_person->formattedname . '</p>';
     }
     if (!count($errors)) {
         $chance = mt_rand(1, (100 * $nerve - ($user_class->speed / 25)));
@@ -44,7 +44,7 @@ if (!empty($_GET['jailbreak'])) {
         } else {
             $db->query('UPDATE users SET crimefailed = crimefailed + 1, nerve = GREATEST(nerve - ?, 0) WHERE id = ?');
             $db->execute([$nerve, $user_class->id]);
-            echo Message('You\'ve failed');
+            echo Message('<p>Bad luck, you have failed this time.</p>');
         }
     }
 }
@@ -73,7 +73,7 @@ if ($rows !== null) {
             $user_jail = new User($row['id']); ?><tr>
                     <td><?php echo $user_jail->formattedname; ?></td>
                     <td><?php echo time_format($user_jail->jail); ?></td>
-                    <td><a href="jail.php?jailbreak=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>">Break Out</a></td>
+                    <td><a href="plugins/jail.php?jailbreak=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>">Break Out Inmate</a></td>
                 </tr><?php
         }
     } else {
