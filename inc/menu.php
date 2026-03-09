@@ -15,8 +15,8 @@ global $owner;
     </div>
     <div class="headbox">Stats</div>
     <div class="menu-stats">
-        Money: <?php echo prettynum($user_class->money, true); ?><br>
-        Points: <?php echo format($user_class->points); ?><br>
+        <div class="menu-stat-row">Money: <span class="menu-stat-value"><?php echo prettynum($user_class->money, true); ?></span></div>
+        <div class="menu-stat-row">Points: <span class="menu-stat-value"><?php echo format($user_class->points); ?></span></div>
         <div class="menu-stat-label">HP</div>
         <div class="bar_a"><div class="bar_b bar_b_pink" style="width:<?php echo (int)$user_class->hppercent; ?>%;"></div></div>
         <div class="menu-stat-label">Energy</div>
