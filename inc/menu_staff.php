@@ -22,6 +22,7 @@ $unread_mail = $db->result();
         <div class="menu-stat-row">Money: <span class="menu-stat-value"><?php echo prettynum($user_class->money, true); ?></span></div>
         <div class="menu-stat-row">Bank: <span class="menu-stat-value"><?php echo prettynum($user_class->bank, true); ?></span></div>
         <div class="menu-stat-row">Points: <span class="menu-stat-value"><?php echo format($user_class->points); ?></span></div>
+        <div class="menu-stat-row">VIP Days: <span class="menu-stat-value"><?php echo format($user_class->rmdays); ?></span></div>
         <div class="menu-stat-bar-row">
             <div class="menu-stat-label">HP</div>
             <div class="bar_a"><div class="bar_b bar_b_pink" style="width:<?php echo (int)$user_class->hppercent; ?>%;"></div></div>
