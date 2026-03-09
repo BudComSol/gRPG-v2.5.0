@@ -2,9 +2,9 @@
 declare(strict_types=1);
 require_once __DIR__.'/../inc/header.php';
 checkUserStatus();
-if ($_GET['id'] !== null) {
+if (isset($_GET['id'])) {
     if (!csrf_check('csrfg', $_GET)) {
-        echo Message(SECURITY_TIMEOUT_MESSAGE);
+        echo Message(SECURITY_TIMEOUT_MESSAGE, null, true);
     }
     $db->query('SELECT * FROM crimes WHERE id = ?', [$_GET['id']]);
     $row = $db->fetch(true);
@@ -34,14 +34,23 @@ if ($_GET['id'] !== null) {
         if ($chance <= 75) {
             $db->query('UPDATE users SET experience = experience + ?, crimesucceeded = crimesucceeded + 1, crimemoney = crimemoney + ?, money = money + ?, nerve = GREATEST(nerve - ?, 0) WHERE id = ?');
             $db->execute([$exp, $money, $money, $nerve, $user_class->id]);
+            $user_class->nerve = max($user_class->nerve - $nerve, 0);
+            $user_class->nervepercent = (float)($user_class->maxnerve > 0 ? min(100, floor(($user_class->nerve / $user_class->maxnerve) * 100)) : 0);
+            $user_class->formattednerve = $user_class->nerve.' / '.$user_class->maxnerve.' ['.$user_class->nervepercent.'%]';
             echo Message($stext.'<p><span style="color:green;">Success pal, you receive '.$exp.' exp and '.prettynum($money, true).'.</span></p><br /><a href="plugins/crime.php?id='.$_GET['id'].'&amp;csrfg='.$csrfg.'">Retry</a> | <a href="plugins/crime.php">Back</a>', 'Error', true);
         } elseif ($chance >= 150) {
             $db->query('UPDATE users SET crimefailed = crimefailed + 1, jail = ?, nerve = GREATEST(nerve - ?, 0) WHERE id = ?');
             $db->execute([$_GET['id'] * 600, $nerve, $user_class->id]);
+            $user_class->nerve = max($user_class->nerve - $nerve, 0);
+            $user_class->nervepercent = (float)($user_class->maxnerve > 0 ? min(100, floor(($user_class->nerve / $user_class->maxnerve) * 100)) : 0);
+            $user_class->formattednerve = $user_class->nerve.' / '.$user_class->maxnerve.' ['.$user_class->nervepercent.'%]';
             echo Message($ctext.'<br /><br /><span style="color:red;">You were caught.</span> You were hauled off to jail for '.($_GET['id'] * 10).' minutes.', 'Error', true);
         } else {
             $db->query('UPDATE users SET crimefailed = crimefailed + 1, nerve = GREATEST(nerve - ?, 0) WHERE id = ?');
             $db->execute([$nerve, $user_class->id]);
+            $user_class->nerve = max($user_class->nerve - $nerve, 0);
+            $user_class->nervepercent = (float)($user_class->maxnerve > 0 ? min(100, floor(($user_class->nerve / $user_class->maxnerve) * 100)) : 0);
+            $user_class->formattednerve = $user_class->nerve.' / '.$user_class->maxnerve.' ['.$user_class->nervepercent.'%]';
             echo Message($ftext.'<span style="color:red;"><p>Sorry But You Failed To Commit This Crime.</p></span><br /><a href="plugins/crime.php?id='.$_GET['id'].'&amp;csrfg='.$csrfg.'">Retry</a> | <a href="plugins/crime.php">Back</a>', 'Error', true);
         }
     }
