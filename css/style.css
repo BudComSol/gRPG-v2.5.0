@@ -321,6 +321,14 @@ a:hover {
     margin-top: 3px;
 }
 
+.menu-stat-row {
+    font-size: 14px;
+}
+
+.menu-stat-value {
+    float: right;
+}
+
 .gap {
     line-height: 3px;
 }
