@@ -179,7 +179,7 @@ if ($user_class->genericsteroids) {
     <th class="content-head">Your Inventory</th>
 </tr>
 <tr>
-    <td class="content"><p>This Is Everything You Have Collected So Far.</p>.</td>
+    <td class="content"><p>This Is Everything You Have Collected So Far.</p></td>
 </tr><?php
 if ($weapons) {
     ?><tr>
