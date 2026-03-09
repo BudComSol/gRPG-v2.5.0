@@ -14,7 +14,7 @@ if (!empty($_GET['buy'])) {
         $db->execute([$_GET['buy']]);
         $row = $db->fetch(true);
         if ($row === null) {
-            $errors[] = 'The item you selected doesn\'t exist';
+            $errors[] = '<p>The item you selected doesn\'t exist.</p>';
         } else {
             $item = item_popup($row['id'], $row['name']);
             if ($row['cost'] > $user_class->money) {
@@ -41,7 +41,7 @@ $rows = $db->fetch();
     <th class="content-head">Armor</th>
 </tr>
 <tr>
-    <td class="content">Welcome to Crazy Riley's Armor Emporium! Please take as much time as you would like to browse through my selection of goods.</td>
+    <td class="content"><p>Welcome to Crazy Riley's Armor Emporium.</p><p>Take As Much Time As You Like To Browse Through The Goods.</p></td>
 </tr><?php
 if (count($errors)) {
     display_errors($errors);
