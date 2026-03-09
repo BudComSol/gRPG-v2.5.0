@@ -66,7 +66,10 @@ ob_start(); ?>
     <link rel="stylesheet" type="text/css" media="all" href="css/style.css"/>    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/g/pure@0.6.2(buttons-min.css+grids-min.css+forms-min.css)"
     integrity="sha384-+YK1ur0Mr74WEZWTMC6oMb5fojhkGm6EpjgVheKlE9urf2PbykYP7MxdwPpruQB8" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="css/custom-styles.css">      
+    <link rel="stylesheet" href="css/custom-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
     <script src="js/cookie-consent.js"></script>
     <?php
     $ga_id = settings('google_analytics');
@@ -104,6 +107,9 @@ ob_start(); ?>
                     <tr>
                         <td width="50%" class="center-img"><img src="images/logos/logo.png" alt="gRPG Main Logo"/></td>
 
+                    </tr>
+                    <tr>
+                        <td width="100%" class="center-img"><p class="tagline">A Full Stack Game Engine</p></td>
                     </tr>
                 </table>
             </div>
