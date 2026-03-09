@@ -20,6 +20,7 @@ $unread_mail = $db->result();
     <div class="headbox leftmenu">Stats</div>
     <div class="menu-stats">
         <div class="menu-stat-row">Money: <span class="menu-stat-value"><?php echo prettynum($user_class->money, true); ?></span></div>
+        <div class="menu-stat-row">Bank: <span class="menu-stat-value"><?php echo prettynum($user_class->bank, true); ?></span></div>
         <div class="menu-stat-row">Points: <span class="menu-stat-value"><?php echo format($user_class->points); ?></span></div>
         <div class="menu-stat-bar-row">
             <div class="menu-stat-label">HP</div>
