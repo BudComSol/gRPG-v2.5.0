@@ -13,6 +13,19 @@ global $owner;
         </a>
         <div class="menu-username"><a href="plugins/profiles.php?id=<?php echo $user_class->id; ?>"><?php echo htmlspecialchars($user_class->username, ENT_QUOTES, 'UTF-8'); ?></a></div>
     </div>
+    <div class="headbox">Stats</div>
+    <div class="menu-stats">
+        Money: <?php echo prettynum($user_class->money, true); ?><br>
+        Points: <?php echo format($user_class->points); ?><br>
+        <div class="menu-stat-label">HP</div>
+        <div class="bar_a"><div class="bar_b bar_b_pink" style="width:<?php echo (int)$user_class->hppercent; ?>%;"></div></div>
+        <div class="menu-stat-label">Energy</div>
+        <div class="bar_a"><div class="bar_b bar_b_pink" style="width:<?php echo (int)$user_class->energypercent; ?>%;"></div></div>
+        <div class="menu-stat-label">Nerve</div>
+        <div class="bar_a"><div class="bar_b" style="width:<?php echo (int)$user_class->nervepercent; ?>%;"></div></div>
+        <div class="menu-stat-label">Awake</div>
+        <div class="bar_a"><div class="bar_b" style="width:<?php echo (int)$user_class->awakepercent; ?>%;"></div></div>
+    </div>
     <div class="headbox">Menu</div>
     
     <a class="leftmenu style1" href="index.php">Home</a>
@@ -36,19 +49,6 @@ global $owner;
         <div class="headbox" style="color:yellow;">Staff</div>
         <a class="leftmenu" href="plugins/control.php">Control Panel</a><?php
     } ?>
-    <div class="headbox">Stats</div>
-    <div class="menu-stats">
-        Money: <?php echo prettynum($user_class->money, true); ?><br>
-        Points: <?php echo format($user_class->points); ?><br>
-        <div class="menu-stat-label">HP</div>
-        <div class="bar_a"><div class="bar_b bar_b_pink" style="width:<?php echo (int)$user_class->hppercent; ?>%;"></div></div>
-        <div class="menu-stat-label">Energy</div>
-        <div class="bar_a"><div class="bar_b bar_b_pink" style="width:<?php echo (int)$user_class->energypercent; ?>%;"></div></div>
-        <div class="menu-stat-label">Nerve</div>
-        <div class="bar_a"><div class="bar_b" style="width:<?php echo (int)$user_class->nervepercent; ?>%;"></div></div>
-        <div class="menu-stat-label">Awake</div>
-        <div class="bar_a"><div class="bar_b" style="width:<?php echo (int)$user_class->awakepercent; ?>%;"></div></div>
-    </div>
     <div class="headbox">Account</div><?php
 if ($user_class->rmdays) {
         ?><a class="leftmenu" href="plugins/blocklist.php">Block</a><?php
