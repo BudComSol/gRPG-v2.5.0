@@ -42,7 +42,6 @@ class Cron
             return null;
         }
         $this->db->query('SELECT lastdone FROM updates WHERE name = ?', [$cron]);
-        $this->db->execute();
         $update = $this->db->result();
         $timeSinceUpdate = $this->currentTime - $update;
         if ($timeSinceUpdate >= $this->conf[$cron]['interval']) {
