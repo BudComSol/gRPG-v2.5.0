@@ -4,6 +4,9 @@ if (!defined('GRPG_INC')) {
     exit;
 }
 global $owner;
+$db->query('SELECT COUNT(id) FROM pms WHERE recipient = ? AND viewed = 0');
+$db->execute([$user_class->id]);
+$unread_mail = $db->result();
 ?>
 <div class="mainbox">
     <div class="headbox">Citizen</div>
@@ -50,7 +53,7 @@ global $owner;
     <a class="leftmenu" href="plugins/todo.php">To-Do</a>
     <a class="leftmenu" href="plugins/events.php">Events <!_-events-_!></a>    
     <a class="leftmenu" href="plugins/city.php"><!_-cityname-_!></a>
-    <a class="leftmenu" href="plugins/pms.php">Mailbox <!_-mail-_!></a>    
+    <a class="leftmenu" href="plugins/pms.php">Mailbox <!_-mail-_!> [<?php echo $unread_mail; ?>]</a>    
     <a class="leftmenu" href="plugins/hospital.php">Hospital <!_-hospital-_!></a>
     <a class="leftmenu" href="plugins/inventory.php">Inventory</a>
     <a class="leftmenu" href="<?php echo !$user_class->gang ? 'plugins/create' : 'plugins/'; ?>gang.php">Your Gang</a>

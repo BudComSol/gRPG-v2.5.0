@@ -6,6 +6,9 @@ if (!defined('GRPG_INC')) {
 $db->query('SELECT COUNT(id) FROM tickets WHERE status IN (\'open\', \'pending\')');
 $db->execute();
 $tickets = $db->result();
+$db->query('SELECT COUNT(id) FROM pms WHERE recipient = ? AND viewed = 0');
+$db->execute([$user_class->id]);
+$unread_mail = $db->result();
 ?>
 <div class="menu-user-card">
     <a href="plugins/profiles.php?id=<?php echo $user_class->id; ?>">
@@ -67,4 +70,5 @@ $tickets = $db->result();
 <div>
     <div class="headbox leftmenu">Miscellaneous</div>
     <a href="plugins/managetickets.php" class="leftmenu">Support Desk [<?php echo $tickets; ?>]</a>
+    <a href="plugins/pms.php" class="leftmenu">Mailbox [<?php echo $unread_mail; ?>]</a>
 </div>
