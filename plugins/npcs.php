@@ -21,6 +21,7 @@ $npcs = $db->fetch();
         <?php if (empty($npcs)) { ?>
             <p>There are no NPCs or robots in your city at this time.</p>
         <?php } else {
+            $csrfg = csrf_create('csrfg', false);
             foreach ($npcs as $npc) {
                 $defeated    = ($npc['hp'] <= 0);
                 $npc_img     = (!empty($npc['image']) && $npc['image'] !== 'images/noimage.png') ? htmlspecialchars($npc['image'], ENT_QUOTES, 'UTF-8') : 'images/noimage.png';
@@ -55,9 +56,9 @@ $npcs = $db->fetch();
                             <?php if ($defeated) { ?>
                                 <em>This NPC has been defeated and is recovering.</em>
                             <?php } else { ?>
-                                <a href="plugins/npc_attack.php?npc=<?php echo (int)$npc['id']; ?>&amp;<?php echo csrf_create('csrfg', false); ?>" class="pure-button pure-button-primary">&#9876; Attack</a>
+                                <a href="plugins/npc_attack.php?npc=<?php echo (int)$npc['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>" class="pure-button pure-button-primary">&#9876; Attack</a>
                                 &nbsp;
-                                <a href="plugins/npc_mug.php?npc=<?php echo (int)$npc['id']; ?>&amp;<?php echo csrf_create('csrfg', false); ?>" class="pure-button" style="background:#e67e22;color:#fff;">&#128178; Mug</a>
+                                <a href="plugins/npc_mug.php?npc=<?php echo (int)$npc['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>" class="pure-button" style="background:#e67e22;color:#fff;">&#128178; Mug</a>
                             <?php } ?>
                         </td>
                     </tr>
