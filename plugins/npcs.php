@@ -9,11 +9,11 @@ $db->query('SELECT id, name, description, image, strength, defense, speed, hp, m
 $db->execute([$user_class->city]);
 $npcs = $db->fetch();
 ?><tr>
-    <th class="content-head">NPCs &amp; Robots</th>
+    <th class="content-head">NPCs</th>
 </tr>
 <tr>
     <td class="content">
-        <p>These are the NPCs and robots roaming <?php echo format($user_class->cityname); ?>. You can attack or mug them — but be careful, some of them fight back!</p>
+        <p>These are the NPCs and robots roaming <?php echo format($user_class->cityname); ?>.</p><p>You can attack or mug them but be careful, some of them fight back!</p>
     </td>
 </tr>
 <tr>
@@ -37,7 +37,7 @@ $npcs = $db->fetch();
                     <tr>
                         <td width="120" style="text-align:center;vertical-align:top;">
                             <img src="<?php echo $npc_img; ?>" alt="<?php echo $npc_name; ?>" width="100" height="100" style="border:1px solid #333;" /><br />
-                            <?php if ($npc['can_attack']) { ?><span style="color:red;" title="This NPC can attack you">&#9760; Lethal</span><?php } ?>
+                            <?php if ($npc['can_attack']) { ?><span style="color:red;" title="This NPC can attack you">&#9760; Lethal</span><?php } ?><br />
                             <?php if ($npc['can_mug'])    { ?><span style="color:orange;" title="This NPC can mug you"> &#128178; Mugger</span><?php } ?>
                         </td>
                         <td style="vertical-align:top;">
@@ -58,7 +58,7 @@ $npcs = $db->fetch();
                             <?php } else { ?>
                                 <a href="plugins/npc_attack.php?npc=<?php echo (int)$npc['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>" class="pure-button pure-button-primary">&#9876; Attack</a>
                                 &nbsp;
-                                <a href="plugins/npc_mug.php?npc=<?php echo (int)$npc['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>" class="pure-button" style="background:#e67e22;color:#fff;">&#128178; Mug</a>
+                                <a href="plugins/npc_mug.php?npc=<?php echo (int)$npc['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>" class="pure-button" style="background:#e67e22;color:#fff;margin-top:-10px;">&#128178; Mug</a>
                             <?php } ?>
                         </td>
                     </tr>
