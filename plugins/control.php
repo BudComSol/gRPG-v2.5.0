@@ -3392,27 +3392,36 @@ if (empty($_GET['page'])) {
             } ?>
         </td></tr> <?php
     } elseif ($_GET['page'] === 'edituser') {
+        $editrow = null;
+        $editCsrfFailed = false;
+        if (isset($_GET['user'])) {
+            if ($_SERVER['REQUEST_METHOD'] === 'GET' && !csrf_check('csrf', $_GET)) {
+                $editCsrfFailed = true;
+            } else {
+                $_GET['user'] = ctype_digit($_GET['user']) ? (int)$_GET['user'] : 0;
+                if (empty($_GET['user'])) {
+                    $errors[] = 'Invalid input.';
+                } else {
+                    $db->query('SELECT id, username, money, bank, level, experience, hp, energy, nerve, awake, strength, defense, speed, points, rmdays, hookers, admin FROM users WHERE id = ?');
+                    $db->execute([$_GET['user']]);
+                    if (!$db->count()) {
+                        $errors[] = 'Invalid user!';
+                    }
+                    $editrow = $db->fetch(true);
+                }
+            }
+        }
         ?>
-        <tr><th class="content-head">Edit User</th></tr>
+        <tr><th class="content-head">Edit User<?php if ($editrow) { echo ': ' . htmlspecialchars($editrow['username'], ENT_QUOTES, 'UTF-8'); } ?></th></tr>
         <?php if (count($errors)) {
             display_errors($errors);
         } ?>
         <tr><td class="content"><?php
+            if ($editCsrfFailed) {
+                echo Message(SECURITY_TIMEOUT_MESSAGE);
+                return;
+            }
             if (isset($_GET['user'])) {
-                if ($_SERVER['REQUEST_METHOD'] === 'GET' && !csrf_check('csrf', $_GET)) {
-                    echo Message(SECURITY_TIMEOUT_MESSAGE);
-                    return;
-                }
-                $_GET['user'] = isset($_GET['user']) && ctype_digit($_GET['user']) ? abs((int)$_GET['user']) : 0;
-                if (empty($_GET['user'])) {
-                    $errors[] = 'Invalid input.';
-                }
-                $db->query('SELECT id, username, money, bank, level, experience, hp, energy, nerve, awake, strength, defense, speed, points, rmdays, hookers, admin FROM users WHERE id = ?');
-                $db->execute([$_GET['user']]);
-                if (!$db->count()) {
-                    $errors[] = 'Invalid user!';
-                }
-                $editrow = $db->fetch(true);
                 if ($editrow) { ?>
                     <form method="POST" action="plugins/control.php?page=edituser" class="pure-form pure-form-aligned">
                         <?php echo csrf_create('edituser'); ?>
