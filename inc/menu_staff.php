@@ -57,6 +57,7 @@ $unread_mail = $db->result();
     <a href="plugins/control.php?page=rmoptions" class="leftmenu">RM Options</a>
     <a href="plugins/control.php?page=rmpacks" class="leftmenu">RM Upgrades</a>
     <a href="plugins/control.php?page=setplayerstatus" class="leftmenu">Player Options</a>    
+    <a href="plugins/control.php?page=edituser" class="leftmenu">Edit User</a>
     <a href="plugins/control.php?page=referrals" class="leftmenu">Manage Referrals</a>
     <div class="headbox">Modifications</div>
     <a class="leftmenu" href="plugins/control.php?page=jobs">Manage Jobs</a>
