@@ -1572,6 +1572,134 @@ if (isset($_POST['addrmpack'])) {
     }
     echo Message($msg);
 }
+// --- NPC Management handlers ---
+$_GET['npcid'] = (isset($_GET['npcid']) && ctype_digit($_GET['npcid'])) ? (int)$_GET['npcid'] : 0;
+$_POST['npc_strength']      = (isset($_POST['npc_strength'])      && ctype_digit($_POST['npc_strength']))      ? (int)$_POST['npc_strength']      : 0;
+$_POST['npc_defense']       = (isset($_POST['npc_defense'])       && ctype_digit($_POST['npc_defense']))       ? (int)$_POST['npc_defense']        : 0;
+$_POST['npc_speed']         = (isset($_POST['npc_speed'])         && ctype_digit($_POST['npc_speed']))         ? (int)$_POST['npc_speed']          : 0;
+$_POST['npc_hp']            = (isset($_POST['npc_hp'])            && ctype_digit($_POST['npc_hp']))            ? (int)$_POST['npc_hp']             : 0;
+$_POST['npc_level']         = (isset($_POST['npc_level'])         && ctype_digit($_POST['npc_level']))         ? (int)$_POST['npc_level']          : 0;
+$_POST['npc_money']         = (isset($_POST['npc_money'])         && ctype_digit(str_replace(',', '', (string)$_POST['npc_money']))) ? (int)str_replace(',', '', (string)$_POST['npc_money']) : 0;
+$_POST['npc_city']          = (isset($_POST['npc_city'])          && ctype_digit($_POST['npc_city']))          ? (int)$_POST['npc_city']           : 1;
+$_POST['npc_regen']         = (isset($_POST['npc_regen'])         && ctype_digit($_POST['npc_regen']))         ? (int)$_POST['npc_regen']          : 3600;
+$_POST['npc_name']          = isset($_POST['npc_name'])          && is_string($_POST['npc_name'])          ? strip_tags(trim($_POST['npc_name']))          : '';
+$_POST['npc_description']   = isset($_POST['npc_description'])   && is_string($_POST['npc_description'])   ? strip_tags(trim($_POST['npc_description']))   : '';
+$_POST['npc_image']         = isset($_POST['npc_image'])         && is_string($_POST['npc_image'])         ? strip_tags(trim($_POST['npc_image']))         : 'images/noimage.png';
+$_POST['npc_enabled']       = isset($_POST['npc_enabled'])       ? 1 : 0;
+$_POST['npc_can_mug']       = isset($_POST['npc_can_mug'])       ? 1 : 0;
+$_POST['npc_can_attack']    = isset($_POST['npc_can_attack'])    ? 1 : 0;
+if (isset($_POST['addnpc'])) {
+    if (!csrf_check('npc_add', $_POST)) {
+        echo Message(SECURITY_TIMEOUT_MESSAGE);
+    }
+    if (empty($_POST['npc_name'])) {
+        $errors[] = 'You must enter a name for the NPC';
+    }
+    if ($_POST['npc_hp'] < 1) {
+        $errors[] = 'HP must be at least 1';
+    }
+    if (!count($errors)) {
+        $db->query('INSERT INTO npcs (name, description, image, strength, defense, speed, hp, max_hp, level, money, city, enabled, can_mug, can_attack, hp_regen_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        $db->execute([$_POST['npc_name'], $_POST['npc_description'], $_POST['npc_image'], $_POST['npc_strength'], $_POST['npc_defense'], $_POST['npc_speed'], $_POST['npc_hp'], $_POST['npc_hp'], $_POST['npc_level'], $_POST['npc_money'], $_POST['npc_city'], $_POST['npc_enabled'], $_POST['npc_can_mug'], $_POST['npc_can_attack'], $_POST['npc_regen']]);
+        echo Message('NPC '.format($_POST['npc_name']).' has been added');
+    } else {
+        display_errors($errors);
+    }
+} elseif (isset($_POST['editnpc'])) {
+    if (!csrf_check('npc_edit', $_POST)) {
+        echo Message(SECURITY_TIMEOUT_MESSAGE);
+    }
+    $_POST['npc_id'] = (isset($_POST['npc_id']) && ctype_digit($_POST['npc_id'])) ? (int)$_POST['npc_id'] : 0;
+    if (!$_POST['npc_id']) {
+        $errors[] = 'Invalid NPC selected';
+    } else {
+        $db->query('SELECT COUNT(id) FROM npcs WHERE id = ?');
+        $db->execute([$_POST['npc_id']]);
+        if (!$db->result()) {
+            $errors[] = 'That NPC doesn\'t exist';
+        }
+    }
+    if (empty($_POST['npc_name'])) {
+        $errors[] = 'You must enter a name for the NPC';
+    }
+    if ($_POST['npc_hp'] < 1) {
+        $errors[] = 'HP must be at least 1';
+    }
+    if (!count($errors)) {
+        $db->query('UPDATE npcs SET name = ?, description = ?, image = ?, strength = ?, defense = ?, speed = ?, max_hp = ?, hp = LEAST(hp, ?), level = ?, money = ?, city = ?, enabled = ?, can_mug = ?, can_attack = ?, hp_regen_time = ? WHERE id = ?');
+        $db->execute([$_POST['npc_name'], $_POST['npc_description'], $_POST['npc_image'], $_POST['npc_strength'], $_POST['npc_defense'], $_POST['npc_speed'], $_POST['npc_hp'], $_POST['npc_hp'], $_POST['npc_level'], $_POST['npc_money'], $_POST['npc_city'], $_POST['npc_enabled'], $_POST['npc_can_mug'], $_POST['npc_can_attack'], $_POST['npc_regen'], $_POST['npc_id']]);
+        echo Message('NPC '.format($_POST['npc_name']).' has been updated');
+    } else {
+        display_errors($errors);
+    }
+} elseif (isset($_POST['deletenpc'])) {
+    if (!csrf_check('npc_delete', $_POST)) {
+        echo Message(SECURITY_TIMEOUT_MESSAGE);
+    }
+    $_POST['npc_id'] = (isset($_POST['npc_id']) && ctype_digit($_POST['npc_id'])) ? (int)$_POST['npc_id'] : 0;
+    if (!$_POST['npc_id']) {
+        $errors[] = 'Invalid NPC selected';
+    } else {
+        $db->query('SELECT id, name FROM npcs WHERE id = ?');
+        $db->execute([$_POST['npc_id']]);
+        if (!$db->count()) {
+            $errors[] = 'That NPC doesn\'t exist';
+        }
+        $del_npc = $db->fetch(true);
+    }
+    if (!count($errors)) {
+        $db->query('DELETE FROM npcs WHERE id = ?');
+        $db->execute([$del_npc['id']]);
+        echo Message('NPC '.format($del_npc['name']).' has been deleted');
+    } else {
+        display_errors($errors);
+    }
+} elseif (isset($_POST['togglenpc'])) {
+    if (!csrf_check('npc_toggle', $_POST)) {
+        echo Message(SECURITY_TIMEOUT_MESSAGE);
+    }
+    $_POST['npc_id'] = (isset($_POST['npc_id']) && ctype_digit($_POST['npc_id'])) ? (int)$_POST['npc_id'] : 0;
+    if (!$_POST['npc_id']) {
+        $errors[] = 'Invalid NPC selected';
+    } else {
+        $db->query('SELECT id, name, enabled FROM npcs WHERE id = ?');
+        $db->execute([$_POST['npc_id']]);
+        if (!$db->count()) {
+            $errors[] = 'That NPC doesn\'t exist';
+        }
+        $tog_npc = $db->fetch(true);
+    }
+    if (!count($errors)) {
+        $db->query('UPDATE npcs SET enabled = IF(enabled = 1, 0, 1) WHERE id = ?');
+        $db->execute([$tog_npc['id']]);
+        $state = $tog_npc['enabled'] ? 'disabled' : 'enabled';
+        echo Message('NPC '.format($tog_npc['name']).' has been '.$state);
+    } else {
+        display_errors($errors);
+    }
+} elseif (isset($_POST['resetnpchp'])) {
+    if (!csrf_check('npc_reset', $_POST)) {
+        echo Message(SECURITY_TIMEOUT_MESSAGE);
+    }
+    $_POST['npc_id'] = (isset($_POST['npc_id']) && ctype_digit($_POST['npc_id'])) ? (int)$_POST['npc_id'] : 0;
+    if (!$_POST['npc_id']) {
+        $errors[] = 'Invalid NPC selected';
+    } else {
+        $db->query('SELECT id, name FROM npcs WHERE id = ?');
+        $db->execute([$_POST['npc_id']]);
+        if (!$db->count()) {
+            $errors[] = 'That NPC doesn\'t exist';
+        }
+        $rst_npc = $db->fetch(true);
+    }
+    if (!count($errors)) {
+        $db->query('UPDATE npcs SET hp = max_hp, last_defeated = 0 WHERE id = ?');
+        $db->execute([$rst_npc['id']]);
+        echo Message('NPC '.format($rst_npc['name']).' HP has been reset to full');
+    } else {
+        display_errors($errors);
+    }
+}
 ?><tr>
     <th class="content-head">Control Panel</th>
 </tr>
@@ -3515,6 +3643,174 @@ if (empty($_GET['page'])) {
                     </div>
                 </form><?php
             } ?>
+        </td></tr><?php
+    } elseif ($_GET['page'] === 'npcs') {
+        // Fetch cities for dropdown
+        $db->query('SELECT id, name FROM cities ORDER BY name');
+        $db->execute();
+        $city_rows = $db->fetch();
+        // Edit an existing NPC?
+        $edit_npc = null;
+        if ($_GET['npcid']) {
+            $db->query('SELECT * FROM npcs WHERE id = ?');
+            $db->execute([$_GET['npcid']]);
+            if ($db->count()) {
+                $edit_npc = $db->fetch(true);
+            }
+        }
+        ?><tr><th class="content-head">Manage NPCs &amp; Robots</th></tr>
+        <tr><td class="content"><?php
+        if (count($errors)) {
+            display_errors($errors);
+        }
+        // Add / Edit form
+        $form_action = $edit_npc ? 'editnpc' : 'addnpc';
+        $csrf_name   = $edit_npc ? 'npc_edit'  : 'npc_add';
+        $form_title  = $edit_npc ? 'Edit NPC: '.htmlspecialchars($edit_npc['name'], ENT_QUOTES, 'UTF-8') : 'Add New NPC / Robot';
+        ?><h3><?php echo $form_title; ?></h3>
+        <form method="POST" action="plugins/control.php?page=npcs" class="pure-form pure-form-aligned">
+            <?php echo csrf_create($csrf_name); ?>
+            <?php if ($edit_npc) { ?><input type="hidden" name="npc_id" value="<?php echo (int)$edit_npc['id']; ?>" /><?php } ?>
+            <fieldset>
+                <div class="pure-control-group">
+                    <label for="npc_name">Name</label>
+                    <input type="text" name="npc_name" id="npc_name" maxlength="191" required value="<?php echo $edit_npc ? htmlspecialchars($edit_npc['name'], ENT_QUOTES, 'UTF-8') : ''; ?>" />
+                </div>
+                <div class="pure-control-group">
+                    <label for="npc_description">Description</label>
+                    <textarea name="npc_description" id="npc_description" rows="3" cols="40"><?php echo $edit_npc ? htmlspecialchars($edit_npc['description'], ENT_QUOTES, 'UTF-8') : ''; ?></textarea>
+                </div>
+                <div class="pure-control-group">
+                    <label for="npc_image">Image URL</label>
+                    <input type="text" name="npc_image" id="npc_image" maxlength="191" value="<?php echo $edit_npc ? htmlspecialchars($edit_npc['image'], ENT_QUOTES, 'UTF-8') : 'images/noimage.png'; ?>" />
+                </div>
+                <div class="pure-control-group">
+                    <label for="npc_strength">Strength</label>
+                    <input type="number" name="npc_strength" id="npc_strength" min="1" value="<?php echo $edit_npc ? (int)$edit_npc['strength'] : 10; ?>" />
+                </div>
+                <div class="pure-control-group">
+                    <label for="npc_defense">Defense</label>
+                    <input type="number" name="npc_defense" id="npc_defense" min="1" value="<?php echo $edit_npc ? (int)$edit_npc['defense'] : 10; ?>" />
+                </div>
+                <div class="pure-control-group">
+                    <label for="npc_speed">Speed</label>
+                    <input type="number" name="npc_speed" id="npc_speed" min="1" value="<?php echo $edit_npc ? (int)$edit_npc['speed'] : 10; ?>" />
+                </div>
+                <div class="pure-control-group">
+                    <label for="npc_hp">Max HP</label>
+                    <input type="number" name="npc_hp" id="npc_hp" min="1" value="<?php echo $edit_npc ? (int)$edit_npc['max_hp'] : 100; ?>" />
+                </div>
+                <div class="pure-control-group">
+                    <label for="npc_level">Level</label>
+                    <input type="number" name="npc_level" id="npc_level" min="1" value="<?php echo $edit_npc ? (int)$edit_npc['level'] : 1; ?>" />
+                </div>
+                <div class="pure-control-group">
+                    <label for="npc_money">Cash on Hand</label>
+                    <input type="number" name="npc_money" id="npc_money" min="0" value="<?php echo $edit_npc ? (int)$edit_npc['money'] : 500; ?>" />
+                </div>
+                <div class="pure-control-group">
+                    <label for="npc_city">City</label>
+                    <select name="npc_city" id="npc_city">
+                        <?php foreach ($city_rows ?? [] as $city) {
+                            $sel = ($edit_npc && $edit_npc['city'] == $city['id']) ? ' selected' : '';
+                            printf('<option value="%u"%s>%s</option>', $city['id'], $sel, htmlspecialchars($city['name'], ENT_QUOTES, 'UTF-8'));
+                        } ?>
+                    </select>
+                </div>
+                <div class="pure-control-group">
+                    <label for="npc_regen">HP Regen Time (seconds)</label>
+                    <input type="number" name="npc_regen" id="npc_regen" min="60" value="<?php echo $edit_npc ? (int)$edit_npc['hp_regen_time'] : 3600; ?>" />
+                </div>
+                <div class="pure-control-group">
+                    <label>Enabled</label>
+                    <input type="checkbox" name="npc_enabled" value="1"<?php echo (!$edit_npc || $edit_npc['enabled']) ? ' checked' : ''; ?> />
+                </div>
+                <div class="pure-control-group">
+                    <label>Can Mug Players</label>
+                    <input type="checkbox" name="npc_can_mug" value="1"<?php echo ($edit_npc && $edit_npc['can_mug']) ? ' checked' : ''; ?> />
+                </div>
+                <div class="pure-control-group">
+                    <label>Can Attack / Kill Players</label>
+                    <input type="checkbox" name="npc_can_attack" value="1"<?php echo ($edit_npc && $edit_npc['can_attack']) ? ' checked' : ''; ?> />
+                </div>
+            </fieldset>
+            <div class="pure-controls">
+                <button type="submit" name="<?php echo $form_action; ?>" class="pure-button pure-button-primary"><?php echo $edit_npc ? 'Save Changes' : 'Add NPC'; ?></button>
+                <?php if ($edit_npc) { ?><a href="plugins/control.php?page=npcs" class="pure-button">Cancel</a><?php } ?>
+            </div>
+        </form>
+        <hr />
+        <h3>All NPCs &amp; Robots</h3>
+        <table width="100%" class="pure-table pure-table-horizontal">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Level</th>
+                    <th>STR/DEF/SPD</th>
+                    <th>HP</th>
+                    <th>Money</th>
+                    <th>City</th>
+                    <th>Enabled</th>
+                    <th>Can Mug</th>
+                    <th>Can Attack</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody><?php
+            $db->query('SELECT n.*, c.name AS cityname FROM npcs n LEFT JOIN cities c ON n.city = c.id ORDER BY n.level ASC, n.id ASC');
+            $db->execute();
+            $all_npcs = $db->fetch();
+            foreach ($all_npcs ?? [] as $row) {
+                $r_name = htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8');
+                printf('<tr>
+                    <td>%u</td>
+                    <td>%s</td>
+                    <td>%u</td>
+                    <td>%u / %u / %u</td>
+                    <td>%u / %u</td>
+                    <td>%s</td>
+                    <td>%s</td>
+                    <td>%s</td>
+                    <td>%s</td>
+                    <td>%s</td>
+                    <td>',
+                    $row['id'],
+                    $r_name,
+                    $row['level'],
+                    $row['strength'], $row['defense'], $row['speed'],
+                    $row['hp'], $row['max_hp'],
+                    prettynum((int)$row['money'], true),
+                    htmlspecialchars($row['cityname'] ?? 'Unknown', ENT_QUOTES, 'UTF-8'),
+                    $row['enabled'] ? '<span style="color:green;">Yes</span>' : '<span style="color:red;">No</span>',
+                    $row['can_mug']    ? '<span style="color:green;">Yes</span>' : 'No',
+                    $row['can_attack'] ? '<span style="color:red;">Yes</span>'   : 'No'
+                );
+                // Edit link
+                printf('<a href="plugins/control.php?page=npcs&amp;npcid=%u" class="pure-button pure-button-primary">Edit</a> ', $row['id']);
+                // Toggle enable/disable
+                ?>
+                <form method="POST" action="plugins/control.php?page=npcs" style="display:inline;">
+                    <?php echo csrf_create('npc_toggle'); ?>
+                    <input type="hidden" name="npc_id" value="<?php echo (int)$row['id']; ?>" />
+                    <button type="submit" name="togglenpc" class="pure-button"><?php echo $row['enabled'] ? 'Disable' : 'Enable'; ?></button>
+                </form>
+                <!-- Reset HP -->
+                <form method="POST" action="plugins/control.php?page=npcs" style="display:inline;">
+                    <?php echo csrf_create('npc_reset'); ?>
+                    <input type="hidden" name="npc_id" value="<?php echo (int)$row['id']; ?>" />
+                    <button type="submit" name="resetnpchp" class="pure-button" style="background:#27ae60;color:#fff;">Reset HP</button>
+                </form>
+                <!-- Delete -->
+                <form method="POST" action="plugins/control.php?page=npcs" style="display:inline;" onsubmit="return confirm('Delete NPC <?php echo addslashes($r_name); ?>?');">
+                    <?php echo csrf_create('npc_delete'); ?>
+                    <input type="hidden" name="npc_id" value="<?php echo (int)$row['id']; ?>" />
+                    <button type="submit" name="deletenpc" class="pure-button pure-button-error">Delete</button>
+                </form>
+                <?php echo '</td></tr>';
+            }
+            ?></tbody>
+        </table>
         </td></tr><?php
     }
 function listRMPacks($showEnabled = false, $formID = 'id')

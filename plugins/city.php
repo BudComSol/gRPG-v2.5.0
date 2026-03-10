@@ -1,6 +1,86 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__.'/../inc/header.php';
+
+// --- NPC proactive encounter: chance of being mugged/attacked when entering the city ---
+if (!$user_class->jail && !$user_class->hospital) {
+    // Regenerate NPC HP if regen time has passed
+    $db->query('UPDATE npcs SET hp = max_hp, last_defeated = 0 WHERE last_defeated > 0 AND (UNIX_TIMESTAMP() - last_defeated) >= hp_regen_time AND city = ?');
+    $db->execute([$user_class->city]);
+    // Pick one random aggressive NPC in the player's city with HP > 0
+    $db->query('SELECT id, name, strength, defense, speed, hp, money, can_mug, can_attack FROM npcs WHERE enabled = 1 AND city = ? AND hp > 0 AND (can_mug = 1 OR can_attack = 1) ORDER BY RAND() LIMIT 1');
+    $db->execute([$user_class->city]);
+    if ($db->count()) {
+        $enc_npc = $db->fetch(true);
+        // 20% chance of an encounter per city visit
+        if (mt_rand(1, 100) <= 20) {
+            $enc_name = htmlspecialchars($enc_npc['name'], ENT_QUOTES, 'UTF-8');
+            if ($enc_npc['can_mug'] && $enc_npc['speed'] > $user_class->speed) {
+                // NPC mugs the player
+                $mugamt = (int)floor($user_class->money / 10);
+                if ($mugamt > 0) {
+                    $db->trans('start');
+                    $db->query('UPDATE users SET money = GREATEST(money - ?, 0) WHERE id = ?');
+                    $db->execute([$mugamt, $user_class->id]);
+                    $db->query('UPDATE npcs SET money = money + ? WHERE id = ?');
+                    $db->execute([$mugamt, (int)$enc_npc['id']]);
+                    $db->trans('end');
+                    Send_Event($user_class->id, 'You were mugged by the NPC '.$enc_name.' for '.prettynum($mugamt, true).'.', 0);
+                }
+            } elseif ($enc_npc['can_attack']) {
+                // NPC attacks the player
+                $yourhp  = $user_class->hp;
+                $theirhp = (int)$enc_npc['hp'];
+                $wait    = $user_class->speed > $enc_npc['speed'] ? 1 : 0;
+                $limit   = 50;
+                $turns   = 0;
+                $npc_won = false;
+                while ($yourhp > 0 && $theirhp > 0 && $turns < $limit) {
+                    ++$turns;
+                    $dmg = max(1, $enc_npc['strength'] - $user_class->moddeddefense);
+                    if ($wait == 0) {
+                        $yourhp -= $dmg;
+                    } else {
+                        $wait = 0;
+                    }
+                    if ($yourhp > 0) {
+                        $pdmg    = max(1, $user_class->moddedstrength - $enc_npc['defense']);
+                        $theirhp -= $pdmg;
+                    }
+                    if ($yourhp <= 0) {
+                        $npc_won = true;
+                        break;
+                    }
+                    if ($theirhp <= 0) {
+                        break;
+                    }
+                }
+                if ($npc_won) {
+                    $moneylost = (int)floor($user_class->money / 10);
+                    $db->trans('start');
+                    $db->query('UPDATE users SET money = GREATEST(money - ?, 0), hwho = 0, hhow = \'npc_attacked\', hwhen = ?, hospital = 1200, battlelost = battlelost + 1 WHERE id = ?');
+                    $db->execute([$moneylost, date('g:i:sa'), $user_class->id]);
+                    $db->query('UPDATE npcs SET money = money + ? WHERE id = ?');
+                    $db->execute([$moneylost, (int)$enc_npc['id']]);
+                    $db->trans('end');
+                    Send_Event($user_class->id, 'You were attacked and hospitalized by the NPC '.$enc_name.' while entering the city. They stole '.prettynum($moneylost, true).' from you.', 0);
+                } else {
+                    // Player survived/won — just update HP
+                    $db->query('UPDATE users SET hp = ? WHERE id = ?');
+                    $db->execute([max(0, $yourhp), $user_class->id]);
+                    if ($theirhp <= 0) {
+                        $db->query('UPDATE npcs SET hp = 0, last_defeated = UNIX_TIMESTAMP() WHERE id = ?');
+                        $db->execute([(int)$enc_npc['id']]);
+                    } else {
+                        $db->query('UPDATE npcs SET hp = ? WHERE id = ?');
+                        $db->execute([$theirhp, (int)$enc_npc['id']]);
+                    }
+                }
+            }
+        }
+    }
+}
+
 $db->query('SELECT id FROM users WHERE city = ? ORDER BY (strength + speed + defense) DESC LIMIT 3');
 $db->execute([$user_class->city]);
 $rows = $db->fetch();
@@ -107,7 +187,8 @@ for ($i = 1; $i <= 3; ++$i) {
                     <a href="plugins/refer.php">Referrals</a><br />
                     <a href="plugins/garage.php">Your Garage</a><br />
                     <a href="plugins/buydrugs.php">Shady Dude</a><br /> 
-                    <a href="plugins/whorehouse.php">Whorehouse</a><br />                  
+                    <a href="plugins/whorehouse.php">Whorehouse</a><br />
+                    <a href="plugins/npcs.php">NPCs &amp; Robots</a><br />                  
                 </td>                
                 <td class="top" style="padding-bottom:10px;">
                     <h3 style="padding:0;margin:0;font-size:1.4em;">Northside</h3><br />

@@ -1184,6 +1184,39 @@ CREATE TABLE IF NOT EXISTS `users_blocked`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = latin1;
 
+DROP TABLE IF EXISTS `npcs`;
+CREATE TABLE IF NOT EXISTS `npcs`
+(
+    `id`            int(11)      NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `name`          varchar(191) NOT NULL DEFAULT '',
+    `description`   text         NOT NULL,
+    `image`         varchar(191) NOT NULL DEFAULT 'images/noimage.png',
+    `strength`      int(11)      NOT NULL DEFAULT 10,
+    `defense`       int(11)      NOT NULL DEFAULT 10,
+    `speed`         int(11)      NOT NULL DEFAULT 10,
+    `hp`            int(11)      NOT NULL DEFAULT 100,
+    `max_hp`        int(11)      NOT NULL DEFAULT 100,
+    `level`         int(11)      NOT NULL DEFAULT 1,
+    `money`         bigint(25)   NOT NULL DEFAULT 500,
+    `city`          int(11)      NOT NULL DEFAULT 1,
+    `enabled`       tinyint(1)   NOT NULL DEFAULT 1,
+    `can_mug`       tinyint(1)   NOT NULL DEFAULT 0,
+    `can_attack`    tinyint(1)   NOT NULL DEFAULT 0,
+    `hp_regen_time` int(11)      NOT NULL DEFAULT 3600,
+    `last_defeated` int(11)      NOT NULL DEFAULT 0,
+    KEY (`enabled`),
+    KEY (`city`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+
+INSERT INTO `npcs` (`name`, `description`, `image`, `strength`, `defense`, `speed`, `hp`, `max_hp`, `level`, `money`, `city`, `enabled`, `can_mug`, `can_attack`, `hp_regen_time`) VALUES
+('Vagrant',         'A desperate homeless person scraping by on the streets. Easy prey for beginners.',                     'images/noimage.png', 8,  5,  6,  40,  40,  1,  150,  1, 1, 0, 0, 1800),
+('Street Thug',     'A low-level criminal who hangs around street corners looking for easy targets.',                       'images/noimage.png', 15, 12, 14, 80,  80,  3,  400,  1, 1, 1, 0, 2400),
+('Drug Dealer',     'A mid-level pusher who guards his stash and cash with ruthless efficiency.',                           'images/noimage.png', 22, 18, 20, 120, 120, 5,  900,  1, 1, 1, 0, 3000),
+('Crime Boss',      'A seasoned crime lord who has clawed his way up the ranks through violence and cunning.',              'images/noimage.png', 35, 30, 28, 200, 200, 8,  2000, 1, 1, 1, 1, 3600),
+('Gang Lieutenant', 'A loyal enforcer for one of the city''s most feared gangs. Dangerous and trigger-happy.',              'images/noimage.png', 50, 42, 45, 300, 300, 12, 4000, 1, 1, 1, 1, 4800),
+('The Enforcer',    'A legendary street warrior. Only the bravest — or most foolish — dare to challenge The Enforcer.',    'images/noimage.png', 70, 60, 65, 500, 500, 15, 8000, 1, 1, 1, 1, 7200);
+
 DROP TABLE IF EXISTS `users_votes`;
 CREATE TABLE IF NOT EXISTS `users_votes`
 (
