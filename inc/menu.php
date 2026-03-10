@@ -51,6 +51,7 @@ $unread_mail = $db->result();
     <a class="leftmenu" href="plugins/jail.php">Jail <!_-jail-_!></a>
     <a class="leftmenu" href="plugins/bank.php">Bank</a>
     <a class="leftmenu" href="plugins/crime.php">Crime</a>
+    <a class="leftmenu" href="plugins/npcs.php">NPCs &amp; Robots</a>
     <a class="leftmenu" href="plugins/forum.php">Forum</a>
     <a class="leftmenu" href="plugins/todo.php">To-Do</a>
     <a class="leftmenu" href="plugins/events.php">Events <!_-events-_!></a>    
