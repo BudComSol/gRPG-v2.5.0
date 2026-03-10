@@ -52,7 +52,7 @@ if (array_key_exists('submit', $_POST)) {
         }
         $_SESSION['id'] = (int)$row['id'];
         ob_end_clean();
-        header('Location: index.php');
+        header('Location: /plugins/city.php');
         exit;
     } else {
         $csrfError = true;
