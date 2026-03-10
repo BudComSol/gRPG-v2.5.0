@@ -1154,7 +1154,7 @@ if (isset($_POST['addrmpack'])) {
         display_errors($errors);
     }
 } elseif (isset($_POST['edituser'])) {
-    if (!csrf_check('edituser', $_POST)) {
+    if (!csrf_check('edituser_token', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
         return;
     }
@@ -3424,7 +3424,7 @@ if (empty($_GET['page'])) {
             if (isset($_GET['user'])) {
                 if ($editrow) { ?>
                     <form method="POST" action="plugins/control.php?page=edituser" class="pure-form pure-form-aligned">
-                        <?php echo csrf_create('edituser'); ?>
+                        <?php echo csrf_create('edituser_token'); ?>
                         <input type="hidden" name="username" value="<?php echo htmlspecialchars($editrow['username'], ENT_QUOTES, 'UTF-8'); ?>" />
                         <fieldset>
                             <legend>Editing: <?php echo htmlspecialchars($editrow['username'], ENT_QUOTES, 'UTF-8'); ?></legend>
