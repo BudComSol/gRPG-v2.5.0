@@ -16,6 +16,20 @@ if (!$db->tableExists('theatre_videos')) {
     $db->execute();
 }
 
+// Ensure the theatre_video_votes table exists
+if (!$db->tableExists('theatre_video_votes')) {
+    $db->query('CREATE TABLE IF NOT EXISTS `theatre_video_votes` (
+        `id`         int(11)    NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        `video_id`   int(11)    NOT NULL,
+        `user_id`    int(11)    NOT NULL,
+        `vote`       tinyint(1) NOT NULL COMMENT \'1 = like, -1 = dislike\',
+        `created_at` int(11)    NOT NULL DEFAULT 0,
+        UNIQUE KEY `uq_video_user` (`video_id`, `user_id`),
+        KEY (`user_id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
+    $db->execute();
+}
+
 /**
  * Extract a YouTube video ID from a URL.
  * Supports:
@@ -44,6 +58,40 @@ function extract_youtube_id(string $url): ?string
 $errors  = [];
 $section = isset($_GET['section']) && is_string($_GET['section']) ? $_GET['section'] : 'search';
 $watch   = null;
+$watch_likes    = 0;
+$watch_dislikes = 0;
+$my_vote        = 0;
+
+// ── Like / Dislike a video ────────────────────────────────────────────────────
+if (array_key_exists('vote', $_POST) && isset($_POST['video_id']) && ctype_digit((string)$_POST['video_id'])) {
+    if (!csrf_check('theatre_vote_csrf', $_POST)) {
+        echo Message(SECURITY_TIMEOUT_MESSAGE, null, true);
+    }
+    $vote_value = (int)$_POST['vote'];
+    $vote_video = (int)$_POST['video_id'];
+    if (in_array($vote_value, [1, -1], true)) {
+        // Check if the user already has a vote for this video
+        $db->query('SELECT vote FROM theatre_video_votes WHERE video_id = ? AND user_id = ?');
+        $db->execute([$vote_video, $user_class->id]);
+        $existing = $db->result();
+        if ($existing === false || $existing === null) {
+            // No existing vote — insert
+            $db->query('INSERT INTO theatre_video_votes (video_id, user_id, vote, created_at) VALUES (?, ?, ?, ?)');
+            $db->execute([$vote_video, $user_class->id, $vote_value, time()]);
+        } elseif ((int)$existing === $vote_value) {
+            // Same vote — remove it (toggle off)
+            $db->query('DELETE FROM theatre_video_votes WHERE video_id = ? AND user_id = ?');
+            $db->execute([$vote_video, $user_class->id]);
+        } else {
+            // Different vote — update
+            $db->query('UPDATE theatre_video_votes SET vote = ?, created_at = ? WHERE video_id = ? AND user_id = ?');
+            $db->execute([$vote_value, time(), $vote_video, $user_class->id]);
+        }
+    }
+    // Redirect back to the watch page to prevent form re-submission
+    header('Location: plugins/theatre.php?section=watch&id=' . $vote_video);
+    exit;
+}
 
 // ── Watch a video ─────────────────────────────────────────────────────────────
 if ($section === 'watch' && isset($_GET['id']) && ctype_digit((string)$_GET['id'])) {
@@ -52,6 +100,18 @@ if ($section === 'watch' && isset($_GET['id']) && ctype_digit((string)$_GET['id'
     $watch = $db->fetch(true);
     if ($watch === null) {
         echo Message('<p>That video does not exist.</p>', 'Error', true);
+    } else {
+        // Fetch like/dislike counts
+        $db->query('SELECT SUM(vote = 1) AS likes, SUM(vote = -1) AS dislikes FROM theatre_video_votes WHERE video_id = ?');
+        $db->execute([(int)$watch['id']]);
+        $vote_counts = $db->fetch(true);
+        $watch_likes    = (int)($vote_counts['likes']    ?? 0);
+        $watch_dislikes = (int)($vote_counts['dislikes'] ?? 0);
+        // Fetch this user's current vote
+        $db->query('SELECT vote FROM theatre_video_votes WHERE video_id = ? AND user_id = ?');
+        $db->execute([(int)$watch['id'], $user_class->id]);
+        $my_vote_row = $db->result();
+        $my_vote = $my_vote_row !== false && $my_vote_row !== null ? (int)$my_vote_row : 0;
     }
 }
 
@@ -166,6 +226,22 @@ $del_csrf = csrf_create('theatre_del_csrf', false);
                 loading="lazy"
                 title="<?php echo htmlspecialchars($watch['title'], ENT_QUOTES, 'UTF-8'); ?>"
             ></iframe>
+        </div>
+        <div style="margin-top:12px;">
+            <form action="plugins/theatre.php" method="post" style="display:inline;">
+                <?php echo csrf_create('theatre_vote_csrf'); ?>
+                <input type="hidden" name="video_id" value="<?php echo (int)$watch['id']; ?>" />
+                <button type="submit" name="vote" value="1"
+                    class="pure-button<?php echo $my_vote === 1 ? ' pure-button-primary' : ''; ?>"
+                    title="Like">
+                    👍 <span><?php echo $watch_likes; ?></span>
+                </button>
+                <button type="submit" name="vote" value="-1"
+                    class="pure-button<?php echo $my_vote === -1 ? ' pure-button-selected' : ''; ?>"
+                    title="Dislike" style="margin-left:6px;">
+                    👎 <span><?php echo $watch_dislikes; ?></span>
+                </button>
+            </form>
         </div>
         <p style="margin-top:8px;"><a href="plugins/theatre.php?section=search">← Back to Browse</a></p>
     </td>
