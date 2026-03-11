@@ -172,7 +172,7 @@ if (array_key_exists('delete', $_GET) && ctype_digit((string)$_GET['delete'])) {
     }
     $db->query('DELETE FROM theatre_videos WHERE id = ? AND user_id = ?');
     $db->execute([(int)$_GET['delete'], $user_class->id]);
-    echo Message('Video removed from your collection.');
+    echo Message('<p>Video has been removed from your collection.</p>');
     $section = 'my_collection';
 }
 
@@ -368,7 +368,7 @@ $del_csrf = csrf_create('theatre_del_csrf', false);
                     <td>
                         <a class="pure-button" href="plugins/theatre.php?section=watch&id=<?php echo (int)$row['id']; ?>">▶ Watch</a>
                         <a class="pure-button pure-button-warning" href="plugins/theatre.php?delete=<?php echo (int)$row['id']; ?>&theatre_del_csrf=<?php echo $del_csrf; ?>"
-                            onclick="return confirm('Remove this video from your collection?');">✕ Remove</a>
+                            onclick="return confirm('Remove this video from your collection?');">✕ Delete</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
