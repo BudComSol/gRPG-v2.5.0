@@ -92,6 +92,9 @@ CREATE TABLE IF NOT EXISTS `carlot`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
+INSERT INTO `carlot` (`name`, `cost`, `image`, `buyable`, `description`, `basemod`, `level`)
+VALUES ('Model T', 500, 'images/cars/model-t.png', 1, 'An old time classic Model T Ford.', 1, 1);
+
 DROP TABLE IF EXISTS `cars`;
 CREATE TABLE IF NOT EXISTS `cars`
 (
