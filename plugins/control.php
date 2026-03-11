@@ -3621,7 +3621,7 @@ if (empty($_GET['page'])) {
                                 <input type="checkbox" name="jailed" id="jailed" value="1"<?php echo $editrow['jail'] == 2147483647 ? ' checked' : ''; ?> />
                             </div>
                             <div class="pure-control-group">
-                                <label for="hospitalized">Hospitalized (Permanent)</label>
+                                <label for="hospitalized">Hospital (Permanent)</label>
                                 <input type="checkbox" name="hospitalized" id="hospitalized" value="1"<?php echo $editrow['hospital'] == 2147483647 ? ' checked' : ''; ?> />
                             </div>
                             <div class="pure-control-group">
