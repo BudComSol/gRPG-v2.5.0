@@ -30,16 +30,16 @@ if ($_GET['email'] !== null) {
             $db->query('DELETE FROM pending_validations WHERE id = ?');
             $db->execute([$row['id']]);
             $db->trans('end');
-            $output = 'Your account has been validated successfully! Redirecting to login page in 5 seconds. <meta http-equiv="refresh" content="5;url=login.php">';
+            $output = 'Your account has been validated successfully, redirecting to login page in 5 seconds. <meta http-equiv="refresh" content="5;url=login.php">';
         } else {
-            $output = 'Either that email/token combination doesn\'t exist or it has expired';
+            $output = 'Either that email/token combination doesn\'t exist or it has expired.';
         }
         }
     } else {
-        $output = 'You didn\'t supply a valid token';
+        $output = 'You didn\'t supply a valid token.';
     }
 } else {
-    $output = 'You didn\'t supply a valid email';
+    $output = 'You didn\'t supply a valid email.';
 } ?>
 <tr>
     <td class="content">
