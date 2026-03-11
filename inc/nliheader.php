@@ -83,7 +83,7 @@ ob_start(); ?>
 
                     </tr>
                     <tr>
-                        <td width="100%" class="center-img"><p class="tagline">A Full Stack Game Engine</p></td>
+                        <td width="100%" class="center-img"><p class="tagline">"A Full Stack Game Engine"</p></td>
                     </tr>
                 </table>
             </div>
