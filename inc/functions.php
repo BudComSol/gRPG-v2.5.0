@@ -385,29 +385,52 @@ function isImage($url, $local = false)
         if (!filter_var($url, FILTER_VALIDATE_URL)) {
             return false;
         }
+        $commonOptions = [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CONNECTTIMEOUT => 5,
+            CURLOPT_TIMEOUT        => 10,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_MAXREDIRS      => 5,
+            CURLOPT_USERAGENT      => 'Mozilla/5.0 (compatible; ImageValidator/1.0)',
+        ];
+        // First attempt: HEAD request (lightweight, no body download)
         $handle = curl_init($url);
         if ($handle === false) {
             return false;
         }
-        curl_setopt_array($handle, [
-            CURLOPT_HEADER         => true,
-            CURLOPT_NOBODY         => true,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_CONNECTTIMEOUT => 5,
-            CURLOPT_TIMEOUT        => 6,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_MAXREDIRS      => 5,
+        curl_setopt_array($handle, $commonOptions + [
+            CURLOPT_HEADER => true,
+            CURLOPT_NOBODY => true,
         ]);
         $result = curl_exec($handle);
-        if ($result === false || curl_errno($handle)) {
-            curl_close($handle);
-            return false;
-        }
         $httpCode    = (int)curl_getinfo($handle, CURLINFO_HTTP_CODE);
         $contentType = (string)curl_getinfo($handle, CURLINFO_CONTENT_TYPE);
+        $curlError   = curl_errno($handle);
         curl_close($handle);
-        if ($httpCode !== 200) {
-            return false;
+        // Some servers reject HEAD requests (405) or return unexpected codes;
+        // fall back to a partial GET to retrieve just enough to confirm content type.
+        if ($result === false || $curlError || $httpCode !== 200) {
+            $handle = curl_init($url);
+            if ($handle === false) {
+                return false;
+            }
+            curl_setopt_array($handle, $commonOptions + [
+                CURLOPT_HEADER => true,
+                CURLOPT_NOBODY => false,
+                CURLOPT_RANGE  => '0-1',
+            ]);
+            $result = curl_exec($handle);
+            if ($result === false || curl_errno($handle)) {
+                curl_close($handle);
+                return false;
+            }
+            $httpCode    = (int)curl_getinfo($handle, CURLINFO_HTTP_CODE);
+            $contentType = (string)curl_getinfo($handle, CURLINFO_CONTENT_TYPE);
+            curl_close($handle);
+            // Accept 200 (full response) or 206 (partial content)
+            if ($httpCode !== 200 && $httpCode !== 206) {
+                return false;
+            }
         }
         // Extract the primary MIME type (before any parameters like "; charset=...")
         $mimeType = strtolower(trim(strtok($contentType, ';')));
