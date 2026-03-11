@@ -76,7 +76,7 @@ $unread_events = $db->result();
 </div>
 <div>
     <div class="headbox leftmenu">Miscellaneous</div>
-    <a href="plugins/pms.php" class="leftmenu">Mailbox [<?php echo $unread_mail; ?>]</a>
     <a href="plugins/events.php" class="leftmenu">Events [<?php echo $unread_events; ?>]</a>
+    <a href="plugins/pms.php" class="leftmenu">Mailbox [<?php echo $unread_mail; ?>]</a>    
     <a href="plugins/managetickets.php" class="leftmenu">Support Desk [<?php echo $tickets; ?>]</a>    
 </div>
