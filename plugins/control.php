@@ -1170,8 +1170,10 @@ if (isset($_POST['addrmpack'])) {
     }
     if (!count($errors)) {
         $target = new User($id);
+        $jail_value = isset($_POST['jailed']) ? 2147483647 : 0;
+        $hospital_value = isset($_POST['hospitalized']) ? 2147483647 : 0;
         $db->trans('start');
-        $db->query('UPDATE users SET money = ?, bank = ?, level = ?, experience = ?, hp = ?, energy = ?, nerve = ?, awake = ?, strength = ?, defense = ?, speed = ?, points = ?, rmdays = ?, hookers = ?, admin = ? WHERE id = ?');
+        $db->query('UPDATE users SET money = ?, bank = ?, level = ?, experience = ?, hp = ?, energy = ?, nerve = ?, awake = ?, strength = ?, defense = ?, speed = ?, points = ?, rmdays = ?, hookers = ?, admin = ?, jail = ?, hospital = ? WHERE id = ?');
         $db->execute([
             $_POST['money'],
             $_POST['bank'],
@@ -1188,6 +1190,8 @@ if (isset($_POST['addrmpack'])) {
             $_POST['rmdays'],
             $_POST['hookers'],
             $_POST['admin_lvl'],
+            $jail_value,
+            $hospital_value,
             $id,
         ]);
         $db->trans('end');
@@ -3530,7 +3534,7 @@ if (empty($_GET['page'])) {
                 if (empty($_GET['user'])) {
                     $errors[] = 'Invalid input.';
                 } else {
-                    $db->query('SELECT id, username, money, bank, level, experience, hp, energy, nerve, awake, strength, defense, speed, points, rmdays, hookers, admin FROM users WHERE id = ?');
+                    $db->query('SELECT id, username, money, bank, level, experience, hp, energy, nerve, awake, strength, defense, speed, points, rmdays, hookers, admin, jail, hospital FROM users WHERE id = ?');
                     $db->execute([$_GET['user']]);
                     if (!$db->count()) {
                         $errors[] = 'Invalid user!';
@@ -3611,6 +3615,14 @@ if (empty($_GET['page'])) {
                             <div class="pure-control-group">
                                 <label for="hookers">Hookers</label>
                                 <input type="text" name="hookers" id="hookers" value="<?php echo (int)$editrow['hookers']; ?>" size="10" maxlength="10" />
+                            </div>
+                            <div class="pure-control-group">
+                                <label for="jailed">Jailed (Permanent)</label>
+                                <input type="checkbox" name="jailed" id="jailed" value="1"<?php echo $editrow['jail'] == 2147483647 ? ' checked' : ''; ?> />
+                            </div>
+                            <div class="pure-control-group">
+                                <label for="hospitalized">Hospitalized (Permanent)</label>
+                                <input type="checkbox" name="hospitalized" id="hospitalized" value="1"<?php echo $editrow['hospital'] == 2147483647 ? ' checked' : ''; ?> />
                             </div>
                             <div class="pure-control-group">
                                 <label for="admin_lvl">Admin Level</label>
