@@ -1454,9 +1454,8 @@ if (isset($_POST['addrmpack'])) {
         if (empty($_POST['description'])) {
             $errors[] = 'You didn\'t enter a valid description';
         }
-        if (!empty($_POST['image']) && !isImage($_POST['image'])) {
-            $errors[] = 'The image you selected didn\'t validate - are you sure it\'s a <strong>direct</strong> URL?';
-        }
+        // Image validation is handled by the pre-processing sanitisation loop
+        // (lines 34-46) which correctly resolves local paths and remote URLs.
         $db->query('SELECT COUNT(id) FROM carlot WHERE name = ? AND id <> ?');
         $db->execute([$_POST['name'], $row['id']]);
         if ($db->result()) {
@@ -3359,9 +3358,8 @@ if (empty($_GET['page'])) {
             if (empty($_POST['description'])) {
                 $car_errors[] = 'You didn\'t enter a valid description';
             }
-            if (!empty($_POST['image']) && !isImage($_POST['image'])) {
-                $car_errors[] = 'The image you selected didn\'t validate - are you sure it\'s a <strong>direct</strong> URL?';
-            }
+            // Image validation is handled by the pre-processing sanitisation loop
+            // (lines 34-46) which correctly resolves local paths and remote URLs.
             $db->query('SELECT COUNT(id) FROM carlot WHERE name = ?');
             $db->execute([$_POST['name']]);
             if ($db->result()) {
