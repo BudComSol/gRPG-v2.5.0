@@ -5,7 +5,7 @@ $_GET['jailbreak'] = array_key_exists('jailbreak', $_GET) && ctype_digit($_GET['
 $errors = [];
 if (!empty($_GET['jailbreak'])) {
     if (!csrf_check('csrfg', $_GET)) {
-        echo Message(SECURITY_TIMEOUT_MESSAGE);
+        echo Message(SECURITY_TIMEOUT_MESSAGE, null, true);
     }
     if (!userExists($_GET['jailbreak'])) {
         $errors[] = '<p>The player you selected doesn\'t exist.</p>';
@@ -25,7 +25,8 @@ if (!empty($_GET['jailbreak'])) {
         $errors[] = 'You don\'t have enough nerve, you\'ll need '.format($nerve).' to bust '.$jailed_person->formattedname . '</p>';
     }
     if (!count($errors)) {
-        $chance = mt_rand(1, (100 * $nerve - ($user_class->speed / 25)));
+        $upper_bound = max(1, (int)(100 * $nerve - ($user_class->speed / 25)));
+        $chance = max(mt_rand(1, $upper_bound), 1);
         $money = 785;
         $exp = 785;
         if ($chance <= 75) {
