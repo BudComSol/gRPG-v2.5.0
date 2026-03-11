@@ -391,8 +391,12 @@ class database
      */
     public function tableExists($table): bool
     {
+        if (!preg_match('/^[a-zA-Z0-9_]+$/', $table)) {
+            return false;
+        }
         try {
-            $result = $this->query('SELECT 1 FROM ' . $table . ' LIMIT 1');
+            $result = $this->db->query('SELECT 1 FROM `' . $table . '` LIMIT 1');
+            return $result !== false;
         } catch (Exception $e) {
             /** @noinspection ForgottenDebugOutputInspection */
             if (function_exists('log_database_error')) {
@@ -402,8 +406,6 @@ class database
             }
             return false;
         }
-
-        return $result !== false;
     }
 
     /**
