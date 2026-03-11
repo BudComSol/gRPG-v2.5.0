@@ -94,6 +94,8 @@ CREATE TABLE IF NOT EXISTS `carlot`
 
 INSERT INTO `carlot` (`name`, `cost`, `image`, `buyable`, `description`, `basemod`, `level`)
 VALUES ('Model T', 500, 'images/cars/model-t.png', 1, 'An old time classic Model T Ford.', 1, 1);
+INSERT INTO `carlot` (`name`, `cost`, `image`, `buyable`, `description`, `basemod`, `level`)
+VALUES ('Ford XR GT', 100000, 'images/cars/xr-gt.png', 1, 'An old time classic Ford muscle car, the XR GT.', 5, 10);
 
 DROP TABLE IF EXISTS `cars`;
 CREATE TABLE IF NOT EXISTS `cars`
