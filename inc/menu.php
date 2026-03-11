@@ -7,6 +7,9 @@ global $owner;
 $db->query('SELECT COUNT(id) FROM pms WHERE recipient = ? AND viewed = 0');
 $db->execute([$user_class->id]);
 $unread_mail = $db->result();
+$db->query('SELECT COUNT(id) FROM events WHERE recipient = ? AND viewed = 0');
+$db->execute([$user_class->id]);
+$unread_events = $db->result();
 ?>
 <div class="mainbox">
     <div class="headbox">Citizen</div>
@@ -54,7 +57,7 @@ $unread_mail = $db->result();
     <a class="leftmenu" href="plugins/npcs.php">NPCs</a>
     <a class="leftmenu" href="plugins/forum.php">Forum</a>
     <a class="leftmenu" href="plugins/todo.php">To-Do</a>
-    <a class="leftmenu" href="plugins/events.php">Events <!_-events-_!></a>    
+    <a class="leftmenu" href="plugins/events.php">Events <!_-events-_!> [<?php echo $unread_events; ?>]</a>    
     <a class="leftmenu" href="plugins/city.php"><!_-cityname-_!></a>        
     <a class="leftmenu" href="plugins/hospital.php">Hospital <!_-hospital-_!></a>
     <a class="leftmenu" href="plugins/inventory.php">Inventory</a>

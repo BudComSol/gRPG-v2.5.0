@@ -9,6 +9,9 @@ $tickets = $db->result();
 $db->query('SELECT COUNT(id) FROM pms WHERE recipient = ? AND viewed = 0');
 $db->execute([$user_class->id]);
 $unread_mail = $db->result();
+$db->query('SELECT COUNT(id) FROM events WHERE recipient = ? AND viewed = 0');
+$db->execute([$user_class->id]);
+$unread_events = $db->result();
 ?>
 <div class="menu-user-card">
     <a href="plugins/profiles.php?id=<?php echo $user_class->id; ?>">
@@ -74,5 +77,6 @@ $unread_mail = $db->result();
 <div>
     <div class="headbox leftmenu">Miscellaneous</div>
     <a href="plugins/pms.php" class="leftmenu">Mailbox [<?php echo $unread_mail; ?>]</a>
+    <a href="plugins/events.php" class="leftmenu">Events [<?php echo $unread_events; ?>]</a>
     <a href="plugins/managetickets.php" class="leftmenu">Support Desk [<?php echo $tickets; ?>]</a>    
 </div>
