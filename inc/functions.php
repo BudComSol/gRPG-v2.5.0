@@ -380,23 +380,38 @@ function isImage($url, $local = false)
             }
         }
     } else {
-        // For remote URLs, use the existing validation
-        if (!urlExists($url)) {
+        // For remote URLs, validate via cURL HEAD request (avoids allow_url_fopen requirement)
+        $url = str_replace(' ', '%20', $url);
+        if (!filter_var($url, FILTER_VALIDATE_URL)) {
             return false;
         }
-        // Eww.. Legacy
-        try {
-            $dims = (array)getimagesize($url);
-        } catch (Exception $e) {
-            /** @noinspection ForgottenDebugOutputInspection */
-            if (function_exists('log_warning')) {
-                log_warning('Image size check failed: ' . $e->getMessage(), ['url' => $url]);
-            } else {
-                error_log($e->getMessage());
-            }
+        $handle = curl_init($url);
+        if ($handle === false) {
             return false;
         }
-        if (!is_array($dims) || !isset($dims[0], $dims[1]) || !$dims[0] || !$dims[1]) {
+        curl_setopt_array($handle, [
+            CURLOPT_HEADER         => true,
+            CURLOPT_NOBODY         => true,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CONNECTTIMEOUT => 5,
+            CURLOPT_TIMEOUT        => 6,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_MAXREDIRS      => 5,
+        ]);
+        $result = curl_exec($handle);
+        if ($result === false || curl_errno($handle)) {
+            curl_close($handle);
+            return false;
+        }
+        $httpCode    = (int)curl_getinfo($handle, CURLINFO_HTTP_CODE);
+        $contentType = (string)curl_getinfo($handle, CURLINFO_CONTENT_TYPE);
+        curl_close($handle);
+        if ($httpCode !== 200) {
+            return false;
+        }
+        // Extract the primary MIME type (before any parameters like "; charset=...")
+        $mimeType = strtolower(trim(strtok($contentType, ';')));
+        if (empty($mimeType) || strpos($mimeType, 'image/') !== 0) {
             return false;
         }
     }
