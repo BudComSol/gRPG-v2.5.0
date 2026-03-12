@@ -46,13 +46,13 @@ if (array_key_exists('fighter', $_GET)) {
 </style>
 
 <tr>
-    <td class="contenthead">CageFighting</td>
+    <td class="content-head">CageFighting</td>
 </tr>
 <tr>
-    <td class="contenthead">
+    <td class="content-head">
      <br>
       <br>
-        <center><img src="images/cagefight.webp"/><br/><br/><font size=2>
+        <center><img src="images/headers/cagefight.webp"/><br/><br/><font size=2>
                 <br/>
                 <center><font color=#99e6b3>They kick off every hour, just pick your fighter to
                     compete.<br/>If your fighter happens to be the last man standing after the bloodbath.<br/>You will pocket a very handsome <font
@@ -67,8 +67,8 @@ if (array_key_exists('fighter', $_GET)) {
                 <td>
                     <table width="100%" align="center" cellpadding="5px">
                         <tr>
-                            <td class="contenthead"><font size=2>Fighter</td>
-                            <td class="contenthead">
+                            <td class="content-head"><font size=2>Fighter</td>
+                            <td class="content-head">
                                 <center><font size=2>Chosen By
                             </td>
                         </tr>
@@ -107,8 +107,8 @@ if (array_key_exists('fighter', $_GET)) {
                 <td>
                     <table width="100%" align="center" cellpadding="5px">
                         <tr>
-                            <td class="contenthead"><font size=2>Fighter</td>
-                            <td class="contenthead">
+                            <td class="content-head"><font size=2>Fighter</td>
+                            <td class="content-head">
                                 <center><font size=2>Chosen By
                             </td>
                         </tr>
@@ -148,15 +148,15 @@ if (array_key_exists('fighter', $_GET)) {
 
         <table width="100%" cellpadding="10" cellspacing="0" class="contentcontent">
             <tr>
-                <td colspan="2" class="contenthead">
+                <td colspan="2" class="content-head">
                     <center>Last 10 Results</center>
                 </td>
             </tr>
             <tr>
-                <td class="contenthead">
+                <td class="content-head">
                     <center><font size="2">Winner</font></center>
                 </td>
-                <td class="contenthead">
+                <td class="content-head">
                     <center><font size="2">Fighter</font></center>
                 </td>
             </tr>
@@ -180,4 +180,3 @@ if (array_key_exists('fighter', $_GET)) {
         </table>
     </td>
 </tr>
-
