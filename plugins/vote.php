@@ -8,22 +8,22 @@ if (!empty($_GET['id'])) {
     $db->query('SELECT COUNT(id) FROM users_votes WHERE site = ? AND userid = ?');
     $db->execute([$_GET['id'], $user_class->id]);
     if ($db->result()) {
-        echo Message('You\'ve already voted on this site', 'Error', true);
+        echo Message('<p>You\'ve already voted on this site.</p>', 'Error', true);
     }
     $db->query('SELECT * FROM voting_sites WHERE id = ?');
     $db->execute([$_GET['id']]);
     if (!$db->count()) {
-        echo Message('The site you selected doesn\'t exist', 'Error', true);
+        echo Message('<p>The site you selected doesn\'t exist.</p>', 'Error', true);
     }
     $row = $db->fetch(true);
     if ($row['req_account_days_min'] && $row['req_account_days_min'] > ($user_class->age_int / 86400)) {
-        echo Message('You\'re not old enough to use this voting site (account age)', 'Error', true);
+        echo Message('<p>You\'re not old enough to use this voting site (account age).</p>', 'Error', true);
     }
     if ($row['req_account_days_max'] && $row['req_account_days_max'] < ($user_class->age_int / 86400)) {
-        echo Message('No offense meant, but you\'re too old to use this voting site (account age)', 'Error', true);
+        echo Message('<p>No offense meant, but you\'re too old to use this voting site (account age).</p>', 'Error', true);
     }
     if ($row['req_donator_days'] && $row['req_donator_days'] > $user_class->rmdays) {
-        echo Message('You don\'t have enough donation status time left to use this voting site', 'Error', true);
+        echo Message('<p>You don\'t have enough donation status time left to use this voting site.</p>', 'Error', true);
     }
     $query = '';
     if ($row['reward_cash']) {
@@ -113,14 +113,14 @@ if ($rows !== null) {
             if ($row['req_donator_days']) {
                 $reqs[] = 'Donator Status Time: at least '.time_format($row['req_donator_days'] * 86400).' left';
             } ?><tr>
-                    <td><?php echo !count($voted) || !in_array($row['id'], $voted) ? '<a href="vote.php?id='.$row['id'].'&amp;csrfg='.$csrfg.'" target="new" class="pure-button pure-button-green">'.format($row['title']).'</a>' : '<button class="pure-button pure-button-grey" disabled>'.format($row['title']).'</button>'; ?></td>
+                    <td><?php echo !count($voted) || !in_array($row['id'], $voted) ? '<a href="plugins/vote.php?id='.$row['id'].'&amp;csrfg='.$csrfg.'" target="new" class="pure-button pure-button-green">'.format($row['title']).'</a>' : '<button class="pure-button pure-button-grey" disabled>'.format($row['title']).'</button>'; ?></td>
                     <td><?php echo count($rewards) ? implode('<br />', $rewards) : 'None'; ?></td>
                     <td><?php echo count($reqs) ? implode('<br />', $reqs) : 'None'; ?></td>
                 </tr><?php
         }
     } else {
         ?><tr>
-                    <td colspan="3" class="centre">There are no voting sites</td>
+                    <td colspan="3" class="centre"><p>There are presently, no voting sites to be had.</p></td>
                 </tr><?php
     }
 ?></table>
