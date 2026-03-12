@@ -4,7 +4,7 @@ require_once __DIR__.'/../inc/header.php';
 
 if (array_key_exists('fighter', $_GET)) {
     if (!csrf_check('cage_csrf', $_GET)) {
-        echo Message(SECURITY_TIMEOUT_MESSAGE);
+        echo Message(SECURITY_TIMEOUT_MESSAGE, null, true);
     } elseif ($user_class->hospital != 0) {
         echo Message('<center><font size=2>Come back when your not warded!');
     } elseif ($user_class->jail != 0) {
