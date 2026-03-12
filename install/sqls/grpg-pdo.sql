@@ -1156,7 +1156,9 @@ CREATE TABLE IF NOT EXISTS `users`
     `nodoze`          int(11)                        NOT NULL DEFAULT 0,
     `genericsteroids` int(11)                        NOT NULL DEFAULT 0,
     `cocaine`         int(11)                        NOT NULL DEFAULT 0,
-    `hookers`         int(11)                        NOT NULL DEFAULT 0
+    `hookers`         int(11)                        NOT NULL DEFAULT 0,
+    `slapping`        int(11)                        NOT NULL DEFAULT 0,
+    `slapped`         int(11)                        NOT NULL DEFAULT 0
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 2
   DEFAULT CHARSET = latin1;
