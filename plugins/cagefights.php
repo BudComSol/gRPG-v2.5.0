@@ -166,11 +166,16 @@ if (array_key_exists('fighter', $_GET)) {
             $winners = $db->fetch();
             if ($winners !== null) {
                 foreach ($winners as $line) {
-                    $winner_user = new User($line['userid']);
                     $monkeyname = $line['monkeyname'];
+                    if ((int)$line['userid'] !== 0) {
+                        $winner_user = new User($line['userid']);
+                        $winnerName = $winner_user->formattedname;
+                    } else {
+                        $winnerName = '<font color=orange>Nobody</font>';
+                    }
                     ?>
                     <tr>
-                        <td><center><font size="2"><?php echo $winner_user->formattedname; ?></font></center></td>
+                        <td><center><font size="2"><?php echo $winnerName; ?></font></center></td>
                         <td><center><font size="2"><?php echo htmlspecialchars($monkeyname, ENT_QUOTES, 'UTF-8'); ?></font></center></td>
                     </tr>
                     <?php
