@@ -147,6 +147,7 @@ for ($i = 1; $i <= 3; ++$i) {
                     <h3 style="padding:0;margin:0;font-size:1.4em;">Pot Luck</h3><br />
                     <a href="plugins/5050game.php">50/50</a><br />
                     <a href="plugins/lottery.php">Lottery</a><br />
+                    <a href="plugins/cagefights.php">Cage Fights</a><br />
                     <a href="plugins/slots.php">Slot Machine</a><br />
                     <a href="plugins/carlot.php">Bob's Used Cars</a>
                 </td>
