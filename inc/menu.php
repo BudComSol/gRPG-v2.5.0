@@ -63,7 +63,8 @@ $unread_events = $db->result();
     <a class="leftmenu" href="plugins/events.php">Events <!_-events-_!> [<?php echo $unread_events; ?>]</a>
     <a class="leftmenu" href="<?php echo !$user_class->gang ? 'plugins/create' : 'plugins/'; ?>gang.php">Your Gang</a>
     <a class="leftmenu" href="plugins/pms.php">Mailbox <!_-mail-_!> [<?php echo $unread_mail; ?>]</a>
-    <a class="leftmenu" href="plugins/gym.php">Gymnasium</a>    
+    <a class="leftmenu" href="plugins/gym.php">Gymnasium</a>
+    <a class="leftmenu" href="plugins/citizens.php">Cage Fights</a>    
     <a class="leftmenu" href="plugins/rmstore.php">Game Store</a>
     <a class="leftmenu" href="plugins/theatre.php">Movie Theatre</a><?php
     if ($user_class->admin == 1) {
