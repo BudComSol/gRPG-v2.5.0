@@ -138,6 +138,7 @@ class Cron
     private function runOneHour(array $data): void
     {
         $this->updateStocks();
+        $this->doCageFight();
     }
 
     private function runOneDay(array $data): void
@@ -193,6 +194,33 @@ class Cron
             }
             $this->db->trans('end');
         }
+    }
+
+    private function doCageFight(): void
+    {
+        // Pick a random fighter from the cage
+        $this->db->query('SELECT boxnumber, playerid FROM luckyboxes ORDER BY RAND() LIMIT 1');
+        $this->db->execute();
+        $winner = $this->db->fetch(true);
+        if ($winner === null) {
+            return;
+        }
+        $monkeyname = $winner['boxnumber'];
+        $playerid = (int)$winner['playerid'];
+        $this->db->trans('start');
+        if ($playerid !== 0) {
+            // Award prize to the player who picked the winning fighter
+            $this->db->query('UPDATE users SET money = money + 500000 WHERE id = ?');
+            $this->db->execute([$playerid]);
+            Send_Event($playerid, 'Congratulations! Your cage fighter ' . $monkeyname . ' won the cage fight! You have won $500,000!');
+        }
+        // Record the result
+        $this->db->query('INSERT INTO cagewinners (userid, monkeyname) VALUES (?, ?)');
+        $this->db->execute([$playerid, $monkeyname]);
+        // Reset all picks for the next fight
+        $this->db->query('UPDATE luckyboxes SET playerid = 0');
+        $this->db->execute();
+        $this->db->trans('end');
     }
 
     private function doLottery()

@@ -1275,4 +1275,29 @@ CREATE TABLE IF NOT EXISTS `voting_sites`
     KEY (`enabled`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
+CREATE TABLE IF NOT EXISTS `luckyboxes`
+(
+    `id`        int(11)     NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `boxnumber` varchar(20) NOT NULL,
+    `playerid`  int(11)     NOT NULL DEFAULT 0,
+    UNIQUE KEY `boxnumber` (`boxnumber`),
+    KEY `playerid` (`playerid`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+
+INSERT IGNORE INTO `luckyboxes` (`boxnumber`, `playerid`) VALUES
+(1, 0), (2, 0), (3, 0), (4, 0), (5, 0),
+(6, 0), (7, 0), (8, 0), (9, 0), (10, 0),
+(11, 0), (12, 0), (13, 0), (14, 0), (15, 0),
+(16, 0), (17, 0), (18, 0), (19, 0), (20, 0);
+
+CREATE TABLE IF NOT EXISTS `cagewinners`
+(
+    `id`         int(11)     NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `userid`     int(11)     NOT NULL DEFAULT 0,
+    `monkeyname` varchar(20) NOT NULL DEFAULT '',
+    KEY `userid` (`userid`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+
 COMMIT;
