@@ -103,14 +103,14 @@ if ($user_class->id != $profile_class->id) {
                     <td width="25%"><a href="plugins/spy.php?id=<?php echo $profile_class->id; ?>&amp;csrfg=<?php echo $csrfg; ?>">Spy</a></td>
                 </tr>
                 <tr>
-                    <td><a href="plugins/sendmoney.php?person=<?php echo $profile_class->id; ?>">Send Money</a></td>
-                    <td><a href="plugins/sendpoints.php?person=<?php echo $profile_class->id; ?>">Send Points</a></td>
-                    <td><?php if ($user_class->admin) {
+                    <td width="25%"><a href="plugins/sendmoney.php?person=<?php echo $profile_class->id; ?>">Send Money</a></td>
+                    <td width="25%"><a href="plugins/sendpoints.php?person=<?php echo $profile_class->id; ?>">Send Points</a></td>
+                    <td width="25%"><a href="plugins/slap.php?target=<?php echo $profile_class->id; ?>">Slap</a></td>
+                    <td width="25%"><?php if ($user_class->admin) {
                         echo '<a href="plugins/profiles.php?harbinger='.$profile_class->id.'&amp;csrfg='.$csrfg.'">Login As User</a>';
                     } else {
                         echo '&nbsp;';
                     } ?></td>
-                    <td>&nbsp;</td>
                 </tr>
             </table>
         </td>

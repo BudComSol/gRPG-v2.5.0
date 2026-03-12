@@ -162,7 +162,7 @@ class Cron
                 if ($updates_user->hookers) {
                     $money += $updates_user->hookers * 300;
                 }
-                $this->db->query('UPDATE users SET money = money + ?, rmdays = GREATEST(rmdays - 1, 0), bank = IF(bank > 0, bank + ?, bank), searchdowntown = 100 WHERE id = ?');
+                $this->db->query('UPDATE users SET money = money + ?, rmdays = GREATEST(rmdays - 1, 0), bank = IF(bank > 0, bank + ?, bank), searchdowntown = 100, slapping = 0 WHERE id = ?');
                 $this->db->execute([$money, $bank, $row['id']]);
             }
             $this->db->trans('end');
