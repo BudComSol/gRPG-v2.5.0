@@ -58,7 +58,7 @@ $npcs = $db->fetch();
                             <?php } else { ?>
                                 <a href="plugins/npc_attack.php?npc=<?php echo (int)$npc['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>" class="pure-button pure-button-primary">&#9876; Attack</a>
                                 &nbsp;
-                                <a href="plugins/npc_mug.php?npc=<?php echo (int)$npc['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>" class="pure-button" style="background:#e67e22;color:#fff;margin-top:-10px;">&#128178; Mug</a>
+                                <a href="plugins/npc_mug.php?npc=<?php echo (int)$npc['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>" class="pure-button" style="background:#e67e22;color:#fff;">&#128178; Mug</a>
                             <?php } ?>
                         </td>
                     </tr>
