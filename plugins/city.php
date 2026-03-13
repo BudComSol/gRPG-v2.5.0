@@ -177,9 +177,11 @@ for ($i = 1; $i <= 3; ++$i) {
             </tr>  
             <td class="top" style="padding-bottom:10px;">
                     <h3 style="padding:0;margin:0;font-size:1.4em;">Southside</h3><br />
-                    <a href="plugins/gang_list.php">Gangs</a><br />                    
-                    <a href="<?php echo !$user_class->gang ? 'plugins/create' : 'plugins/'; ?>gang.php">Your Gang</a><br />                    
-                    <a href="plugins/jobs.php">Jobs Center</a><br />                                        
+                    <a href="plugins/gang_list.php">Gangs</a><br />
+                    <a href="plugins/inventory.php">Inventory</a><br />                    
+                    <a href="<?php echo !$user_class->gang ? 'plugins/create' : 'plugins/'; ?>gang.php">Your Gang</a><br />                                        
+                    <a href="plugins/jobs.php">Jobs Center</a><br />
+                    <a href="plugins/crime.php">Commit Crime</a><br />                                        
                     <a href="plugins/realestate.php">Real Estate Agency</a>
                 </td>
             <td class="top" style="padding-bottom:10px;">
@@ -192,8 +194,10 @@ for ($i = 1; $i <= 3; ++$i) {
                     <a href="plugins/npcs.php">NPCs &amp; Robots</a><br />                  
                 </td>                
                 <td class="top" style="padding-bottom:10px;">
-                    <h3 style="padding:0;margin:0;font-size:1.4em;">Northside</h3><br />
+                    <h3 style="padding:0;margin:0;font-size:1.4em;">Northside</h3><br />                    
+                    <a href="plugins/classifieds.php">Advertize</a><br />
                     <a href="plugins/newspaper.php">Newspaper</a><br />
+                    <a href="plugins/gym.php">Gymnasium</a><br />
                     <a href="plugins/portfolio.php">View Portfolio</a><br />
                     <a href="plugins/brokerage.php">Brokerage Firm</a><br />
                     <a href="plugins/viewstocks.php">View Stock Market</a><br />                    
