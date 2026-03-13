@@ -44,7 +44,7 @@ if ($_GET['email'] !== null) {
 <tr>
     <td class="content">
         <?php echo $output; ?>
-        <div class="center">&copy; GenericRPG 2007-<?php echo date('Y'); ?> GRPG Dev Team</div>
+        <div class="center"><p>gRPG © ● 2007 - <?php echo date('Y'); ?> ● All Rights Reserved</p></div>
     </td>
 </tr><?php
 require_once __DIR__.'/inc/nlifooter.php';
