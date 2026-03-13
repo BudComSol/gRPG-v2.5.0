@@ -48,22 +48,18 @@ $unread_events = $db->result();
     </div>
     <div class="headbox">Menu</div>
     
-    <a class="leftmenu style1" href="index.php">Home</a>
-    <a class="leftmenu" href="plugins/classifieds.php">Ads</a>
+    <a class="leftmenu style1" href="index.php">Home</a>    
     <a class="leftmenu" href="plugins/city.php">City</a>
     <a class="leftmenu" href="plugins/jail.php">Jail <!_-jail-_!></a>
-    <a class="leftmenu" href="plugins/bank.php">Bank</a>
-    <a class="leftmenu" href="plugins/crime.php">Crime</a>
-    <a class="leftmenu" href="plugins/npcs.php">NPCs</a>
+    <a class="leftmenu" href="plugins/slap.php">Slap</a>
+    <a class="leftmenu" href="plugins/bank.php">Bank</a>    
     <a class="leftmenu" href="plugins/forum.php">Forum</a>
     <a class="leftmenu" href="plugins/todo.php">To-Do</a>        
     <a class="leftmenu" href="plugins/city.php"><!_-cityname-_!></a>        
-    <a class="leftmenu" href="plugins/hospital.php">Hospital <!_-hospital-_!></a>
-    <a class="leftmenu" href="plugins/inventory.php">Inventory</a>
+    <a class="leftmenu" href="plugins/hospital.php">Hospital <!_-hospital-_!></a>    
     <a class="leftmenu" href="plugins/events.php">Events <!_-events-_!> [<?php echo $unread_events; ?>]</a>
     <a class="leftmenu" href="<?php echo !$user_class->gang ? 'plugins/create' : 'plugins/'; ?>gang.php">Your Gang</a>
-    <a class="leftmenu" href="plugins/pms.php">Mailbox <!_-mail-_!> [<?php echo $unread_mail; ?>]</a>
-    <a class="leftmenu" href="plugins/gym.php">Gymnasium</a>    
+    <a class="leftmenu" href="plugins/pms.php">Mailbox <!_-mail-_!> [<?php echo $unread_mail; ?>]</a>        
     <a class="leftmenu" href="plugins/rmstore.php">Game Store</a>
     <a class="leftmenu" href="plugins/theatre.php">Movie Theatre</a><?php
     if ($user_class->admin == 1) {
