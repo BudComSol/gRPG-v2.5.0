@@ -91,8 +91,14 @@ if (array_key_exists('submit', $_POST)) {
         echo Message('You slapped '.$target->formattedname.'!');
     }
 }
-?><tr>
+?>
+<tr>
     <th class="content-head">Slap</th>
+</tr>
+<tr>
+    <td class="content">
+        <img src="images/headers/slap.png" alt="gRPG Slap Header">
+    </td>
 </tr>
 <tr>
     <td class="content">
