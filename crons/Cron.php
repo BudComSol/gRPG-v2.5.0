@@ -139,6 +139,7 @@ class Cron
     {
         $this->updateStocks();
         $this->doCageFight();
+        $this->doGangBar();
     }
 
     private function runOneDay(array $data): void
@@ -221,6 +222,45 @@ class Cron
         $this->db->query('UPDATE luckyboxes SET playerid = 0');
         $this->db->execute();
         $this->db->trans('end');
+    }
+
+    private function doGangBar(): void
+    {
+        // Find the gang with the highest accumulated points this hour (earliest gang ID breaks ties)
+        $this->db->query('SELECT gang, no FROM gangattacks WHERE gang > 0 ORDER BY no DESC, gang ASC LIMIT 1');
+        $this->db->execute();
+        $winner = $this->db->fetch(true);
+        if ($winner === null) {
+            // No attacks this hour; reset user barpoints and move on
+            $this->db->query('UPDATE users SET barpoints = 0');
+            $this->db->execute();
+            return;
+        }
+        $gangId = (int)$winner['gang'];
+        $score  = (int)$winner['no'];
+        $prize  = 250000;
+        $this->db->trans('start');
+        // Award prize to the winning gang's vault
+        $this->db->query('UPDATE gangs SET moneyvault = moneyvault + ? WHERE id = ?');
+        $this->db->execute([$prize, $gangId]);
+        // Record the winner in the history table
+        $this->db->query('INSERT INTO goth (gang, kills) VALUES (?, ?)');
+        $this->db->execute([$gangId, $score]);
+        // Reset the hourly contest scores and all user bar points
+        $this->db->query('DELETE FROM gangattacks');
+        $this->db->execute();
+        $this->db->query('UPDATE users SET barpoints = 0');
+        $this->db->execute();
+        $this->db->trans('end');
+        // Notify gang members of the win
+        $this->db->query('SELECT id FROM users WHERE gang = ?');
+        $this->db->execute([$gangId]);
+        $members = $this->db->fetch();
+        if ($members !== null) {
+            foreach ($members as $member) {
+                Send_Event((int)$member['id'], 'Congratulations! Your gang won the Gang Bar contest and received $'.number_format($prize).'!');
+            }
+        }
     }
 
     private function doLottery()

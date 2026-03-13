@@ -403,6 +403,16 @@ UPDATE `forum_boards`
 SET `fb_topics` = 3, `fb_posts` = 3, `fb_latest_topic` = 3, `fb_latest_post` = 3, `fb_latest_poster` = 1, `fb_latest_time` = NOW()
 WHERE `fb_id` = 1;
 
+DROP TABLE IF EXISTS `gangattacks`;
+CREATE TABLE IF NOT EXISTS `gangattacks`
+(
+    `id`   int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `gang` int(11) NOT NULL DEFAULT 0,
+    `no`   int(11) NOT NULL DEFAULT 0,
+    UNIQUE KEY `gang` (`gang`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+
 DROP TABLE IF EXISTS `gangarmory`;
 CREATE TABLE IF NOT EXISTS `gangarmory`
 (
@@ -497,6 +507,16 @@ CREATE TABLE IF NOT EXISTS `gangwars`
     `warid`      int(11)   NOT NULL DEFAULT 0,
     `gang1score` int(100)  NOT NULL DEFAULT 0,
     `gang2score` int(100)  NOT NULL DEFAULT 0
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+
+DROP TABLE IF EXISTS `goth`;
+CREATE TABLE IF NOT EXISTS `goth`
+(
+    `id`    int(11)   NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `gang`  int(11)   NOT NULL DEFAULT 0,
+    `kills` int(11)   NOT NULL DEFAULT 0,
+    `time`  timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
@@ -1158,7 +1178,8 @@ CREATE TABLE IF NOT EXISTS `users`
     `cocaine`         int(11)                        NOT NULL DEFAULT 0,
     `hookers`         int(11)                        NOT NULL DEFAULT 0,
     `slapping`        int(11)                        NOT NULL DEFAULT 0,
-    `slapped`         int(11)                        NOT NULL DEFAULT 0
+    `slapped`         int(11)                        NOT NULL DEFAULT 0,
+    `barpoints`       int(11)                        NOT NULL DEFAULT 0
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 2
   DEFAULT CHARSET = latin1;
