@@ -101,17 +101,9 @@ ob_start(); ?>
 <table bgcolor="#1E1E1E" border="0" cellspacing="0" cellpadding="0" width="100%">
     
     <tr>
-        <td colspan="3" class="pos1" height="55" valign="middle">
+        <td colspan="3" class="pos1" valign="middle">
             <div class="topbox">
-                <table width="800">
-                    <tr>
-                        <td width="50%" class="center-img"><img src="images/logos/logo.png" alt="gRPG Main Logo"/></td>
-
-                    </tr>
-                    <tr>
-                        <td width="100%" class="center-img"><p class="tagline">"A Full Stack Game Engine"</p></td>
-                    </tr>
-                </table>
+                <img src="images/logos/banner.webp" alt="gRPG" class="header-banner"/>
             </div>
         </td>
     </tr>
