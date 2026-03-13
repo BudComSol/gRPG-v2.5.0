@@ -1251,12 +1251,12 @@ CREATE TABLE IF NOT EXISTS `npcs`
   DEFAULT CHARSET = utf8mb4;
 
 INSERT INTO `npcs` (`name`, `description`, `image`, `strength`, `defense`, `speed`, `hp`, `max_hp`, `level`, `money`, `city`, `enabled`, `can_mug`, `can_attack`, `hp_regen_time`) VALUES
-('Vagrant',         'A desperate homeless person scraping by on the streets. Easy prey for beginners.',                     'images/npc/vagrant.png',          8,  5,  6,  40,  40,  1,  150,  1, 1, 0, 0, 1800),
-('Street Thug',     'A low-level criminal who hangs around street corners looking for easy targets.',                       'images/npc/street-thug.png',      15, 12, 14, 80,  80,  3,  400,  1, 1, 1, 0, 2400),
-('Drug Dealer',     'A mid-level pusher who guards his stash and cash with ruthless efficiency.',                           'images/npc/drug-dealer.png',      22, 18, 20, 120, 120, 5,  900,  1, 1, 1, 0, 3000),
-('Crime Boss',      'A seasoned crime lord who has clawed his way up the ranks through violence and cunning.',              'images/npc/crime-boss.png',       35, 30, 28, 200, 200, 8,  2000, 1, 1, 1, 1, 3600),
-('Gang Lieutenant', 'A loyal enforcer for one of the city''s most feared gangs. Dangerous and trigger-happy.',              'images/npc/gang-lieutenant.png',  50, 42, 45, 300, 300, 12, 4000, 1, 1, 1, 1, 4800),
-('The Enforcer',    'A legendary street warrior. Only the bravest — or most foolish — dare to challenge The Enforcer.',    'images/npc/enforcer.png',         70, 60, 65, 500, 500, 15, 8000, 1, 1, 1, 1, 7200);
+('Vagrant',         'Desperate homeless person scraping by on the streets ... easy prey!',                     'images/npc/vagrant.png',          8,  5,  6,  40,  40,  1,  150,  1, 1, 0, 0, 1800),
+('Street Thug',     'Low-level criminal who hangs around street corners looking for easy targets.',                       'images/npc/street-thug.png',      15, 12, 14, 80,  80,  3,  400,  1, 1, 1, 0, 2400),
+('Drug Dealer',     'Mid-level pusher who guards his stash and cash with ruthless efficiency.',                           'images/npc/drug-dealer.png',      22, 18, 20, 120, 120, 5,  900,  1, 1, 1, 0, 3000),
+('Crime Boss',      'Seasoned crime lord who clawed his way up through violence and cunning.',              'images/npc/crime-boss.png',       35, 30, 28, 200, 200, 8,  2000, 1, 1, 1, 1, 3600),
+('Gang Lieutenant', 'Loyal enforcer for the city's most feared gang, dangerous and trigger-happy.',              'images/npc/gang-lieutenant.png',  50, 42, 45, 300, 300, 12, 4000, 1, 1, 1, 1, 4800),
+('The Enforcer',    'Legendary street warrior, only the bravest or dumbest dare to challenge.',    'images/npc/enforcer.png',         70, 60, 65, 500, 500, 15, 8000, 1, 1, 1, 1, 7200);
 
 DROP TABLE IF EXISTS `users_votes`;
 CREATE TABLE IF NOT EXISTS `users_votes`
