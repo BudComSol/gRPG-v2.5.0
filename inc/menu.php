@@ -10,6 +10,12 @@ $unread_mail = $db->result();
 $db->query('SELECT COUNT(id) FROM events WHERE recipient = ? AND viewed = 0');
 $db->execute([$user_class->id]);
 $unread_events = $db->result();
+$db->query('SELECT COUNT(id) FROM users WHERE hospital > 0');
+$db->execute();
+$hospital_count = $db->result();
+$db->query('SELECT COUNT(id) FROM users WHERE jail > 0');
+$db->execute();
+$jail_count = $db->result();
 ?>
 <div class="mainbox">
     <div class="headbox">Citizen</div>
@@ -50,13 +56,13 @@ $unread_events = $db->result();
     
     <a class="leftmenu style1" href="index.php">Home</a>    
     <a class="leftmenu" href="plugins/city.php">City</a>
-    <a class="leftmenu" href="plugins/jail.php">Jail <!_-jail-_!></a>
+    <a class="leftmenu" href="plugins/jail.php">Jail <!_-jail-_!> [<?php echo $jail_count; ?>]</a>
     <a class="leftmenu" href="plugins/slap.php">Slap</a>
     <a class="leftmenu" href="plugins/bank.php">Bank</a>    
     <a class="leftmenu" href="plugins/forum.php">Forum</a>
     <a class="leftmenu" href="plugins/todo.php">To-Do</a>        
     <a class="leftmenu" href="plugins/city.php"><!_-cityname-_!></a>        
-    <a class="leftmenu" href="plugins/hospital.php">Hospital <!_-hospital-_!></a>    
+    <a class="leftmenu" href="plugins/hospital.php">Hospital <!_-hospital-_!> [<?php echo $hospital_count; ?>]</a>    
     <a class="leftmenu" href="plugins/events.php">Events <!_-events-_!> [<?php echo $unread_events; ?>]</a>
     <a class="leftmenu" href="<?php echo !$user_class->gang ? 'plugins/create' : 'plugins/'; ?>gang.php">Your Gang</a>
     <a class="leftmenu" href="plugins/pms.php">Mailbox <!_-mail-_!> [<?php echo $unread_mail; ?>]</a>        
