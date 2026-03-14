@@ -21,11 +21,16 @@ $rows = $db->fetch();
 if ($rows !== null) {
         foreach ($rows as $row) {
             $user_hospital = new User($row['id']);
-            $user_attacker = $row['hwho'] ? new User($row['hwho']) : (object) ['formattedname' => '<em>Unknown</em>'];
-            $how = $row['hhow'] === 'wasattacked' ? 'Was attacked by' : 'Attacked'; ?><tr>
+            if ($row['hhow'] === 'npc_attacked') {
+                $reason = 'Was attacked by an NPC and lost';
+            } else {
+                $user_attacker = $row['hwho'] ? new User($row['hwho']) : (object) ['formattedname' => '<em>Unknown</em>'];
+                $how = $row['hhow'] === 'wasattacked' ? 'Was attacked by' : 'Attacked';
+                $reason = $how.' '.$user_attacker->formattedname.' and lost';
+            } ?><tr>
                     <td><?php echo $user_hospital->formattedname; ?></td>
                     <td><?php echo time_format($user_hospital->hospital); ?></td>
-                    <td><?php echo $how.' '.$user_attacker->formattedname; ?> and lost</td>
+                    <td><?php echo $reason; ?></td>
                     <td><?php echo $row['hwhen']; ?></td>
                 </tr><?php
         }

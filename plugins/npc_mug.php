@@ -57,16 +57,17 @@ if (count($errors)) {
         $db->trans('end');
         echo Message('You mugged '.$npc_name.' for '.prettynum($mugamount, true));
     } else {
-        // NPC is faster — if aggressive, it counter-mugs the player
+        // NPC is faster — if aggressive, it counter-mugs and hospitalizes the player
         if ($npc['can_attack']) {
             $countermug = (int)floor($user_class->money / 10);
             $db->trans('start');
-            $db->query('UPDATE users SET money = GREATEST(money - ?, 0) WHERE id = ?');
-            $db->execute([$countermug, $user_class->id]);
+            $db->query('UPDATE users SET money = GREATEST(money - ?, 0), hwho = 0, hhow = \'npc_attacked\', hwhen = ?, hospital = 1200, battlelost = battlelost + 1, battlemoney = battlemoney - ? WHERE id = ?');
+            $db->execute([$countermug, date('g:i:sa'), $countermug, $user_class->id]);
             $db->query('UPDATE npcs SET money = money + ? WHERE id = ?');
             $db->execute([$countermug, (int)$npc['id']]);
+            Send_Event($user_class->id, 'You were hospitalized by the NPC '.$npc_name.' for 20 minutes.', 0);
             $db->trans('end');
-            echo Message($npc_name.' spotted you and turned the tables — they mugged YOU for '.prettynum($countermug, true).'!');
+            echo Message($npc_name.' spotted you and turned the tables — they mugged YOU for '.prettynum($countermug, true).' and sent you to the hospital for 20 minutes!');
         } else {
             echo Message($npc_name.'\'s speed is higher than yours. They saw you coming and you failed.');
         }
