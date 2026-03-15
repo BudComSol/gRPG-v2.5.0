@@ -105,7 +105,7 @@ ob_start(); ?>
             <div class="topbox">
                 <?php
                 $show_rotating_ads = false;
-                if (defined('SHOW_BANNER_ADS') && isset($user_class) && (int)$user_class->rmdays <= 0
+                if (isset($user_class) && (int)$user_class->rmdays <= 0
                     && settings('banner_ads_enabled') === 'on') {
                     $db->query('SELECT ad_code, display_seconds FROM banner_ads ORDER BY sort_order ASC, id ASC');
                     $db->execute();
