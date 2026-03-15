@@ -37,6 +37,17 @@ CREATE TABLE IF NOT EXISTS `ads`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
+DROP TABLE IF EXISTS `banner_ads`;
+CREATE TABLE IF NOT EXISTS `banner_ads`
+(
+    `id`              int(11)   NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `ad_code`         text      NOT NULL,
+    `display_seconds` int(11)   NOT NULL DEFAULT 5,
+    `sort_order`      int(11)   NOT NULL DEFAULT 0,
+    `created_at`      timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+
 DROP TABLE IF EXISTS `attlog`;
 CREATE TABLE IF NOT EXISTS `attlog`
 (
@@ -924,7 +935,8 @@ CREATE TABLE IF NOT EXISTS `settings`
 INSERT INTO `settings` (`settings`, `conf_name`, `conf_value`)
 VALUES (1, 'registration', 'open'),
        (2, 'bus_travel_cost', '5000'),
-       (3, 'google_analytics', '');
+       (3, 'google_analytics', ''),
+       (4, 'banner_ads_enabled', 'off');
 
 DROP TABLE IF EXISTS `shares`;
 CREATE TABLE IF NOT EXISTS `shares`

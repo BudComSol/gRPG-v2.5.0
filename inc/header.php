@@ -103,7 +103,46 @@ ob_start(); ?>
     <tr>
         <td colspan="3" class="pos1" valign="middle">
             <div class="topbox">
+                <?php
+                $show_rotating_ads = false;
+                if (defined('SHOW_BANNER_ADS') && isset($user_class) && (int)$user_class->rmdays <= 0
+                    && settings('banner_ads_enabled') === 'on') {
+                    $db->query('SELECT ad_code, display_seconds FROM banner_ads ORDER BY sort_order ASC, id ASC');
+                    $db->execute();
+                    $_banner_ads = $db->fetch();
+                    if (!empty($_banner_ads)) {
+                        $show_rotating_ads = true;
+                    }
+                }
+                if ($show_rotating_ads) { ?>
+                <div id="rotating-banner-ads">
+                    <?php foreach ($_banner_ads as $_ba_idx => $_ba) { ?>
+                    <div class="banner-ad-slide"
+                         data-duration="<?php echo (int)$_ba['display_seconds']; ?>"
+                         style="display:<?php echo $_ba_idx === 0 ? 'block' : 'none'; ?>;">
+                        <?php /* ad_code is admin-configured HTML/JS and is intentionally output unescaped */ echo $_ba['ad_code']; ?>
+                    </div>
+                    <?php } ?>
+                </div>
+                <script>
+                (function() {
+                    var slides = document.querySelectorAll('#rotating-banner-ads .banner-ad-slide');
+                    if (!slides || slides.length <= 1) return;
+                    var current = 0;
+                    function showNext() {
+                        slides[current].style.display = 'none';
+                        current = (current + 1) % slides.length;
+                        slides[current].style.display = 'block';
+                        var dur = parseInt(slides[current].getAttribute('data-duration'), 10) || 5;
+                        setTimeout(showNext, dur * 1000);
+                    }
+                    var initDur = parseInt(slides[0].getAttribute('data-duration'), 10) || 5;
+                    setTimeout(showNext, initDur * 1000);
+                })();
+                </script>
+                <?php } else { ?>
                 <img src="images/logos/banner.webp" alt="gRPG" class="header-banner"/>
+                <?php } ?>
             </div>
         </td>
     </tr>

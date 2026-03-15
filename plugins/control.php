@@ -871,6 +871,60 @@ if (isset($_POST['addrmpack'])) {
         <a href="plugins/control.php?page=marquee&amp;deletemarquee=<?php echo $row['id']; ?>&amp;ans=yes&amp;csrf=<?php echo csrf_create('csrf', false); ?>" class="pure-button pure-button-red"><i class="fa fa-ban" aria-hidden="true"></i> I'm sure, delete it</a>
         <a href="plugins/control.php?page=marquee" class="pure-button pure-button-primary"><i class="fa fa-tick" aria-hidden="true"></i> No, go back</a><?php
     }
+} elseif (isset($_POST['add_banner_ad'])) {
+    if (!csrf_check('banner_ads_add', $_POST)) {
+        echo Message(SECURITY_TIMEOUT_MESSAGE);
+    }
+    $ba_code = isset($_POST['ad_code']) && is_string($_POST['ad_code']) ? trim($_POST['ad_code']) : '';
+    $ba_secs = (isset($_POST['display_seconds']) && ctype_digit((string)$_POST['display_seconds'])) ? (int)$_POST['display_seconds'] : 5;
+    if ($ba_secs < 1) {
+        $ba_secs = 1;
+    }
+    if ($ba_secs > 300) {
+        $ba_secs = 300;
+    }
+    if (empty($ba_code)) {
+        $errors[] = 'You didn\'t enter any ad code';
+    }
+    if (!count($errors)) {
+        $db->query('INSERT INTO banner_ads (ad_code, display_seconds) VALUES (?, ?)');
+        $db->execute([$ba_code, $ba_secs]);
+        echo Message('Banner ad has been added.');
+    } else {
+        display_errors($errors);
+    }
+} elseif (isset($_GET['delete_banner_ad'])) {
+    $_GET['delete_banner_ad'] = (isset($_GET['delete_banner_ad']) && ctype_digit($_GET['delete_banner_ad'])) ? $_GET['delete_banner_ad'] : null;
+    if (empty($_GET['delete_banner_ad'])) {
+        echo Message('You didn\'t select a valid banner ad', 'Error', true);
+    }
+    $db->query('SELECT id FROM banner_ads WHERE id = ?');
+    $db->execute([$_GET['delete_banner_ad']]);
+    if (!$db->count()) {
+        echo Message('That banner ad doesn\'t exist', 'Error', true);
+    }
+    $ba_row = $db->fetch(true);
+    if (isset($_GET['ans'])) {
+        if (!csrf_check('banner_ad_del', $_GET)) {
+            echo Message(SECURITY_TIMEOUT_MESSAGE);
+        }
+        $db->query('DELETE FROM banner_ads WHERE id = ?');
+        $db->execute([$ba_row['id']]);
+        echo Message('You\'ve deleted the banner ad.');
+    } else {
+        ?>Are you sure you want to delete this banner ad?<br />
+        <a href="plugins/control.php?page=banner_ads&amp;delete_banner_ad=<?php echo (int)$ba_row['id']; ?>&amp;ans=yes&amp;banner_ad_del=<?php echo csrf_create('banner_ad_del', false); ?>" class="pure-button pure-button-red"><i class="fa fa-ban" aria-hidden="true"></i> I'm sure, delete it</a>
+        <a href="plugins/control.php?page=banner_ads" class="pure-button pure-button-primary"><i class="fa fa-tick" aria-hidden="true"></i> No, go back</a><?php
+    }
+} elseif (isset($_POST['toggle_banner_ads'])) {
+    if (!csrf_check('banner_ads_toggle', $_POST)) {
+        echo Message(SECURITY_TIMEOUT_MESSAGE);
+    }
+    $ba_current = settings('banner_ads_enabled');
+    $ba_new = ($ba_current === 'on') ? 'off' : 'on';
+    $db->query('UPDATE settings SET conf_value = ? WHERE conf_name = \'banner_ads_enabled\'');
+    $db->execute([$ba_new]);
+    echo Message('Banner ads have been turned '.$ba_new.'.');
 } elseif (isset($_POST['addrmdays'])) {
     if (!csrf_check('rmoptions_days', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
@@ -3307,6 +3361,87 @@ if (empty($_GET['page'])) {
                 </div>
                 <div class="pure-controls">
                     <button type="submit" name="addmarquee" class="pure-button pure-button-primary">Add Marquee Banner Now</button>
+                </div>
+            </form>
+        </td>
+    </tr><?php
+    } elseif ($_GET['page'] === 'banner_ads') {
+        $ba_enabled = settings('banner_ads_enabled');
+        $db->query('SELECT id, ad_code, display_seconds, sort_order, created_at FROM banner_ads ORDER BY sort_order ASC, id ASC');
+        $db->execute();
+        $ba_rows = $db->fetch(); ?>
+    <tr>
+        <th class="content-head">Banner Ad Settings</th>
+    </tr>
+    <tr>
+        <td class="content">
+            <p>Banner ads replace the banner image on the home page for players without VIP Days. They are <strong><?php echo $ba_enabled === 'on' ? '<span style="color:green;">currently enabled</span>' : '<span style="color:red;">currently disabled</span>'; ?></strong>.</p>
+            <form action="plugins/control.php?page=banner_ads" method="post">
+                <?php echo csrf_create('banner_ads_toggle'); ?>
+                <button type="submit" name="toggle_banner_ads" class="pure-button <?php echo $ba_enabled === 'on' ? 'pure-button-red' : 'pure-button-primary'; ?>">
+                    Turn Ads <?php echo $ba_enabled === 'on' ? 'Off' : 'On'; ?>
+                </button>
+            </form>
+            <p><em>When ads are off, or for players with VIP Days active, the original banner.webp is displayed instead.</em></p>
+        </td>
+    </tr>
+    <tr>
+        <th class="content-head">Current Banner Ads</th>
+    </tr>
+    <tr>
+        <td class="content">
+            <table class="pure-table pure-table-horizontal" width="100%">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Ad Code (preview)</th>
+                        <th>Display (seconds)</th>
+                        <th>Added</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody><?php
+                if ($ba_rows !== null) {
+                    foreach ($ba_rows as $ba_row) { ?>
+                        <tr>
+                            <td><?php echo (int)$ba_row['id']; ?></td>
+                            <td><code style="word-break:break-all;font-size:11px;"><?php
+                                $preview = mb_substr($ba_row['ad_code'], 0, 100);
+                                echo htmlspecialchars($preview, ENT_QUOTES, 'UTF-8');
+                                if (mb_strlen($ba_row['ad_code']) > 100) { echo '&hellip;'; }
+                            ?></code></td>
+                            <td><?php echo (int)$ba_row['display_seconds']; ?>s</td>
+                            <td><?php echo htmlspecialchars($ba_row['created_at'], ENT_QUOTES, 'UTF-8'); ?></td>
+                            <td>[<a href="plugins/control.php?page=banner_ads&amp;delete_banner_ad=<?php echo (int)$ba_row['id']; ?>">Delete</a>]</td>
+                        </tr><?php
+                    }
+                } else { ?>
+                    <tr>
+                        <td colspan="5" class="center"><p>There are presently no banner ads.</p></td>
+                    </tr><?php
+                } ?>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <th class="content-head">Add Banner Ad</th>
+    </tr>
+    <tr>
+        <td class="content">
+            <form action="plugins/control.php?page=banner_ads" method="post" class="pure-form pure-form-aligned">
+                <?php echo csrf_create('banner_ads_add'); ?>
+                <div class="pure-control-group">
+                    <label for="ad_code">Ad Code (HTML/JS)</label>
+                    <textarea name="ad_code" id="ad_code" class="pure-u-1-2 pure-u-md-1-2" rows="6" required placeholder="Paste your ad code here (HTML, image tag, AdSense script, etc.)"></textarea>
+                </div>
+                <p><em><strong>Security note:</strong> Ad code is output directly to the page. Only paste trusted code from reputable ad networks (e.g. Google AdSense).</em></p>
+                <div class="pure-control-group">
+                    <label for="display_seconds">Display Duration (seconds)</label>
+                    <input type="number" name="display_seconds" id="display_seconds" class="pure-u-1-4 pure-u-md-1-4" value="5" min="1" max="300" required />
+                </div>
+                <div class="pure-controls">
+                    <button type="submit" name="add_banner_ad" class="pure-button pure-button-primary">Add Banner Ad</button>
                 </div>
             </form>
         </td>
