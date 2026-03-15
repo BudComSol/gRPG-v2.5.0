@@ -133,11 +133,16 @@ ob_start(); ?>
                         slides[current].style.display = 'none';
                         current = (current + 1) % slides.length;
                         slides[current].style.display = 'block';
-                        var dur = parseInt(slides[current].getAttribute('data-duration'), 10) || 5;
+                        var dur = parseInt(slides[current].getAttribute('data-duration'), 10);
+                        if (isNaN(dur)) { dur = 5; }
+                        if (dur === 0) return;
                         setTimeout(showNext, dur * 1000);
                     }
-                    var initDur = parseInt(slides[0].getAttribute('data-duration'), 10) || 5;
-                    setTimeout(showNext, initDur * 1000);
+                    var initDur = parseInt(slides[0].getAttribute('data-duration'), 10);
+                    if (isNaN(initDur)) { initDur = 5; }
+                    if (initDur !== 0) {
+                        setTimeout(showNext, initDur * 1000);
+                    }
                 })();
                 </script>
                 <?php } else { ?>
