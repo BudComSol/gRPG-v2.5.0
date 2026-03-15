@@ -37,7 +37,7 @@ function blockListIndex($db, $user_class)
             <table width="100%" class="pure-table pure-table-horizontal">
                 <thead>
                     <tr>
-                        <th width="40%">Blocked <span class="right"><a href="blocklist.php?action=add" class="pure-button pure-button-green" title="Block Citizen"><i class="fa fa-plus"></i></a></th>
+                        <th width="40%">Blocked <span class="right"><a href="plugins/blocklist.php?action=add" class="pure-button pure-button-green" title="Block Citizen"><i class="fa fa-plus"></i></a></th>
                         <th width="40%">Comment</th>
                         <th width="20%">Actions</th>
                     </tr>
@@ -52,8 +52,8 @@ function blockListIndex($db, $user_class)
                         </td>
                         <td><?php echo $row['comment'] ? nl2br(format($row['comment'])) : '<em>None</em>'; ?></td>
                         <td>
-                            <a href="blocklist.php?action=edit&amp;id=<?php echo $row['id']; ?>" class="pure-button pure-button-yellow"><i class="fa fa-pencil"></i></a>
-                            <a href="blocklist.php?action=del&amp;id=<?php echo $row['id']; ?>" class="pure-button pure-button-red"><i class="fa fa-trash"></i></a>
+                            <a href="plugins/blocklist.php?action=edit&amp;id=<?php echo $row['id']; ?>" class="pure-button pure-button-yellow"><i class="fa fa-pencil"></i></a>
+                            <a href="plugins/blocklist.php?action=del&amp;id=<?php echo $row['id']; ?>" class="pure-button pure-button-red"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr><?php
         }
@@ -105,7 +105,7 @@ function addListing($db, $user_class)
         exit(blockListIndex($db, $user_class));
     } ?><tr>
         <td class="content">
-            <form action="blocklist.php?action=add" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/blocklist.php?action=add" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('add'); ?>
                 <div class="pure-control-group">
                     <label for="user">Citizen</label>
@@ -157,7 +157,7 @@ function editListing($db, $user_class)
     <tr>
         <td class="content">
             Updating your comment on <?php echo $blocked->formattedname; ?><br />
-            <form action="blocklist.php?action=edit&amp;id=<?php echo $_GET['id']; ?>" method="post" class="pure-form pure-form-aligned">
+            <form action="plugins/blocklist.php?action=edit&amp;id=<?php echo $_GET['id']; ?>" method="post" class="pure-form pure-form-aligned">
                 <?php echo csrf_create('edit'); ?>
                     <div class="pure-control-group">
                     <label for="comment">Comment</label>
@@ -203,7 +203,7 @@ function deleteListing($db, $user_class)
         ?><tr>
             <td class="content">
                 Are you sure you want to remove <?php echo $blocked->formattedname; ?> from your blocklist?<br />
-                <a href="blocklist.php?action=del&amp;id=<?php echo $_GET['id']; ?>&amp;ans=yes&amp;csrf=<?php echo csrf_create('csrf', false); ?>" class="pure-button pure-button-primary"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Yes, I'm sure</a> &middot; <a href="blocklist.php">No, go back</a>
+                <a href="plugins/blocklist.php?action=del&amp;id=<?php echo $_GET['id']; ?>&amp;ans=yes&amp;csrf=<?php echo csrf_create('csrf', false); ?>" class="pure-button pure-button-primary"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Yes, I'm sure</a> &middot; <a href="plugins/blocklist.php">No, go back</a>
             </td>
         </tr><?php
     }
