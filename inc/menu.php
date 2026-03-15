@@ -55,17 +55,17 @@ $jail_count = $db->result();
     <div class="headbox">Menu</div>
     
     <a class="leftmenu style1" href="index.php">Home</a>    
-    <a class="leftmenu" href="plugins/city.php">City</a>
-    <a class="leftmenu" href="plugins/jail.php">Jail <!_-jail-_!> [<?php echo $jail_count; ?>]</a>
+    <a class="leftmenu" href="plugins/city.php">City</a>    
     <a class="leftmenu" href="plugins/slap.php">Slap</a>
     <a class="leftmenu" href="plugins/bank.php">Bank</a>    
     <a class="leftmenu" href="plugins/forum.php">Forum</a>
     <a class="leftmenu" href="plugins/todo.php">To-Do</a>        
     <a class="leftmenu" href="plugins/city.php"><!_-cityname-_!></a>        
-    <a class="leftmenu" href="plugins/hospital.php">Hospital <!_-hospital-_!> [<?php echo $hospital_count; ?>]</a>    
+    <a class="leftmenu" href="plugins/jail.php">Jail <!_-jail-_!> [<?php echo $jail_count; ?>]</a>    
     <a class="leftmenu" href="plugins/events.php">Events <!_-events-_!> [<?php echo $unread_events; ?>]</a>
     <a class="leftmenu" href="<?php echo !$user_class->gang ? 'plugins/create' : 'plugins/'; ?>gang.php">Your Gang</a>
-    <a class="leftmenu" href="plugins/pms.php">Mailbox <!_-mail-_!> [<?php echo $unread_mail; ?>]</a>        
+    <a class="leftmenu" href="plugins/pms.php">Mailbox <!_-mail-_!> [<?php echo $unread_mail; ?>]</a>
+    <a class="leftmenu" href="plugins/hospital.php">Hospital <!_-hospital-_!> [<?php echo $hospital_count; ?>]</a>        
     <a class="leftmenu" href="plugins/rmstore.php">Game Store</a>
     <a class="leftmenu" href="plugins/theatre.php">Movie Theatre</a><?php
     if ($user_class->admin == 1) {
