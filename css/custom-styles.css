@@ -44,8 +44,11 @@
 .gangbar-target-th {
     width: 33.33%;
     text-align: center;
+    padding-bottom: 12px;
 }
 
 .gangbar-target-td {
     text-align: center;
+    vertical-align: top;
+    padding-top: 8px;
 }
