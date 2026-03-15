@@ -877,8 +877,8 @@ if (isset($_POST['addrmpack'])) {
     }
     $ba_code = isset($_POST['ad_code']) && is_string($_POST['ad_code']) ? trim($_POST['ad_code']) : '';
     $ba_secs = (isset($_POST['display_seconds']) && ctype_digit((string)$_POST['display_seconds'])) ? (int)$_POST['display_seconds'] : 5;
-    if ($ba_secs < 1) {
-        $ba_secs = 1;
+    if ($ba_secs < 0) {
+        $ba_secs = 0;
     }
     if ($ba_secs > 300) {
         $ba_secs = 300;
@@ -3410,7 +3410,7 @@ if (empty($_GET['page'])) {
                                 echo htmlspecialchars($preview, ENT_QUOTES, 'UTF-8');
                                 if (mb_strlen($ba_row['ad_code']) > 100) { echo '&hellip;'; }
                             ?></code></td>
-                            <td><?php echo (int)$ba_row['display_seconds']; ?>s</td>
+                            <td><?php echo (int)$ba_row['display_seconds'] === 0 ? '<em>Indefinite</em>' : (int)$ba_row['display_seconds'].'s'; ?></td>
                             <td><?php echo htmlspecialchars($ba_row['created_at'], ENT_QUOTES, 'UTF-8'); ?></td>
                             <td>[<a href="plugins/control.php?page=banner_ads&amp;delete_banner_ad=<?php echo (int)$ba_row['id']; ?>">Delete</a>]</td>
                         </tr><?php
@@ -3438,7 +3438,8 @@ if (empty($_GET['page'])) {
                 <p><em><strong>Security note:</strong> Ad code is output directly to the page. Only paste trusted code from reputable ad networks (e.g. Google AdSense).</em></p>
                 <div class="pure-control-group">
                     <label for="display_seconds">Display Duration (seconds)</label>
-                    <input type="number" name="display_seconds" id="display_seconds" class="pure-u-1-4 pure-u-md-1-4" value="5" min="1" max="300" required />
+                    <input type="number" name="display_seconds" id="display_seconds" class="pure-u-1-4 pure-u-md-1-4" value="5" min="0" max="300" required />
+                    <span class="pure-form-message-inline">Seconds to display (0 = indefinite, never rotates)</span>
                 </div>
                 <div class="pure-controls">
                     <button type="submit" name="add_banner_ad" class="pure-button pure-button-primary">Add Banner Ad</button>
