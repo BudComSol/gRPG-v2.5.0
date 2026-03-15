@@ -41,13 +41,13 @@
 
 }
 
-.gangbar-target-th {
+.pure-table th.gangbar-target-th {
     width: 33.33%;
     text-align: center;
     padding-bottom: 12px;
 }
 
-.gangbar-target-td {
+.pure-table td.gangbar-target-td {
     text-align: center;
     vertical-align: top;
     padding-top: 8px;
