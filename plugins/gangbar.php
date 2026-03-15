@@ -3,7 +3,7 @@ declare(strict_types=1);
 require_once __DIR__.'/../inc/header.php';
 checkUserStatus();
 if (!$user_class->gang) {
-    echo Message('<p>No Gang...No Bar.</p>', 'Error', true);
+    echo Message('<p>No Gang...No Bar Silly.</p>', 'Error', true);
 }
 $_GET['attack'] = array_key_exists('attack', $_GET) && in_array($_GET['attack'], ['window', 'door'], true) ? $_GET['attack'] : null;
 if (isset($_GET['attack'])) {
@@ -12,10 +12,10 @@ if (isset($_GET['attack'])) {
     }
     $errors = [];
     if ($_GET['attack'] === 'window' && $user_class->energypercent < 30) {
-        $errors[] = 'You need to have at least 30% of your energy to attempt the window.';
+        $errors[] = '<p>You need to have at least 30% of your energy to attempt the window.</p>';
     }
     if ($_GET['attack'] === 'door' && $user_class->energypercent < 25) {
-        $errors[] = 'You need to have at least 25% of your energy to attempt the door.';
+        $errors[] = '<p>You need to have at least 25% of your energy to attempt the door.</p>';
     }
     if (count($errors)) {
         display_errors($errors, true);
@@ -59,11 +59,11 @@ if (!isset($csrfg)) {
     <td class="content">
         <center>
             <img src="images/barscene.webp" width="350" alt="Bar Scene"/><br/><br/>
-            <p>Score as many points as possible over a 1 hour period.<br/>
-            Windows will award a lower score but are easier to succeed.<br/>
-            The door will award higher scores but you will die more often.<br/>
-            Gang with the high score over the hour wins $250,000 for its vaults.<br/><br/>
-            Just click your target below and good luck.</p>
+            <p>Score as many points as possible over a 1 hour period.</p>
+            Windows will award a lower score but are easier to succeed.</p>
+            The door will award higher scores but you will die more often.</p>
+            Gang with the high score over the hour wins $250,000 for its vaults.</p><br />
+            <p>Just click your target below and good luck.</p><br />
             <table width="450" class="pure-table">
                 <thead>
                     <tr>
@@ -92,7 +92,7 @@ if (!isset($csrfg)) {
             <thead>
                 <tr>
                     <th>Winner</th>
-                    <th>How Long Ago</th>
+                    <th>When</th>
                     <th>Score</th>
                 </tr>
             </thead>
@@ -107,7 +107,7 @@ if (!isset($csrfg)) {
                         echo '<tr><td>' . $l_winner->formattedname . '</td><td>' . howlongago($gothRow['time']) . '</td><td>' . prettynum((int)$gothRow['kills']) . ' Points</td></tr>';
                     }
                 } else {
-                    echo '<tr><td colspan="3"><p>No winners yet.</p></td></tr>';
+                    echo '<tr><td colspan="3"><p>Sadly there are no winners yet.</p></td></tr>';
                 }
                 ?>
             </tbody>
