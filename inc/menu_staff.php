@@ -55,9 +55,10 @@ $unread_events = $db->result();
 <div>
     <div class="headbox leftmenu">Control Panel</div>    
     <a href="plugins/control.php?page=marquee" class="leftmenu">Marquee</a>
-    <a href="plugins/control.php?page=banner_ads" class="leftmenu">Banner Ads</a>
+    
     <a href="plugins/control.php?page=edituser" class="leftmenu">Edit User</a>
-    <a href="plugins/massmail.php" class="leftmenu">Mass Mail</a>  
+    <a href="plugins/massmail.php" class="leftmenu">Mass Mail</a>
+    <a href="plugins/control.php?page=banner_ads" class="leftmenu">Banner Ads</a>  
     <a href="plugins/control.php?page=rmoptions" class="leftmenu">RM Options</a>
     <a href="plugins/control.php?page=site_settings" class="leftmenu">Site Settings</a> 
     <a href="plugins/control.php?page=rmpacks" class="leftmenu">RM Upgrades</a>
