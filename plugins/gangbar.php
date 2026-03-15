@@ -64,19 +64,19 @@ if (!isset($csrfg)) {
             The door will award higher scores but you will die more often.</p>
             Gang with the high score over the hour wins $250,000 for its vaults.</p><br />
             <p>Just click your target below and good luck.</p><br />
-            <table width="450" class="pure-table">
+            <table width="100%" class="pure-table">
                 <thead>
                     <tr>
-                        <th>Top Window</th>
-                        <th>Boarded Window</th>
-                        <th>Main Door</th>
+                        <th class="gangbar-target-th">Top Window</th>
+                        <th class="gangbar-target-th">Boarded Window</th>
+                        <th class="gangbar-target-th">Main Door</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><a href="plugins/gangbar.php?attack=window&amp;csrfg=<?php echo htmlspecialchars($csrfg, ENT_QUOTES, 'UTF-8'); ?>"><img src="images/topwindow.png" width="71" height="113" alt="Top Window" border="0"/></a></td>
-                        <td><a href="plugins/gangbar.php?attack=window&amp;csrfg=<?php echo htmlspecialchars($csrfg, ENT_QUOTES, 'UTF-8'); ?>"><img src="images/bottomwindow.png" width="71" height="113" alt="Boarded Window" border="0"/></a></td>
-                        <td><a href="plugins/gangbar.php?attack=door&amp;csrfg=<?php echo htmlspecialchars($csrfg, ENT_QUOTES, 'UTF-8'); ?>"><img src="images/bardoor.png" width="71" height="113" alt="Main Door" border="0"/></a></td>
+                        <td class="gangbar-target-td"><a href="plugins/gangbar.php?attack=window&amp;csrfg=<?php echo htmlspecialchars($csrfg, ENT_QUOTES, 'UTF-8'); ?>"><img src="images/topwindow.png" width="71" height="113" alt="Top Window" border="0"/></a></td>
+                        <td class="gangbar-target-td"><a href="plugins/gangbar.php?attack=window&amp;csrfg=<?php echo htmlspecialchars($csrfg, ENT_QUOTES, 'UTF-8'); ?>"><img src="images/bottomwindow.png" width="71" height="113" alt="Boarded Window" border="0"/></a></td>
+                        <td class="gangbar-target-td"><a href="plugins/gangbar.php?attack=door&amp;csrfg=<?php echo htmlspecialchars($csrfg, ENT_QUOTES, 'UTF-8'); ?>"><img src="images/bardoor.png" width="71" height="113" alt="Main Door" border="0"/></a></td>
                     </tr>
                 </tbody>
             </table>
