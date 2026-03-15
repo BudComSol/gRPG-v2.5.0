@@ -26,7 +26,7 @@ if (!empty($_GET['buy'])) {
         $db->query('INSERT INTO cars (userid, carid) VALUES (?, ?)');
         $db->execute([$user_class->id, $_GET['buy']]);
         $db->trans('end');
-        echo Message('You\'ve purchased '.aAn($row['name']));
+        echo Message('<p>You\'ve purchased '.aAn($row['name'])) . '</p>';
     }
 }
 $db->query('SELECT id, name, cost, image FROM carlot WHERE buyable = 1 ORDER BY cost ');
@@ -54,7 +54,7 @@ if ($rows !== null) {
                         <img src="<?php echo format($row['image']); ?>" width="100" heeight="100" style="border: 1px solid #333;" /><br />
                         <?php echo car_popup($row['name'], $row['id']); ?><br />
                         <?php echo prettynum($row['cost'], true); ?><br />
-                        [<a href="carlot.php?buy=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>">Buy</a>]
+                        [<a href="plugins/carlot.php?buy=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>">Buy</a>]
                     </td><?php
         ++$cnt;
             if (!($cnt % 4)) {
