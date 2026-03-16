@@ -157,7 +157,7 @@ for ($i = 1; $i <= 3; ++$i) {
                     <h3 style="padding:0;margin:0;font-size:1.4em;">Uptown</h3><br />
                     <a href="plugins/events.php">Events <!_-events-_!></a><br />
                     <a href="plugins/pms.php">Mailbox <!_-mail-_!></a><br />                                        
-                    <a href="plugins/inventory.php">Inventory</a><br />                    
+                    <a href="plugins/foolsgamble.php">Fools Gamble</a><br />                    
                     <a href="plugins/fields.php">Manage Land</a>
                 </td>
                 <td class="top" style="padding-bottom:10px;">
