@@ -27,7 +27,7 @@ if (!empty($_GET['buy'])) {
         echo Message('You\'ve purchased and moved into '.format($row['name']));
     }
 }
-$db->query('SELECT id, name, awake, cost FROM houses ORDER BY id ');
+$db->query('SELECT id, name, image, awake, cost FROM houses ORDER BY id ');
 $db->execute();
 $rows = $db->fetch();
 ?><tr>
@@ -43,7 +43,8 @@ if ($user_class->house > 0) {
         <table width="100%" class="pure-table pure-table-horizontal">
             <thead>
                 <tr>
-                    <th width="45%">Type</th>
+                    <th width="15%">Image</th>
+                    <th width="30%">Type</th>
                     <th width="15%">Awake</th>
                     <th width="20%">Cost</th>
                     <th width="20%">Move</th>
@@ -53,6 +54,7 @@ if ($rows !== null) {
         $csrfg = csrf_create('csrfg', false);
         foreach ($rows as $row) {
             ?><tr>
+                    <td><?php echo !empty($row['image']) ? '<img src="'.format($row['image']).'" alt="'.format($row['name']).'" width="64" height="64" />' : '&nbsp;'; ?></td>
                     <td><?php echo format($row['name']); ?></td>
                     <td><?php echo format($row['awake']); ?></td>
                     <td><?php echo prettynum($row['cost'], true); ?></td>
@@ -61,7 +63,7 @@ if ($rows !== null) {
         }
     } else {
         ?><tr>
-                    <td colspan="4" class="center"><p>Sorry But There Are No Properties At This Time.</p></td>
+                    <td colspan="5" class="center"><p>Sorry But There Are No Properties At This Time.</p></td>
                 </tr><?php
     }
 ?></table>
