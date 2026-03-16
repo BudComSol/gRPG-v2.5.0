@@ -162,7 +162,7 @@ if (defined('CAPTCHA_REGISTRATION') && CAPTCHA_REGISTRATION == true) {
     } else {
         ?>
               <img src="images/headers/rego-closed.png" alt="gRPG Registration Closed">    
-        <p>Registration For The Site Is Currently Closed.</p><p>This Is A Demo Of The Script Found Here <a href="https://github.com/BudComSol/gRPG-v2.5.0" target="_blank" rel="noopener">Github</a> Where You Can Create Your Own Game.</p><?php
+        <p>Registration For The Site Is Currently Closed.</p><p>This Is A Demo Of The Script Found On <a href="https://github.com/BudComSol/gRPG-v2.5.0" target="_blank" rel="noopener">Github</a> Where You Can Create Your Own Game.</p><?php
     } ?>
         
     </td>
