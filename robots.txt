@@ -1,5 +1,7 @@
 # robots.txt for GRPG v2
 # Block GPTBot and other AI crawlers
+# Note: Replace the Sitemap URL below with the full URL to your sitemap once the application is deployed (e.g. https://example.com/sitemap.php).
+Sitemap: https://example.com/sitemap.php
 
 User-agent: GPTBot
 Disallow: /

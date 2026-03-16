@@ -65,7 +65,7 @@ ob_start(); ?>
             We use cookies to ensure you get the best experience on our website. 
             These include essential cookies for site functionality and session management. 
             By continuing to use this site, you consent to our use of cookies. 
-            <a href="<?php echo ($siteURL !== false && $siteURL !== '') ? '' : '/'; ?>inc/privacy.php">Learn more</a>
+            <a href="<?php echo ($siteURL !== false && $siteURL !== '') ? '' : '/'; ?>privacy.php">Learn more</a>
         </div>
         <div class="cookie-buttons">
             <button id="cookie-consent-accept">Accept</button>
@@ -91,8 +91,8 @@ ob_start(); ?>
                             <a href="/" class="leftmenu">Home</a>
                             <a href="login.php" class="leftmenu">Login</a>
                             <a href="register.php" class="leftmenu">Register</a>                            
-                            <a href="inc/privacy.php" class="leftmenu">Privacy Policy</a>
-                            <a href="inc/terms.php" class="leftmenu">Terms of Service</a>
+                            <a href="privacy.php" class="leftmenu">Privacy Policy</a>
+                            <a href="terms.php" class="leftmenu">Terms of Service</a>
                             <a href="forgot.php" class="leftmenu">Account Recovery</a>
                         </div>
                     </td>
