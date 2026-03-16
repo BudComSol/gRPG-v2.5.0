@@ -192,7 +192,6 @@ for ($x = 0; $x < 5; ++$x) {
 }
 ?>
             </tr>
-        </form>
         <?php
 //staying
 if (!isset($_POST['stay'])) {
@@ -226,5 +225,6 @@ if (!isset($_POST['stay'])) {
                 </td>
             </tr>
         </table>
+        </form>
     </td>
 </tr>
