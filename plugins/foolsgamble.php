@@ -65,15 +65,18 @@ $csrfg = csrf_create('csrfg', false);
 <tr>
     <td class="content">
         <p><img src="images/headers/bigcash.png" alt="bigcash"/></p>
-        <p>Are you a lucky person? You can take one of these bets daily.<br/>
-        Make your choice and have the cash in your hand.<br/>
-        If you win you double your stake, if you lose you may cry.</p>
+        <br />
+        <p>Are you a lucky person, because you can take one of these bets daily.</p>
+        <p>Make your choice and have the cash in your hand.</p>
+        <p>If you win you double your stake, if you lose you may cry.</p>
+        <br />
         <p>
             <?php foreach ($allowed_bets as $b) { ?>
             <a href="plugins/foolsgamble.php?bet=<?php echo $b; ?>&amp;csrfg=<?php echo $csrfg; ?>" class="pure-button"><?php echo prettynum($b, true); ?></a>
             <?php } ?>
         </p>
-        <p><a href="plugins/city.php">No thanks, I'm keeping my cash.</a></p>
+       <br />
+      <p><a href="plugins/city.php" class="pure-button pure-button-primary">No Thanks, I'm Keeping My Cash.</a></p>
     </td>
 </tr>
 <tr>
@@ -84,7 +87,7 @@ $csrfg = csrf_create('csrfg', false);
         <table width="100%" class="pure-table pure-table-horizontal">
             <thead>
                 <tr>
-                    <th>Thug</th>
+                    <th>Citizen</th>
                     <th>Date</th>
                     <th>Outcome</th>
                 </tr>
@@ -103,7 +106,7 @@ if ($log_rows !== null) {
     }
 } else { ?>
         <tr>
-            <td colspan="3" class="center"><p>No gambles have been placed yet.</p></td>
+            <td colspan="3" class="center"><p>No Gambles Have Been Placed Yet.</p></td>
         </tr><?php
 } ?>
         </table>
