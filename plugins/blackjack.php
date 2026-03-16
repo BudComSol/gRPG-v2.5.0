@@ -164,10 +164,10 @@ function makeGame()
     <th class="content-head">Blackjack</th>
     </tr>
 <tr>
-    <td class="content">
+    <td class="content center">
         <div id="outcome" style="color:red"></div>
         <form name="form" method="post" action="">
-        <table>
+        <table style="margin: 0 auto">
             <tr>
                 <td>Dealer's Cards</td>
                 <?php
