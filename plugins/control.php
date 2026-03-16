@@ -1382,8 +1382,8 @@ if (isset($_POST['addrmpack'])) {
     if (count($errors)) {
         display_errors($errors);
     } else {
-        $db->query('INSERT INTO houses (name, awake, cost, buyable) VALUES (?, ?, ?, ?)');
-        $db->execute([$_POST['name'], $_POST['awake'], $_POST['cost'], $_POST['buyable']]);
+        $db->query('INSERT INTO houses (name, image, awake, cost, buyable) VALUES (?, ?, ?, ?, ?)');
+        $db->execute([$_POST['name'], $_POST['image'] ?? '', $_POST['awake'], $_POST['cost'], $_POST['buyable']]);
         echo Message('You\'ve added the house: '.format($_POST['name']));
     }
 } elseif (isset($_GET['edithouse'])) {
@@ -1414,8 +1414,8 @@ if (isset($_POST['addrmpack'])) {
         if (count($errors)) {
             display_errors($errors);
         } else {
-            $db->query('UPDATE houses SET name = ?, awake = ?, cost = ? WHERE id = ?');
-            $db->execute([$_POST['name'], $_POST['awake'], $_POST['cost'], $_GET['id']]);
+            $db->query('UPDATE houses SET name = ?, image = ?, awake = ?, cost = ? WHERE id = ?');
+            $db->execute([$_POST['name'], $_POST['image'] ?? '', $_POST['awake'], $_POST['cost'], $_GET['id']]);
             echo Message('You\'ve edited the house: '.format($_POST['name']));
         }
     } else {
@@ -1430,6 +1430,10 @@ if (isset($_POST['addrmpack'])) {
                     <div class="pure-control-group">
                         <label for="name">Name</label>
                         <input type="text" name="name" id="name" value="<?php echo format($row['name']); ?>" class="pure-u-1-2 pure-u-md-1-2" required autofocus />
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="image">Image</label>
+                        <input type="text" name="image" id="image" value="<?php echo format($row['image']); ?>" class="pure-u-1-2 pure-u-md-1-2" placeholder="images/houses/example.png" />
                     </div>
                     <div class="pure-control-group">
                         <label for="awake">Awake</label>
@@ -3240,6 +3244,7 @@ if (empty($_GET['page'])) {
             <table class="pure-table pure-table-horizontal" width="100%">
                 <thead>
                     <tr>
+                        <th>Image</th>
                         <th>House</th>
                         <th>Awake</th>
                         <th>Cost</th>
@@ -3253,6 +3258,7 @@ if (empty($_GET['page'])) {
                         $buyable = $row['buyable'] ? 'accept' : 'delete';
                         $title = $row['buyable'] ? 'Yes' : 'No'; ?>
                         <tr>
+                            <td><?php echo !empty($row['image']) ? '<img src="'.format($row['image']).'" alt="'.format($row['name']).'" width="48" height="48" />' : '&nbsp;'; ?></td>
                             <td><?php echo format($row['name']); ?></td>
                             <td><?php echo format($row['awake']); ?></td>
                             <td><?php echo prettynum($row['cost'], true); ?></td>
@@ -3266,7 +3272,7 @@ if (empty($_GET['page'])) {
                 } else {
                     ?>
                     <tr>
-                        <td colspan="5" class="center">There are no houses</td>
+                        <td colspan="6" class="center">There are no houses</td>
                     </tr><?php
                 } ?>
                 </tbody>
@@ -3286,6 +3292,10 @@ if (empty($_GET['page'])) {
                 <div class="pure-control-group">
                     <label for="name">Name</label>
                     <input type="text" name="name" id="name" class="pure-u-1-2 pure-u-md-1-2" required autofocus />
+                </div>
+                <div class="pure-control-group">
+                    <label for="image">Image</label>
+                    <input type="text" name="image" id="image" class="pure-u-1-2 pure-u-md-1-2" placeholder="images/houses/example.png" />
                 </div>
                 <div class="pure-control-group">
                     <label for="awake">Awake</label>

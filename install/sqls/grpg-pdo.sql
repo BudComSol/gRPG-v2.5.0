@@ -582,11 +582,17 @@ CREATE TABLE IF NOT EXISTS `houses`
 (
     `id`      int(11)      NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `name`    varchar(191) NOT NULL DEFAULT '',
+    `image`   varchar(191) NOT NULL DEFAULT '',
     `awake`   int(11)      NOT NULL DEFAULT 100,
     `cost`    int(11)      NOT NULL DEFAULT 0,
     `buyable` int(11)      NOT NULL DEFAULT 0
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
+
+INSERT INTO `houses` (`name`, `image`, `awake`, `cost`, `buyable`)
+VALUES ('Shack', 'images/houses/shack.png', 100, 500, 1),
+       ('House', 'images/houses/house.png', 200, 5000, 1),
+       ('Fortress', 'images/houses/fortress.png', 300, 50000, 1);
 
 DROP TABLE IF EXISTS `ignorelist`;
 CREATE TABLE IF NOT EXISTS `ignorelist`
