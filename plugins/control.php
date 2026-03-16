@@ -1602,6 +1602,88 @@ if (isset($_POST['addrmpack'])) {
             </td>
         </tr><?php
     }
+} elseif (isset($_GET['editstock'])) {
+    if (empty($_GET['id'])) {
+        echo Message('You didn\'t select a valid stock', 'Error', true);
+    }
+    $db->query('SELECT id, company_name, cost FROM stocks WHERE id = ?');
+    $db->execute([$_GET['id']]);
+    if (!$db->count()) {
+        echo Message('The stock you selected doesn\'t exist', 'Error', true);
+    }
+    $row = $db->fetch(true);
+    if (isset($_POST['submit'])) {
+        if (!csrf_check('editcsrf', $_POST)) {
+            echo Message(SECURITY_TIMEOUT_MESSAGE);
+        }
+        if (empty($_POST['company_name'])) {
+            $errors[] = 'You didn\'t enter a valid company name';
+        }
+        if (empty($_POST['cost']) || !is_numeric($_POST['cost']) || $_POST['cost'] < 1) {
+            $errors[] = 'You didn\'t enter a valid cost';
+        }
+        $db->query('SELECT COUNT(id) FROM stocks WHERE company_name = ? AND id <> ?');
+        $db->execute([$_POST['company_name'], $row['id']]);
+        if ($db->result()) {
+            $errors[] = 'Another stock with the name of '.format($_POST['company_name']).' already exists';
+        }
+        if (count($errors)) {
+            display_errors($errors);
+        } else {
+            $db->query('UPDATE stocks SET company_name = ?, cost = ? WHERE id = ?');
+            $db->execute([$_POST['company_name'], $_POST['cost'], $row['id']]);
+            echo Message('You\'ve edited the stock: '.format($_POST['company_name']));
+        }
+    } else {
+        ?>
+        <tr>
+            <th class="content-head">Edit Stock</th>
+        </tr>
+        <tr>
+            <td class="content">
+                <form action="plugins/control.php?page=stocks&amp;editstock&amp;id=<?php echo $row['id']; ?>" method="post" class="pure-form pure-form-aligned">
+                    <?php echo csrf_create('editcsrf'); ?>
+                    <div class="pure-control-group">
+                        <label for="company_name">Company Name</label>
+                        <input type="text" name="company_name" id="company_name" value="<?php echo format($row['company_name']); ?>" class="pure-u-1-2 pure-u-md-1-2" required autofocus />
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="cost">Cost per Share</label>
+                        <input type="number" name="cost" id="cost" value="<?php echo format($row['cost']); ?>" class="pure-u-1-2 pure-u-md-1-2" min="1" required />
+                    </div>
+                    <div class="pure-controls">
+                        <button type="submit" name="submit" class="pure-button pure-button-primary">Edit Stock</button>
+                    </div>
+                </form>
+            </td>
+        </tr><?php
+    }
+} elseif (isset($_GET['deletestock'])) {
+    if (empty($_GET['id'])) {
+        echo Message('You didn\'t select a valid stock', 'Error', true);
+    }
+    $db->query('SELECT id, company_name, cost FROM stocks WHERE id = ?');
+    $db->execute([$_GET['id']]);
+    if (!$db->count()) {
+        echo Message('The stock you selected doesn\'t exist', 'Error', true);
+    }
+    $row = $db->fetch(true);
+    if (isset($_GET['ans'])) {
+        if (!csrf_check('delcsrf', $_GET)) {
+            echo Message(SECURITY_TIMEOUT_MESSAGE);
+        }
+        $db->query('DELETE FROM stocks WHERE id = ?');
+        $db->execute([$row['id']]);
+        echo Message('You\'ve deleted the stock: '.format($row['company_name']));
+    } else {
+        $csrf = csrf_create('delcsrf', false); ?>
+        <tr>
+            <td class="content">
+                Are you sure you wish to delete the stock: &ldquo;<?php echo format($row['company_name']); ?>&rdquo;?<br />
+                <a href="plugins/control.php?page=stocks&amp;deletestock&amp;id=<?php echo $row['id']; ?>&amp;ans=yes&amp;delcsrf=<?php echo $csrf; ?>" class="pure-button pure-button-primary">Yes, delete it</a>
+            </td>
+        </tr><?php
+    }
 } elseif (isset($_GET['settings'])) {
     if (!csrf_check('csrf', $_POST)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
@@ -3313,6 +3395,95 @@ if (empty($_GET['page'])) {
                 </div>
                 <div class="pure-controls">
                     <button type="submit" class="pure-button pure-button-primary">Add House</button>
+                </div>
+            </form>
+        </td>
+    </tr><?php
+    } elseif ($_GET['page'] === 'stocks') {
+        if (isset($_POST['addstock'])) {
+            if (!csrf_check('stock_add', $_POST)) {
+                echo Message(SECURITY_TIMEOUT_MESSAGE);
+            }
+            $stock_errors = [];
+            if (empty($_POST['company_name'])) {
+                $stock_errors[] = 'You didn\'t enter a valid company name';
+            }
+            if (empty($_POST['cost']) || !is_numeric($_POST['cost']) || $_POST['cost'] < 1) {
+                $stock_errors[] = 'You didn\'t enter a valid cost';
+            }
+            $db->query('SELECT COUNT(id) FROM stocks WHERE company_name = ?');
+            $db->execute([$_POST['company_name']]);
+            if ($db->result()) {
+                $stock_errors[] = 'Another stock with the name of '.format($_POST['company_name']).' already exists';
+            }
+            if (count($stock_errors)) {
+                display_errors($stock_errors);
+            } else {
+                $db->query('INSERT INTO stocks (company_name, cost) VALUES (?, ?)');
+                $db->execute([$_POST['company_name'], $_POST['cost']]);
+                echo Message('You\'ve added the stock: '.format($_POST['company_name']));
+            }
+        }
+        $db->query('SELECT id, company_name, cost FROM stocks ORDER BY id');
+        $db->execute();
+        $rows = $db->fetch(); ?>
+    <tr>
+        <th class="content-head">Stocks</th>
+    </tr>
+    <tr>
+        <td class="content">
+            <table class="pure-table pure-table-horizontal" width="100%">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Company Name</th>
+                        <th>Cost per Share</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody><?php
+                if ($rows !== null) {
+                    foreach ($rows as $row) { ?>
+                        <tr>
+                            <td><?php echo format($row['id']); ?></td>
+                            <td><?php echo format($row['company_name']); ?></td>
+                            <td><?php echo prettynum($row['cost'], true); ?></td>
+                            <td>
+                                [<a href="plugins/control.php?page=stocks&amp;editstock&amp;id=<?php echo $row['id']; ?>">Edit</a>] &middot;
+                                [<a href="plugins/control.php?page=stocks&amp;deletestock&amp;id=<?php echo $row['id']; ?>">Delete</a>]
+                            </td>
+                        </tr><?php
+                    }
+                } else {
+                    ?>
+                    <tr>
+                        <td colspan="4" class="center">There are no stocks</td>
+                    </tr><?php
+                } ?>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td class="content-spacer">&nbsp;</td>
+    </tr>
+    <tr>
+        <th class="content-head">Add Stock</th>
+    </tr>
+    <tr>
+        <td class="content">
+            <form action="plugins/control.php?page=stocks" method="post" class="pure-form pure-form-aligned">
+                <?php echo csrf_create('stock_add'); ?>
+                <div class="pure-control-group">
+                    <label for="company_name">Company Name</label>
+                    <input type="text" name="company_name" id="company_name" class="pure-u-1-2 pure-u-md-1-2" required autofocus />
+                </div>
+                <div class="pure-control-group">
+                    <label for="cost">Cost per Share</label>
+                    <input type="number" name="cost" id="cost" class="pure-u-1-2 pure-u-md-1-2" min="1" required />
+                </div>
+                <div class="pure-controls">
+                    <button type="submit" name="addstock" class="pure-button pure-button-primary">Add Stock</button>
                 </div>
             </form>
         </td>
