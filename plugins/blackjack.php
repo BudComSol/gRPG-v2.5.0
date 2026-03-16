@@ -40,13 +40,13 @@ elseif ((isset($_POST['stay'])) && ($_SESSION['bj_state'] === 'in_game')) {
     }
     //dealer has blackjack
     if ($dealer == 21) {
-        echo 'Dealer Got BlackJack... You lost...';
+        echo '<p>Dealer Got BlackJack, sorry but you lost.</p>';
     } elseif ($dealer >= $player) { //dealer has more points then player
         //if dealer under 21, they win
         if ($dealer < 21) {
             echo 'Dealer Won...';
         } else { //dealer busted (OVER 21)
-            echo 'Congratulations, you won. The dealer busted...';
+            echo '<p>Congratulations you won, the dealer busted.</p>';
         }
     } elseif ($player == 21) {
         //player won
@@ -54,7 +54,7 @@ elseif ((isset($_POST['stay'])) && ($_SESSION['bj_state'] === 'in_game')) {
         echo 'You got black jack...';
     } else {
         //player one by point values
-        echo 'Congratulations, You won...';
+        echo '<p>Congratulations you legend, you won.</p>';
     }
     $_SESSION['bj_state'] = 'game_over';
 } elseif (isset($_POST['new_game'])) { //create new game
@@ -164,10 +164,10 @@ function makeGame()
     <th class="content-head">Blackjack</th>
     </tr>
 <tr>
-    <td class="content center">
+    <td class="content">
         <div id="outcome" style="color:red"></div>
         <form name="form" method="post" action="">
-        <table style="margin: 0 auto">
+        <table>
             <tr>
                 <td>Dealer's Cards</td>
                 <?php
@@ -192,6 +192,7 @@ for ($x = 0; $x < 5; ++$x) {
 }
 ?>
             </tr>
+        </form>
         <?php
 //staying
 if (!isset($_POST['stay'])) {
@@ -225,6 +226,6 @@ if (!isset($_POST['stay'])) {
                 </td>
             </tr>
         </table>
-        </form>
     </td>
 </tr>
+
