@@ -64,7 +64,7 @@ $csrfg = csrf_create('csrfg', false);
 </tr>
 <tr>
     <td class="content">
-        <p><img src="images/bigcash.png" alt="bigcash"/></p>
+        <p><img src="images/headers/bigcash.png" alt="bigcash"/></p>
         <p>Are you a lucky person? You can take one of these bets daily.<br/>
         Make your choice and have the cash in your hand.<br/>
         If you win you double your stake, if you lose you may cry.</p>
