@@ -1,285 +1,112 @@
 <?php
+declare(strict_types=1);
+require_once __DIR__.'/../inc/header.php';
 
-include 'header.php';
-if ($User->gamble > 0) {
-    echo Message("<font size=2>You can only have one go per day, come back tomorrow.");
-    include 'footer.php';
-    die();
+$db->query('SELECT gamble_daily FROM users WHERE id = ?', [$user_class->id]);
+$gamble_daily = (int)$db->result();
+
+if ($gamble_daily > 0) {
+    echo Message('<p>You can only have one go per day, come back tomorrow.</p>', null, true);
 }
-if ($User->jail > 0) {
-    echo Message("<font size=2>You cannot gamble, you are in the cells.</font>");
-    include 'footer.php';
-    die();
+if ($user_class->jail > 0) {
+    echo Message('<p>You cannot gamble, you are in the cells.</p>', null, true);
 }
 
-$time = time();
-if ($_GET['bet'] == 500) {
-    if ($User->money < 500) {
-        echo Message("<font size=2>You need $500 in your hand to be able to try this gamble.</font>");
-        include 'footer.php';
-        die();
-    }
-    $chance = rand(1, 3);
-    if ($chance == "1") {
-        echo Message("<center><font size=2><br />Well done you have won $500.<br /><br /></font><br /><br /> </font>");
-        $newmoney = $User->money + 500;
-        $newgamble = $User->gamble + 1;
-        $result = $DBO->query("UPDATE grpgusers SET `money` = '" . $newmoney . "', `gamble` = '" . $newgamble . "' WHERE `id` = '" . $User->id . "' ");
-        $result = $DBO->query("INSERT INTO `million` (`userid`,`timestamp`, `text`)" . "VALUES ('" . $User->id . "','" . $time . "',  'Won $500')");
-    }
-    if ($chance == "2") {
-        echo Message("<center><font size=2><br />Gutted ... you just lost your $500.<br /><br /></font><br /><br /> </font>");
-        $newmoney = $User->money - 500;
-        $newgamble = $User->gamble + 1;
-        $result = $DBO->query("UPDATE grpgusers SET `money` = '" . $newmoney . "', `gamble` = '" . $newgamble . "' WHERE `id` = '" . $User->id . "' ");
-        $result = $DBO->query("INSERT INTO `million` (`userid`,`timestamp`, `text`)" . "VALUES ('" . $User->id . "','" . $time . "',  'Lost 500')");
-    }
-    if ($chance == "3") {
-        echo Message("<center><font size=2><br />Gutted ... you just lost your $500.<br /><br /></font><br /><br /> </font>");
-        $newmoney = $User->money - 500;
-        $newgamble = $User->gamble + 1;
-        $result = $DBO->query("UPDATE grpgusers SET `money` = '" . $newmoney . "', `gamble` = '" . $newgamble . "' WHERE `id` = '" . $User->id . "' ");
-        $result = $DBO->query("INSERT INTO `million` (`userid`,`timestamp`, `text`)" . "VALUES ('" . $User->id . "','" . $time . "',  'Lost 500')");
-    }
-}
-if ($_GET['bet'] == 1000) {
-    if ($User->money < 1000) {
-        echo Message("<font size=2>You need $1,000 in your hand to be able to try this gamble.</font>");
-        include 'footer.php';
-        die();
-    }
-    $chance = rand(1, 3);
-    if ($chance == "1") {
-        echo Message("<center><font size=2><br />Well done you have won $1,000<br /><br /></font><br /><br /> </font>");
-        $newmoney = $User->money + 1000;
-        $newgamble = $User->gamble + 1;
-        $result = $DBO->query("UPDATE grpgusers SET `money` = '" . $newmoney . "', `gamble` = '" . $newgamble . "' WHERE `id` = '" . $User->id . "' ");
-        $result = $DBO->query("INSERT INTO `million` (`userid`,`timestamp`, `text`)" . "VALUES ('" . $User->id . "','" . $time . "',  'Won 1k ')");
-    }
-    if ($chance == "2") {
-        echo Message("<center><font size=2><br />Gutted ... you just lost your $1,000.<br /><br /></font><br /><br /> </font>");
-        $newmoney = $User->money - 1000;
-        $newgamble = $User->gamble + 1;
-        $result = $DBO->query("UPDATE grpgusers SET `money` = '" . $newmoney . "', `gamble` = '" . $newgamble . "' WHERE `id` = '" . $User->id . "' ");
-        $result = $DBO->query("INSERT INTO `million` (`userid`,`timestamp`, `text`)" . "VALUES ('" . $User->id . "','" . $time . "',  'Lost 1 k')");
-    }
-    if ($chance == "3") {
-        echo Message("<center><font size=2><br />Gutted ... you just lost your $1,000.<br /><br /></font><br /><br /> </font>");
-        $newmoney = $User->money - 1000;
-        $newgamble = $User->gamble + 1;
-        $result = $DBO->query("UPDATE grpgusers SET `money` = '" . $newmoney . "', `gamble` = '" . $newgamble . "' WHERE `id` = '" . $User->id . "' ");
-        $result = $DBO->query("INSERT INTO `million` (`userid`,`timestamp`, `text`)" . "VALUES ('" . $User->id . "','" . $time . "',  'Lost 1k ')");
-    }
+$allowed_bets = [500, 1000, 2500, 50000, 500000, 5000000];
+$bet_odds = [
+    500     => [1, 3],
+    1000    => [1, 3],
+    2500    => [1, 4],
+    50000   => [1, 5],
+    500000  => [1, 5],
+    5000000 => [1, 5],
+];
 
-}
-if ($_GET['bet'] == 2500) {
-    if ($User->money < 2500) {
-        echo Message("<font size=2>You need $2,500 in your hand to be able to try this gamble.</font>");
-        include 'footer.php';
-        die();
-    }
-    $chance = rand(1, 4);
-    if ($chance == "1") {
-        echo Message("<center><font size=2><br />Well done you have won $2,500<br /><br /></font><br /><br /> </font>");
-        $newmoney = $User->money + 2500;
-        $newgamble = $User->gamble + 1;
-        $result = $DBO->query("UPDATE grpgusers SET `money` = '" . $newmoney . "', `gamble` = '" . $newgamble . "' WHERE `id` = '" . $User->id . "' ");
-        $result = $DBO->query("INSERT INTO `million` (`userid`,`timestamp`, `text`)" . "VALUES ('" . $User->id . "','" . $time . "',  'Won 2.500 ')");
-    }
-    if ($chance == "2") {
-        echo Message("<center><font size=2><br />Gutted ... you just lost your $2,500.<br /><br /></font><br /><br /> </font>");
-        $newmoney = $User->money - 2500;
-        $newgamble = $User->gamble + 1;
-        $result = $DBO->query("UPDATE grpgusers SET `money` = '" . $newmoney . "', `gamble` = '" . $newgamble . "' WHERE `id` = '" . $User->id . "' ");
-        $result = $DBO->query("INSERT INTO `million` (`userid`,`timestamp`, `text`)" . "VALUES ('" . $User->id . "','" . $time . "',  'Lost 2.500 ')");
-    }
-    if ($chance == "3") {
-        echo Message("<center><font size=2><br />Gutted ... you just lost your $2,500.<br /><br /></font><br /><br /> </font>");
-        $newmoney = $User->money - 2500;
-        $newgamble = $User->gamble + 1;
-        $result = $DBO->query("UPDATE grpgusers SET `money` = '" . $newmoney . "', `gamble` = '" . $newgamble . "' WHERE `id` = '" . $User->id . "' ");
-        $result = $DBO->query("INSERT INTO `million` (`userid`,`timestamp`, `text`)" . "VALUES ('" . $User->id . "','" . $time . "',  'Lost 2.500 ')");
-    }
-    if ($chance == "4") {
-        echo Message("<center><font size=2><br />Gutted ... you just lost your $2,500.<br /><br /></font><br /><br /> </font>");
-        $newmoney = $User->money - 2500;
-        $newgamble = $User->gamble + 1;
-        $result = $DBO->query("UPDATE grpgusers SET `money` = '" . $newmoney . "', `gamble` = '" . $newgamble . "' WHERE `id` = '" . $User->id . "' ");
-        $result = $DBO->query("INSERT INTO `million` (`userid`,`timestamp`, `text`)" . "VALUES ('" . $User->id . "','" . $time . "',  'Lost 2.500 ')");
-    }
-
-}
-if ($_GET['bet'] == 50000) {
-    if ($User->money < 50000) {
-        echo Message("<font size=2>You need $50,000 in your hand to be able to try this gamble.</font>");
-        include 'footer.php';
-        die();
-    }
-    $chance = rand(1, 5);
-    if ($chance == "1") {
-        echo Message("<center><font size=2><br />Well done you have won $50,000<br /><br /></font><br /><br /> </font>");
-        $newmoney = $User->money + 50000;
-        $newgamble = $User->gamble + 1;
-        $result = $DBO->query("UPDATE grpgusers SET `money` = '" . $newmoney . "', `gamble` = '" . $newgamble . "' WHERE `id` = '" . $User->id . "' ");
-        $result = $DBO->query("INSERT INTO `million` (`userid`,`timestamp`, `text`)" . "VALUES ('" . $User->id . "','" . $time . "',  'Won 50k ')");
-    }
-    if ($chance == "2") {
-        echo Message("<center><font size=2><br />Gutted ... you just lost your $50,000.<br /><br /></font><br /><br /> </font>");
-        $newmoney = $User->money - 50000;
-        $newgamble = $User->gamble + 1;
-        $result = $DBO->query("UPDATE grpgusers SET `money` = '" . $newmoney . "', `gamble` = '" . $newgamble . "' WHERE `id` = '" . $User->id . "' ");
-        $result = $DBO->query("INSERT INTO `million` (`userid`,`timestamp`, `text`)" . "VALUES ('" . $User->id . "','" . $time . "',  'Lost 50k')");
-    }
-    if ($chance == "3") {
-        echo Message("<center><font size=2><br />Gutted ... you just lost your $50,000.<br /><br /></font><br /><br /> </font>");
-        $newmoney = $User->money - 50000;
-        $newgamble = $User->gamble + 1;
-        $result = $DBO->query("UPDATE grpgusers SET `money` = '" . $newmoney . "', `gamble` = '" . $newgamble . "' WHERE `id` = '" . $User->id . "' ");
-        $result = $DBO->query("INSERT INTO `million` (`userid`,`timestamp`, `text`)" . "VALUES ('" . $User->id . "','" . $time . "',  'Lost 50k ')");
-    }
-    if ($chance == "4") {
-        echo Message("<center><font size=2><br />Gutted ... you just lost your $50,000.<br /><br /></font><br /><br /> </font>");
-        $newmoney = $User->money - 50000;
-        $newgamble = $User->gamble + 1;
-        $result = $DBO->query("UPDATE grpgusers SET `money` = '" . $newmoney . "', `gamble` = '" . $newgamble . "' WHERE `id` = '" . $User->id . "' ");
-        $result = $DBO->query("INSERT INTO `million` (`userid`,`timestamp`, `text`)" . "VALUES ('" . $User->id . "','" . $time . "',  'Lost 50k ')");
-    }
-    if ($chance == "5") {
-        echo Message("<center><font size=2><br />Gutted ... you just lost your $50,000.<br /><br /></font><br /><br /> </font>");
-        $newmoney = $User->money - 50000;
-        $newgamble = $User->gamble + 1;
-        $result = $DBO->query("UPDATE grpgusers SET `money` = '" . $newmoney . "', `gamble` = '" . $newgamble . "' WHERE `id` = '" . $User->id . "' ");
-        $result = $DBO->query("INSERT INTO `million` (`userid`,`timestamp`, `text`)" . "VALUES ('" . $User->id . "','" . $time . "',  'Lost 50k ')");
+$bet = null;
+if (array_key_exists('bet', $_GET)) {
+    $bet_val = filter_var($_GET['bet'], FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+    if ($bet_val !== false && in_array($bet_val, $allowed_bets, true)) {
+        $bet = $bet_val;
     }
 }
 
-if ($_GET['bet'] == 500000) {
-    if ($User->money < 500000) {
-        echo Message("<font size=2>You need $500,000 in your hand to be able to try this gamble.</font>");
-        include 'footer.php';
-        die();
+if ($bet !== null) {
+    if (!csrf_check('csrfg', $_GET)) {
+        echo Message(SECURITY_TIMEOUT_MESSAGE, null, true);
     }
-    $chance = rand(1, 5);
-    if ($chance == "1") {
-        echo Message("<center><font size=2><br />Well done you have won $500,000<br /><br /></font><br /><br /> </font>");
-        $newmoney = $User->money + 500000;
-        $newgamble = $User->gamble + 1;
-        $result = $DBO->query("UPDATE grpgusers SET `money` = '" . $newmoney . "', `gamble` = '" . $newgamble . "' WHERE `id` = '" . $User->id . "' ");
-        $result = $DBO->query("INSERT INTO `million` (`userid`,`timestamp`, `text`)" . "VALUES ('" . $User->id . "','" . $time . "',  'Won')");
+    if ($user_class->money < $bet) {
+        echo Message('<p>You need '.prettynum($bet, true).' in your hand to be able to try this gamble.</p>', null, true);
     }
-    if ($chance == "2") {
-        echo Message("<center><font size=2><br />Gutted ... you just lost your $500,000.<br /><br /></font><br /><br /> </font>");
-        $newmoney = $User->money - 500000;
-        $newgamble = $User->gamble + 1;
-        $result = $DBO->query("UPDATE grpgusers SET `money` = '" . $newmoney . "', `gamble` = '" . $newgamble . "' WHERE `id` = '" . $User->id . "' ");
-        $result = $DBO->query("INSERT INTO `million` (`userid`,`timestamp`, `text`)" . "VALUES ('" . $User->id . "','" . $time . "',  'Lost')");
-    }
-    if ($chance == "3") {
-        echo Message("<center><font size=2><br />Gutted ... you just lost your $500,000.<br /><br /></font><br /><br /> </font>");
-        $newmoney = $User->money - 500000;
-        $newgamble = $User->gamble + 1;
-        $result = $DBO->query("UPDATE grpgusers SET `money` = '" . $newmoney . "', `gamble` = '" . $newgamble . "' WHERE `id` = '" . $User->id . "' ");
-        $result = $DBO->query("INSERT INTO `million` (`userid`,`timestamp`, `text`)" . "VALUES ('" . $User->id . "','" . $time . "',  'Lost')");
-    }
-    if ($chance == "4") {
-        echo Message("<center><font size=2><br />Gutted ... you just lost your $500,000.<br /><br /></font><br /><br /> </font>");
-        $newmoney = $User->money - 500000;
-        $newgamble = $User->gamble + 1;
-        $result = $DBO->query("UPDATE grpgusers SET `money` = '" . $newmoney . "', `gamble` = '" . $newgamble . "' WHERE `id` = '" . $User->id . "' ");
-        $result = $DBO->query("INSERT INTO `million` (`userid`,`timestamp`, `text`)" . "VALUES ('" . $User->id . "','" . $time . "',  'Lost')");
-    }
-    if ($chance == "5") {
-        echo Message("<center><font size=2><br />Gutted ... you just lost your $500,000.<br /><br /></font><br /><br /> </font>");
-        $newmoney = $User->money - 500000;
-        $newgamble = $User->gamble + 1;
-        $result = $DBO->query("UPDATE grpgusers SET `money` = '" . $newmoney . "', `gamble` = '" . $newgamble . "' WHERE `id` = '" . $User->id . "' ");
-        $result = $DBO->query("INSERT INTO `million` (`userid`,`timestamp`, `text`)" . "VALUES ('" . $User->id . "','" . $time . "',  'Lost')");
+    [$win_value, $range] = $bet_odds[$bet];
+    $chance = mt_rand(1, $range);
+    $time = time();
+    $db->trans('start');
+    if ($chance === $win_value) {
+        $db->query('UPDATE users SET money = money + ?, gamble_daily = 1 WHERE id = ?');
+        $db->execute([$bet, $user_class->id]);
+        $db->query('INSERT INTO foolsgamble_log (userid, timestamp, text) VALUES (?, ?, ?)');
+        $db->execute([$user_class->id, $time, 'Won '.prettynum($bet)]);
+        $db->trans('end');
+        echo Message('<p>Well done, you have won '.prettynum($bet, true).'!</p>', null, true);
+    } else {
+        $db->query('UPDATE users SET money = GREATEST(money - ?, 0), gamble_daily = 1 WHERE id = ?');
+        $db->execute([$bet, $user_class->id]);
+        $db->query('INSERT INTO foolsgamble_log (userid, timestamp, text) VALUES (?, ?, ?)');
+        $db->execute([$user_class->id, $time, 'Lost '.prettynum($bet)]);
+        $db->trans('end');
+        echo Message('<p>Gutted ... you just lost '.prettynum($bet, true).'.</p>', null, true);
     }
 }
 
-if ($_GET['bet'] == 5000000) {
-    if ($User->money < 5000000) {
-        echo Message("<font size=2>You need $5,000,000 in your hand to be able to try this gamble.</font>");
-        include 'footer.php';
-        die();
-    }
-    $chance = rand(1, 5);
-    if ($chance == "1") {
-        echo Message("<center><font size=2><br />Well done you have won $5,000,000<br /><br /></font><br /><br /> </font>");
-        $newmoney = $User->money + 5000000;
-        $newgamble = $User->gamble + 1;
-        $result = $DBO->query("UPDATE grpgusers SET `money` = '" . $newmoney . "', `gamble` = '" . $newgamble . "' WHERE `id` = '" . $User->id . "' ");
-        $result = $DBO->query("INSERT INTO `million` (`userid`,`timestamp`, `text`)" . "VALUES ('" . $User->id . "','" . $time . "',  'Won 5 million')");
-    }
-    if ($chance == "2") {
-        echo Message("<center><font size=2><br />Gutted ... you just lost lost $5,000,000.<br /><br /></font><br /><br /> </font>");
-        $newmoney = $User->money - 5000000;
-        $newgamble = $User->gamble + 1;
-        $result = $DBO->query("UPDATE grpgusers SET `money` = '" . $newmoney . "', `gamble` = '" . $newgamble . "' WHERE `id` = '" . $User->id . "' ");
-        $result = $DBO->query("INSERT INTO `million` (`userid`,`timestamp`, `text`)" . "VALUES ('" . $User->id . "','" . $time . "',  'Lost 5 million')");
-    }
-    if ($chance == "3") {
-        echo Message("<center><font size=2><br />Gutted ... you just lost your $5,000,000.<br /><br /></font><br /><br /> </font>");
-        $newmoney = $User->money - 5000000;
-        $newgamble = $User->gamble + 1;
-        $result = $DBO->query("UPDATE grpgusers SET `money` = '" . $newmoney . "', `gamble` = '" . $newgamble . "' WHERE `id` = '" . $User->id . "' ");
-        $result = $DBO->query("INSERT INTO `million` (`userid`,`timestamp`, `text`)" . "VALUES ('" . $User->id . "','" . $time . "',  'Lost 5 million')");
-    }
-    if ($chance == "4") {
-        echo Message("<center><font size=2><br />Gutted ... you just lost your $5,000,000.<br /><br /></font><br /><br /> </font>");
-        $newmoney = $User->money - 5000000;
-        $newgamble = $User->gamble + 1;
-        $result = $DBO->query("UPDATE grpgusers SET `money` = '" . $newmoney . "', `gamble` = '" . $newgamble . "' WHERE `id` = '" . $User->id . "' ");
-        $result = $DBO->query("INSERT INTO `million` (`userid`,`timestamp`, `text`)" . "VALUES ('" . $User->id . "','" . $time . "',  'Lost 5 million')");
-    }
-    if ($chance == "5") {
-        echo Message("<center><font size=2><br />Gutted ... you just lost your $5,000,000.<br /><br /></font><br /><br /> </font>");
-        $newmoney = $User->money - 5000000;
-        $newgamble = $User->gamble + 1;
-        $result = $DBO->query("UPDATE grpgusers SET `money` = '" . $newmoney . "', `gamble` = '" . $newgamble . "' WHERE `id` = '" . $User->id . "' ");
-        $result = $DBO->query("INSERT INTO `million` (`userid`,`timestamp`, `text`)" . "VALUES ('" . $User->id . "','" . $time . "',  'Lost 5 million')");
-    }
-}
-
-
-?>
-
-<tr>
-    <td class="contenthead">Fools Gamble</td>
+$csrfg = csrf_create('csrfg', false);
+?><tr>
+    <th class="content-head">Fools Gamble</th>
 </tr>
-
 <tr>
-    <td class="contentprofile">
-        <center>
-            <br/><br/>
-            <img src="images/bigcash.png" alt="bigcash" BORDER='0'/> <br/><br/><font size=2>Are you a lucky person?<br/>You
-                can take one of these bets daily.<br/>Make your choice and have the cash in your hand<br/>If
-                you win you double your stake, if you lose you may cry.<br/><br/>
-                <a href='foolsgamble.php?bet=500'><font color=orange><font size=3>[ 500  ]</a>
-                <a href='foolsgamble.php?bet=1000'><font color=orange><font size=3>[ 1000 ]</a>
-                <a href='foolsgamble.php?bet=2500'><font color=orange><font size=3>[ 2500 ]</a>
-                <a href='foolsgamble.php?bet=50000'><font color=orange><font size=3>[ 50 k] </a>
-                <a href='foolsgamble.php?bet=500000'><font color=orange><font size=3>[ 500 k] </a>
-                <a href='foolsgamble.php?bet=5000000'><font color=orange><font size=3>[ 5 mil] </a>
-                <br/><br/><br/>
-                <a href='city.php'><font size=3>[F^%& Off .... I'm Keeping My Cash]</a><br/><br/>
-
-
+    <td class="content">
+        <p><img src="images/bigcash.png" alt="bigcash"/></p>
+        <p>Are you a lucky person? You can take one of these bets daily.<br/>
+        Make your choice and have the cash in your hand.<br/>
+        If you win you double your stake, if you lose you may cry.</p>
+        <p>
+            <?php foreach ($allowed_bets as $b) { ?>
+            <a href="plugins/foolsgamble.php?bet=<?php echo $b; ?>&amp;csrfg=<?php echo $csrfg; ?>" class="pure-button"><?php echo prettynum($b, true); ?></a>
+            <?php } ?>
+        </p>
+        <p><a href="plugins/city.php">No thanks, I'm keeping my cash.</a></p>
+    </td>
+</tr>
+<tr>
+    <th class="content-head">Last 10 Fools Gamble Results</th>
+</tr>
+<tr>
+    <td class="content">
+        <table width="100%" class="pure-table pure-table-horizontal">
+            <thead>
+                <tr>
+                    <th>Thug</th>
+                    <th>Date</th>
+                    <th>Outcome</th>
+                </tr>
+            </thead><?php
+$db->query('SELECT userid, timestamp, text FROM foolsgamble_log ORDER BY timestamp DESC LIMIT 10');
+$db->execute();
+$log_rows = $db->fetch();
+if ($log_rows !== null) {
+    foreach ($log_rows as $log_row) {
+        $log_user = new User($log_row['userid']); ?>
+        <tr>
+            <td><?php echo $log_user->formattedname; ?></td>
+            <td><?php echo date('M d, Y g:i:sa', (int)$log_row['timestamp']); ?></td>
+            <td><?php echo htmlspecialchars($log_row['text'], ENT_QUOTES, 'UTF-8'); ?></td>
+        </tr><?php
+    }
+} else { ?>
+        <tr>
+            <td colspan="3" class="center"><p>No gambles have been placed yet.</p></td>
+        </tr><?php
+} ?>
+        </table>
     </td>
 </tr>
 
-<?php
-$result = $DBO->query("SELECT * FROM `million` ORDER BY `timestamp` DESC LIMIT 10");
-
-echo '<table width=100% cellpadding=4 cellspacing=0 class=contentcontent>
-	<tr><td colspan="3" class="contenthead">Last 10 Fools Results</td></tr>
-	<tr><td class="contenthead"><font size=2>Thug</td><td class="contenthead"><font size=2>Date</td><td class="contenthead"><font size=2>Outcome</td></tr>';
-while ($line = $DBO->fetch_array($result, MYSQL_ASSOC)) {
-
-    $l_winner = UserFactory::getInstance()->getUser($line['userid']);
-    $text = ($line['text']);
-    print "<tr><td><font size=2>" . $l_winner->formattedname . "</td><td><font size=2>" . date(F . " " . d . ",  " . g . ":" . i . ":" . sa, $line['timestamp']) . "</td><td><font size=2>" . $text . "</td></tr>";
-}
-echo '</td></tr>';
-include 'footer.php';
-?>

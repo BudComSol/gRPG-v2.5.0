@@ -314,6 +314,17 @@ CREATE TABLE IF NOT EXISTS `forgot_password`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
+DROP TABLE IF EXISTS `foolsgamble_log`;
+CREATE TABLE IF NOT EXISTS `foolsgamble_log`
+(
+    `id`        int(11)      NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `userid`    int(11)      NOT NULL DEFAULT 0,
+    `timestamp` int(11)      NOT NULL DEFAULT 0,
+    `text`      varchar(191) NOT NULL DEFAULT '',
+    KEY `idx_timestamp` (`timestamp`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+
 DROP TABLE IF EXISTS `forum_boards`;
 CREATE TABLE IF NOT EXISTS `forum_boards`
 (
@@ -1197,7 +1208,8 @@ CREATE TABLE IF NOT EXISTS `users`
     `hookers`         int(11)                        NOT NULL DEFAULT 0,
     `slapping`        int(11)                        NOT NULL DEFAULT 0,
     `slapped`         int(11)                        NOT NULL DEFAULT 0,
-    `barpoints`       int(11)                        NOT NULL DEFAULT 0
+    `barpoints`       int(11)                        NOT NULL DEFAULT 0,
+    `gamble_daily`    int(11)                        NOT NULL DEFAULT 0
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 2
   DEFAULT CHARSET = latin1;
