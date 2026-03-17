@@ -122,6 +122,11 @@ class database
                 return $this->execute($params);
             }
         } catch (PDOException $e) {
+            if (function_exists('log_database_error')) {
+                log_database_error('Query error: ' . $e->getMessage(), ['query' => $query]);
+            } else {
+                error_log('Query error: ' . $e->getMessage());
+            }
             exit('<p style="color:red;"><strong>QUERY ERROR</strong></p><pre>' . $e->getMessage() . '</pre>');
         }
         return null;
@@ -171,6 +176,11 @@ class database
         try {
             $this->stmt->bindValue($param, $value, $type);
         } catch (PDOException $e) {
+            if (function_exists('log_database_error')) {
+                log_database_error('Bind error: ' . $e->getMessage(), ['param' => $param]);
+            } else {
+                error_log('Bind error: ' . $e->getMessage());
+            }
             exit('<p style="color:red;"><strong>BIND ERROR</strong></p><pre>' . $e->getMessage() . '</pre>');
         }
     }
@@ -192,6 +202,11 @@ class database
             $this->executed = true;
             return $result;
         } catch (PDOException $e) {
+            if (function_exists('log_database_error')) {
+                log_database_error('Execution error: ' . $e->getMessage());
+            } else {
+                error_log('Execution error: ' . $e->getMessage());
+            }
             echo '<p style="color:red;"><strong>EXECUTION ERROR</strong></p><pre>' . $e->getMessage() . '</pre><p><pre>';
             /** @noinspection ForgottenDebugOutputInspection */
             var_dump($this->stmt->debugDumpParams());
@@ -220,6 +235,11 @@ class database
             }
             $ret = $this->stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
+            if (function_exists('log_database_error')) {
+                log_database_error('Fetch row error: ' . $e->getMessage());
+            } else {
+                error_log('Fetch row error: ' . $e->getMessage());
+            }
             exit('<p style="color:red;"><strong>FETCH ROW ERROR</strong></p><pre>' . $e->getMessage() . '</pre>');
         }
         if(empty($ret)) {
@@ -251,6 +271,11 @@ class database
 
             return $this->stmt->fetchColumn($col);
         } catch (PDOException $e) {
+            if (function_exists('log_database_error')) {
+                log_database_error('Fetch single error: ' . $e->getMessage());
+            } else {
+                error_log('Fetch single error: ' . $e->getMessage());
+            }
             exit('<p style="color:red;"><strong>FETCH SINGLE ERROR</strong></p><pre>' . $e->getMessage() . '</pre>');
         }
     }
@@ -272,6 +297,11 @@ class database
 
             return $this->stmt->fetch(PDO::FETCH_OBJ);
         } catch (PDOException $e) {
+            if (function_exists('log_database_error')) {
+                log_database_error('Fetch object error: ' . $e->getMessage());
+            } else {
+                error_log('Fetch object error: ' . $e->getMessage());
+            }
             exit('<p style="color:red;"><strong>FETCH OBJECT ERROR</strong></p><pre>' . $e->getMessage() . '</pre>');
         }
     }
@@ -286,6 +316,11 @@ class database
         try {
             return $this->stmt->rowCount();
         } catch (PDOException $e) {
+            if (function_exists('log_database_error')) {
+                log_database_error('Affected rows error: ' . $e->getMessage());
+            } else {
+                error_log('Affected rows error: ' . $e->getMessage());
+            }
             exit('<p style="color:red;"><strong>AFFECTED ROWS ERROR</strong></p><pre>' . $e->getMessage() . '</pre>');
         }
     }
@@ -302,6 +337,11 @@ class database
         try {
             return (int)$this->stmt->rowCount();
         } catch (PDOException $e) {
+            if (function_exists('log_database_error')) {
+                log_database_error('Num rows error: ' . $e->getMessage());
+            } else {
+                error_log('Num rows error: ' . $e->getMessage());
+            }
             exit('<p style="color:red;"><strong>NUM ROWS ERROR</strong></p><pre>' . $e->getMessage() . '</pre>');
         }
     }
@@ -317,6 +357,11 @@ class database
             $id = $this->db->lastInsertId();
             return $id > 0 ? (int)$id : null;
         } catch (PDOException $e) {
+            if (function_exists('log_database_error')) {
+                log_database_error('Last insert ID error: ' . $e->getMessage());
+            } else {
+                error_log('Last insert ID error: ' . $e->getMessage());
+            }
             exit('<p style="color:red;"><strong>LAST INSERT ID ERROR</strong></p><pre>' . $e->getMessage() . '</pre>');
         }
     }
@@ -339,6 +384,11 @@ class database
         try {
             $this->db->$function();
         } catch (Exception $e) {
+            if (function_exists('log_database_error')) {
+                log_database_error(strtoupper($which) . ' transaction error: ' . $e->getMessage());
+            } else {
+                error_log(strtoupper($which) . ' transaction error: ' . $e->getMessage());
+            }
             exit('<strong>' . strtoupper($which) . ' TRANSACTION ERROR:</strong> ' . $e->getMessage());
         }
     }

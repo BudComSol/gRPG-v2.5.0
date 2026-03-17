@@ -1600,7 +1600,7 @@ function send_game_mail(string $to, string $subject, string $body): bool
     $errstr = '';
     $socket = @fsockopen($transport, $smtpPort, $errno, $errstr, 10);
     if ($socket === false) {
-        log_error('SMTP connect failed: ' . $errstr, 'error', ['host' => $smtpHost, 'port' => $smtpPort]);
+        log_error('SMTP connect failed: ' . $errstr, 'ERROR', ['host' => $smtpHost, 'port' => $smtpPort]);
         return false;
     }
     stream_set_timeout($socket, 10);
