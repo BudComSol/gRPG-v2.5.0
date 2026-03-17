@@ -445,10 +445,12 @@ class database
             return false;
         }
         try {
-            $result = $this->db->query('SELECT 1 FROM `' . $table . '` LIMIT 1');
-            return $result !== false;
+            $stmt = $this->db->prepare(
+                'SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?'
+            );
+            $stmt->execute([$table]);
+            return (bool)$stmt->fetchColumn();
         } catch (Exception $e) {
-            /** @noinspection ForgottenDebugOutputInspection */
             if (function_exists('log_database_error')) {
                 log_database_error('Table existence check failed: ' . $e->getMessage(), ['table' => $table]);
             } else {
