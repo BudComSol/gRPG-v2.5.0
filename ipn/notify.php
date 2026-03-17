@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 define('GRPG_INC', true);
 ini_set('log_errors', true);
-ini_set('error_log', __DIR__.'/ipn_errors.log');
+ini_set('error_log', dirname(__DIR__).'/logs/error.log');
 // instantiate the IpnListener class
 require_once __DIR__.'/ipnlistener.php';
 $listener = new ipnlistener();
@@ -13,8 +13,12 @@ try {
     $listener->requirePostMethod();
     $verified = $listener->processIpn();
 } catch (Exception $e) {
-    /** @noinspection ForgottenDebugOutputInspection */
-    error_log($e->getMessage());
+    if (function_exists('log_error')) {
+        log_error('IPN listener error: ' . $e->getMessage(), 'ERROR');
+    } else {
+        /** @noinspection ForgottenDebugOutputInspection */
+        error_log($e->getMessage());
+    }
     exit;
 }
 $errorMail = 'errors@'.rtrim(str_replace(['http://', 'https://', 'www.'], '', BASE_URL), '/');
