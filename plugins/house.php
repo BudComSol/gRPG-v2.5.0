@@ -2,6 +2,22 @@
 declare(strict_types=1);
 require_once __DIR__.'/../inc/header.php';
 $_GET['buy'] = array_key_exists('buy', $_GET) && ctype_digit($_GET['buy']) ? $_GET['buy'] : null;
+$_GET['action'] = array_key_exists('action', $_GET) ? $_GET['action'] : null;
+if ($_GET['action'] === 'sell' && $user_class->house > 0) {
+    if (!csrf_check('csrfg', $_GET)) {
+        echo Message(SECURITY_TIMEOUT_MESSAGE);
+    } else {
+        $db->query('SELECT cost FROM houses WHERE id = ?');
+        $db->execute([$user_class->house]);
+        if ($db->count()) {
+            $refund = (int) round($db->result() * .75);
+            $db->query('UPDATE users SET house = 0, money = money + ? WHERE id = ?');
+            $db->execute([$refund, $user_class->id]);
+            $user_class->house = 0;
+            echo Message('You have sold your house and received '.prettynum($refund, true));
+        }
+    }
+}
 if (!empty($_GET['buy'])) {
     if (!csrf_check('csrfg', $_GET)) {
         echo Message(SECURITY_TIMEOUT_MESSAGE);
@@ -30,12 +46,13 @@ if (!empty($_GET['buy'])) {
 $db->query('SELECT id, name, image, awake, cost FROM houses ORDER BY id ');
 $db->execute();
 $rows = $db->fetch();
+$csrfg = csrf_create('csrfg', false);
 ?><tr>
     <th class="content-head">Move House</th>
 </tr><?php
 if ($user_class->house > 0) {
     ?><tr>
-        <td class="content center"><a href="plugins/house.php?action=sell">Sell Your House</a></td>
+        <td class="content center"><a href="plugins/house.php?action=sell&amp;csrfg=<?php echo $csrfg; ?>">Sell Your House</a></td>
     </tr><?php
 }
 ?><tr>
@@ -51,7 +68,6 @@ if ($user_class->house > 0) {
                 </tr>
             </thead><?php
 if ($rows !== null) {
-        $csrfg = csrf_create('csrfg', false);
         foreach ($rows as $row) {
             ?><tr>
                     <td><?php echo !empty($row['image']) ? '<img src="'.format($row['image']).'" alt="'.format($row['name']).'" width="64" height="64" />' : '&nbsp;'; ?></td>
