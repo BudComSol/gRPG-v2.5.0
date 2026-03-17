@@ -356,6 +356,12 @@ SITE_URL="'.$siteUrl.'"
             require_once $mainPath . '/inc/dbcon.php';
             $db = database::getInstance(); // Manually instantiate DB connection for database installation
             ?><h2 class="content-subhead">We're connected, now let's install the database.</h2><?php
+            $db->query('SHOW TABLES');
+            $db->execute();
+            $existingTables = $db->fetch();
+            if ($existingTables !== null) {
+                error('Existing tables detected in DB, please drop all tables or begin with an empty DB to continue.');
+            }
             $templineMain = '';
             $lines = file($sqlPathMain);
             foreach ($lines as $line) {
