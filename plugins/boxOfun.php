@@ -98,27 +98,34 @@ require_once __DIR__.'/../inc/header.php';
 
             $('#firstblock').click(function () {
                 $('#firstblock').css("background-color", "blue");
-                var sound2 = new Audio("bonk.mp3");
+                var sound2 = new Audio("/sounds/bonk.mp3");
                 sound2.play();
             });
             $('#secblock').click(function () {
                 $('#secblock').css("background-color", "green");
+                var sound2 = new Audio("/sounds/bonk.mp3");
+                sound2.play();
             });
             $('#thirdblock').click(function () {
                 $('#thirdblock').css("background-color", "red");
+                var sound2 = new Audio("/sounds/bonk.mp3");
+                sound2.play();
             });
             $('#fourthblock').click(function () {
                 $('#fourthblock').css("background-color", "blue");
+                var sound2 = new Audio("/sounds/bonk.mp3");
+                sound2.play();
             });
             $('#fifthblock').click(function () {
-                var scary = $('#scary');
-                scary.show();
-                scary.one('click', function () {
-                    scary.hide();
-                });
+                $('div').fadeOut('fast');
+                $('#scary').delay(600).fadeIn('fast');
+                var sound = new Audio("/sounds/scream.mp3");
+                sound.play();
             });
             $('#sixthblock').click(function () {
                 $('#sixthblock').css("background-color", "yellow");
+                var sound2 = new Audio("/sounds/bonk.mp3");
+                sound2.play();
             });
         });
         </script>
