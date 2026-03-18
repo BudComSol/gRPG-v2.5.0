@@ -87,15 +87,14 @@ require_once __DIR__.'/../inc/header.php';
         </div>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         <script>
+        alert("Welcome to the Box-O-Fun!");
+        alert("You think you're clever do you?");
+        alert("Good, cause only GENIUSES can solve this little puzzle!");
+        alert("The aim of the game is to make all of the boxes the same color, easy huh?");
+        alert("Click on the boxes to make them change colors!");
+        alert("But wait! You can only make them change colors once. You'll have to click every block in order to change the color a second time.");
+        alert("Make sure you turn up your sound to enjoy the full potential of this lively game!");
         $(document).ready(function () {
-            alert("Welcome to the Box-O-Fun!");
-            alert("You think you're clever do you?");
-            alert("Good, cause only GENIUSES can solve this little puzzle!");
-            alert("The aim of the game is to make all of the boxes the same color, easy huh?");
-            alert("Click on the boxes to make them change colors!");
-            alert("But wait! You can only make them change colors once. You'll have to click every block in order to change the color a second time.");
-            alert("Make sure you turn up your sound to enjoy the full potential of this lively game!");
-
             $('#firstblock').click(function () {
                 $('#firstblock').css("background-color", "blue");
                 var sound2 = new Audio("/sounds/bonk.mp3");
