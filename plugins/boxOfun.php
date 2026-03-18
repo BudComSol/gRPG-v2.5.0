@@ -76,7 +76,6 @@ require_once __DIR__.'/../inc/header.php';
           z-index:1;
         }
         </style>
-        <p>Welcome to the Box-O-Fun! The aim of the game is to make all of the boxes the same colour. Click on the boxes to make them change colours!</p>
         <div id="body">
             <div id="firstblock"></div>
             <div id="secblock"></div>
@@ -86,31 +85,42 @@ require_once __DIR__.'/../inc/header.php';
             <div id="sixthblock"></div>
             <img id="scary" src="images/scarecrow-creepy-smile.gif" alt="BOO!" style="max-width:100%;max-height:100%;"/>
         </div>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         <script>
-        (function () {
-            document.getElementById('firstblock').addEventListener('click', function () {
-                document.getElementById('firstblock').style.backgroundColor = 'blue';
+        $(document).ready(function () {
+            alert("Welcome to the Box-O-Fun!");
+            alert("You think you're clever do you?");
+            alert("Good, cause only GENIUSES can solve this little puzzle!");
+            alert("The aim of the game is to make all of the boxes the same color, easy huh?");
+            alert("Click on the boxes to make them change colors!");
+            alert("But wait! You can only make them change colors once. You'll have to click every block in order to change the color a second time.");
+            alert("Make sure you turn up your sound to enjoy the full potential of this lively game!");
+
+            $('#firstblock').click(function () {
+                $('#firstblock').css("background-color", "blue");
+                var sound2 = new Audio("bonk.mp3");
+                sound2.play();
             });
-            document.getElementById('secblock').addEventListener('click', function () {
-                document.getElementById('secblock').style.backgroundColor = 'green';
+            $('#secblock').click(function () {
+                $('#secblock').css("background-color", "green");
             });
-            document.getElementById('thirdblock').addEventListener('click', function () {
-                document.getElementById('thirdblock').style.backgroundColor = 'red';
+            $('#thirdblock').click(function () {
+                $('#thirdblock').css("background-color", "red");
             });
-            document.getElementById('fourthblock').addEventListener('click', function () {
-                document.getElementById('fourthblock').style.backgroundColor = 'blue';
+            $('#fourthblock').click(function () {
+                $('#fourthblock').css("background-color", "blue");
             });
-            document.getElementById('fifthblock').addEventListener('click', function () {
-                var scary = document.getElementById('scary');
-                scary.style.display = 'block';
-                scary.addEventListener('click', function () {
-                    scary.style.display = 'none';
-                }, { once: true });
+            $('#fifthblock').click(function () {
+                var scary = $('#scary');
+                scary.show();
+                scary.one('click', function () {
+                    scary.hide();
+                });
             });
-            document.getElementById('sixthblock').addEventListener('click', function () {
-                document.getElementById('sixthblock').style.backgroundColor = 'yellow';
+            $('#sixthblock').click(function () {
+                $('#sixthblock').css("background-color", "yellow");
             });
-        }());
+        });
         </script>
     </td>
 </tr>
