@@ -10,6 +10,9 @@ require_once __DIR__.'/../inc/header.php';
         <style>
         #body {
           background-color: #321313;
+          position: relative;
+          min-height: 650px;
+          overflow: hidden;
         }
         /* First round!*/
         #firstblock {
@@ -17,45 +20,48 @@ require_once __DIR__.'/../inc/header.php';
           width: 100px;
           position: absolute;
           border: 5px red solid;
+          left: 0;
+          top: 0;
         }
         #secblock {
           height: 100px;
           width: 100px;
           position: absolute;
           border: 5px red solid;
-          margin-left: 850px;
-          margin-top: 250px;
+          left: 60%;
+          top: 250px;
         }
         #thirdblock {
           height: 100px;
           width: 100px;
           position: absolute;
           border: 5px red solid;
-          margin-top: 180px;
-          margin-left: 140px;
+          left: 140px;
+          top: 180px;
         }
         #fourthblock {
           height: 100px;
           width: 100px;
           position: absolute;
           border: 5px red solid;
-          margin-left: 1400px;
+          right: 0;
+          top: 0;
         }
         #fifthblock {
           height: 100px;
           width: 100px;
           position: absolute;
           border: 5px red solid;
-          margin-left: 600px;
-          margin-top: 400px;
+          left: 40%;
+          top: 400px;
         }
         #sixthblock {
           height: 100px;
           width: 100px;
           position: absolute;
           border: 5px red solid;
-          margin-left: 400px;
-          margin-top: 500px;
+          left: 20%;
+          top: 500px;
         }
 
         #scary
@@ -71,7 +77,7 @@ require_once __DIR__.'/../inc/header.php';
         }
         </style>
         <p>Welcome to the Box-O-Fun! The aim of the game is to make all of the boxes the same colour. Click on the boxes to make them change colours!</p>
-        <div id="body" style="position:relative;min-height:650px;">
+        <div id="body">
             <div id="firstblock"></div>
             <div id="secblock"></div>
             <div id="thirdblock"></div>
