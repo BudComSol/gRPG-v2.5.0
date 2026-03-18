@@ -1,92 +1,110 @@
 <?php
-include 'header.php';
+declare(strict_types=1);
+require_once __DIR__.'/../inc/header.php';
 ?>
-
 <tr>
-    <td class="contenthead">Code of Conduct</td>
+    <th class="content-head">Code of Conduct</th>
 </tr>
-
 <tr>
-    <td class="contentprofile"><!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>LegendaryThugs Box-O-Fun</title>
-<script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
-<link rel='stylesheet' href='boxOfun/style.css'/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <td class="content">
+        <style>
+        #body {
+          background-color: #321313;
+        }
+        /* First round!*/
+        #firstblock {
+          height: 100px;
+          width: 100px;
+          position: absolute;
+          border: 5px red solid;
+        }
+        #secblock {
+          height: 100px;
+          width: 100px;
+          position: absolute;
+          border: 5px red solid;
+          margin-left: 850px;
+          margin-top: 250px;
+        }
+        #thirdblock {
+          height: 100px;
+          width: 100px;
+          position: absolute;
+          border: 5px red solid;
+          margin-top: 180px;
+          margin-left: 140px;
+        }
+        #fourthblock {
+          height: 100px;
+          width: 100px;
+          position: absolute;
+          border: 5px red solid;
+          margin-left: 1400px;
+        }
+        #fifthblock {
+          height: 100px;
+          width: 100px;
+          position: absolute;
+          border: 5px red solid;
+          margin-left: 600px;
+          margin-top: 400px;
+        }
+        #sixthblock {
+          height: 100px;
+          width: 100px;
+          position: absolute;
+          border: 5px red solid;
+          margin-left: 400px;
+          margin-top: 500px;
+        }
 
-</head>
-<script>
-
-$(document).ready(function(){
-alert("Welcome to the Box-O-Fun!");
-  alert("You think you're clever do you?");
-  alert("Good, cause only GENIUSES can solve this little puzzle!");
-  alert("The aim of the game is to make all of the boxes the same color, easy huh?")
-  alert("Click on the boxes to make them change colors!")
-  alert("But wait! You can only make them change colors once. You'll have to click every block in order to change the color a second time.");
-  alert("Make sure you turn up your sound to enjoy the full potential of this lively game!");
-  $('#firstblock').click(function(){
- 
-    $('#firstblock').css("background-color", "blue");
-     var sound2 = new Audio("bonk.mp3");
-  sound2.play();
-
-});
-  $('#secblock').click(function(){
-    
-  $('#secblock').css("background-color", "green");
-   var sound2 = new Audio("bonk.mp3");
-  sound2.play();
-
-});
-   $('#thirdblock').click(function(){
-    
-  $('#thirdblock').css("background-color", "red");
-        var sound2 = new Audio("bonk.mp3");
-  sound2.play();
-
-
-});
-   $('#fourthblock').click(function(){
-    
-  $('#fourthblock').css("background-color", "blue");
-      var sound2 = new Audio("bonk.mp3");
-  sound2.play();
-
-   });
-$('#fifthblock').click(function(){
-    $('div').fadeOut('fast');
- $('#scary').delay(600).fadeIn('fast');
-  var sound = new Audio("scream.mp3");
-  sound.play();
-   });
-  $('#sixthblock').click(function(){
-       var sound2 = new Audio("bonk.mp3");
-  sound2.play();
-
-  $('#sixthblock').css("background-color", "yellow");
-   });
- 
-  
-});
-
-</script>
-
-<body id="body">
-  <div id="firstblock"> </div>
-  <div id="secblock"> </div>
-  <div id="thirdblock"> </div>
-  <div id="fourthblock"> </div>
-  <div id="fifthblock"> </div>
-  <div id="sixthblock"> </div>
-  <img id ="scary" src="scarecrow-creepy-smile.gif"/>
-</body>
-</html>
+        #scary
+        {
+          display: none;
+          background-color:black;
+          position:fixed;
+          width:100%;
+          height:100%;
+          top:0px;
+          left:0px;
+          z-index:1;
+        }
+        </style>
+        <p>Welcome to the Box-O-Fun! The aim of the game is to make all of the boxes the same colour. Click on the boxes to make them change colours!</p>
+        <div id="body" style="position:relative;min-height:650px;">
+            <div id="firstblock"></div>
+            <div id="secblock"></div>
+            <div id="thirdblock"></div>
+            <div id="fourthblock"></div>
+            <div id="fifthblock"></div>
+            <div id="sixthblock"></div>
+            <img id="scary" src="images/scarecrow-creepy-smile.gif" alt="BOO!" style="max-width:100%;max-height:100%;"/>
+        </div>
+        <script>
+        (function () {
+            document.getElementById('firstblock').addEventListener('click', function () {
+                document.getElementById('firstblock').style.backgroundColor = 'blue';
+            });
+            document.getElementById('secblock').addEventListener('click', function () {
+                document.getElementById('secblock').style.backgroundColor = 'green';
+            });
+            document.getElementById('thirdblock').addEventListener('click', function () {
+                document.getElementById('thirdblock').style.backgroundColor = 'red';
+            });
+            document.getElementById('fourthblock').addEventListener('click', function () {
+                document.getElementById('fourthblock').style.backgroundColor = 'blue';
+            });
+            document.getElementById('fifthblock').addEventListener('click', function () {
+                var scary = document.getElementById('scary');
+                scary.style.display = 'block';
+                scary.addEventListener('click', function () {
+                    scary.style.display = 'none';
+                }, { once: true });
+            });
+            document.getElementById('sixthblock').addEventListener('click', function () {
+                document.getElementById('sixthblock').style.backgroundColor = 'yellow';
+            });
+        }());
+        </script>
     </td>
 </tr>
-
-<?php
-include 'footer.php';
-?>
