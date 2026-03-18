@@ -92,37 +92,39 @@ require_once __DIR__.'/../inc/header.php';
             if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             }
-            return audioCtx;
+            return audioCtx.resume().then(function() { return audioCtx; });
         }
         function playBonk() {
-            var ctx = getAudioContext();
-            var oscillator = ctx.createOscillator();
-            var gainNode = ctx.createGain();
-            oscillator.connect(gainNode);
-            gainNode.connect(ctx.destination);
-            oscillator.type = 'square';
-            oscillator.frequency.setValueAtTime(300, ctx.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(50, ctx.currentTime + 0.3);
-            gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
-            oscillator.start(ctx.currentTime);
-            oscillator.stop(ctx.currentTime + 0.4);
+            getAudioContext().then(function(ctx) {
+                var oscillator = ctx.createOscillator();
+                var gainNode = ctx.createGain();
+                oscillator.connect(gainNode);
+                gainNode.connect(ctx.destination);
+                oscillator.type = 'square';
+                oscillator.frequency.setValueAtTime(300, ctx.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(50, ctx.currentTime + 0.3);
+                gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+                oscillator.start(ctx.currentTime);
+                oscillator.stop(ctx.currentTime + 0.4);
+            });
         }
         function playScream() {
-            var ctx = getAudioContext();
-            var oscillator = ctx.createOscillator();
-            var gainNode = ctx.createGain();
-            oscillator.connect(gainNode);
-            gainNode.connect(ctx.destination);
-            oscillator.type = 'sawtooth';
-            oscillator.frequency.setValueAtTime(300, ctx.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 1.5);
-            gainNode.gain.setValueAtTime(0.4, ctx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.5);
-            oscillator.start(ctx.currentTime);
-            oscillator.stop(ctx.currentTime + 1.5);
+            getAudioContext().then(function(ctx) {
+                var oscillator = ctx.createOscillator();
+                var gainNode = ctx.createGain();
+                oscillator.connect(gainNode);
+                gainNode.connect(ctx.destination);
+                oscillator.type = 'sawtooth';
+                oscillator.frequency.setValueAtTime(300, ctx.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 1.5);
+                gainNode.gain.setValueAtTime(0.4, ctx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.5);
+                oscillator.start(ctx.currentTime);
+                oscillator.stop(ctx.currentTime + 1.5);
+            });
         }
-        $(document).ready(function () {
+        window.addEventListener('load', function () {
             alert("Welcome to the Box-O-Fun!");
             alert("You think you're clever do you?");
             alert("Good, cause only GENIUSES can solve this little puzzle!");
