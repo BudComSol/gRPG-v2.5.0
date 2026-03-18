@@ -37,6 +37,11 @@ if (count($errors)) {
     display_errors($errors);
 }
 ?><tr>
+    <tr>
+    <td class="content">
+        <img src="images/headers/lottery.webp" alt="gRPG Lottery Header">
+    </td>
+    </tr>
     <td class="content">
         <p>Do you want to buy a ticket for the daily lottery?</p>
         <p>You can buy up to 5 tickets a day for <?php echo prettynum(1000, true); ?> a ticket.</p>
