@@ -87,44 +87,73 @@ require_once __DIR__.'/../inc/header.php';
         </div>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         <script>
-        alert("Welcome to the Box-O-Fun!");
-        alert("You think you're clever do you?");
-        alert("Good, cause only GENIUSES can solve this little puzzle!");
-        alert("The aim of the game is to make all of the boxes the same color, easy huh?");
-        alert("Click on the boxes to make them change colors!");
-        alert("But wait! You can only make them change colors once. You'll have to click every block in order to change the color a second time.");
-        alert("Make sure you turn up your sound to enjoy the full potential of this lively game!");
+        var audioCtx = null;
+        function getAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            return audioCtx;
+        }
+        function playBonk() {
+            var ctx = getAudioContext();
+            var oscillator = ctx.createOscillator();
+            var gainNode = ctx.createGain();
+            oscillator.connect(gainNode);
+            gainNode.connect(ctx.destination);
+            oscillator.type = 'square';
+            oscillator.frequency.setValueAtTime(300, ctx.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(50, ctx.currentTime + 0.3);
+            gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+            oscillator.start(ctx.currentTime);
+            oscillator.stop(ctx.currentTime + 0.4);
+        }
+        function playScream() {
+            var ctx = getAudioContext();
+            var oscillator = ctx.createOscillator();
+            var gainNode = ctx.createGain();
+            oscillator.connect(gainNode);
+            gainNode.connect(ctx.destination);
+            oscillator.type = 'sawtooth';
+            oscillator.frequency.setValueAtTime(300, ctx.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 1.5);
+            gainNode.gain.setValueAtTime(0.4, ctx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.5);
+            oscillator.start(ctx.currentTime);
+            oscillator.stop(ctx.currentTime + 1.5);
+        }
         $(document).ready(function () {
+            alert("Welcome to the Box-O-Fun!");
+            alert("You think you're clever do you?");
+            alert("Good, cause only GENIUSES can solve this little puzzle!");
+            alert("The aim of the game is to make all of the boxes the same color, easy huh?");
+            alert("Click on the boxes to make them change colors!");
+            alert("But wait! You can only make them change colors once. You'll have to click every block in order to change the color a second time.");
+            alert("Make sure you turn up your sound to enjoy the full potential of this lively game!");
             $('#firstblock').click(function () {
                 $('#firstblock').css("background-color", "blue");
-                var sound2 = new Audio("/sounds/bonk.mp3");
-                sound2.play();
+                playBonk();
             });
             $('#secblock').click(function () {
                 $('#secblock').css("background-color", "green");
-                var sound2 = new Audio("/sounds/bonk.mp3");
-                sound2.play();
+                playBonk();
             });
             $('#thirdblock').click(function () {
                 $('#thirdblock').css("background-color", "red");
-                var sound2 = new Audio("/sounds/bonk.mp3");
-                sound2.play();
+                playBonk();
             });
             $('#fourthblock').click(function () {
                 $('#fourthblock').css("background-color", "blue");
-                var sound2 = new Audio("/sounds/bonk.mp3");
-                sound2.play();
+                playBonk();
             });
             $('#fifthblock').click(function () {
                 $('div').fadeOut('fast');
                 $('#scary').delay(600).fadeIn('fast');
-                var sound = new Audio("/sounds/scream.mp3");
-                sound.play();
+                playScream();
             });
             $('#sixthblock').click(function () {
                 $('#sixthblock').css("background-color", "yellow");
-                var sound2 = new Audio("/sounds/bonk.mp3");
-                sound2.play();
+                playBonk();
             });
         });
         </script>
