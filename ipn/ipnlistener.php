@@ -99,6 +99,7 @@ class ipnlistener
             CURLOPT_TIMEOUT => $this->timeout,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2TLS,
         ];
         if ($this->force_ssl_v3) {
             $curlOpts[CURLOPT_SSLVERSION] = 3;
