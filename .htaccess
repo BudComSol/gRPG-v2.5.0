@@ -1,5 +1,7 @@
 DirectoryIndex home.php index.php
 
+ErrorDocument 404 /404.php
+
 # Protect sensitive files
 <FilesMatch "^\.env">
     Require all denied
