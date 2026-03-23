@@ -109,8 +109,8 @@ if (!empty($rows)) {
 for ($i = 1; $i <= 3; ++$i) {
     if (isset($leaders[$i])) {
         ?><div class="box<?php echo $i; ?>">
-            <span><img class="medals-img" height="50" width="50" src="images/medals/<?php echo ordinal($i); ?>.png" /></span><br />
-            <span><?php echo formatImage($leaders[$i]->avatar); ?></span><br />
+            <span><img class="medals-img" height="50" width="50" src="images/medals/<?php echo ordinal($i); ?>.png" alt="<?php echo htmlspecialchars(ordinal($i), ENT_QUOTES, 'UTF-8'); ?> Place Medal" /></span><br />
+            <span><?php echo formatImage($leaders[$i]->avatar, 100, 100, 'border: 1px solid #333333;', $leaders[$i]->username . "'s avatar"); ?></span><br />
             <span><?php echo $leaders[$i]->formattedname; ?></span><br />
             <span>Level: <?php echo format($leaders[$i]->level); ?></span><br />
             <span><?php echo !$leaders[$i]->gang ? '<br />' : $leaders[$i]->formattedgang; ?></span>
