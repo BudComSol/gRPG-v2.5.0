@@ -1,12 +1,30 @@
 # Example nginx configuration for GRPG v2
 # Copy this file to your nginx sites-available directory and adjust as needed
 
+# Redirect HTTP to HTTPS
 server {
     listen 80;
+    server_name example.com;
+
+    return 301 https://$host$request_uri;
+}
+
+# HTTPS server with HTTP/2
+server {
+    listen 443 ssl http2;
     server_name example.com;
     root /path/to/GRPG-v2;
     # Note: GRPG v2 uses home.php as the default landing page, followed by index.php
     index home.php index.php;
+
+    # SSL certificate configuration (adjust paths as needed)
+    # IMPORTANT: Replace these paths with your actual SSL certificate files.
+    # The server will fail to start if these placeholder paths are not updated.
+    ssl_certificate /etc/ssl/certs/example.com.crt;
+    ssl_certificate_key /etc/ssl/private/example.com.key;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
 
     # Hide nginx version number
     server_tokens off;

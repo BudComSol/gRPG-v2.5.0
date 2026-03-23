@@ -397,6 +397,7 @@ function isImage($url, $local = false)
             CURLOPT_TIMEOUT        => 6,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_MAXREDIRS      => 5,
+            CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_2TLS,
         ]);
         $result = curl_exec($handle);
         if ($result === false || curl_errno($handle)) {
@@ -463,6 +464,7 @@ function getHttpResponseCode_using_curl($url, $followredirects = true, $bool = f
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_CONNECTTIMEOUT => 5,
         CURLOPT_TIMEOUT => 6,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2TLS,
     ];
     if ($followredirects === true) {
         $curlOpts[CURLOPT_FOLLOWLOCATION] = true;

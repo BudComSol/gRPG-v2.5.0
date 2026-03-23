@@ -46,6 +46,8 @@ No additional action is required if you're using Apache.
 The nginx configuration includes:
 - `server_tokens off;` - Hides nginx version
 - `fastcgi_hide_header X-Powered-By;` - Hides PHP version
+- `listen 443 ssl http2;` - Enables HTTP/2 over HTTPS
+- HTTP to HTTPS redirect for all traffic
 
 ### For PHP-FPM (all web servers)
 
