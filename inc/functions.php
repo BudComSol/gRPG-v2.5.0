@@ -282,7 +282,7 @@ function itemExists($id = 0)
  *
  * @return string
  */
-function formatImage($url = null, $width = 100, $height = 100, $style = 'border: 1px solid #333333;')
+function formatImage($url = null, $width = 100, $height = 100, $style = 'border: 1px solid #333333;', $alt = 'Image')
 {
     if (!$url) {
         $url = 'images/noimage.png';
@@ -334,7 +334,7 @@ function formatImage($url = null, $width = 100, $height = 100, $style = 'border:
         }
     }
     
-    $image = '<img src="' . $url . '" width="' . $width . '" height="' . $height . '"';
+    $image = '<img src="' . $url . '" width="' . $width . '" height="' . $height . '" alt="' . htmlspecialchars($alt, ENT_QUOTES, 'UTF-8') . '"';
     if ($style) {
         $image .= ' style="' . $style . '"';
     }
