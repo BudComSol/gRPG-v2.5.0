@@ -169,7 +169,7 @@ for ($i = 1; $i <= 3; ++$i) {
                 </td>
                 <td class="top" style="padding-bottom:10px;">
                     <h3 style="padding:0;margin:0;font-size:1.4em;">Downtown</h3><br />
-                    <a href="bank.php">Bank</a><br />
+                    <a href="plugins/bank.php">Bank</a><br />
                     <a href="plugins/pharmacy.php">Pharmacy</a><br />
                     <a href="plugins/viewstaff.php">Game Staff</a><br />                                         
                     <a href="plugins/downtown.php">Search Downtown</a><br />                  
