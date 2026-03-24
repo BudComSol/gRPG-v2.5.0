@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 320" width="500" height="320">
+  <!-- Outer black rounded rectangle (border) -->
+  <rect x="10" y="10" width="480" height="300" rx="45" ry="45" fill="black"/>
+  <!-- Inner white rounded rectangle (background) -->
+  <rect x="28" y="28" width="444" height="264" rx="30" ry="30" fill="white"/>
+  <!-- 404 text in red -->
+  <text x="250" y="165" font-family="Impact, Arial Black, sans-serif" font-size="130" font-weight="bold" fill="#CC0000" text-anchor="middle" dominant-baseline="auto">404</text>
+  <!-- ERROR text in black -->
+  <text x="250" y="262" font-family="Impact, Arial Black, sans-serif" font-size="100" font-weight="bold" fill="#111111" text-anchor="middle" dominant-baseline="auto">ERROR</text>
+</svg>
