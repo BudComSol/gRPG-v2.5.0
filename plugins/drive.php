@@ -36,8 +36,8 @@ if (!empty($_GET['go'])) {
         echo Message('Yo\'ve refilled your tank for '.prettynum($cost, true).' and drove to '.format($row['name']));
     }
 }
-$db->query('SELECT id, name, levelreq FROM cities WHERE levelreq <= ? AND id != ? ORDER BY levelreq , name ');
-$db->execute([$user_class->level, $user_class->city]);
+$db->query('SELECT id, name, levelreq FROM cities ORDER BY levelreq, name');
+$db->execute();
 $rows = $db->fetch();
 ?><tr>
     <th class="content-head">Drive</th>
@@ -64,7 +64,13 @@ if ($rows !== null) {
             ?><tr>
                     <td><?php echo format($row['name']); ?></td>
                     <td><?php echo format($row['levelreq']); ?></td>
-                    <td><a href="plugins/drive.php?go=<?php echo $row['id']; ?>&amp;csrfg=<?php echo $csrfg; ?>">Drive</a></td>
+                    <td><?php if ((int)$row['id'] === $user_class->city) {
+                        echo 'Current City';
+                    } elseif ((int)$row['levelreq'] <= $user_class->level) {
+                        echo '<a href="plugins/drive.php?go='.(int)$row['id'].'&amp;csrfg='.htmlspecialchars($csrfg, ENT_QUOTES).'">Drive</a>';
+                    } else {
+                        echo 'Requires Level '.(int)$row['levelreq'];
+                    } ?></td>
                 </tr><?php
         }
     } else {
