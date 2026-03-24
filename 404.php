@@ -7,7 +7,7 @@ require_once __DIR__.'/inc/nliheader.php';
 </tr>
 <tr>
     <td class="content center">
-        <img src="images/logos/logo.png" alt="gRPG Logo" style="max-width:200px; margin: 20px auto; display:block;" />
+        <img src="images/404error.svg" alt="404 Error" style="max-width:300px; margin: 20px auto; display:block;" />
         <h2>Oops! The page you are looking for does not exist.</h2>
         <p>It may have been moved, deleted, or you may have typed the address incorrectly.</p>
         <p><a href="/">Return to Home</a></p>
