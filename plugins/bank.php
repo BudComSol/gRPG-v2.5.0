@@ -47,7 +47,7 @@ $interest = ceil($user_class->bank * $interest);
     <th class="content-head">Bank</th>
 </tr><?php
 if (!$user_class->whichbank) {
-    echo Message('<p>You don\'t currently have an account with us.</p> Would you like to open one for '.prettynum(5000, true).'?<br /><a href="plugins/bank.php?open&amp;csrfg='.csrf_create('csrfg', false).'"><p>Yes Please</p></a>', 'Open An Account', true);
+    echo Message('<p>You don\'t currently have an account with us.</p> Would you like to open one for '.prettynum(5000, true).'?<br /><br /><a class="pure-button pure-button-primary" href="plugins/bank.php?open&amp;csrfg='.csrf_create('csrfg', false).'">Yes Please</a>', 'Open An Account', true);
 }
 ?><tr>
     <td class="content">
