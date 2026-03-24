@@ -1,7 +1,16 @@
 <?php
 declare(strict_types=1);
 http_response_code(404);
-require_once __DIR__.'/inc/nliheader.php';
+if (!defined('GRPG_INC')) {
+    define('GRPG_INC', true);
+}
+require_once __DIR__.'/inc/dbcon.php';
+$_404_logged_in = !empty($_SESSION['id']) && is_numeric($_SESSION['id']);
+if ($_404_logged_in) {
+    require_once __DIR__.'/inc/header.php';
+} else {
+    require_once __DIR__.'/inc/nliheader.php';
+}
 ?><tr>
     <th class="content-head">404 - Page Not Found</th>
 </tr>
@@ -13,6 +22,7 @@ require_once __DIR__.'/inc/nliheader.php';
         <p><a href="/">Return to Home</a></p>
     </td>
 </tr>
+<?php if (!$_404_logged_in) { ?>
 <tr>
     <td>
         <table class="topbar">
@@ -22,5 +32,5 @@ require_once __DIR__.'/inc/nliheader.php';
         </table>
     </td>
 </tr>
-
 <?php require_once __DIR__.'/inc/nlifooter.php';
+} ?>
