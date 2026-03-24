@@ -695,6 +695,20 @@ CREATE TABLE IF NOT EXISTS `jobs`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
+INSERT INTO `jobs` (`name`, `money`, `strength`, `defense`, `speed`, `level`) VALUES
+('Street Sweeper',      100,    0,   0,   0,  1),
+('Delivery Driver',     350,    5,   0,   5,  3),
+('Grocery Store Clerk', 750,    5,   5,   5,  5),
+('Security Guard',     1500,   15,  10,   5, 10),
+('Mechanic',           3000,   20,  10,  10, 15),
+('Factory Worker',     6000,   30,  20,  15, 20),
+('Police Officer',    12000,   40,  35,  25, 30),
+('Firefighter',       22000,   50,  45,  35, 40),
+('Construction Foreman',40000, 65,  55,  40, 50),
+('Bank Manager',       75000,  70,  70,  50, 65),
+('Corporate Executive',150000, 80,  80,  65, 80),
+('Crime Lord',         400000, 100, 100, 100, 100);
+
 DROP TABLE IF EXISTS `land`;
 CREATE TABLE IF NOT EXISTS `land`
 (
