@@ -65,6 +65,11 @@ $amount = $amount > 0 ? $amount : 0;
     <th class="content-head">Manage Land</th>
 </tr>
 <tr>
+    <td class="content">
+        <img src="images/headers/grow-pot.webp" alt="gRPG Fields Header">
+    </td>
+</tr>
+<tr>
     <td class="content"><p>Here Is Where You Manage Your Acres Of Land.</p></td>
 </tr>
 <tr>
@@ -73,8 +78,8 @@ $amount = $amount > 0 ? $amount : 0;
 <tr>
     <td class="content"><?php
 if ($amount) {
-    $available = floor($user_class->potseeds / 100); ?>You have <?php echo format($amount); ?> acre<?php echo s($amount); ?> of land in <?php echo $user_class->cityname; ?> and <?php echo $user_class->potseeds; ?> marijuana seed<?php echo s($user_class->potseeds); ?>,
-        which is enough to grow <?php echo format($available); ?> acre<?php echo s($available); ?> of weed<br />
+    $available = floor($user_class->potseeds / 100); ?><p>You have <?php echo format($amount); ?> acre<?php echo s($amount); ?> of land in <?php echo $user_class->cityname; ?> and <?php echo $user_class->potseeds; ?> marijuana seed<?php echo s($user_class->potseeds); ?>,
+        you can grow <?php echo format($available); ?> acre<?php echo s($available); ?> of weed</p>
         <form action="plugins/fields.php" method="post" class="pure-form pure-form-aligned">
             <?php echo csrf_create(); ?>
             <fieldset>
