@@ -199,8 +199,19 @@ class Cron
 
     private function doCageFight(): void
     {
-        // Pick a random fighter from the cage
-        $this->db->query('SELECT boxnumber, playerid FROM luckyboxes ORDER BY RAND() LIMIT 1');
+        // Count distinct players who have entered a fighter
+        $this->db->query('SELECT COUNT(DISTINCT playerid) FROM luckyboxes WHERE playerid != 0');
+        $this->db->execute();
+        $playerCount = (int)$this->db->result();
+
+        if ($playerCount === 1) {
+            // Only one player entered – they win by default
+            $this->db->query('SELECT boxnumber, playerid FROM luckyboxes WHERE playerid != 0 LIMIT 1');
+        } else {
+            // Multiple players (or zero players) – pick a random fighter as usual;
+            // a zero-player result will be caught by the null check below
+            $this->db->query('SELECT boxnumber, playerid FROM luckyboxes ORDER BY RAND() LIMIT 1');
+        }
         $this->db->execute();
         $winner = $this->db->fetch(true);
         if ($winner === null) {
