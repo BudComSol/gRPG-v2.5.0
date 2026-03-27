@@ -66,7 +66,7 @@ $amount = $amount > 0 ? $amount : 0;
 </tr>
 <tr>
     <td class="content">
-        <img src="images/headers/grow-pot.webp" alt="gRPG Fields Header">
+        <img src="images/headers/grow-pot.webp" style="width: 100%;" alt="gRPG Fields Header">
     </td>
 </tr>
 <tr>
@@ -98,7 +98,7 @@ if ($amount) {
 ?></td>
 </tr>
 <tr>
-    <th class="content-head">Currently Growing</th>
+    <th class="content-head">Whats Currently Growing</th>
 </tr>
 <tr>
     <td class="content"><?php
