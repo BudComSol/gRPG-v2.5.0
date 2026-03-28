@@ -34,7 +34,13 @@ $db->execute();
 $rows = $db->fetch();
 ?><tr>
     <th class="content-head">Car Lot</th>
-</tr><?php
+</tr>
+<tr>
+    <td class="content">
+        <img src="images/headers/bobscars.webp" alt="gRPG BobsCars Header">
+    </td>
+</tr>
+<?php
 if (count($errors)) {
     display_errors($errors);
 }
