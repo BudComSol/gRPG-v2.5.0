@@ -11,6 +11,11 @@ $rank = 0;
 </tr>
 <tr>
     <td class="content">
+        <img src="images/headers/hof.webp" alt="gRPG Hall of Fame Header">
+    </td>
+</tr>
+<tr>
+    <td class="content">
         <a href="plugins/halloffame.php?view=experience"<?php echo $_GET['view'] === 'experience' ? ' class="bold"' : ''; ?>>Level</a> |
         <a href="plugins/halloffame.php?view=strength"<?php echo $_GET['view'] === 'strength' ? ' class="bold"' : ''; ?>>Strength</a> |
         <a href="plugins/halloffame.php?view=defense"<?php echo $_GET['view'] === 'defense' ? ' class="bold"' : ''; ?>>Defense</a> |
