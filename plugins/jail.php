@@ -54,7 +54,13 @@ $db->execute();
 $rows = $db->fetch();
 ?><tr>
     <th class="content-head">Jail</th>
-</tr><?php
+</tr>
+<tr>
+    <td class="content">
+        <img src="images/headers/jail.webp" alt="gRPG Jail Header">
+    </td>
+</tr>
+<?php
 if (count($errors)) {
     display_errors($errors);
 }
