@@ -1357,19 +1357,20 @@ CREATE TABLE IF NOT EXISTS `voting_sites`
   DEFAULT CHARSET = utf8mb4;
 CREATE TABLE IF NOT EXISTS `luckyboxes`
 (
-    `id`        int(11)     NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    `boxnumber` varchar(20) NOT NULL,
-    `playerid`  int(11)     NOT NULL DEFAULT 0,
+    `id`          int(11)     NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `boxnumber`   varchar(20) NOT NULL,
+    `fightername` varchar(20) NOT NULL DEFAULT '',
+    `playerid`    int(11)     NOT NULL DEFAULT 0,
     UNIQUE KEY `boxnumber` (`boxnumber`),
     KEY `playerid` (`playerid`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
-INSERT IGNORE INTO `luckyboxes` (`boxnumber`, `playerid`) VALUES
-(1, 0), (2, 0), (3, 0), (4, 0), (5, 0),
-(6, 0), (7, 0), (8, 0), (9, 0), (10, 0),
-(11, 0), (12, 0), (13, 0), (14, 0), (15, 0),
-(16, 0), (17, 0), (18, 0), (19, 0), (20, 0);
+INSERT IGNORE INTO `luckyboxes` (`boxnumber`, `fightername`, `playerid`) VALUES
+(1,  'Iron Fist',    0), (2,  'The Viper',   0), (3,  'Mad Dog',     0), (4,  'Knuckles',    0), (5,  'Razor',       0),
+(6,  'The Crusher',  0), (7,  'Shadow',       0), (8,  'Brawler',     0), (9,  'The Beast',   0), (10, 'Stone Cold',  0),
+(11, 'Rampage',      0), (12, 'The Hammer',   0), (13, 'Wildcat',     0), (14, 'Devastator',  0), (15, 'The Butcher', 0),
+(16, 'Bone Breaker', 0), (17, 'Predator',     0), (18, 'The Reaper',  0), (19, 'Bruiser',     0), (20, 'Thunderbolt', 0);
 
 CREATE TABLE IF NOT EXISTS `cagewinners`
 (

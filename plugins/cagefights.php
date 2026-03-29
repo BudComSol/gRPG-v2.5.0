@@ -80,6 +80,7 @@ if (array_key_exists('fighter', $_GET)) {
                         if ($leftFighters !== null) {
                             foreach ($leftFighters as $line) {
                                 $boxnumber = $line['boxnumber'];
+                                $fightername = htmlspecialchars($line['fightername'], ENT_QUOTES, 'UTF-8');
                                 if (strlen((string)$boxnumber) == 1) {
                                     $boxnumber = "&nbsp;" . $line['boxnumber'] . "&nbsp;";
                                 } else {
@@ -94,46 +95,7 @@ if (array_key_exists('fighter', $_GET)) {
                                 ?>
                                 <tr>
                                     <td align="left" width="40%"><font size=2><font color=white><span
-                                                        class="box"><?php echo $boxnumber; ?></span></td>
-                                    <td align="center" width="60%"><font size=2><?php echo $text; ?></td>
-                                </tr>
-                                <?php
-                            }
-                        }
-                        ?>
-                    </table>
-                    <br/><br/>
-                </td>
-                <td>
-                    <table width="100%" align="center" cellpadding="5px">
-                        <tr>
-                            <td class="content-head"><font size=2>Fighter</td>
-                            <td class="content-head">
-                                <center><font size=2>Chosen By
-                            </td>
-                        </tr>
-                        <?php
-                        $db->query('SELECT * FROM `luckyboxes` LIMIT 10 OFFSET 10');
-                        $db->execute();
-                        $rightFighters = $db->fetch();
-                        if ($rightFighters !== null) {
-                            foreach ($rightFighters as $line) {
-                                $boxnumber = $line['boxnumber'];
-                                if (strlen((string)$boxnumber) == 1) {
-                                    $boxnumber = "&nbsp;" . $line['boxnumber'] . "&nbsp;";
-                                } else {
-                                    $boxnumber = $line['boxnumber'];
-                                }
-                                if ($line['playerid'] != 0) {
-                                    $boxes_user = new User($line['playerid']);
-                                    $text = $boxes_user->formattedname;
-                                } else {
-                                    $text = "[<a href='plugins/cagefights.php?fighter=" . urlencode((string)$line['boxnumber']) . "&amp;cage_csrf=" . htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') . "'><font color=orange>Pick Fighter</font></a>]";
-                                }
-                                ?>
-                                <tr>
-                                    <td align="left" width="40%"><font size=2><font color=white><span
-                                                        class="box"><?php echo $boxnumber; ?></span></td>
+                                                        class="box"><?php echo $boxnumber; ?></span></font> <font size=2><?php echo $fightername; ?></font></td>
                                     <td align="center" width="60%"><font size=2><?php echo $text; ?></td>
                                 </tr>
                                 <?php
